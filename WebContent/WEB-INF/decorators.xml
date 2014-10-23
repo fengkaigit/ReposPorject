@@ -1,0 +1,10 @@
+<decorators defaultdir="/pages/decorators">
+	<!-- 在excludes元素下指定的页面将不会由SiteMesh来装饰 -->
+    <excludes>
+    	<!--<pattern>/workflow!startFlow.action*</pattern>
+    	<pattern>/flowAct!load.action</pattern>-->
+    </excludes>
+	<decorator name="form_frame" page="form_frame.jsp">
+		<pattern>/info.do</pattern>
+	</decorator>
+</decorators>
