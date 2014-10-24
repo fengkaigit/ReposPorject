@@ -24,6 +24,7 @@ import com.ey.controller.base.BaseController;
 import com.ey.entity.User;
 import com.ey.service.UserService;
 import com.ey.util.MD5;
+import com.ey.util.RequestUtils;
 
 
 
@@ -55,7 +56,7 @@ public class UserController extends BaseController {
     	  User currentUser = userService.findUserByLoginCode(user.getLoginCode(),MD5.getMD5Str(user.getPassword()));
     	  ModelAndView mav = new ModelAndView();
     	  if(currentUser==null){
-    		  mav.addObject("message", this.getText("login", request));
+    		  mav.addObject("message", RequestUtils.getMessage("login", request));
     		  mav.setViewName("login/login");
     	  }else{
     		  mav.setViewName("redirect:/info.do");
@@ -69,7 +70,7 @@ public class UserController extends BaseController {
     	  User currentUser = userService.findUserByLoginCode(loginCode,MD5.getMD5Str(password));
     	  ModelAndView mav = new ModelAndView();
     	  if(currentUser==null){
-    		  mav.addObject("message", this.getText("login", request));
+    		  mav.addObject("message", RequestUtils.getMessage("login", request));
     		  mav.setViewName("login/login");
     	  }else{
     		  mav.setViewName("redirect:/info.do");
@@ -98,7 +99,7 @@ public class UserController extends BaseController {
     	  user.setPassword(MD5.getMD5Str(user.getPassword()));
     	  userService.saveObject(user);
     	  ModelAndView view = new ModelAndView("saveok");
-    	  view.addObject("message", this.getText("add", request));
+    	  view.addObject("message", RequestUtils.getMessage("add", request));
     	  return view;
       }
       @RequestMapping(value="/update")
@@ -106,14 +107,14 @@ public class UserController extends BaseController {
     	  user.setPassword(MD5.getMD5Str(user.getPassword()));
     	  userService.update(user);
     	  ModelAndView view = new ModelAndView("saveok");
-    	  view.addObject("message", this.getText("update", request));
+    	  view.addObject("message", RequestUtils.getMessage("update", request));
     	  return view;
       }
       @RequestMapping(value="/del")
       public ModelAndView del(User user,HttpServletRequest request,HttpServletResponse response){
     	  userService.delete(user);
     	  ModelAndView view = new ModelAndView("saveok");
-    	  view.addObject("message", this.getText("delete", request));
+    	  view.addObject("message", RequestUtils.getMessage("del", request));
     	  return view;
       }
 }

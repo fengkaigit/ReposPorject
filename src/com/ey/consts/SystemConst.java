@@ -14,4 +14,26 @@ public class SystemConst {
 	static public String SPLITE = "[#]";
 	static public String ATTR_SPLITE_SIGN = ":";
 	static public String POINT_SPLITE = "[.]";
+	/**
+	 * HTTP POST请求
+	 */
+	public static final String POST = "POST";
+	/**
+	 * HTTP GET请求
+	 */
+	public static final String GET = "GET";
+	
+	/**
+	 * UTF-8编码
+	 */
+	public static final String UTF8 = "UTF-8";
+	
+	/**
+	 * cookie中的JSESSIONID名称
+	 */
+	public static final String JSESSION_COOKIE = "JSESSIONID";
+	/**
+	 * url中的jsessionid名称
+	 */
+	public static final String JSESSION_URL = "jsessionid";
 }

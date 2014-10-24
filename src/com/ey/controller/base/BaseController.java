@@ -19,10 +19,5 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 @Controller
 public class BaseController {
 	
-	public String getText(String key,HttpServletRequest request){
-		 Locale locale = RequestContextUtils.getLocale(request);
-		 ApplicationContext ctx = RequestContextUtils.getWebApplicationContext(request);
-		 return ctx.getMessage(key, null,locale);
-	}
 	
 }
