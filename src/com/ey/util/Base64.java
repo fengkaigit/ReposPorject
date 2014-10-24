@@ -1,7 +1,6 @@
 package com.ey.util;
 
 public class Base64 {
- 
 	private Base64() {
 		super();
 	}
