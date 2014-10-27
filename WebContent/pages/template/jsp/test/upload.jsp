@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -19,15 +18,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	
   </head>
   
   <body>
-     <form id="forms" action="login.do" method="post">
-             <p><input type="text" name="loginCode"/></p>
-             <p><input type="password" name="password"/></p>
-             <p><input type="submit" value="登录 "/></p>
-              <p>${message}</p>
+       <form id="forms" method="post" action="uploads.do" enctype="multipart/form-data">
+             <p><input type="file" id="file1" name="file1"/></p>
+             <p><input type="file" id="file2" name="file2"/></p>
+             <p><input type="file" id="file3" name="file3"/></p>
+             <p><input type="submit" value="确定 " /></p>
      </form>
   </body>
 </html>

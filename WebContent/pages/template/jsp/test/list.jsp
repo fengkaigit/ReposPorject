@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -22,26 +23,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script>
-	          function postHandle(){
-	        	  var id = document.getElementById("id");
-	        	  var form = document.getElementById("forms");
-	        	  form.action = "add.do";
-	        	  if(id.value != "")
-	        		  form.action = "update.do";
-	        	  form.submit();
-	        	  
-	          }
+	           function ajaxTest(id){
+	        	var userNames = [];
+	        	   $.ajax({
+						url: "show.do",
+						dataType: "json",
+						async:false,
+						data:{id:id},
+					    success: function(data, textStatus) {
+						     alert(data.password);
+					     }
+					});
+				//alert(userNames.join(","));
+	           }
 	</script>
   </head>
   
   <body>
-       <form id="forms" method="post">
-             <p><input type="hidden" id="id" name="id" value="${user.id}"/></p>
-             <p><input type="text" name="loginCode" value="${user.loginCode}"/></p>
-             <p><input type="text" name="userName" value="${user.userName}"/></p>
-             <p><input type="text" name="realName" value="${user.realName}"/></p>
-             <p><input type="password" name="password"/></p>
-             <p><input type="button" value="确定 " onclick="postHandle()" /></p>
-     </form>
+      <p><a href="user/show/add.do">新增</a>&nbsp;<a href="user/uploadform.do">上传文件</a></p>
+      <c:forEach var="item" items="${key1}" varStatus="status">
+            <p><a href="user/show/${item.id}.do">${item.realName}</a></p>
+       </c:forEach>
   </body>
 </html>
