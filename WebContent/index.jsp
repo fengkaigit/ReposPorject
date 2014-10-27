@@ -21,6 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-      <%response.sendRedirect("info.do"); %>
+      <%response.sendRedirect("user/info.do"); %>
   </body>
 </html>
