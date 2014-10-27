@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -28,63 +28,27 @@ import com.ey.util.RequestUtils;
 
 
 
-@RestController
-@SessionAttributes("USER")
+@Controller
 @RequestMapping(value="/user")
 public class UserController extends BaseController {
 	
       @Autowired
       private UserService userService;
       
-      @RequestMapping(value="/info")
+      @RequestMapping(value="/list")
       public ModelAndView getTestInfo(HttpServletRequest request,HttpServletResponse response){
     	  List<User> users = userService.findUsers();
-    	  ModelAndView view = new ModelAndView("test");
+    	  ModelAndView view = new ModelAndView("test/list");
     	  view.addObject("key1", users);
     	  return view;
       }
       
-      @RequestMapping(value="/infos")
-      public ModelAndView getTestInfos(ModelMap model){
-    	  //List<User> users = userService.findUsers();
-    	  //model.addAttribute("key1", users);
-    	  ModelAndView mav = new ModelAndView("redirect:info.do");
-    	  return mav;
-      }
       @RequestMapping(value="/uploadform")
       public ModelAndView uploadform(ModelMap model){
-    	  ModelAndView mav = new ModelAndView("upload");
+    	  ModelAndView mav = new ModelAndView("test/upload");
     	  return mav;
       }
-      
-      @RequestMapping(value="/login",method=RequestMethod.POST)
-      public ModelAndView login(User user,HttpServletRequest request,HttpServletResponse response){
-    	  User currentUser = userService.findUserByLoginCode(user.getLoginCode(),MD5.getMD5Str(user.getPassword()));
-    	  ModelAndView mav = new ModelAndView();
-    	  if(currentUser==null){
-    		  mav.addObject("message", RequestUtils.getMessage("login", request));
-    		  mav.setViewName("login/login");
-    	  }else{
-    		  mav.setViewName("redirect:info.do");
-    		  mav.addObject(SystemConst.USER,currentUser);
-    	  }
-    	  return mav;
-      }
-      
-      @RequestMapping(value="/login1",method=RequestMethod.POST)
-      public ModelAndView login1(String loginCode,String password,HttpServletRequest request,HttpServletResponse response){
-    	  User currentUser = userService.findUserByLoginCode(loginCode,MD5.getMD5Str(password));
-    	  ModelAndView mav = new ModelAndView();
-    	  if(currentUser==null){
-    		  mav.addObject("message", RequestUtils.getMessage("login", request));
-    		  mav.setViewName("login/login");
-    	  }else{
-    		  mav.setViewName("redirect:/info.do");
-    		  mav.addObject(SystemConst.USER,currentUser);
-    	  }
-    	  return mav;
-      }
-      
+   
       @RequestMapping(value="/show")
       @ResponseBody
       public Object getShow(Long id,HttpServletRequest request,HttpServletResponse response){
@@ -94,17 +58,17 @@ public class UserController extends BaseController {
       @RequestMapping(value="/show/{id}")
       public ModelAndView show(@PathVariable("id") Long id,HttpServletRequest request,HttpServletResponse response){
     	  User user = userService.findUserById(id);
-    	  return new ModelAndView("addOrUpdate","user",user);
+    	  return new ModelAndView("test/addOrUpdate","user",user);
       }
       @RequestMapping(value="/show/add")
       public ModelAndView show(HttpServletRequest request,HttpServletResponse response){
-    	  return new ModelAndView("addOrUpdate");
+    	  return new ModelAndView("test/addOrUpdate");
       }
       @RequestMapping(value="/add")
       public ModelAndView add(User user,HttpServletRequest request,HttpServletResponse response){
     	  user.setPassword(MD5.getMD5Str(user.getPassword()));
     	  userService.saveObject(user);
-    	  ModelAndView view = new ModelAndView("saveok");
+    	  ModelAndView view = new ModelAndView("test/saveok");
     	  view.addObject("message", RequestUtils.getMessage("add", request));
     	  return view;
       }
@@ -112,14 +76,14 @@ public class UserController extends BaseController {
       public ModelAndView update(User user,HttpServletRequest request,HttpServletResponse response) {
     	  user.setPassword(MD5.getMD5Str(user.getPassword()));
     	  userService.update(user);
-    	  ModelAndView view = new ModelAndView("saveok");
+    	  ModelAndView view = new ModelAndView("test/saveok");
     	  view.addObject("message", RequestUtils.getMessage("update", request));
     	  return view;
       }
       @RequestMapping(value="/del")
       public ModelAndView del(User user,HttpServletRequest request,HttpServletResponse response){
     	  userService.delete(user);
-    	  ModelAndView view = new ModelAndView("saveok");
+    	  ModelAndView view = new ModelAndView("test/saveok");
     	  view.addObject("message", RequestUtils.getMessage("del", request));
     	  return view;
       }

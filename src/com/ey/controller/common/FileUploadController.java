@@ -24,24 +24,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ey.consts.SystemConst;
 import com.ey.util.RequestUtils;
+import com.ey.util.StringUtil;
 
 @Controller
 public class FileUploadController {
        
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)   
+	@RequestMapping(value = "/upload")   
     public ModelAndView upload(@RequestParam("file")  MultipartFile uploadFile, HttpServletRequest request) throws IOException {   
         try {   
-        	uploadFile.transferTo(new File(RequestUtils.getContextDirectory(SystemConst.CONTEXT_ATTACHEDIR, request) + uploadFile.getOriginalFilename())); // 保存上传的文件   
+        	uploadFile.transferTo(new File(RequestUtils.getContextDirectory(SystemConst.CONTEXT_ATTACHEDIR, request) + "/"+uploadFile.getOriginalFilename())); // 保存上传的文件   
         } catch (IllegalStateException e) {   
             e.printStackTrace();   
         } catch (IOException e) {   
             e.printStackTrace();   
-        }   
-        request.setAttribute("files", loadFiles(request));   
+        }     
         return new ModelAndView("saveok","message","上传成功");   
     }  
 	// 多文件上传   
-    @RequestMapping(value = "/uploads", method = RequestMethod.POST)   
+    @RequestMapping(value = "/uploads")   
     public ModelAndView fileUpload(HttpServletRequest request,   
             HttpServletResponse response)   
             throws Exception {   
@@ -52,33 +52,12 @@ public class FileUploadController {
         String fileName = null;   
         for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {   
             MultipartFile mf = entity.getValue();   
-            fileName = mf.getOriginalFilename();   
-            mf.transferTo(new File(dirPath + fileName)); 
+            fileName = mf.getOriginalFilename();
+            if(!StringUtil.isEmptyString(fileName))
+               mf.transferTo(new File(dirPath + "/" + fileName)); 
         }   
-        request.setAttribute("files", loadFiles(request));   
-        return new ModelAndView("success");   
+        return new ModelAndView("saveok","message","上传成功");
     }   
-  
-    // @ModelAttribute("files")//此属性用于初始类时调用,但上传文件后不能时时反应上传文件个数,不适合动态数据   
-    public List<String> loadFiles(HttpServletRequest request) {   
-        List<String> files = new ArrayList<String>();   
-        String ctxPath = request.getSession().getServletContext().getRealPath(   
-                "/")   
-                + "\\" + "images\\";   
-        File file = new File(ctxPath);   
-        if (file.exists()) {   
-            File[] fs = file.listFiles();   
-            String fname = null;   
-            for (File f : fs) {   
-                fname = f.getName();   
-                if (f.isFile()) {   
-                    files.add(fname);   
-                }   
-            }   
-        }   
-        return files;   
-    }   
-  
     @RequestMapping("/download/{fileName}")   
     public ModelAndView download(@PathVariable("fileName")   
     String fileName, HttpServletRequest request, HttpServletResponse response)   
@@ -91,7 +70,7 @@ public class FileUploadController {
   
         String dirPath = RequestUtils.getContextDirectory(SystemConst.CONTEXT_ATTACHEDIR, request);
    
-        String downLoadPath = dirPath + fileName;   
+        String downLoadPath = dirPath + "/" + fileName;   
         try {   
             long fileLength = new File(downLoadPath).length();   
             response.setContentType("application/x-msdownload;");   

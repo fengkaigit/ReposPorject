@@ -259,4 +259,16 @@ public class StringUtil {
 			return true;
 		return false;
 	}
+	public static boolean isEmptyString(String string){
+		if(string==null||string.trim().equals("")){
+			return true;
+		}
+		return false;
+	}
+	public static boolean isNullObject(Object obj){
+		if(obj==null){
+			return true;
+		}
+		return false;
+	}
 }
