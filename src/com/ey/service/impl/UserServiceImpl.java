@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ey.dao.UserDAO;
 import com.ey.dao.base.BaseDAO;
 import com.ey.entity.User;
 import com.ey.service.UserService;
@@ -17,46 +18,41 @@ import com.ey.service.UserService;
 public class UserServiceImpl implements UserService {
 	
      @Autowired
-     private BaseDAO<User> baseDAO;
+     private UserDAO userDAO;
 
 	@Override
 	public void saveObject(User user) throws RuntimeException {
 		// TODO Auto-generated method stub
-		 baseDAO.saveOrUpdate(user);
+		userDAO.save(user);
 	}
 
 	@Override
 	public void delete(User user) throws RuntimeException{
 		// TODO Auto-generated method stub
-		baseDAO.delete(user);
+		userDAO.delete(user);
 	}
 
 	@Override
 	public void update(User user) throws RuntimeException{
 		// TODO Auto-generated method stub
-		baseDAO.update(user);
+		userDAO.update(user);
 	}
 
 	@Override
 	public List<User> findUsers() throws RuntimeException{
 		// TODO Auto-generated method stub
-		String hql="from User order by id";
-		return baseDAO.find(hql);
+		return userDAO.findUsers();
 	}
 
 	@Override
 	public User findUserById(Long id) throws RuntimeException {
 		// TODO Auto-generated method stub
-		return baseDAO.get(User.class, id);
+		return userDAO.findUserById(id);
 	}
 
 	@Override
 	public User findUserByLoginCode(String loginCode,String password) throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql="from User where loginCode = ? and password = ? order by id";
-		List<User> users = baseDAO.find(hql, new Object[]{loginCode,password});
-		if(users!=null&&users.size()>0)
-			return users.get(0);
-		return null;
+		return userDAO.findUserByLoginCode(loginCode, password);
 	}
 }

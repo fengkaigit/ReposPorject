@@ -36,4 +36,8 @@ public class SystemConst {
 	 * url中的jsessionid名称
 	 */
 	public static final String JSESSION_URL = "jsessionid";
+	/**
+	 * context中的context name名称
+	 */
+	public static final String CONTEXT_ATTACHEDIR = "attachDirectory";
 }

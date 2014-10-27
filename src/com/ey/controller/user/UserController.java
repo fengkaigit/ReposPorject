@@ -30,6 +30,7 @@ import com.ey.util.RequestUtils;
 
 @RestController
 @SessionAttributes("USER")
+@RequestMapping(value="/user")
 public class UserController extends BaseController {
 	
       @Autowired
@@ -50,6 +51,11 @@ public class UserController extends BaseController {
     	  ModelAndView mav = new ModelAndView("redirect:info.do");
     	  return mav;
       }
+      @RequestMapping(value="/uploadform")
+      public ModelAndView uploadform(ModelMap model){
+    	  ModelAndView mav = new ModelAndView("upload");
+    	  return mav;
+      }
       
       @RequestMapping(value="/login",method=RequestMethod.POST)
       public ModelAndView login(User user,HttpServletRequest request,HttpServletResponse response){
@@ -59,13 +65,13 @@ public class UserController extends BaseController {
     		  mav.addObject("message", RequestUtils.getMessage("login", request));
     		  mav.setViewName("login/login");
     	  }else{
-    		  mav.setViewName("redirect:/info.do");
+    		  mav.setViewName("redirect:info.do");
     		  mav.addObject(SystemConst.USER,currentUser);
     	  }
     	  return mav;
       }
       
-      @RequestMapping(value="/user/login",method=RequestMethod.POST)
+      @RequestMapping(value="/login1",method=RequestMethod.POST)
       public ModelAndView login1(String loginCode,String password,HttpServletRequest request,HttpServletResponse response){
     	  User currentUser = userService.findUserByLoginCode(loginCode,MD5.getMD5Str(password));
     	  ModelAndView mav = new ModelAndView();

@@ -2,6 +2,7 @@ package com.ey.util;
 
 import com.ey.consts.SystemConst;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Enumeration;
@@ -257,12 +258,35 @@ public class RequestUtils {
 		}
 
 	}
+	/**
+	 * 获得国际化资源
+	 * 
+	 * @param key
+	 * @param request
+	 * @return
+	 */
 	public static String getMessage(String key,HttpServletRequest request){
 		 Locale locale = RequestContextUtils.getLocale(request);
 		 ApplicationContext ctx = RequestContextUtils.getWebApplicationContext(request);
 		 return ctx.getMessage(key, null,locale);
 	}
-
+	/**
+	 * 获得附件上传目录
+	 *
+	 * @param request
+	 * @return
+	 */
+	public static String getContextDirectory(String contextName,HttpServletRequest request){
+    	String initPath = request.getSession().getServletContext().getInitParameter(contextName);
+    	if(initPath==null){
+    		initPath = request.getSession().getServletContext().getRealPath("/")  + "\\" + contextName+"\\";
+    	}
+    	File file = new File(initPath);   
+        if (!file.exists()) {   
+            file.mkdir();   
+        } 
+    	return initPath;
+    }
 	public static void main(String[] args) {
 	}
 }

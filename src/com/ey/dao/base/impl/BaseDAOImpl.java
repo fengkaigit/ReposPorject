@@ -11,10 +11,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;  
 import org.springframework.stereotype.Repository;  
    
-  
-@Repository("baseDAO")  
-@SuppressWarnings("all")  
-public class BaseDAOImpl<T> implements BaseDAO<T> {  
+    
+public class BaseDAOImpl {  
   
     private SessionFactory sessionFactory;  
   
@@ -31,26 +29,26 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
         return sessionFactory.getCurrentSession();  
     }  
   
-    public Serializable save(T o) {  
+    public Serializable save(Object o) {  
     	return this.getCurrentSession().save(o);  
     }  
   
-    public void delete(T o) {  
+    public void delete(Object o) {  
         this.getCurrentSession().delete(o); 
     }  
   
-    public void update(T o) {  
+    public void update(Object o) {  
         this.getCurrentSession().update(o);
     }  
   
-    public void saveOrUpdate(T o) {  
+    public void saveOrUpdate(Object o) {  
         this.getCurrentSession().saveOrUpdate(o);  
     }  
-    public List<T> find(String hql) {  
+    public List find(String hql) {  
         return this.getCurrentSession().createQuery(hql).list();  
     }  
   
-    public List<T> find(String hql, Object[] param) {  
+    public List find(String hql, Object[] param) {  
         Query q = this.getCurrentSession().createQuery(hql);  
         if (param != null && param.length > 0) {  
             for (int i = 0; i < param.length; i++) {  
@@ -60,7 +58,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
         return q.list();  
     }  
   
-    public List<T> find(String hql, List<Object> param) {  
+    public List find(String hql, List<Object> param) {  
         Query q = this.getCurrentSession().createQuery(hql);  
         if (param != null && param.size() > 0) {  
             for (int i = 0; i < param.size(); i++) {  
@@ -70,7 +68,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
         return q.list();  
     }  
   
-    public List<T> find(String hql, Object[] param, Integer page, Integer rows) {  
+    public List find(String hql, Object[] param, Integer page, Integer rows) {  
         if (page == null || page < 1) {  
             page = 1;  
         }  
@@ -86,7 +84,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
         return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();  
     }  
   
-    public List<T> find(String hql, List<Object> param, Integer page, Integer rows) {  
+    public List find(String hql, List<Object> param, Integer page, Integer rows) {  
         if (page == null || page < 1) {  
             page = 1;  
         }  
@@ -102,12 +100,12 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
         return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();  
     }  
   
-    public T get(Class<T> c, Serializable id) {  
-        return (T) this.getCurrentSession().get(c, id);  
+    public Object get(Class c, Serializable id) {  
+        return this.getCurrentSession().get(c, id);  
     }  
   
-    public T get(String hql, Object[] param) {  
-        List<T> l = this.find(hql, param);  
+    public Object get(String hql, Object[] param) {  
+        List l = this.find(hql, param);  
         if (l != null && l.size() > 0) {  
             return l.get(0);  
         } else {  
@@ -115,8 +113,8 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
         }  
     }  
   
-    public T get(String hql, List<Object> param) {  
-        List<T> l = this.find(hql, param);  
+    public Object get(String hql, List<Object> param) {  
+        List l = this.find(hql, param);  
         if (l != null && l.size() > 0) {  
             return l.get(0);  
         } else {  
