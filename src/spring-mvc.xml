@@ -111,7 +111,6 @@
           
     </bean>
     <bean id="LoginInterceptor" class="com.ey.interceptor.LoginInterceptor">
-	       <property name="userService" ref="userService" />
     </bean>
     <mvc:interceptors>  
               <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求   -->

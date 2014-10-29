@@ -77,8 +77,8 @@
 				<prop key="hibernate.show_sql">true</prop>
 				<!-- 后台输出SQL语句时格式化 -->
 				<prop key="hibernate.format_sql">true</prop>
-				<!-- 数据库表的操作 -->
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- 数据库表的操作 
+				<prop key="hibernate.hbm2ddl.auto">update</prop>-->
 				<!-- INFO: HHH000424: Disabling contextual LOB creation as createClob() 
 					method threw error : -->
 				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
