@@ -23,15 +23,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script>
-	           function ajaxTest(id){
+	           function del(id){
 	        	var userNames = [];
 	        	   $.ajax({
-						url: "show.do",
+						url: "user/del.do",
 						dataType: "json",
 						async:false,
 						data:{id:id},
 					    success: function(data, textStatus) {
-						     alert(data.password);
+					    	alert(data.message);
+						    window.location.href = "list.do";
 					     }
 					});
 				//alert(userNames.join(","));
@@ -42,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
       <p><a href="user/show/add.do">新增</a>&nbsp;<a href="user/uploadform.do">上传文件</a></p>
       <c:forEach var="item" items="${key1}" varStatus="status">
-            <p><a href="user/show/${item.id}.do">${item.realName}</a></p>
+            <p><a href="user/show/${item.id}.do">${item.realName}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:del(${item.id});">删除</a></p>
        </c:forEach>
   </body>
 </html>
