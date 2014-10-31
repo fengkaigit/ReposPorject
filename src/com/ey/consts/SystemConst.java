@@ -40,4 +40,7 @@ public class SystemConst {
 	 * contextÖÐµÄcontext nameÃû³Æ
 	 */
 	public static final String CONTEXT_ATTACHEDIR = "attachDirectory";
+	
+	public static final String DB_VERSION_KEY = "db.version";
+	  public static final String NEXT_DBID_KEY = "next.dbid";
 }

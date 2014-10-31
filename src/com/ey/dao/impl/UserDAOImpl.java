@@ -22,7 +22,7 @@ public class UserDAOImpl extends BaseDAOImpl implements UserDAO {
 	@Override
 	public void save(User user) throws RuntimeException {
 		// TODO Auto-generated method stub
-		this.saveOrUpdate(user);
+		super.save(user);
 	}
 
 	@Override

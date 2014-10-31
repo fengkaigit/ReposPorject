@@ -11,11 +11,8 @@ import com.ey.service.UserService;
 
 public class LoginInterceptor implements HandlerInterceptor {
 
-	private UserService userService;
 	
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+	
 	@Override
 	public void afterCompletion(HttpServletRequest arg0,
 			HttpServletResponse arg1, Object arg2, Exception arg3)

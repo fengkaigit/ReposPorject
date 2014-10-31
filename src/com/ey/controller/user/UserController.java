@@ -1,7 +1,11 @@
 package com.ey.controller.user;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,7 +72,7 @@ public class UserController extends BaseController {
       public ModelAndView add(User user,HttpServletRequest request,HttpServletResponse response){
     	  user.setPassword(MD5.getMD5Str(user.getPassword()));
     	  userService.saveObject(user);
-    	  ModelAndView view = new ModelAndView("test/saveok");
+    	  ModelAndView view = new ModelAndView("redirect:list.do");
     	  view.addObject("message", RequestUtils.getMessage("add", request));
     	  return view;
       }
@@ -76,15 +80,17 @@ public class UserController extends BaseController {
       public ModelAndView update(User user,HttpServletRequest request,HttpServletResponse response) {
     	  user.setPassword(MD5.getMD5Str(user.getPassword()));
     	  userService.update(user);
-    	  ModelAndView view = new ModelAndView("test/saveok");
+    	  ModelAndView view = new ModelAndView("redirect:list.do");
     	  view.addObject("message", RequestUtils.getMessage("update", request));
     	  return view;
       }
       @RequestMapping(value="/del")
-      public ModelAndView del(User user,HttpServletRequest request,HttpServletResponse response){
+      @ResponseBody
+      public Object del(User user,HttpServletRequest request,HttpServletResponse response) throws IOException{
     	  userService.delete(user);
-    	  ModelAndView view = new ModelAndView("test/saveok");
-    	  view.addObject("message", RequestUtils.getMessage("del", request));
-    	  return view;
+    	 
+    	  Map<String,Object> map = new HashMap<String,Object>();
+    	  map.put("message","删除成功");
+    	  return map;
       }
 }

@@ -1,10 +1,13 @@
 package com.ey.dao.base.impl;
 
 import com.ey.dao.base.BaseDAO;
+import com.ey.dao.common.dbid.DbidGenerator;
 
 import java.io.Serializable;  
+import java.lang.reflect.Field;
 import java.util.List;  
   
+import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.Query;  
 import org.hibernate.Session;  
 import org.hibernate.SessionFactory;  
@@ -25,11 +28,12 @@ public class BaseDAOImpl {
         this.sessionFactory = sessionFactory;  
     }  
   
-    private Session getCurrentSession() {  
+    public Session getCurrentSession() {  
         return sessionFactory.getCurrentSession();  
     }  
   
-    public Serializable save(Object o) {  
+    public Serializable save(Object o) {
+    	//this.getDbId(o);
     	return this.getCurrentSession().save(o);  
     }  
   
@@ -169,5 +173,13 @@ public class BaseDAOImpl {
         }  
         return q.executeUpdate();  
     }  
-  
+  private void getDbId(Object o){
+	  try {
+		  BeanUtils.setProperty(o, "id", DbidGenerator.getDbidGenerator().getNextId());
+	}catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+  }
 }  

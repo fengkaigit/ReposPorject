@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.UserDAO;
 import com.ey.dao.base.BaseDAO;
 import com.ey.entity.User;

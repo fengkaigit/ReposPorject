@@ -122,7 +122,8 @@
             <tx:method name="edit*" propagation="REQUIRED" />  
             <tx:method name="save*" propagation="REQUIRED" />  
             <tx:method name="add*" propagation="REQUIRED" />  
-            <tx:method name="new*" propagation="REQUIRED" />  
+            <tx:method name="new*" propagation="REQUIRED" />
+            <tx:method name="execute*" propagation="REQUIRED" />
             <tx:method name="set*" propagation="REQUIRED" />  
             <tx:method name="remove*" propagation="REQUIRED" />  
             <tx:method name="delete*" propagation="REQUIRED" />  
@@ -148,6 +149,6 @@
 		<property name="maxInMemorySize" value="20960" />
 		<property name="maxUploadSize" value="20971520" />
 		<property name="uploadTempDir" value="/upload/images/" />
-	</bean>
-
+	</bean>    
+	<bean id="dbIdGenerator" class="com.ey.dao.common.dbid.DatabaseDbidGenerator" />
 </beans>
