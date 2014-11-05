@@ -3,8 +3,9 @@ package com.ey.dao;
 import java.util.List;
 
 import com.ey.entity.User;
+import com.ey.dao.base.BaseDAO;
 
-public interface UserDAO {
+public interface UserDAO extends BaseDAO{
 	
     public void save(User user) throws RuntimeException;
 	

@@ -1,5 +1,6 @@
 package com.ey.dao.base.impl;
 
+import com.ey.dao.UserDAO;
 import com.ey.dao.base.BaseDAO;
 import com.ey.dao.common.dbid.DbidGenerator;
 
@@ -15,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;  
    
     
-public class BaseDAOImpl {  
+public class BaseDAOImpl implements BaseDAO{  
   
     private SessionFactory sessionFactory;  
   

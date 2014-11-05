@@ -34,12 +34,11 @@ import org.hibernate.Session;
 
 @Entity
 @Table(name = "sys_dbid")
-public class PropertyImpl {
+public class PropertyImpl implements java.io.Serializable{
 	
   @Id
   @Column(name = "key_", nullable = false, length = 255)
   private String key;
-  
   @Column(name = "value_", nullable = false, length = 255)
   private String value;
   

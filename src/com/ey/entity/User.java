@@ -18,7 +18,7 @@ import com.ey.entity.base.AbstractEntityBean;
 
 @Entity
 @Table(name = "SYS_USER")
-public class User extends AbstractEntityBean{
+public class User extends AbstractEntityBean implements java.io.Serializable{
 	/**
 	 * 用户编号(长度为50，唯一，非空)
 	 */

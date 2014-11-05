@@ -14,7 +14,7 @@ import java.util.Map;
  * 
  * @version 1.0
  */
-public interface BaseDAO<T> {  
+public interface BaseDAO {  
 		  
 	    /** 
 	     * 保存一个对象 
@@ -22,28 +22,28 @@ public interface BaseDAO<T> {
 	     * @param o 
 	     * @return 
 	     */  
-	    public Serializable save(T o);  
+	    public Serializable save(Object o);  
 	  
 	    /** 
 	     * 删除一个对象 
 	     *  
 	     * @param o 
 	     */  
-	    public void delete(T o);  
+	    public void delete(Object o);  
 	  
 	    /** 
 	     * 更新一个对象 
 	     *  
 	     * @param o 
 	     */  
-	    public void update(T o);  
+	    public void update(Object o);  
 	  
 	    /** 
 	     * 保存或更新对象 
 	     *  
 	     * @param o 
 	     */  
-	    public void saveOrUpdate(T o);  
+	    public void saveOrUpdate(Object o);  
 	  
 	    /** 
 	     * 查询 
@@ -51,7 +51,7 @@ public interface BaseDAO<T> {
 	     * @param hql 
 	     * @return 
 	     */  
-	    public List<T> find(String hql);  
+	    public List find(String hql);  
 	  
 	    /** 
 	     * 查询集合 
@@ -60,7 +60,7 @@ public interface BaseDAO<T> {
 	     * @param param 
 	     * @return 
 	     */  
-	    public List<T> find(String hql, Object[] param);  
+	    public List find(String hql, Object[] param);  
 	  
 	    /** 
 	     * 查询集合 
@@ -69,7 +69,7 @@ public interface BaseDAO<T> {
 	     * @param param 
 	     * @return 
 	     */  
-	    public List<T> find(String hql, List<Object> param);  
+	    public List find(String hql, List<Object> param);  
 	  
 	    /** 
 	     * 查询集合(带分页) 
@@ -82,7 +82,7 @@ public interface BaseDAO<T> {
 	     *            每页显示几条记录 
 	     * @return 
 	     */  
-	    public List<T> find(String hql, Object[] param, Integer page, Integer rows);  
+	    public List find(String hql, Object[] param, Integer page, Integer rows);  
 	  
 	    /** 
 	     * 查询集合(带分页) 
@@ -93,7 +93,7 @@ public interface BaseDAO<T> {
 	     * @param rows 
 	     * @return 
 	     */  
-	    public List<T> find(String hql, List<Object> param, Integer page, Integer rows);  
+	    public List find(String hql, List<Object> param, Integer page, Integer rows);  
 	  
 	    /** 
 	     * 获得一个对象 
@@ -103,7 +103,7 @@ public interface BaseDAO<T> {
 	     * @param id 
 	     * @return Object 
 	     */  
-	    public T get(Class<T> c, Serializable id);  
+	    public Object get(Class c, Serializable id);  
 	  
 	    /** 
 	     * 获得一个对象 
@@ -112,7 +112,7 @@ public interface BaseDAO<T> {
 	     * @param param 
 	     * @return Object 
 	     */  
-	    public T get(String hql, Object[] param);  
+	    public Object get(String hql, Object[] param);  
 	  
 	    /** 
 	     * 获得一个对象 
@@ -121,7 +121,7 @@ public interface BaseDAO<T> {
 	     * @param param 
 	     * @return 
 	     */  
-	    public T get(String hql, List<Object> param);  
+	    public Object get(String hql, List<Object> param);  
 	  
 	    /** 
 	     * select count(*) from 类 

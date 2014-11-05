@@ -40,9 +40,14 @@ public class DatabaseDbidGenerator extends DbidGenerator {
 
   @Autowired
   private CommandExecute defaultCommand;
+  
+  private long blocksize;
+  
+  public void setBlocksize(long blocksize) {
+	this.blocksize = blocksize;
+  }
 
-long blocksize = 3;
-  int maxAttempts = 3;
+int maxAttempts = 3;
 
   // runtime state  
   long lastId = -2;

@@ -150,5 +150,7 @@
 		<property name="maxUploadSize" value="20971520" />
 		<property name="uploadTempDir" value="/upload/images/" />
 	</bean>    
-	<bean id="dbIdGenerator" class="com.ey.dao.common.dbid.DatabaseDbidGenerator" />
+	<bean id="dbIdGenerator" class="com.ey.dao.common.dbid.DatabaseDbidGenerator">
+	    <property name="blocksize" value="100" />
+	</bean> 
 </beans>

@@ -11,6 +11,7 @@ import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.UserDAO;
 import com.ey.dao.base.BaseDAO;
 import com.ey.entity.User;
+import com.ey.entity.UserOrgan;
 import com.ey.service.UserService;
 
 
@@ -24,7 +25,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void saveObject(User user) throws RuntimeException {
 		// TODO Auto-generated method stub
+		user.setId(DbidGenerator.getDbidGenerator().getNextId());
 		userDAO.save(user);
+		userDAO.saveOrUpdate(new UserOrgan(150105,user.getId()));
 	}
 
 	@Override
