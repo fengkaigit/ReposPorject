@@ -6,20 +6,31 @@ import com.ey.dao.common.dbid.DbidGenerator;
 
 import java.io.Serializable;  
 import java.lang.reflect.Field;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;  
+import java.util.Map;
   
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;  
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;  
 import org.hibernate.SessionFactory;  
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;  
    
     
 public class BaseDAOImpl implements BaseDAO{  
   
     private SessionFactory sessionFactory;  
-  
+    protected final Log log = LogFactory.getLog(getClass());
     public SessionFactory getSessionFactory() {  
         return sessionFactory;  
     }  
@@ -71,7 +82,13 @@ public class BaseDAOImpl implements BaseDAO{
             }  
         }  
         return q.list();  
-    }  
+    } 
+    
+    public List find(String hql, Map parameters) {  
+    	Query query = this.getCurrentSession().createQuery(hql);
+		setQueryParameters(query, parameters);
+		return query.list();
+    }
   
     public List find(String hql, Object[] param, Integer page, Integer rows) {  
         if (page == null || page < 1) {  
@@ -104,7 +121,18 @@ public class BaseDAOImpl implements BaseDAO{
         }  
         return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();  
     }  
-  
+    
+    public List find(String hql,Integer page,Integer rows) {  
+        if (page == null || page < 1) {  
+            page = 1;  
+        }  
+        if (rows == null || rows < 1) {  
+            rows = 10;  
+        }  
+        Query q = this.getCurrentSession().createQuery(hql);  
+        return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();  
+    } 
+    
     public Object get(Class c, Serializable id) {  
         return this.getCurrentSession().get(c, id);  
     }  
@@ -183,4 +211,107 @@ public class BaseDAOImpl implements BaseDAO{
 	}
 	
   }
+  private void setQueryParameters(Query query, Map parameters) {
+		if (parameters != null) {
+			for (Iterator i = parameters.entrySet().iterator(); i.hasNext();) {
+				Map.Entry entry = (Map.Entry) i.next();
+				String paramName = (String) entry.getKey();
+				Object paramValue = entry.getValue();
+				if (paramValue instanceof Collection) {
+					query.setParameterList(paramName, (Collection) paramValue);
+				} else if (paramValue instanceof Object[]) {
+					query.setParameterList(paramName, (Object[]) paramValue);
+				} else {
+					query.setParameter(paramName, paramValue);
+				}
+			}
+		}
+	}
+
+	private void setQueryParameters(Query query, Object[] values) {
+		if (values != null) {
+			for (int i = 0; i < values.length; i++) {
+				query.setParameter(i, values[i]);
+			}
+		}
+	}
+	
+	protected List List(String sql,Object[] values) {
+		return list(sql, null, null, values, 0, 0);
+	}
+	protected List List(String sql, Object[][] scalaries,Class beanCls,Object[] values) {
+		return list(sql, null,scalaries,beanCls,values,0,0);
+	}
+	protected List List(String sql, Object[][] scalaries,Class beanCls,Object[] values,int pageNo, int pageSize) {
+		return list(sql, null,scalaries,beanCls,values,(pageNo - 1) * pageSize,pageSize);
+	}
+	protected List List(String sql, Object[][] scalaries,Object[] values) {
+		return list(sql, null, scalaries, values, 0,0);
+	}
+	protected List List(String sql, Object[][] scalaries,
+			Object[] values, int pageNo, int pageSize) {
+		return list(sql, null, scalaries, values, (pageNo - 1) * pageSize,
+				pageSize);
+	}
+	protected List List(String sql, Object[][] entities, Object[][] scalaries,
+			Object[] values, int pageNo, int pageSize) {
+		return list(sql, entities, scalaries, values, (pageNo - 1) * pageSize,
+				pageSize);
+	}
+	private List list(final String sql, final Object[][] entities,
+			final Object[][] scalaries, final Object[] values,
+			final int firstResult, final int maxResults) {
+		SQLQuery query = this.getCurrentSession().createSQLQuery(sql);
+		query.setCacheable(false);
+		if (entities != null) {
+			for (int i = 0; i < entities.length; i++) {
+				query.addEntity(entities[i][0].toString(),
+						(Class) entities[i][1]);
+			}
+		}
+		if (scalaries != null) {
+			for (int i = 0; i < scalaries.length; i++) {
+				query.addScalar(scalaries[i][0].toString(),
+						(Type) scalaries[i][1]);
+			}
+		}
+		setQueryParameters(query, values);
+		if (firstResult > 0) {
+			log.debug("firstResult:" + firstResult);
+			query.setFirstResult(firstResult);
+		}
+		if (maxResults > 0) {
+			log.debug("maxResults:" + maxResults);
+			query.setMaxResults(maxResults);
+		}
+		return query.list();
+	}
+	private List list(final String sql, final Object[][] entities, final Object[][] scalaries, final Class cls, final Object[] values,
+			final int firstResult, final int maxResults) {
+		SQLQuery query = this.getCurrentSession().createSQLQuery(sql);
+		query.setCacheable(false);
+		if (entities != null) {
+			for (int i = 0; i < entities.length; i++) {
+				query.addEntity(entities[i][0].toString(),
+						(Class) entities[i][1]);
+			}
+		}
+		if (scalaries != null) {
+			for (int i = 0; i < scalaries.length; i++) {
+				query.addScalar(scalaries[i][0].toString(),
+						(Type) scalaries[i][1]);
+			}
+		}
+		query.setResultTransformer(Transformers.aliasToBean(cls));
+		setQueryParameters(query, values);
+		if (firstResult > 0) {
+			log.debug("firstResult:" + firstResult);
+			query.setFirstResult(firstResult);
+		}
+		if (maxResults > 0) {
+			log.debug("maxResults:" + maxResults);
+			query.setMaxResults(maxResults);
+		}
+		return query.list();
+	}
 }  
