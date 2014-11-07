@@ -30,7 +30,7 @@
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/payment?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<property name="username" value="root" />
 		<property name="password" value="password" />
 
@@ -98,7 +98,7 @@
 		</property>
 		<!-- 自动扫描的包 -->
 		<property name="packagesToScan"
-			value="com.ey.entity" />
+			value="com.ey.dao.entity" />
 	</bean>
 
 	<!-- hibernate4 事务管理 -->
