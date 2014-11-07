@@ -27,7 +27,7 @@ import java.util.List;
 import org.hibernate.Session;
 
 import com.ey.consts.SystemConst;
-import com.ey.entity.PropertyImpl;
+import com.ey.dao.entity.PropertyImpl;
 
 
 /**

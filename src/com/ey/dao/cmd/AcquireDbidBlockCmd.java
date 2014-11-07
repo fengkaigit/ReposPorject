@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ey.consts.SystemConst;
-import com.ey.entity.PropertyImpl;
+import com.ey.dao.entity.PropertyImpl;
 
 /**
  * @author 
