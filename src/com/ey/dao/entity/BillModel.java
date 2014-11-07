@@ -1,13 +1,8 @@
 package com.ey.dao.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -24,7 +19,6 @@ public class BillModel implements java.io.Serializable {
 	private String modelName;
 	private String billCode;
 	private long entId;
-	private Set<PaymentGas> paymentGases = new HashSet<PaymentGas>(0);
 
 	// Constructors
 
@@ -32,7 +26,7 @@ public class BillModel implements java.io.Serializable {
 	public BillModel() {
 	}
 
-	/** minimal constructor */
+	/** full constructor */
 	public BillModel(long id, long userId, String modelName, String billCode,
 			long entId) {
 		this.id = id;
@@ -40,17 +34,6 @@ public class BillModel implements java.io.Serializable {
 		this.modelName = modelName;
 		this.billCode = billCode;
 		this.entId = entId;
-	}
-
-	/** full constructor */
-	public BillModel(long id, long userId, String modelName, String billCode,
-			long entId, Set<PaymentGas> paymentGases) {
-		this.id = id;
-		this.userId = userId;
-		this.modelName = modelName;
-		this.billCode = billCode;
-		this.entId = entId;
-		this.paymentGases = paymentGases;
 	}
 
 	// Property accessors
@@ -98,15 +81,6 @@ public class BillModel implements java.io.Serializable {
 
 	public void setEntId(long entId) {
 		this.entId = entId;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "billModel")
-	public Set<PaymentGas> getPaymentGases() {
-		return this.paymentGases;
-	}
-
-	public void setPaymentGases(Set<PaymentGas> paymentGases) {
-		this.paymentGases = paymentGases;
 	}
 
 }

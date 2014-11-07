@@ -1,9 +1,12 @@
 package com.ey.dao.entity;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * FeeRule entity. @author MyEclipse Persistence Tools
@@ -20,6 +23,8 @@ public class FeeRule implements java.io.Serializable {
 	private String IExplain;
 	private String rule;
 	private Integer paymentType;
+	private Date beginTime;
+	private Date endTime;
 
 	// Constructors
 
@@ -28,21 +33,24 @@ public class FeeRule implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public FeeRule(long id, long userId, Integer paymentType) {
+	public FeeRule(long id, long userId, Integer paymentType, Date beginTime) {
 		this.id = id;
 		this.userId = userId;
 		this.paymentType = paymentType;
+		this.beginTime = beginTime;
 	}
 
 	/** full constructor */
 	public FeeRule(long id, long userId, String profile, String IExplain,
-			String rule, Integer paymentType) {
+			String rule, Integer paymentType, Date beginTime, Date endTime) {
 		this.id = id;
 		this.userId = userId;
 		this.profile = profile;
 		this.IExplain = IExplain;
 		this.rule = rule;
 		this.paymentType = paymentType;
+		this.beginTime = beginTime;
+		this.endTime = endTime;
 	}
 
 	// Property accessors
@@ -99,6 +107,26 @@ public class FeeRule implements java.io.Serializable {
 
 	public void setPaymentType(Integer paymentType) {
 		this.paymentType = paymentType;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "begin_time", nullable = false, length = 10)
+	public Date getBeginTime() {
+		return this.beginTime;
+	}
+
+	public void setBeginTime(Date beginTime) {
+		this.beginTime = beginTime;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "end_time", length = 10)
+	public Date getEndTime() {
+		return this.endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 }

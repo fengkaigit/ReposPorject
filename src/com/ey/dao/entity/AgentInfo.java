@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * AgentInfo entity. @author MyEclipse Persistence Tools
@@ -58,7 +57,7 @@ public class AgentInfo implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "regist_account", unique = true, nullable = false, length = 50)
+	@Column(name = "regist_account", nullable = false, length = 50)
 	public String getRegistAccount() {
 		return this.registAccount;
 	}

@@ -1,21 +1,22 @@
 package com.ey.dao.entity;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
  * IncomeTransferRelation entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "income_transfer_relation", catalog = "payment")
+@Table(name = "income_transfer_relation")
 public class IncomeTransferRelation implements java.io.Serializable {
 
 	// Fields
 
-	private long receiptsId;
-	private long transferRecordsId;
+	private IncomeTransferRelationId id;
 
 	// Constructors
 
@@ -24,29 +25,21 @@ public class IncomeTransferRelation implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public IncomeTransferRelation(long receiptsId, long transferRecordsId) {
-		this.receiptsId = receiptsId;
-		this.transferRecordsId = transferRecordsId;
+	public IncomeTransferRelation(IncomeTransferRelationId id) {
+		this.id = id;
 	}
 
 	// Property accessors
-	@Id
-	@Column(name = "receipts_id", unique = true, nullable = false)
-	public long getReceiptsId() {
-		return this.receiptsId;
+	@EmbeddedId
+	@AttributeOverrides({
+			@AttributeOverride(name = "receiptsId", column = @Column(name = "receipts_id", nullable = false)),
+			@AttributeOverride(name = "transferRecordsId", column = @Column(name = "transfer_records_id", nullable = false)) })
+	public IncomeTransferRelationId getId() {
+		return this.id;
 	}
 
-	public void setReceiptsId(long receiptsId) {
-		this.receiptsId = receiptsId;
-	}
-
-	@Column(name = "transfer_records_id", nullable = false)
-	public long getTransferRecordsId() {
-		return this.transferRecordsId;
-	}
-
-	public void setTransferRecordsId(long transferRecordsId) {
-		this.transferRecordsId = transferRecordsId;
+	public void setId(IncomeTransferRelationId id) {
+		this.id = id;
 	}
 
 }

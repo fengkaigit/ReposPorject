@@ -8,24 +8,24 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * PaymentTransferRelation entity. @author MyEclipse Persistence Tools
+ * PoundageTransferRelation entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "payment_transfer_relation")
-public class PaymentTransferRelation implements java.io.Serializable {
+@Table(name = "poundage_transfer_relation")
+public class PoundageTransferRelation implements java.io.Serializable {
 
 	// Fields
 
-	private PaymentTransferRelationId id;
+	private PoundageTransferRelationId id;
 
 	// Constructors
 
 	/** default constructor */
-	public PaymentTransferRelation() {
+	public PoundageTransferRelation() {
 	}
 
 	/** full constructor */
-	public PaymentTransferRelation(PaymentTransferRelationId id) {
+	public PoundageTransferRelation(PoundageTransferRelationId id) {
 		this.id = id;
 	}
 
@@ -34,11 +34,11 @@ public class PaymentTransferRelation implements java.io.Serializable {
 	@AttributeOverrides({
 			@AttributeOverride(name = "receiptsId", column = @Column(name = "receipts_id", nullable = false)),
 			@AttributeOverride(name = "transferRecordsId", column = @Column(name = "transfer_records_id", nullable = false)) })
-	public PaymentTransferRelationId getId() {
+	public PoundageTransferRelationId getId() {
 		return this.id;
 	}
 
-	public void setId(PaymentTransferRelationId id) {
+	public void setId(PoundageTransferRelationId id) {
 		this.id = id;
 	}
 

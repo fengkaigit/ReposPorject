@@ -1,8 +1,10 @@
 package com.ey.dao.entity;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -14,8 +16,7 @@ public class AgentTransferRelation implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long cardNumber;
+	private AgentTransferRelationId id;
 
 	// Constructors
 
@@ -24,29 +25,21 @@ public class AgentTransferRelation implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public AgentTransferRelation(long id, long cardNumber) {
+	public AgentTransferRelation(AgentTransferRelationId id) {
 		this.id = id;
-		this.cardNumber = cardNumber;
 	}
 
 	// Property accessors
-	@Id
-	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	@EmbeddedId
+	@AttributeOverrides({
+			@AttributeOverride(name = "id", column = @Column(name = "ID", nullable = false)),
+			@AttributeOverride(name = "cardNumber", column = @Column(name = "card_number", nullable = false)) })
+	public AgentTransferRelationId getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(AgentTransferRelationId id) {
 		this.id = id;
-	}
-
-	@Column(name = "card_number", nullable = false)
-	public long getCardNumber() {
-		return this.cardNumber;
-	}
-
-	public void setCardNumber(long cardNumber) {
-		this.cardNumber = cardNumber;
 	}
 
 }

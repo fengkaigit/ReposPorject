@@ -1,9 +1,12 @@
 package com.ey.dao.entity;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * AgentRuleHis entity. @author MyEclipse Persistence Tools
@@ -19,6 +22,8 @@ public class AgentRuleHis implements java.io.Serializable {
 	private String profile;
 	private String IExplain;
 	private String rule;
+	private Date beginTime;
+	private Date endTime;
 
 	// Constructors
 
@@ -27,19 +32,23 @@ public class AgentRuleHis implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public AgentRuleHis(long id, long agentId) {
+	public AgentRuleHis(long id, long agentId, Date beginTime, Date endTime) {
 		this.id = id;
 		this.agentId = agentId;
+		this.beginTime = beginTime;
+		this.endTime = endTime;
 	}
 
 	/** full constructor */
 	public AgentRuleHis(long id, long agentId, String profile, String IExplain,
-			String rule) {
+			String rule, Date beginTime, Date endTime) {
 		this.id = id;
 		this.agentId = agentId;
 		this.profile = profile;
 		this.IExplain = IExplain;
 		this.rule = rule;
+		this.beginTime = beginTime;
+		this.endTime = endTime;
 	}
 
 	// Property accessors
@@ -87,6 +96,26 @@ public class AgentRuleHis implements java.io.Serializable {
 
 	public void setRule(String rule) {
 		this.rule = rule;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "begin_time", nullable = false, length = 10)
+	public Date getBeginTime() {
+		return this.beginTime;
+	}
+
+	public void setBeginTime(Date beginTime) {
+		this.beginTime = beginTime;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "end_time", nullable = false, length = 10)
+	public Date getEndTime() {
+		return this.endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 }

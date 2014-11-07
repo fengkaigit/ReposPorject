@@ -3,10 +3,7 @@ package com.ey.dao.entity;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,8 +18,8 @@ public class PaymentGas implements java.io.Serializable {
 	// Fields
 
 	private long id;
-	private BillModel billModel;
 	private long userId;
+	private long modelId;
 	private Date beginPeriod;
 	private Date endDate;
 	private String periodFrequency;
@@ -51,13 +48,12 @@ public class PaymentGas implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public PaymentGas(long id, BillModel billModel, long userId,
-			Date beginPeriod, Date endDate, String periodFrequency,
-			double billMoney, double poundage, Date paymentTime,
-			String billNumber) {
+	public PaymentGas(long id, long userId, long modelId, Date beginPeriod,
+			Date endDate, String periodFrequency, double billMoney,
+			double poundage, Date paymentTime, String billNumber) {
 		this.id = id;
-		this.billModel = billModel;
 		this.userId = userId;
+		this.modelId = modelId;
 		this.beginPeriod = beginPeriod;
 		this.endDate = endDate;
 		this.periodFrequency = periodFrequency;
@@ -78,16 +74,6 @@ public class PaymentGas implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "model_id")
-	public BillModel getBillModel() {
-		return this.billModel;
-	}
-
-	public void setBillModel(BillModel billModel) {
-		this.billModel = billModel;
-	}
-
 	@Column(name = "user_id", nullable = false)
 	public long getUserId() {
 		return this.userId;
@@ -95,6 +81,15 @@ public class PaymentGas implements java.io.Serializable {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+
+	@Column(name = "model_id")
+	public long getModelId() {
+		return this.modelId;
+	}
+
+	public void setModelId(long modelId) {
+		this.modelId = modelId;
 	}
 
 	@Temporal(TemporalType.DATE)
