@@ -12,8 +12,8 @@ import javax.persistence.TemporalType;
  * PaymentBill entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "payment_bill")
-public class PaymentBill implements java.io.Serializable {
+@Table(name = "temp_payment_bill")
+public class TempPaymentBill implements java.io.Serializable {
 
 	// Fields
 
@@ -32,19 +32,19 @@ public class PaymentBill implements java.io.Serializable {
 	private Integer paymentStatus;
 	private Integer paymentMode;
 	private String uuid;
-	private Integer divideStatus;
+	private Integer stageStatus;
 
 	// Constructors
 
 	/** default constructor */
-	public PaymentBill() {
+	public TempPaymentBill() {
 	}
 
 	/** minimal constructor */
-	public PaymentBill(Long id, Long accountBillId, Long userId,
+	public TempPaymentBill(Long id, Long accountBillId, Long userId,
 			double remainBalance, Date createTime, double paidMoney,
 			double balance, Integer payType, Long entId, Integer businessType,
-			Integer paymentMode, Integer divideStatus) {
+			Integer paymentMode, Integer stageStatus) {
 		this.id = id;
 		this.accountBillId = accountBillId;
 		this.userId = userId;
@@ -56,15 +56,15 @@ public class PaymentBill implements java.io.Serializable {
 		this.entId = entId;
 		this.businessType = businessType;
 		this.paymentMode = paymentMode;
-		this.divideStatus = divideStatus;
+		this.stageStatus = stageStatus;
 	}
 
 	/** full constructor */
-	public PaymentBill(Long id, Long accountBillId, Long userId,
+	public TempPaymentBill(Long id, Long accountBillId, Long userId,
 			double remainBalance, Date createTime, double paidMoney,
 			double payMoney, double balance, double poundage, Integer payType,
 			Long entId, Integer businessType, Integer paymentStatus,
-			Integer paymentMode, String uuid, Integer divideStatus) {
+			Integer paymentMode, String uuid, Integer stageStatus) {
 		this.id = id;
 		this.accountBillId = accountBillId;
 		this.userId = userId;
@@ -80,7 +80,7 @@ public class PaymentBill implements java.io.Serializable {
 		this.paymentStatus = paymentStatus;
 		this.paymentMode = paymentMode;
 		this.uuid = uuid;
-		this.divideStatus = divideStatus;
+		this.stageStatus = stageStatus;
 	}
 
 	// Property accessors
@@ -221,13 +221,13 @@ public class PaymentBill implements java.io.Serializable {
 		this.uuid = uuid;
 	}
 
-	@Column(name = "divide_status")
-	public Integer getDivideStatus() {
-		return divideStatus;
+	@Column(name = "stage_status")
+	public Integer getStageStatus() {
+		return stageStatus;
 	}
 
-	public void setDivideStatus(Integer divideStatus) {
-		this.divideStatus = divideStatus;
+	public void setStageStatus(Integer stageStatus) {
+		this.stageStatus = stageStatus;
 	}
 
 }

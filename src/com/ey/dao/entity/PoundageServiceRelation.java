@@ -33,7 +33,7 @@ public class PoundageServiceRelation implements java.io.Serializable {
 	@EmbeddedId
 	@AttributeOverrides({
 			@AttributeOverride(name = "poundageId", column = @Column(name = "poundage_id", nullable = false)),
-			@AttributeOverride(name = "serviceId", column = @Column(name = "service_id", nullable = false)) })
+			@AttributeOverride(name = "serviceBillId", column = @Column(name = "service_bill_id", nullable = false)) })
 	public PoundageServiceRelationId getId() {
 		return this.id;
 	}

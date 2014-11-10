@@ -12,7 +12,7 @@ public class PoundageServiceRelationId implements java.io.Serializable {
 	// Fields
 
 	private Long poundageId;
-	private Long serviceId;
+	private Long serviceBillId;
 
 	// Constructors
 
@@ -21,9 +21,9 @@ public class PoundageServiceRelationId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public PoundageServiceRelationId(Long poundageId, Long serviceId) {
+	public PoundageServiceRelationId(Long poundageId, Long serviceBillId) {
 		this.poundageId = poundageId;
-		this.serviceId = serviceId;
+		this.serviceBillId = serviceBillId;
 	}
 
 	// Property accessors
@@ -37,13 +37,13 @@ public class PoundageServiceRelationId implements java.io.Serializable {
 		this.poundageId = poundageId;
 	}
 
-	@Column(name = "service_id", nullable = false)
-	public Long getServiceId() {
-		return this.serviceId;
+	@Column(name = "service_bill_id", nullable = false)
+	public Long getServiceBillId() {
+		return this.serviceBillId;
 	}
 
-	public void setServiceId(Long serviceId) {
-		this.serviceId = serviceId;
+	public void setServiceBillId(Long serviceBillId) {
+		this.serviceBillId = serviceBillId;
 	}
 
 	public boolean equals(Object other) {
@@ -56,7 +56,7 @@ public class PoundageServiceRelationId implements java.io.Serializable {
 		PoundageServiceRelationId castOther = (PoundageServiceRelationId) other;
 
 		return (this.getPoundageId() == castOther.getPoundageId())
-				&& (this.getServiceId() == castOther.getServiceId());
+				&& (this.getServiceBillId() == castOther.getServiceBillId());
 	}
 
 }
