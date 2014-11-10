@@ -14,8 +14,8 @@ public class ChargeEnterprise implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long areaId;
+	private Long id;
+	private Long areaId;
 	private String enterpriseName;
 	private String careNumber;
 	private Integer payType;
@@ -27,7 +27,7 @@ public class ChargeEnterprise implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public ChargeEnterprise(long id, long areaId, String enterpriseName,
+	public ChargeEnterprise(Long id, Long areaId, String enterpriseName,
 			Integer payType) {
 		this.id = id;
 		this.areaId = areaId;
@@ -36,7 +36,7 @@ public class ChargeEnterprise implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public ChargeEnterprise(long id, long areaId, String enterpriseName,
+	public ChargeEnterprise(Long id, Long areaId, String enterpriseName,
 			String careNumber, Integer payType) {
 		this.id = id;
 		this.areaId = areaId;
@@ -48,20 +48,20 @@ public class ChargeEnterprise implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "area_id", nullable = false)
-	public long getAreaId() {
+	public Long getAreaId() {
 		return this.areaId;
 	}
 
-	public void setAreaId(long areaId) {
+	public void setAreaId(Long areaId) {
 		this.areaId = areaId;
 	}
 

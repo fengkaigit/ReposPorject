@@ -11,8 +11,8 @@ public class IncomeProfitRelationId implements java.io.Serializable {
 
 	// Fields
 
-	private long profitId;
-	private long incomeId;
+	private Long profitId;
+	private Long incomeId;
 
 	// Constructors
 
@@ -21,7 +21,7 @@ public class IncomeProfitRelationId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public IncomeProfitRelationId(long profitId, long incomeId) {
+	public IncomeProfitRelationId(Long profitId, Long incomeId) {
 		this.profitId = profitId;
 		this.incomeId = incomeId;
 	}
@@ -29,20 +29,20 @@ public class IncomeProfitRelationId implements java.io.Serializable {
 	// Property accessors
 
 	@Column(name = "profit_id", nullable = false)
-	public long getProfitId() {
+	public Long getProfitId() {
 		return this.profitId;
 	}
 
-	public void setProfitId(long profitId) {
+	public void setProfitId(Long profitId) {
 		this.profitId = profitId;
 	}
 
 	@Column(name = "income_id", nullable = false)
-	public long getIncomeId() {
+	public Long getIncomeId() {
 		return this.incomeId;
 	}
 
-	public void setIncomeId(long incomeId) {
+	public void setIncomeId(Long incomeId) {
 		this.incomeId = incomeId;
 	}
 
@@ -57,14 +57,6 @@ public class IncomeProfitRelationId implements java.io.Serializable {
 
 		return (this.getProfitId() == castOther.getProfitId())
 				&& (this.getIncomeId() == castOther.getIncomeId());
-	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (int) this.getProfitId();
-		result = 37 * result + (int) this.getIncomeId();
-		return result;
 	}
 
 }

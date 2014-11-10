@@ -17,9 +17,9 @@ public class PaymentBill implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long accountBillId;
-	private long userId;
+	private Long id;
+	private Long accountBillId;
+	private Long userId;
 	private double remainBalance;
 	private Date createTime;
 	private double paidMoney;
@@ -27,7 +27,7 @@ public class PaymentBill implements java.io.Serializable {
 	private double balance;
 	private double poundage;
 	private Integer payType;
-	private long entId;
+	private Long entId;
 	private Integer businessType;
 	private Integer paymentStatus;
 	private Integer paymentMode;
@@ -39,9 +39,9 @@ public class PaymentBill implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public PaymentBill(long id, long accountBillId, long userId,
+	public PaymentBill(Long id, Long accountBillId, Long userId,
 			double remainBalance, Date createTime, double paidMoney,
-			double balance, Integer payType, long entId, Integer businessType,
+			double balance, Integer payType, Long entId, Integer businessType,
 			Integer paymentMode) {
 		this.id = id;
 		this.accountBillId = accountBillId;
@@ -57,10 +57,10 @@ public class PaymentBill implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public PaymentBill(long id, long accountBillId, long userId,
+	public PaymentBill(Long id, Long accountBillId, Long userId,
 			double remainBalance, Date createTime, double paidMoney,
 			double payMoney, double balance, double poundage, Integer payType,
-			long entId, Integer businessType, Integer paymentStatus,
+			Long entId, Integer businessType, Integer paymentStatus,
 			Integer paymentMode) {
 		this.id = id;
 		this.accountBillId = accountBillId;
@@ -81,29 +81,29 @@ public class PaymentBill implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "account_bill_id", nullable = false)
-	public long getAccountBillId() {
+	public Long getAccountBillId() {
 		return this.accountBillId;
 	}
 
-	public void setAccountBillId(long accountBillId) {
+	public void setAccountBillId(Long accountBillId) {
 		this.accountBillId = accountBillId;
 	}
 
 	@Column(name = "user_id", nullable = false)
-	public long getUserId() {
+	public Long getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -172,11 +172,11 @@ public class PaymentBill implements java.io.Serializable {
 	}
 
 	@Column(name = "ent_id", nullable = false)
-	public long getEntId() {
+	public Long getEntId() {
 		return this.entId;
 	}
 
-	public void setEntId(long entId) {
+	public void setEntId(Long entId) {
 		this.entId = entId;
 	}
 

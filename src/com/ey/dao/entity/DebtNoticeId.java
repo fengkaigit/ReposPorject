@@ -11,8 +11,8 @@ public class DebtNoticeId implements java.io.Serializable {
 
 	// Fields
 
-	private long batchId;
-	private long paymentId;
+	private Long batchId;
+	private Long paymentId;
 	private double billMoney;
 	private double payMoney;
 	private double debtMoney;
@@ -25,7 +25,7 @@ public class DebtNoticeId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public DebtNoticeId(long batchId, long paymentId, double billMoney,
+	public DebtNoticeId(Long batchId, Long paymentId, double billMoney,
 			double payMoney, double debtMoney, Integer noticeStatus) {
 		this.batchId = batchId;
 		this.paymentId = paymentId;
@@ -38,20 +38,20 @@ public class DebtNoticeId implements java.io.Serializable {
 	// Property accessors
 
 	@Column(name = "batch_id", nullable = false)
-	public long getBatchId() {
+	public Long getBatchId() {
 		return this.batchId;
 	}
 
-	public void setBatchId(long batchId) {
+	public void setBatchId(Long batchId) {
 		this.batchId = batchId;
 	}
 
 	@Column(name = "payment_id", nullable = false)
-	public long getPaymentId() {
+	public Long getPaymentId() {
 		return this.paymentId;
 	}
 
-	public void setPaymentId(long paymentId) {
+	public void setPaymentId(Long paymentId) {
 		this.paymentId = paymentId;
 	}
 
@@ -110,20 +110,6 @@ public class DebtNoticeId implements java.io.Serializable {
 						&& castOther.getNoticeStatus() != null && this
 						.getNoticeStatus().equals(castOther.getNoticeStatus())));
 	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (int) this.getBatchId();
-		result = 37 * result + (int) this.getPaymentId();
-		result = 37 * result + (int) this.getBillMoney();
-		result = 37 * result + (int) this.getPayMoney();
-		result = 37 * result + (int) this.getDebtMoney();
-		result = 37
-				* result
-				+ (getNoticeStatus() == null ? 0 : this.getNoticeStatus()
-						.hashCode());
-		return result;
-	}
+	
 
 }

@@ -17,12 +17,12 @@ public class EntRefundBill implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
+	private Long id;
 	private Date createTime;
 	private Date confirmTime;
-	private long transferMoney;
-	private long status;
-	private long entId;
+	private Long transferMoney;
+	private Long status;
+	private Long entId;
 	private Integer transferWay;
 
 	// Constructors
@@ -32,8 +32,8 @@ public class EntRefundBill implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public EntRefundBill(long id, Date createTime, long transferMoney,
-			long status, long entId, Integer transferWay) {
+	public EntRefundBill(Long id, Date createTime, Long transferMoney,
+			Long status, Long entId, Integer transferWay) {
 		this.id = id;
 		this.createTime = createTime;
 		this.transferMoney = transferMoney;
@@ -43,8 +43,8 @@ public class EntRefundBill implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public EntRefundBill(long id, Date createTime, Date confirmTime,
-			long transferMoney, long status, long entId, Integer transferWay) {
+	public EntRefundBill(Long id, Date createTime, Date confirmTime,
+			Long transferMoney, Long status, Long entId, Integer transferWay) {
 		this.id = id;
 		this.createTime = createTime;
 		this.confirmTime = confirmTime;
@@ -57,11 +57,11 @@ public class EntRefundBill implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -86,29 +86,29 @@ public class EntRefundBill implements java.io.Serializable {
 	}
 
 	@Column(name = "transfer_money", nullable = false)
-	public long getTransferMoney() {
+	public Long getTransferMoney() {
 		return this.transferMoney;
 	}
 
-	public void setTransferMoney(long transferMoney) {
+	public void setTransferMoney(Long transferMoney) {
 		this.transferMoney = transferMoney;
 	}
 
 	@Column(name = "status", nullable = false)
-	public long getStatus() {
+	public Long getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(long status) {
+	public void setStatus(Long status) {
 		this.status = status;
 	}
 
 	@Column(name = "ent_id", nullable = false)
-	public long getEntId() {
+	public Long getEntId() {
 		return this.entId;
 	}
 
-	public void setEntId(long entId) {
+	public void setEntId(Long entId) {
 		this.entId = entId;
 	}
 

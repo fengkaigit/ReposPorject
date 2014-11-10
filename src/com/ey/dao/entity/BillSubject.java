@@ -14,7 +14,7 @@ public class BillSubject implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
+	private Long id;
 	private String sourceId;
 	private String fieldType;
 	private String fieldName;
@@ -31,7 +31,7 @@ public class BillSubject implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public BillSubject(long id, String sourceId, String fieldType,
+	public BillSubject(Long id, String sourceId, String fieldType,
 			String fieldName) {
 		this.id = id;
 		this.sourceId = sourceId;
@@ -40,7 +40,7 @@ public class BillSubject implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public BillSubject(long id, String sourceId, String fieldType,
+	public BillSubject(Long id, String sourceId, String fieldType,
 			String fieldName, Integer fieldSize, Integer fieldPrecision,
 			String fieldExplain, String fieldConstraint, String defaultValue) {
 		this.id = id;
@@ -57,11 +57,11 @@ public class BillSubject implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

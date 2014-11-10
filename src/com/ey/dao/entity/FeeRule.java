@@ -17,8 +17,8 @@ public class FeeRule implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long userId;
+	private Long id;
+	private Long userId;
 	private String profile;
 	private String IExplain;
 	private String rule;
@@ -33,7 +33,7 @@ public class FeeRule implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public FeeRule(long id, long userId, Integer paymentType, Date beginTime) {
+	public FeeRule(Long id, Long userId, Integer paymentType, Date beginTime) {
 		this.id = id;
 		this.userId = userId;
 		this.paymentType = paymentType;
@@ -41,7 +41,7 @@ public class FeeRule implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public FeeRule(long id, long userId, String profile, String IExplain,
+	public FeeRule(Long id, Long userId, String profile, String IExplain,
 			String rule, Integer paymentType, Date beginTime, Date endTime) {
 		this.id = id;
 		this.userId = userId;
@@ -56,20 +56,20 @@ public class FeeRule implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "user_id", nullable = false)
-	public long getUserId() {
+	public Long getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

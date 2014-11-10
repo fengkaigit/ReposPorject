@@ -17,7 +17,7 @@ public class SystemAccount implements java.io.Serializable {
 	private Integer acctType;
 	private String acctName;
 	private double acctBalance;
-	private long bankAccountId;
+	private Long bankAccountId;
 
 	// Constructors
 
@@ -34,7 +34,7 @@ public class SystemAccount implements java.io.Serializable {
 
 	/** full constructor */
 	public SystemAccount(Integer acctType, String acctName, double acctBalance,
-			long bankAccountId) {
+			Long bankAccountId) {
 		this.acctType = acctType;
 		this.acctName = acctName;
 		this.acctBalance = acctBalance;
@@ -71,11 +71,11 @@ public class SystemAccount implements java.io.Serializable {
 	}
 
 	@Column(name = "bank_account_id")
-	public long getBankAccountId() {
+	public Long getBankAccountId() {
 		return this.bankAccountId;
 	}
 
-	public void setBankAccountId(long bankAccountId) {
+	public void setBankAccountId(Long bankAccountId) {
 		this.bankAccountId = bankAccountId;
 	}
 

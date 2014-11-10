@@ -17,9 +17,9 @@ public class PaymentFixedline implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long userId;
-	private long modelId;
+	private Long id;
+	private Long userId;
+	private Long modelId;
 	private Date beginPeriod;
 	private Date endPeriod;
 	private String periodFrequency;
@@ -36,7 +36,7 @@ public class PaymentFixedline implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public PaymentFixedline(long id, long userId, Date beginPeriod,
+	public PaymentFixedline(Long id, Long userId, Date beginPeriod,
 			String periodFrequency, Integer lineType, double billMoney,
 			Date paymentTime, String billNumber) {
 		this.id = id;
@@ -50,7 +50,7 @@ public class PaymentFixedline implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public PaymentFixedline(long id, long userId, long modelId,
+	public PaymentFixedline(Long id, Long userId, Long modelId,
 			Date beginPeriod, Date endPeriod, String periodFrequency,
 			Integer lineType, double billMoney, double poundage,
 			Date paymentTime, String billNumber) {
@@ -70,29 +70,29 @@ public class PaymentFixedline implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "user_id", nullable = false)
-	public long getUserId() {
+	public Long getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
 	@Column(name = "model_id")
-	public long getModelId() {
+	public Long getModelId() {
 		return this.modelId;
 	}
 
-	public void setModelId(long modelId) {
+	public void setModelId(Long modelId) {
 		this.modelId = modelId;
 	}
 

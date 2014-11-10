@@ -17,7 +17,7 @@ public class TransferRecords implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
+	private Long id;
 	private Date transferTime;
 	private double poundage;
 	private double transferMoney;
@@ -33,7 +33,7 @@ public class TransferRecords implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public TransferRecords(long id, Date transferTime, double poundage,
+	public TransferRecords(Long id, Date transferTime, double poundage,
 			double transferMoney, String transferOutAccountId,
 			String transferInAccountId, Integer transferType) {
 		this.id = id;
@@ -46,7 +46,7 @@ public class TransferRecords implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TransferRecords(long id, Date transferTime, double poundage,
+	public TransferRecords(Long id, Date transferTime, double poundage,
 			double transferMoney, String transferOutAccountId,
 			String transferInAccountId, Integer transferType,
 			Integer transferStatus) {
@@ -63,11 +63,11 @@ public class TransferRecords implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

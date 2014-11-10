@@ -14,11 +14,11 @@ public class AgentBatchRule implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
+	private Long id;
 	private String profile;
 	private String IExplain;
 	private String rule;
-	private long agentId;
+	private Long agentId;
 	private Integer ruleStatus;
 
 	// Constructors
@@ -28,7 +28,7 @@ public class AgentBatchRule implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public AgentBatchRule(long id, String rule, long agentId, Integer ruleStatus) {
+	public AgentBatchRule(Long id, String rule, Long agentId, Integer ruleStatus) {
 		this.id = id;
 		this.rule = rule;
 		this.agentId = agentId;
@@ -36,8 +36,8 @@ public class AgentBatchRule implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public AgentBatchRule(long id, String profile, String IExplain,
-			String rule, long agentId, Integer ruleStatus) {
+	public AgentBatchRule(Long id, String profile, String IExplain,
+			String rule, Long agentId, Integer ruleStatus) {
 		this.id = id;
 		this.profile = profile;
 		this.IExplain = IExplain;
@@ -49,11 +49,11 @@ public class AgentBatchRule implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -85,11 +85,11 @@ public class AgentBatchRule implements java.io.Serializable {
 	}
 
 	@Column(name = "agent_id", nullable = false)
-	public long getAgentId() {
+	public Long getAgentId() {
 		return this.agentId;
 	}
 
-	public void setAgentId(long agentId) {
+	public void setAgentId(Long agentId) {
 		this.agentId = agentId;
 	}
 

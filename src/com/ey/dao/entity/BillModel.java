@@ -14,11 +14,11 @@ public class BillModel implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long userId;
+	private Long id;
+	private Long userId;
 	private String modelName;
 	private String billCode;
-	private long entId;
+	private Long entId;
 
 	// Constructors
 
@@ -27,8 +27,8 @@ public class BillModel implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public BillModel(long id, long userId, String modelName, String billCode,
-			long entId) {
+	public BillModel(Long id, Long userId, String modelName, String billCode,
+			Long entId) {
 		this.id = id;
 		this.userId = userId;
 		this.modelName = modelName;
@@ -39,20 +39,20 @@ public class BillModel implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "user_ID", nullable = false)
-	public long getUserId() {
+	public Long getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -75,11 +75,11 @@ public class BillModel implements java.io.Serializable {
 	}
 
 	@Column(name = "ent_id", nullable = false)
-	public long getEntId() {
+	public Long getEntId() {
 		return this.entId;
 	}
 
-	public void setEntId(long entId) {
+	public void setEntId(Long entId) {
 		this.entId = entId;
 	}
 

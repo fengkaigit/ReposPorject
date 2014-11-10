@@ -17,13 +17,13 @@ public class AgentPaymentBatch implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
+	private Long id;
 	private double batchMoney;
 	private Date createTime;
 	private Date confirmTime;
 	private Integer batchStatus;
-	private long agentId;
-	private long ruleId;
+	private Long agentId;
+	private Long ruleId;
 
 	// Constructors
 
@@ -32,8 +32,8 @@ public class AgentPaymentBatch implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public AgentPaymentBatch(long id, Date createTime, Integer batchStatus,
-			long agentId, long ruleId) {
+	public AgentPaymentBatch(Long id, Date createTime, Integer batchStatus,
+			Long agentId, Long ruleId) {
 		this.id = id;
 		this.createTime = createTime;
 		this.batchStatus = batchStatus;
@@ -42,8 +42,8 @@ public class AgentPaymentBatch implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public AgentPaymentBatch(long id, double batchMoney, Date createTime,
-			Date confirmTime, Integer batchStatus, long agentId, long ruleId) {
+	public AgentPaymentBatch(Long id, double batchMoney, Date createTime,
+			Date confirmTime, Integer batchStatus, Long agentId, Long ruleId) {
 		this.id = id;
 		this.batchMoney = batchMoney;
 		this.createTime = createTime;
@@ -56,11 +56,11 @@ public class AgentPaymentBatch implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -103,20 +103,20 @@ public class AgentPaymentBatch implements java.io.Serializable {
 	}
 
 	@Column(name = "agent_id", nullable = false)
-	public long getAgentId() {
+	public Long getAgentId() {
 		return this.agentId;
 	}
 
-	public void setAgentId(long agentId) {
+	public void setAgentId(Long agentId) {
 		this.agentId = agentId;
 	}
 
 	@Column(name = "rule_id", nullable = false)
-	public long getRuleId() {
+	public Long getRuleId() {
 		return this.ruleId;
 	}
 
-	public void setRuleId(long ruleId) {
+	public void setRuleId(Long ruleId) {
 		this.ruleId = ruleId;
 	}
 

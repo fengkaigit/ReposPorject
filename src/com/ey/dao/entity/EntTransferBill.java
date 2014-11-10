@@ -17,13 +17,13 @@ public class EntTransferBill implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
+	private Long id;
 	private Date createTime;
 	private Date confirmTime;
 	private double transferMoney;
 	private Integer transferStatus;
 	private Integer transferWay;
-	private long entId;
+	private Long entId;
 
 	// Constructors
 
@@ -32,8 +32,8 @@ public class EntTransferBill implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public EntTransferBill(long id, Date createTime, double transferMoney,
-			Integer transferWay, long entId) {
+	public EntTransferBill(Long id, Date createTime, double transferMoney,
+			Integer transferWay, Long entId) {
 		this.id = id;
 		this.createTime = createTime;
 		this.transferMoney = transferMoney;
@@ -42,9 +42,9 @@ public class EntTransferBill implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public EntTransferBill(long id, Date createTime, Date confirmTime,
+	public EntTransferBill(Long id, Date createTime, Date confirmTime,
 			double transferMoney, Integer transferStatus, Integer transferWay,
-			long entId) {
+			Long entId) {
 		this.id = id;
 		this.createTime = createTime;
 		this.confirmTime = confirmTime;
@@ -57,11 +57,11 @@ public class EntTransferBill implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -113,11 +113,11 @@ public class EntTransferBill implements java.io.Serializable {
 	}
 
 	@Column(name = "ent_id", nullable = false)
-	public long getEntId() {
+	public Long getEntId() {
 		return this.entId;
 	}
 
-	public void setEntId(long entId) {
+	public void setEntId(Long entId) {
 		this.entId = entId;
 	}
 

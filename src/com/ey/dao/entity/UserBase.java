@@ -14,7 +14,7 @@ public class UserBase implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
+	private Long id;
 	private String areaId;
 	private String accountNumber;
 	private String realName;
@@ -31,7 +31,7 @@ public class UserBase implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public UserBase(long id, String areaId, String accountNumber,
+	public UserBase(Long id, String areaId, String accountNumber,
 			String realName, Integer registType, String passwd,
 			double accountScore) {
 		this.id = id;
@@ -44,7 +44,7 @@ public class UserBase implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public UserBase(long id, String areaId, String accountNumber,
+	public UserBase(Long id, String areaId, String accountNumber,
 			String realName, Integer registType, String passwd, String EMail,
 			String mobilePhone, double accountScore) {
 		this.id = id;
@@ -61,11 +61,11 @@ public class UserBase implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

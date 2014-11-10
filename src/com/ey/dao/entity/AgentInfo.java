@@ -14,7 +14,7 @@ public class AgentInfo implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
+	private Long id;
 	private String registAccount;
 	private String passwd;
 	private String EMail;
@@ -28,7 +28,7 @@ public class AgentInfo implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public AgentInfo(long id, String registAccount, String passwd, String areaId) {
+	public AgentInfo(Long id, String registAccount, String passwd, String areaId) {
 		this.id = id;
 		this.registAccount = registAccount;
 		this.passwd = passwd;
@@ -36,7 +36,7 @@ public class AgentInfo implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public AgentInfo(long id, String registAccount, String passwd,
+	public AgentInfo(Long id, String registAccount, String passwd,
 			String EMail, Integer mobile, String areaId) {
 		this.id = id;
 		this.registAccount = registAccount;
@@ -49,11 +49,11 @@ public class AgentInfo implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -14,8 +14,8 @@ public class EntTransferRelation implements java.io.Serializable {
 
 	// Fields
 
-	private long receiptsId;
-	private long transferRecordsId;
+	private Long receiptsId;
+	private Long transferRecordsId;
 
 	// Constructors
 
@@ -24,7 +24,7 @@ public class EntTransferRelation implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public EntTransferRelation(long receiptsId, long transferRecordsId) {
+	public EntTransferRelation(Long receiptsId, Long transferRecordsId) {
 		this.receiptsId = receiptsId;
 		this.transferRecordsId = transferRecordsId;
 	}
@@ -32,20 +32,20 @@ public class EntTransferRelation implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "receipts_id", unique = true, nullable = false)
-	public long getReceiptsId() {
+	public Long getReceiptsId() {
 		return this.receiptsId;
 	}
 
-	public void setReceiptsId(long receiptsId) {
+	public void setReceiptsId(Long receiptsId) {
 		this.receiptsId = receiptsId;
 	}
 
 	@Column(name = "transfer_records_id", nullable = false)
-	public long getTransferRecordsId() {
+	public Long getTransferRecordsId() {
 		return this.transferRecordsId;
 	}
 
-	public void setTransferRecordsId(long transferRecordsId) {
+	public void setTransferRecordsId(Long transferRecordsId) {
 		this.transferRecordsId = transferRecordsId;
 	}
 

@@ -11,8 +11,8 @@ public class BatchPaymentRelationId implements java.io.Serializable {
 
 	// Fields
 
-	private long paymentBillId;
-	private long relationId;
+	private Long paymentBillId;
+	private Long relationId;
 
 	// Constructors
 
@@ -21,7 +21,7 @@ public class BatchPaymentRelationId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public BatchPaymentRelationId(long paymentBillId, long relationId) {
+	public BatchPaymentRelationId(Long paymentBillId, Long relationId) {
 		this.paymentBillId = paymentBillId;
 		this.relationId = relationId;
 	}
@@ -29,20 +29,20 @@ public class BatchPaymentRelationId implements java.io.Serializable {
 	// Property accessors
 
 	@Column(name = "payment_bill_id", nullable = false)
-	public long getPaymentBillId() {
+	public Long getPaymentBillId() {
 		return this.paymentBillId;
 	}
 
-	public void setPaymentBillId(long paymentBillId) {
+	public void setPaymentBillId(Long paymentBillId) {
 		this.paymentBillId = paymentBillId;
 	}
 
 	@Column(name = "relation_id", nullable = false)
-	public long getRelationId() {
+	public Long getRelationId() {
 		return this.relationId;
 	}
 
-	public void setRelationId(long relationId) {
+	public void setRelationId(Long relationId) {
 		this.relationId = relationId;
 	}
 
@@ -58,13 +58,4 @@ public class BatchPaymentRelationId implements java.io.Serializable {
 		return (this.getPaymentBillId() == castOther.getPaymentBillId())
 				&& (this.getRelationId() == castOther.getRelationId());
 	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (int) this.getPaymentBillId();
-		result = 37 * result + (int) this.getRelationId();
-		return result;
-	}
-
 }

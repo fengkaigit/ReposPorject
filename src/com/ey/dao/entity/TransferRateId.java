@@ -11,7 +11,7 @@ public class TransferRateId implements java.io.Serializable {
 
 	// Fields
 
-	private long bankId;
+	private Long bankId;
 	private double limitMoney;
 	private double rate;
 
@@ -22,7 +22,7 @@ public class TransferRateId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TransferRateId(long bankId, double limitMoney, double rate) {
+	public TransferRateId(Long bankId, double limitMoney, double rate) {
 		this.bankId = bankId;
 		this.limitMoney = limitMoney;
 		this.rate = rate;
@@ -31,11 +31,11 @@ public class TransferRateId implements java.io.Serializable {
 	// Property accessors
 
 	@Column(name = "bank_id", nullable = false)
-	public long getBankId() {
+	public Long getBankId() {
 		return this.bankId;
 	}
 
-	public void setBankId(long bankId) {
+	public void setBankId(Long bankId) {
 		this.bankId = bankId;
 	}
 
@@ -70,14 +70,4 @@ public class TransferRateId implements java.io.Serializable {
 				&& (this.getLimitMoney() == castOther.getLimitMoney())
 				&& (this.getRate() == castOther.getRate());
 	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (int) this.getBankId();
-		result = 37 * result + (int) this.getLimitMoney();
-		result = 37 * result + (int) this.getRate();
-		return result;
-	}
-
 }

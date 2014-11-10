@@ -11,7 +11,7 @@ public class NoticeSettingId implements java.io.Serializable {
 
 	// Fields
 
-	private long userId;
+	private Long userId;
 	private Integer noticeType;
 
 	// Constructors
@@ -21,7 +21,7 @@ public class NoticeSettingId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public NoticeSettingId(long userId, Integer noticeType) {
+	public NoticeSettingId(Long userId, Integer noticeType) {
 		this.userId = userId;
 		this.noticeType = noticeType;
 	}
@@ -29,11 +29,11 @@ public class NoticeSettingId implements java.io.Serializable {
 	// Property accessors
 
 	@Column(name = "user_id", nullable = false)
-	public long getUserId() {
+	public Long getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -61,16 +61,4 @@ public class NoticeSettingId implements java.io.Serializable {
 						&& castOther.getNoticeType() != null && this
 						.getNoticeType().equals(castOther.getNoticeType())));
 	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (int) this.getUserId();
-		result = 37
-				* result
-				+ (getNoticeType() == null ? 0 : this.getNoticeType()
-						.hashCode());
-		return result;
-	}
-
 }

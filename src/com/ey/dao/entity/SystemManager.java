@@ -14,8 +14,8 @@ public class SystemManager implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long managerName;
+	private Long id;
+	private Long managerName;
 	private String passwd;
 	private String EMail;
 	private String mobilePhone;
@@ -27,14 +27,14 @@ public class SystemManager implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public SystemManager(long id, long managerName, String passwd) {
+	public SystemManager(Long id, Long managerName, String passwd) {
 		this.id = id;
 		this.managerName = managerName;
 		this.passwd = passwd;
 	}
 
 	/** full constructor */
-	public SystemManager(long id, long managerName, String passwd,
+	public SystemManager(Long id, Long managerName, String passwd,
 			String EMail, String mobilePhone) {
 		this.id = id;
 		this.managerName = managerName;
@@ -46,20 +46,20 @@ public class SystemManager implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "manager_name", nullable = false)
-	public long getManagerName() {
+	public Long getManagerName() {
 		return this.managerName;
 	}
 
-	public void setManagerName(long managerName) {
+	public void setManagerName(Long managerName) {
 		this.managerName = managerName;
 	}
 

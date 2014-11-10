@@ -11,8 +11,8 @@ public class SettleTransferRelationId implements java.io.Serializable {
 
 	// Fields
 
-	private long receiptsId;
-	private long transferRecordsId;
+	private Long receiptsId;
+	private Long transferRecordsId;
 
 	// Constructors
 
@@ -21,7 +21,7 @@ public class SettleTransferRelationId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public SettleTransferRelationId(long receiptsId, long transferRecordsId) {
+	public SettleTransferRelationId(Long receiptsId, Long transferRecordsId) {
 		this.receiptsId = receiptsId;
 		this.transferRecordsId = transferRecordsId;
 	}
@@ -29,20 +29,20 @@ public class SettleTransferRelationId implements java.io.Serializable {
 	// Property accessors
 
 	@Column(name = "receipts_id", nullable = false)
-	public long getReceiptsId() {
+	public Long getReceiptsId() {
 		return this.receiptsId;
 	}
 
-	public void setReceiptsId(long receiptsId) {
+	public void setReceiptsId(Long receiptsId) {
 		this.receiptsId = receiptsId;
 	}
 
 	@Column(name = "transfer_records_id", nullable = false)
-	public long getTransferRecordsId() {
+	public Long getTransferRecordsId() {
 		return this.transferRecordsId;
 	}
 
-	public void setTransferRecordsId(long transferRecordsId) {
+	public void setTransferRecordsId(Long transferRecordsId) {
 		this.transferRecordsId = transferRecordsId;
 	}
 
@@ -59,13 +59,4 @@ public class SettleTransferRelationId implements java.io.Serializable {
 				&& (this.getTransferRecordsId() == castOther
 						.getTransferRecordsId());
 	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (int) this.getReceiptsId();
-		result = 37 * result + (int) this.getTransferRecordsId();
-		return result;
-	}
-
 }

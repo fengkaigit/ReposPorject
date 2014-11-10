@@ -17,13 +17,13 @@ public class PersonRefundBill implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long userId;
+	private Long id;
+	private Long userId;
 	private Date createTime;
 	private Date confirmTime;
 	private double refundMoney;
 	private Integer refundStatus;
-	private long paymentBillId;
+	private Long paymentBillId;
 
 	// Constructors
 
@@ -32,8 +32,8 @@ public class PersonRefundBill implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public PersonRefundBill(long id, long userId, Date createTime,
-			double refundMoney, Integer refundStatus, long paymentBillId) {
+	public PersonRefundBill(Long id, Long userId, Date createTime,
+			double refundMoney, Integer refundStatus, Long paymentBillId) {
 		this.id = id;
 		this.userId = userId;
 		this.createTime = createTime;
@@ -43,9 +43,9 @@ public class PersonRefundBill implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public PersonRefundBill(long id, long userId, Date createTime,
+	public PersonRefundBill(Long id, Long userId, Date createTime,
 			Date confirmTime, double refundMoney, Integer refundStatus,
-			long paymentBillId) {
+			Long paymentBillId) {
 		this.id = id;
 		this.userId = userId;
 		this.createTime = createTime;
@@ -58,20 +58,20 @@ public class PersonRefundBill implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "user_id", nullable = false)
-	public long getUserId() {
+	public Long getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -114,11 +114,11 @@ public class PersonRefundBill implements java.io.Serializable {
 	}
 
 	@Column(name = "payment_bill_id", nullable = false)
-	public long getPaymentBillId() {
+	public Long getPaymentBillId() {
 		return this.paymentBillId;
 	}
 
-	public void setPaymentBillId(long paymentBillId) {
+	public void setPaymentBillId(Long paymentBillId) {
 		this.paymentBillId = paymentBillId;
 	}
 

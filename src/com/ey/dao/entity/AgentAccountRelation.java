@@ -14,8 +14,8 @@ public class AgentAccountRelation implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long bankAccountId;
+	private Long id;
+	private Long bankAccountId;
 
 	// Constructors
 
@@ -24,7 +24,7 @@ public class AgentAccountRelation implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public AgentAccountRelation(long id, long bankAccountId) {
+	public AgentAccountRelation(Long id, Long bankAccountId) {
 		this.id = id;
 		this.bankAccountId = bankAccountId;
 	}
@@ -32,20 +32,20 @@ public class AgentAccountRelation implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "bank_account_id", nullable = false)
-	public long getBankAccountId() {
+	public Long getBankAccountId() {
 		return this.bankAccountId;
 	}
 
-	public void setBankAccountId(long bankAccountId) {
+	public void setBankAccountId(Long bankAccountId) {
 		this.bankAccountId = bankAccountId;
 	}
 

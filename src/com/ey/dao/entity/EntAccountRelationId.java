@@ -11,8 +11,8 @@ public class EntAccountRelationId implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long cardNumber;
+	private Long id;
+	private Long cardNumber;
 
 	// Constructors
 
@@ -21,7 +21,7 @@ public class EntAccountRelationId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public EntAccountRelationId(long id, long cardNumber) {
+	public EntAccountRelationId(Long id, Long cardNumber) {
 		this.id = id;
 		this.cardNumber = cardNumber;
 	}
@@ -29,20 +29,20 @@ public class EntAccountRelationId implements java.io.Serializable {
 	// Property accessors
 
 	@Column(name = "ID", nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "card_number", nullable = false)
-	public long getCardNumber() {
+	public Long getCardNumber() {
 		return this.cardNumber;
 	}
 
-	public void setCardNumber(long cardNumber) {
+	public void setCardNumber(Long cardNumber) {
 		this.cardNumber = cardNumber;
 	}
 
@@ -57,14 +57,6 @@ public class EntAccountRelationId implements java.io.Serializable {
 
 		return (this.getId() == castOther.getId())
 				&& (this.getCardNumber() == castOther.getCardNumber());
-	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (int) this.getId();
-		result = 37 * result + (int) this.getCardNumber();
-		return result;
 	}
 
 }

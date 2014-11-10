@@ -17,8 +17,8 @@ public class NoticeInfo implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long userId;
+	private Long id;
+	private Long userId;
 	private byte[] serverContent;
 	private Date createTime;
 	private Integer sendStatus;
@@ -32,7 +32,7 @@ public class NoticeInfo implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public NoticeInfo(long id, long userId, byte[] serverContent,
+	public NoticeInfo(Long id, Long userId, byte[] serverContent,
 			Date createTime, Integer sendStatus, Integer noticeType,
 			Integer noticeMode) {
 		this.id = id;
@@ -47,20 +47,20 @@ public class NoticeInfo implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "user_id", nullable = false)
-	public long getUserId() {
+	public Long getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

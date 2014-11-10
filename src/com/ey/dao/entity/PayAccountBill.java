@@ -15,15 +15,15 @@ public class PayAccountBill implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long userId;
+	private Long id;
+	private Long userId;
 	private Date createTime;
-	private long modelId;
+	private Long modelId;
 	private double billMoney;
 	private double poundage;
 	private Integer payType;
 	private Integer billType;
-	private long entId;
+	private Long entId;
 	private Integer businessType;
 
 	// Constructors
@@ -33,9 +33,9 @@ public class PayAccountBill implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public PayAccountBill(long id, long userId, Date createTime, long modelId,
+	public PayAccountBill(Long id, Long userId, Date createTime, Long modelId,
 			double billMoney, double poundage, Integer payType,
-			Integer billType, long entId, Integer businessType) {
+			Integer billType, Long entId, Integer businessType) {
 		this.id = id;
 		this.userId = userId;
 		this.createTime = createTime;
@@ -51,20 +51,20 @@ public class PayAccountBill implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "user_id", nullable = false)
-	public long getUserId() {
+	public Long getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -78,11 +78,11 @@ public class PayAccountBill implements java.io.Serializable {
 	}
 
 	@Column(name = "model_id", nullable = false)
-	public long getModelId() {
+	public Long getModelId() {
 		return this.modelId;
 	}
 
-	public void setModelId(long modelId) {
+	public void setModelId(Long modelId) {
 		this.modelId = modelId;
 	}
 
@@ -123,11 +123,11 @@ public class PayAccountBill implements java.io.Serializable {
 	}
 
 	@Column(name = "ent_id", nullable = false)
-	public long getEntId() {
+	public Long getEntId() {
 		return this.entId;
 	}
 
-	public void setEntId(long entId) {
+	public void setEntId(Long entId) {
 		this.entId = entId;
 	}
 

@@ -11,8 +11,8 @@ public class BillSubjectDataId implements java.io.Serializable {
 
 	// Fields
 
-	private long modelId;
-	private long id;
+	private Long modelId;
+	private Long id;
 
 	// Constructors
 
@@ -21,7 +21,7 @@ public class BillSubjectDataId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public BillSubjectDataId(long modelId, long id) {
+	public BillSubjectDataId(Long modelId, Long id) {
 		this.modelId = modelId;
 		this.id = id;
 	}
@@ -29,20 +29,20 @@ public class BillSubjectDataId implements java.io.Serializable {
 	// Property accessors
 
 	@Column(name = "model_id", nullable = false)
-	public long getModelId() {
+	public Long getModelId() {
 		return this.modelId;
 	}
 
-	public void setModelId(long modelId) {
+	public void setModelId(Long modelId) {
 		this.modelId = modelId;
 	}
 
 	@Column(name = "ID", nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -58,13 +58,4 @@ public class BillSubjectDataId implements java.io.Serializable {
 		return (this.getModelId() == castOther.getModelId())
 				&& (this.getId() == castOther.getId());
 	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (int) this.getModelId();
-		result = 37 * result + (int) this.getId();
-		return result;
-	}
-
 }

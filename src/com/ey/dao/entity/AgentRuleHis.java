@@ -17,8 +17,8 @@ public class AgentRuleHis implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
-	private long agentId;
+	private Long id;
+	private Long agentId;
 	private String profile;
 	private String IExplain;
 	private String rule;
@@ -32,7 +32,7 @@ public class AgentRuleHis implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public AgentRuleHis(long id, long agentId, Date beginTime, Date endTime) {
+	public AgentRuleHis(Long id, Long agentId, Date beginTime, Date endTime) {
 		this.id = id;
 		this.agentId = agentId;
 		this.beginTime = beginTime;
@@ -40,7 +40,7 @@ public class AgentRuleHis implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public AgentRuleHis(long id, long agentId, String profile, String IExplain,
+	public AgentRuleHis(Long id, Long agentId, String profile, String IExplain,
 			String rule, Date beginTime, Date endTime) {
 		this.id = id;
 		this.agentId = agentId;
@@ -54,20 +54,20 @@ public class AgentRuleHis implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "agent_ID", nullable = false)
-	public long getAgentId() {
+	public Long getAgentId() {
 		return this.agentId;
 	}
 
-	public void setAgentId(long agentId) {
+	public void setAgentId(Long agentId) {
 		this.agentId = agentId;
 	}
 

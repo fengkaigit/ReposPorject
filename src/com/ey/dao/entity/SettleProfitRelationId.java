@@ -11,8 +11,8 @@ public class SettleProfitRelationId implements java.io.Serializable {
 
 	// Fields
 
-	private long profitId;
-	private long settleId;
+	private Long profitId;
+	private Long settleId;
 
 	// Constructors
 
@@ -21,7 +21,7 @@ public class SettleProfitRelationId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public SettleProfitRelationId(long profitId, long settleId) {
+	public SettleProfitRelationId(Long profitId, Long settleId) {
 		this.profitId = profitId;
 		this.settleId = settleId;
 	}
@@ -29,20 +29,20 @@ public class SettleProfitRelationId implements java.io.Serializable {
 	// Property accessors
 
 	@Column(name = "profit_id", nullable = false)
-	public long getProfitId() {
+	public Long getProfitId() {
 		return this.profitId;
 	}
 
-	public void setProfitId(long profitId) {
+	public void setProfitId(Long profitId) {
 		this.profitId = profitId;
 	}
 
 	@Column(name = "settle_id", nullable = false)
-	public long getSettleId() {
+	public Long getSettleId() {
 		return this.settleId;
 	}
 
-	public void setSettleId(long settleId) {
+	public void setSettleId(Long settleId) {
 		this.settleId = settleId;
 	}
 
@@ -58,13 +58,4 @@ public class SettleProfitRelationId implements java.io.Serializable {
 		return (this.getProfitId() == castOther.getProfitId())
 				&& (this.getSettleId() == castOther.getSettleId());
 	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (int) this.getProfitId();
-		result = 37 * result + (int) this.getSettleId();
-		return result;
-	}
-
 }

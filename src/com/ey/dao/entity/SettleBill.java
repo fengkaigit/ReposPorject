@@ -17,12 +17,12 @@ public class SettleBill implements java.io.Serializable {
 
 	// Fields
 
-	private long id;
+	private Long id;
 	private Date createDate;
 	private Date confirmDate;
-	private long profitMoney;
+	private Long profitMoney;
 	private Integer status;
-	private long agentId;
+	private Long agentId;
 
 	// Constructors
 
@@ -31,8 +31,8 @@ public class SettleBill implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public SettleBill(long id, Date createDate, long profitMoney,
-			Integer status, long agentId) {
+	public SettleBill(Long id, Date createDate, Long profitMoney,
+			Integer status, Long agentId) {
 		this.id = id;
 		this.createDate = createDate;
 		this.profitMoney = profitMoney;
@@ -41,8 +41,8 @@ public class SettleBill implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public SettleBill(long id, Date createDate, Date confirmDate,
-			long profitMoney, Integer status, long agentId) {
+	public SettleBill(Long id, Date createDate, Date confirmDate,
+			Long profitMoney, Integer status, Long agentId) {
 		this.id = id;
 		this.createDate = createDate;
 		this.confirmDate = confirmDate;
@@ -54,11 +54,11 @@ public class SettleBill implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -83,11 +83,11 @@ public class SettleBill implements java.io.Serializable {
 	}
 
 	@Column(name = "profit_money", nullable = false)
-	public long getProfitMoney() {
+	public Long getProfitMoney() {
 		return this.profitMoney;
 	}
 
-	public void setProfitMoney(long profitMoney) {
+	public void setProfitMoney(Long profitMoney) {
 		this.profitMoney = profitMoney;
 	}
 
@@ -101,11 +101,11 @@ public class SettleBill implements java.io.Serializable {
 	}
 
 	@Column(name = "agent_id", nullable = false)
-	public long getAgentId() {
+	public Long getAgentId() {
 		return this.agentId;
 	}
 
-	public void setAgentId(long agentId) {
+	public void setAgentId(Long agentId) {
 		this.agentId = agentId;
 	}
 
