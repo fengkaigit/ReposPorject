@@ -32,7 +32,7 @@
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/payment?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<property name="username" value="root" />
-		<property name="password" value="password" />
+		<property name="password" value="root" />
 
 		<!-- 配置 -->
 		<!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->
@@ -152,5 +152,5 @@
 	</bean>    
 	<bean id="dbIdGenerator" class="com.ey.dao.common.dbid.DatabaseDbidGenerator">
 	    <property name="blocksize" value="100" />
-	</bean> 
+	</bean>
 </beans>

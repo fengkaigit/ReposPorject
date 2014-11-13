@@ -27,9 +27,8 @@ public class Area implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Area(String id, String city, String province, String encodePath) {
+	public Area(String id, String province, String encodePath) {
 		this.id = id;
-		this.city = city;
 		this.province = province;
 		this.encodePath = encodePath;
 	}
@@ -55,7 +54,7 @@ public class Area implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "city", nullable = false, length = 24)
+	@Column(name = "city", length = 24)
 	public String getCity() {
 		return this.city;
 	}
