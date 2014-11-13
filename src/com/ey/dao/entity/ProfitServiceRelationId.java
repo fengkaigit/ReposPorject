@@ -42,7 +42,9 @@ public class ProfitServiceRelationId implements java.io.Serializable {
 		return this.profitBillId;
 	}
 
-	public void setRelationId(Long profitBillId) {
+	
+
+	public void setProfitBillId(Long profitBillId) {
 		this.profitBillId = profitBillId;
 	}
 
