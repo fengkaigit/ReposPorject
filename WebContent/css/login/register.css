@@ -1,0 +1,108 @@
+.zc_zone {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #DDDDDD;
+	margin: 0 auto 10px;
+	width: 980px;
+}
+
+.card_title1 {
+	background: url(../../images/reg/left_iocn.gif) 0px -1px repeat-x;
+	height: 30px;
+	line-height: 30px;
+	width: 980px;
+}
+
+.zc_title span {
+	margin-left: 20px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #000;
+}
+
+.card_title span {
+	margin-left: 20px;
+	font-size: 14px;
+	color: #000;
+}
+
+.title_link {
+	padding-bottom: 2px;
+	color: #077ABD;
+	font-size: 12px;
+	line-height: 22px;
+	text-decoration: none;
+	line-height: 22px;
+}
+
+.register_form {
+	width: 700px;
+	PADDING-BOTTOM: 0px;
+	margin-LEFT: 250px;
+	PADDING-RIGHT: 5px;
+	PADDING-TOP: 20px;
+}
+
+#xy {
+	border: 1px solid #A8A8A8;
+	height: 80px;
+	font-size: 14px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	width: 450px;
+}
+
+.dk_pay1 {
+	background: url("../../images/reg/111_04.jpg") repeat scroll 0 0
+		transparent;
+	border: medium none;
+	color: #FFFFFF;
+	font-size: 14px;
+	font-weight: bold;
+	height: 31px;
+	width: 181px;
+}
+
+.fm-item1 {
+	PADDING-BOTTOM: 20px;
+	PADDING-LEFT: 230px;
+	PADDING-RIGHT: 5px;
+	PADDING-TOP: 20px
+}
+
+.xieyi {
+	color: #7C7C7C;
+	font-size: 12px;
+	font-weight: bold;
+	padding-bottom: 5px;
+	padding-right: 130px;
+	font-size: 14px;
+}
+
+.fm-item1 table tr td {
+	color: #333333;
+	font-family: "宋体","Times New Roman",Times,serif;
+	font-size: 14px;
+	outline: medium none;
+	text-decoration: none;
+}
+
+#xm {
+	color: #666666;
+}
+
+#tishixinxi {
+	font-size: 14px;
+	padding-right: 0;
+	width: 350px;
+	color: #0000FF;
+}
+.zc_city {
+    border: 1px solid #d5d5d5;
+    height: 25px;
+    line-height: 25px;
+    width: 90px;
+}
+.reg_tips{ background:url(../../images/index/reg_succicon.jpg) 11px 3px no-repeat #FEFFEC; border:1px solid #FFAB32; width:200px;height:25px;}
+.reg_tips span{ display:block; color:#FF5824; padding:5px 0px 0px 34px; font-size:12px;}
+

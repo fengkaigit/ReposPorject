@@ -1,0 +1,43 @@
+@charset "utf-8";
+input {
+	font-size: 14px;
+}
+.success-dh {
+   background: url(../../images/register/success.jpg) no-repeat 0px 0px;
+   padding-bottom: 5px;
+   padding-top: 5px;
+   width: 20px;
+   height: 20px;
+   margin-left: 5px;
+   padding-right: 0px; 
+   padding-left: 28px;
+   display:inline-block;
+   position:absolute;
+}
+.on-focus {
+    border-color: #95DDFF;
+    border-style: solid;
+    border-width: 1px;
+    padding: 4px 2px 4px 5px;
+    width: 180px;
+}
+.on-show {
+    border-color: #D5D5D5;
+    border-style: solid;
+    border-width: 1px;
+    padding: 4px 2px 4px 5px;
+    width: 180px;
+}
+.on-error {
+    border-color: #FF0000;
+    border-style: solid;
+    border-width: 1px;
+    padding: 4px 2px 4px 5px;
+    width: 180px;
+}
+.vip_ghtips{ width:620px; height:80px; border:1px solid #FF944C; background:url(../../images/common/tipsicon.jpg) 13px 8px no-repeat #FEFFEC; margin:10px 0px 0px 50px;line-height:20px;}
+.vip_ghtips ul{ margin:0px; padding:10px 0px 0px 33px;}
+.vip_ghtips ul li{ list-style:none; font-size:12px; padding:0px; margin:0px 0px 5px 0px;}
+.vip_ghtipli01{ color:#FF560B; font-weight:bold;}
+.vip_ghtipli01 b{ color:#077ABD;}
+.vip_ghtipli02{ color:#FD8E5C; }
