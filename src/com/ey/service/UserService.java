@@ -2,6 +2,7 @@ package com.ey.service;
 
 import java.util.List;
 
+import com.ey.dao.entity.UserBase;
 import com.ey.entity.User;
 
 public interface UserService {
@@ -16,6 +17,6 @@ public interface UserService {
 	
 	public User findUserById(Long id) throws RuntimeException;
 	
-	public User findUserByLoginCode(String loginCode,String password) throws RuntimeException;
+	public UserBase findUserByLoginCode(String loginCode,String password) throws RuntimeException;
 	  
 }

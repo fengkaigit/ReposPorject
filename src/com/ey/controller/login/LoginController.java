@@ -1,43 +1,205 @@
 package com.ey.controller.login;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
-import com.ey.entity.User;
+import com.ey.dao.entity.UserBase;
 import com.ey.service.LoginService;
-import com.ey.service.UserService;
 import com.ey.util.MD5;
 import com.ey.util.RequestUtils;
-
+import com.ey.util.StringUtil;
+import com.ey.util.VerifyCodeUtil;
 
 @Controller
-@SessionAttributes("USER")
 public class LoginController extends BaseController {
-     
-	 @Autowired
-     private LoginService loginService;
-	
-	 @RequestMapping(value="/login")
-     public ModelAndView login(User user,HttpServletRequest request,HttpServletResponse response){
-   	  User currentUser = loginService.findUserByLoginCode(user.getLoginCode(),MD5.getMD5Str(user.getPassword()));
-   	  ModelAndView mav = new ModelAndView();
-   	  if(currentUser==null){
-   		  mav.addObject("message", RequestUtils.getMessage("login", request));
-   		  mav.setViewName("login/login");
-   	  }else{
-   		  mav.setViewName("redirect:/user/list.do");
-   		  mav.addObject(SystemConst.USER,currentUser);
-   	  }
-   	  return mav;
-     }
+
+	@Autowired
+	private LoginService loginService;
+
+	@RequestMapping(value = "/dologin")
+	public ModelAndView login(HttpServletRequest request,
+			HttpServletResponse response) {
+		String verify = request.getParameter("verify");
+		String loginCode = request.getParameter("loginCode");
+		String password = request.getParameter("password");
+		ModelAndView mav = new ModelAndView();
+		if (StringUtil.isEmptyString(loginCode)) {
+			mav.addObject("message", RequestUtils.getMessage("nologin",
+					request));
+			mav.setViewName("login/login");
+			return mav;
+		}
+		if (StringUtil.isEmptyString(password)) {
+			mav.addObject("message", RequestUtils.getMessage("nopassword",
+					request));
+			mav.setViewName("login/login");
+			return mav;
+		}
+
+		if (StringUtil.isEmptyString(verify)) {
+			mav.addObject("message", RequestUtils.getMessage("noverify",
+					request));
+			mav.setViewName("login/login");
+			return mav;
+		} else {
+			String validateCode = (String) request.getSession().getAttribute(
+					"validateCode");
+			if (!verify.equalsIgnoreCase(validateCode)) {
+				mav.addObject("message", RequestUtils.getMessage(
+						"invalidateverify", request));
+				mav.setViewName("login/login");
+				return mav;
+			}
+		}
+		UserBase currentUser = loginService.findUserByLoginCode(loginCode, MD5
+				.getMD5Str(password));
+
+		if (currentUser == null) {
+			mav.addObject("message", RequestUtils.getMessage("login", request));
+			mav.setViewName("login/login");
+		} else {
+			mav.setViewName("redirect:/main.do");
+			mav.addObject(SystemConst.USER, currentUser);
+			request.getSession().setAttribute(SystemConst.USER,currentUser);
+		}
+		return mav;
+	}
+
+	@RequestMapping(value = "/getVerify")
+	public ModelAndView getVerify(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		VerifyCodeUtil verify = new VerifyCodeUtil();
+		StringBuffer randomCode = new StringBuffer("");
+		BufferedImage bufferImg = verify.generateCode(randomCode);
+		// 将四位数字的验证码保存到Session中。
+		HttpSession session = request.getSession();
+		session.setAttribute("validateCode", randomCode.toString());
+		// 禁止图像缓存。
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
+		response.setContentType("image/jpeg");
+		// 将图像输出到Servlet输出流中。
+		ServletOutputStream sos = response.getOutputStream();
+		ImageIO.write(bufferImg, "jpeg", sos);
+		sos.close();
+		return null;
+	}
+
+	@RequestMapping(value = "/reg")
+	public ModelAndView reg(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("login/reg");
+		return mav;
+	}
+
+	@RequestMapping(value = "/login")
+	public ModelAndView gologin(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("login/login");
+		return mav;
+	}
+	@RequestMapping(value = "/doreg")
+	public ModelAndView doreg(HttpServletRequest request,
+			HttpServletResponse response,UserBase user) {
+		String verify = request.getParameter("verify");
+		
+		ModelAndView mav = new ModelAndView();
+		if (StringUtil.isEmptyString(user.getAccountNumber())) {
+			mav.addObject("message", RequestUtils.getMessage("nologin",
+					request));
+			mav.setViewName("login/reg");
+			return mav;
+		}
+		if (StringUtil.isEmptyString(user.getRealName())) {
+			mav.addObject("message", RequestUtils.getMessage("norealname",
+					request));
+			mav.setViewName("login/reg");
+			return mav;
+		}
+		if (StringUtil.isEmptyString(user.getPasswd())) {
+			mav.addObject("message", RequestUtils.getMessage("nopassword",
+					request));
+			mav.setViewName("login/reg");
+			return mav;
+		}
+
+		if (StringUtil.isEmptyString(verify)) {
+			mav.addObject("message", RequestUtils.getMessage("noverify",
+					request));
+			mav.setViewName("login/reg");
+			return mav;
+		} else {
+			String validateCode = (String) request.getSession().getAttribute(
+					"validateCode");
+			if (!verify.equalsIgnoreCase(validateCode)) {
+				mav.addObject("message", RequestUtils.getMessage(
+						"invalidateverify", request));
+				mav.setViewName("login/reg");
+				return mav;
+			}
+		}
+		user.setPasswd(MD5
+				.getMD5Str(user.getPasswd()));
+		UserBase currentUser = loginService.findUserByLoginCode(user.getAccountNumber());
+		if(currentUser!=null){
+			mav.addObject("message", RequestUtils.getMessage("duplicateuser", request));
+			mav.setViewName("login/reg");
+		}else{
+			try{
+				loginService.saveUser(user);
+				mav.setViewName("redirect:/main.do");
+				mav.addObject(SystemConst.USER, user);
+			}catch(Exception ex){
+				mav.addObject("message", RequestUtils.getMessage("registererror", request));
+				mav.setViewName("login/reg");
+				return mav;
+			}
+		}
+		return mav;
+	}
+	@RequestMapping(value = "/logout")
+	public ModelAndView logout(HttpServletRequest request,
+			HttpServletResponse response) {
+		request.getSession().removeAttribute(SystemConst.USER);
+		request.getSession().invalidate();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/main.do");
+		return mav;
+	}
+	@RequestMapping(value = "/checkreg")
+	public ModelAndView checkreg(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		String accountNumber = request.getParameter("accountNumber");
+		UserBase user = loginService.findUserByLoginCode(accountNumber);
+		String message = "此登录名可以注册!";
+		if(user!=null){
+			message = "此登录名已存在,请填写其它用户名!";
+		}
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		out.print(message);
+		out.close();
+		return null;
+	}
 }

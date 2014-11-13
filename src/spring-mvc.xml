@@ -106,6 +106,14 @@
           <property name="excludeMappingUrls"> 
                    <list> 
                         <value>/login.do</value>
+                        <value>/main.do</value>
+                        <value>/getVerify.do</value>
+                        <value>/reg.do</value>
+                        <value>/doreg.do</value>
+                        <value>/dologin.do</value>
+                        <value>/logout.do</value>
+                        <value>/checkreg.do</value>
+                        <value>/sf/gosf.do</value>
                    </list> 
          </property>
           

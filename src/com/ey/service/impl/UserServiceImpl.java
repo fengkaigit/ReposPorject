@@ -4,12 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.UserDAO;
-import com.ey.dao.base.BaseDAO;
+import com.ey.dao.common.dbid.DbidGenerator;
+import com.ey.dao.entity.UserBase;
 import com.ey.entity.User;
 import com.ey.entity.UserOrgan;
 import com.ey.service.UserService;
@@ -55,7 +53,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findUserByLoginCode(String loginCode,String password) throws RuntimeException {
+	public UserBase findUserByLoginCode(String loginCode,String password) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return userDAO.findUserByLoginCode(loginCode, password);
 	}

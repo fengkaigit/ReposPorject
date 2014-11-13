@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ey.dao.UserDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
+import com.ey.dao.entity.UserBase;
 import com.ey.entity.User;
 
 
@@ -45,14 +46,31 @@ public class UserDAOImpl extends BaseDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User findUserByLoginCode(String loginCode, String password)
+	public UserBase findUserByLoginCode(String loginCode, String password)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql="from User where loginCode = ? and password = ? order by id";
-		List<User> users = this.find(hql, new Object[]{loginCode,password});
+		String hql="from UserBase where accountNumber = ? and passwd = ? order by id";
+		List<UserBase> users = this.find(hql, new Object[]{loginCode,password});
 		if(users!=null&&users.size()>0)
 			return users.get(0);
 		return null;
+	}
+
+	@Override
+	public UserBase findUserByLoginCode(String loginCode) {
+		String hql="from UserBase where accountNumber = ?";
+		List<UserBase> users = this.find(hql, new Object[]{loginCode});
+		if(users!=null&&users.size()>0)
+			return users.get(0);
+		return null;
+	}
+
+	@Override
+	public void saveUser(UserBase user) {
+		if(user.getId()==0){
+			super.getDbId(user);
+		}
+		super.save(user);
 	}
 
 }

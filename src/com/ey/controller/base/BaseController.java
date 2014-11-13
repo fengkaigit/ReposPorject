@@ -24,7 +24,7 @@ public class BaseController {
 	
 	@RequestMapping(value="/main")
     public ModelAndView main(HttpServletRequest request,HttpServletResponse response){
-  	 // ModelAndView mav = new ModelAndView("test/main");
-  	  return null;
+  	  ModelAndView mav = new ModelAndView("home/index");
+  	  return mav;
     }
 }

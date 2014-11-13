@@ -202,7 +202,7 @@ public class BaseDAOImpl implements BaseDAO{
         }  
         return q.executeUpdate();  
     }  
-  private void getDbId(Object o){
+  protected void getDbId(Object o){
 	  try {
 		  BeanUtils.setProperty(o, "id", DbidGenerator.getDbidGenerator().getNextId());
 	}catch (Exception e) {
