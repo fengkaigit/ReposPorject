@@ -1,6 +1,6 @@
 package com.ey.dao.base.impl;
 
-import com.ey.dao.UserDAO;
+
 import com.ey.dao.base.BaseDAO;
 import com.ey.dao.common.dbid.DbidGenerator;
 
@@ -107,30 +107,24 @@ public class BaseDAOImpl implements BaseDAO{
     }  
   
     public List find(String hql, List<Object> param, Integer page, Integer rows) {  
-        if (page == null || page < 1) {  
-            page = 1;  
-        }  
-        if (rows == null || rows < 1) {  
-            rows = 10;  
-        }  
         Query q = this.getCurrentSession().createQuery(hql);  
         if (param != null && param.size() > 0) {  
             for (int i = 0; i < param.size(); i++) {  
                 q.setParameter(i, param.get(i));  
             }  
         }  
-        return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();  
+        if(page!=null&&page>0&&rows!=null&&rows>0){
+        	q.setFirstResult((page - 1) * rows).setMaxResults(rows);
+        }
+        return q.list();  
     }  
     
     public List find(String hql,Integer page,Integer rows) {  
-        if (page == null || page < 1) {  
-            page = 1;  
-        }  
-        if (rows == null || rows < 1) {  
-            rows = 10;  
-        }  
-        Query q = this.getCurrentSession().createQuery(hql);  
-        return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();  
+        Query q = this.getCurrentSession().createQuery(hql); 
+        if(page!=null&&page>0&&rows!=null&&rows>0){
+        	q.setFirstResult((page - 1) * rows).setMaxResults(rows);
+        }
+        return q.list();  
     } 
     
     public Object get(Class c, Serializable id) {  
