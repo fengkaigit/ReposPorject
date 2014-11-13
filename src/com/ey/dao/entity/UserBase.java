@@ -20,7 +20,7 @@ public class UserBase implements java.io.Serializable {
 	private String realName;
 	private Integer registType;
 	private String passwd;
-	private String EMail;
+	private String email;
 	private String mobilePhone;
 	private double accountScore;
 
@@ -53,7 +53,7 @@ public class UserBase implements java.io.Serializable {
 		this.realName = realName;
 		this.registType = registType;
 		this.passwd = passwd;
-		this.EMail = EMail;
+		this.email = EMail;
 		this.mobilePhone = mobilePhone;
 		this.accountScore = accountScore;
 	}
@@ -61,11 +61,11 @@ public class UserBase implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -105,7 +105,7 @@ public class UserBase implements java.io.Serializable {
 		this.registType = registType;
 	}
 
-	@Column(name = "passwd", nullable = false, length = 20)
+	@Column(name = "passwd", nullable = false, length = 150)
 	public String getPasswd() {
 		return this.passwd;
 	}
@@ -115,18 +115,20 @@ public class UserBase implements java.io.Serializable {
 	}
 
 	@Column(name = "e_mail", length = 30)
-	public String getEMail() {
-		return this.EMail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEMail(String EMail) {
-		this.EMail = EMail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Column(name = "mobile_phone", length = 15)
 	public String getMobilePhone() {
 		return this.mobilePhone;
 	}
+
+	
 
 	public void setMobilePhone(String mobilePhone) {
 		this.mobilePhone = mobilePhone;
