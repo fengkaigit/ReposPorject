@@ -7,7 +7,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.entity.User;
-import com.ey.service.UserService;
 
 public class LoginInterceptor implements HandlerInterceptor {
 

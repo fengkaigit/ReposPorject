@@ -10,7 +10,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.consts.SystemConst;
-import com.ey.service.UserService;
 
 public class CommonInterceptor implements  HandlerInterceptor {
 
