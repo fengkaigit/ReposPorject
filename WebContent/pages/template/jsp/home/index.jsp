@@ -2,18 +2,7 @@
     pageEncoding="utf-8" import="com.ey.dao.entity.UserBase,com.ey.consts.SystemConst"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<title>e缴365</title>
-<meta content="" name="description">
-<link rel="stylesheet" type="text/css" href="css/global.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/dh.css">
-<script type="text/javascript" src="js/jquery.min.js"></script> 
-<link rel="stylesheet" type="text/css" href="css/ui/ui.css">  
-<link rel="stylesheet" type="text/css" href="css/login/login.css">  
-<link rel="stylesheet" type="text/css" href="css/zzsc.css">
-<script type="text/javascript" src="js/home.js"></script>
+<%@include file="/pages/template/jsp/common/common.jsp"%>
 <script language="javascript">
 var keywordtitle="输入验证码";
 function SearchFocus(obj){
@@ -151,28 +140,28 @@ jQuery(document).ready(
     <div class="headtitle"><em><i class="icons icon-novice"></i></em> 缴费专区</div>
     <ul class="clearfix">
       <li>
-        <a href="gosf.do" target="_blank" >
+        <a href="<%=request.getContextPath() %>/sf/first.do" target="_blank" >
           <div style="color:#f85f20" class="title">水费</div>
           <div style="background-position:-62px 0px" class="pic"></div>
           <div class="note">7*24小时服务</div>
         </a>
       </li>
       <li>
-        <a href="jiaofei_d.html" target="_blank">
+        <a href="<%=request.getContextPath() %>/df/first.do" target="_blank">
           <div style="color:#ac73c1" class="title">电费</div>
           <div style="background-position:0px 0px" class="pic"></div>
           <div class="note">无需排队</div>
         </a>
       </li>
       <li>
-        <a href="jiaofei_q.html" target="_blank">
+        <a href="<%=request.getContextPath() %>/rqf/first.do" target="_blank">
           <div style="color:#3aabda" class="title">燃气费</div>
           <div style="background-position:-124px 0px" class="pic"></div>
           <div class="note">足不出户</div>
         </a>
       </li>
       <li>
-        <a href="jiaofei_gh.html" target="_blank">
+        <a href="<%=request.getContextPath() %>/ghf/first.do" target="_blank">
           <div style="color:#88b838" class="title">固话费</div>
           <div style="background-position:-186px 0px" class="pic"></div>
           <div class="note">动动拇指</div>
@@ -181,14 +170,14 @@ jQuery(document).ready(
     </ul>
     <ul class="clearfix">
       <li>
-        <a href="jiaofei_sj.html" target="_blank">
+        <a href="<%=request.getContextPath() %>/ydtx/first.do" target="_blank">
           <div style="color:#55c6c6" class="title">移动通讯</div>
           <div style="background-position:-248px 0px" class="pic"></div>
           <div class="note">一站式缴费</div>
         </a>
       </li>
       <li>
-        <a href="jiaofei_jt.html" target="_blank">
+        <a href="<%=request.getContextPath() %>/jtfk/first.do" target="_blank">
           <div style="color:#f94c03" class="title">交通罚款</div>
           <div style="background-position:-62px  -62px" class="pic"></div>
           <div class="note">第一时间 推送提醒</div>
@@ -196,7 +185,7 @@ jQuery(document).ready(
       </li>
 
       <li>
-        <a target="_blank" href="jiaofei_wy.html">
+        <a target="_blank" href="<%=request.getContextPath() %>/wyf/first.do">
           <div class="title" style="color:#5d83ce">物业费</div>
           <div class="pic" style="background-position:0px -62px"></div>
           <div class="note">无障碍沟通</div>
@@ -204,7 +193,7 @@ jQuery(document).ready(
       </li>
    
          <li>
-        <a target="_blank" href="jiaofei_ds.html">
+        <a target="_blank" href="<%=request.getContextPath() %>/yxds/first.do">
           <div class="title" style="color:#5d83ce">有线电视</div>
           <div class="pic" style="background-position:-124px -62px"></div>
           <div class="note">轻松缴费</div>

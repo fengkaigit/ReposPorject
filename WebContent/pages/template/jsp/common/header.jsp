@@ -22,16 +22,16 @@
                      <%
                      UserBase user = (UserBase)session.getAttribute(SystemConst.USER);
                      if(user==null){ %>
-                     <a rel="nofollow" style="color:#fc8936" href="reg.do">免费注册</a>
-                     <a style="color:#a0db00" href="login.do">立即登录</a>
+                     <a rel="nofollow" style="color:#fc8936" href="<%=request.getContextPath() %>/reg.do">免费注册</a>
+                     <a style="color:#a0db00" href="<%=request.getContextPath() %>/login.do">立即登录</a>
                 	<%}else{ %>
                 	<a style="color:#a0db00" href="javascript:void(0)">欢迎你，<%=user.getRealName() %></a>
-                	 <a rel="nofollow" style="color:#fc8936" href="logout.do">注销</a>
+                	 <a rel="nofollow" style="color:#fc8936" href="<%=request.getContextPath() %>/logout.do">注销</a>
                 	<%} %>
         </div>
         </div>
         <div class="logo">
-            <h2><a href="main.do"><img width="450" height="51" src="images/common/logo.png" alt="E缴365"></a></h2>
+            <h2><a href="<%=request.getContextPath() %>/main.do"><img width="450" height="51" src="<%=request.getContextPath() %>/images/common/logo.png" alt="E缴365"></a></h2>
         </div>
         <div class="userbar">
 

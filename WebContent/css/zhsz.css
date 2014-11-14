@@ -1,0 +1,102 @@
+.jfzh-title{border-bottom:1px solid #ddd; width::100%;padding-left:20px;height:32px;line-height:32px; font-size:16px; font-family:"微软雅黑"; font-weight:700;}
+.label{font-size:14px; width:85px; overflow:hidden; padding-left:6px; float:left;}
+.jbxx{width:420px}
+.jbxx .items,.zdtx .items{margin-top:10px;}
+.zdtx{width:440px;padding-left:20px;border-left:1px solid #ddd;}
+.jfzh-con{width:888px; margin:10px auto;padding:10 50px; border:1px solid #ddd;}
+.tab {border-top:1px solid #ddd;border-right:1px solid #ddd;width:440px;;}
+.tab td{border-bottom:1px solid #ddd;border-left:1px solid #ddd; height:26px; line-height:24px;padding-left:5px;font-size: 12px;}
+.tab .even{background:#f7f7f7;}
+.tab .add{background:#f2f2f3;}
+.tab .add1{background:#f2f2f3;font-size: 14px;}
+.jfzh-con .name{font-weight:700; height:24px; line-height:24px;}
+.save{height:31px;line-height:31px;margin:5px auto; text-align:center;}
+#addbills {
+    position:absolute;
+    font-size: 12px;
+padding:10px;
+	width:460px;
+	height:380px;
+	z-index:999;
+	top:170px;
+	left:340px;
+	border:2px solid #ddd;
+	background:#fff;
+}
+#addbills td{border-left:1px solid #ddd;border-bottom:1px solid #ddd; height:28px; line-height:28px;padding:5px 10px;}
+#addbills select {
+    font-size: 12px;
+}
+
+#addbills table {
+    font-size: 12px;
+	
+	width:460px;
+	margin:10px auto;
+	border-top:1px solid #ddd;
+	border-right:1px solid #ddd;
+	
+}
+
+#addbills .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+
+
+#addbills h1 {
+	height:25px;
+    text-indent: 70px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #cccccc;
+    background-image: url(../images/common/logo11.png);
+    background-repeat: no-repeat;
+    background-position: left top;
+    padding-bottom: 15px;
+    font-size: 14px;
+    color: #16619d;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+select {
+    -moz-appearance: menulist;
+    -moz-user-select: none;
+    background-color: -moz-combobox;
+    border-color: threedface;
+    border-style: inset;
+    border-width: 2px;
+    box-sizing: border-box;
+    color: -moz-comboboxtext;
+    cursor: default;
+    display: inline-block;
+    font: ;
+    line-height: normal !important;
+    margin: 0;
+    overflow: -moz-hidden-unscrollable;
+    page-break-inside: avoid;
+    text-align: start;
+    text-indent: 0;
+    text-shadow: none;
+    white-space: nowrap !important;
+    word-wrap: normal !important;
+}
+.billInput {
+    background-color: #ffffff;
+    border-color: #a5acb2;
+    border-style: solid;
+    border-width: 1px;
+    color: #000000;
+    width: 125px;
+}
+input {
+    font-size: 14px;
+}
+.cur{cursor:pointer}

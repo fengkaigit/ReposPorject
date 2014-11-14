@@ -28,7 +28,7 @@
     </dl>
     <dl class="end">
     <dt>首页二维码</dt>
-    <dd><img src="images/common/wx.jpg"></dd>
+    <dd><img src="<%=request.getContextPath() %>/images/common/wx.jpg"></dd>
     </dl>
 
 

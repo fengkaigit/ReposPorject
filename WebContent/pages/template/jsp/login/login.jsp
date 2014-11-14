@@ -2,26 +2,7 @@
 	pageEncoding="utf-8"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<title>e缴365</title>
-<meta content="" name="description">
-<link rel="stylesheet" type="text/css" href="css/global.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/dh.css">
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script src="js/common/formValidator.js" language="Javascript"></script>
-<script src="js/common/regularExpression.js" language="Javascript"></script>
-<link href="css/jquery/transfer_new.css" type="text/css"
-	rel="stylesheet">
-<link href="css/jquery/validator.css" type="text/css" rel="stylesheet">
-<link href="css/login/register.css" type="text/css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/ui/ui.css">  
-<link rel="stylesheet" type="text/css" href="css/login/login.css"> 
-<link rel="stylesheet" type="text/css" href="css/zzsc.css">
- <link type="text/css" rel="stylesheet" href="css/validator.css"></link>
- 
-<script type="text/javascript" src="js/home.js"></script>
+<%@include file="/pages/template/jsp/common/common.jsp"%>
 <script language="javascript">
 var keywordtitle="输入验证码";
 function SearchFocus(obj){

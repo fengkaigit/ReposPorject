@@ -1169,7 +1169,7 @@ a: hover {
 #footer .navsub p{padding:5px 0;}
 #footer .navsub a{padding:0 5px;}
 .fw-con{background-color:#fff;border-top:1px solid #eee;padding:10px 0;margin-top:10px;}
-.fw{width:1000px; margin:10 auto 0 auto; }
+.fw{width:1000px; margin:10px auto 0 auto; }
 .fw dl{width:240px; float: left; text-align:center; border-right:1px dashed #ddd;}
 .fw dl.end{border:0px;}
 .fw dl dt{font-weight:700; font-size:14px; padding:5px 0;}

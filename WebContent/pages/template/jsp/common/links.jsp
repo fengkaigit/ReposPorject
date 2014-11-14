@@ -7,11 +7,11 @@
 <body>
 <div class="links">
 	<ul class="clearfix">
-    	<li><img src="images/common/wj.gif"></li>
-        <li><img src="images/common/ws.gif"></li>
-        <li><img src="images/common/zfb.gif"></li>
-        <li><img src="images/common/yl.gif"></li>
-        <li><img src="images/common/wxyz.gif"></li>
+    	<li><img src="<%=request.getContextPath() %>/images/common/wj.gif"></li>
+        <li><img src="<%=request.getContextPath() %>/images/common/ws.gif"></li>
+        <li><img src="<%=request.getContextPath() %>/images/common/zfb.gif"></li>
+        <li><img src="<%=request.getContextPath() %>/images/common/yl.gif"></li>
+        <li><img src="<%=request.getContextPath() %>/images/common/wxyz.gif"></li>
        </ul>
 </div>
 </body></html>
