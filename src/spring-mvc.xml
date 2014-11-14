@@ -113,7 +113,12 @@
                         <value>/dologin.do</value>
                         <value>/logout.do</value>
                         <value>/checkreg.do</value>
-                        <value>/sf/gosf.do</value>
+                        <value>/sf/first.do</value>
+                        <value>/df/first.do</value>
+                        <value>/rqf/first.do</value>
+                        <value>/ghf/first.do</value>
+                        <value>/ydtx/first.do</value>
+                        <value>/jtfk/first.do</value>
                    </list> 
          </property>
           
