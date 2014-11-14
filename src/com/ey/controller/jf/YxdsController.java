@@ -10,13 +10,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ey.controller.base.BaseController;
 
 @Controller
-@RequestMapping(value="/sf")
-public class SfController extends BaseController {
+@RequestMapping(value="/yxds")
+public class YxdsController extends BaseController {
 	@RequestMapping(value = "/first")
 	public ModelAndView first(HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("jf/sf/first");
+		mav.setViewName("jf/yxds/first");
 		return mav;
 	}
 	
