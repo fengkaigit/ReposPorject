@@ -20,7 +20,7 @@ public class IncomeBill implements java.io.Serializable {
 	private Long id;
 	private Date createDate;
 	private Date confirmDate;
-	private Long profitMoney;
+	private Double profitMoney;
 	private Integer status;
 
 	// Constructors
@@ -30,7 +30,7 @@ public class IncomeBill implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public IncomeBill(Long id, Date createDate, Long profitMoney, Integer status) {
+	public IncomeBill(Long id, Date createDate, Double profitMoney, Integer status) {
 		this.id = id;
 		this.createDate = createDate;
 		this.profitMoney = profitMoney;
@@ -39,7 +39,7 @@ public class IncomeBill implements java.io.Serializable {
 
 	/** full constructor */
 	public IncomeBill(Long id, Date createDate, Date confirmDate,
-			Long profitMoney, Integer status) {
+			Double profitMoney, Integer status) {
 		this.id = id;
 		this.createDate = createDate;
 		this.confirmDate = confirmDate;
@@ -78,12 +78,12 @@ public class IncomeBill implements java.io.Serializable {
 		this.confirmDate = confirmDate;
 	}
 
-	@Column(name = "profit_money", nullable = false)
-	public Long getProfitMoney() {
+	@Column(name = "profit_money", precision = 20, scale = 2, nullable = false)
+	public Double getProfitMoney() {
 		return this.profitMoney;
 	}
 
-	public void setProfitMoney(Long profitMoney) {
+	public void setProfitMoney(Double profitMoney) {
 		this.profitMoney = profitMoney;
 	}
 

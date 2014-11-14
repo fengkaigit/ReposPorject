@@ -64,7 +64,7 @@ public class AgentPaymentBatch implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "batch_money", precision = 22, scale = 0)
+	@Column(name = "batch_money", precision = 20, scale = 2)
 	public double getBatchMoney() {
 		return this.batchMoney;
 	}

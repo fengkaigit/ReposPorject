@@ -20,7 +20,7 @@ public class EntRefundBill implements java.io.Serializable {
 	private Long id;
 	private Date createTime;
 	private Date confirmTime;
-	private Long transferMoney;
+	private Double transferMoney;
 	private Long status;
 	private Long entId;
 	private Integer transferWay;
@@ -32,7 +32,7 @@ public class EntRefundBill implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public EntRefundBill(Long id, Date createTime, Long transferMoney,
+	public EntRefundBill(Long id, Date createTime, Double transferMoney,
 			Long status, Long entId, Integer transferWay) {
 		this.id = id;
 		this.createTime = createTime;
@@ -44,7 +44,7 @@ public class EntRefundBill implements java.io.Serializable {
 
 	/** full constructor */
 	public EntRefundBill(Long id, Date createTime, Date confirmTime,
-			Long transferMoney, Long status, Long entId, Integer transferWay) {
+			Double transferMoney, Long status, Long entId, Integer transferWay) {
 		this.id = id;
 		this.createTime = createTime;
 		this.confirmTime = confirmTime;
@@ -85,12 +85,12 @@ public class EntRefundBill implements java.io.Serializable {
 		this.confirmTime = confirmTime;
 	}
 
-	@Column(name = "transfer_money", nullable = false)
-	public Long getTransferMoney() {
+	@Column(name = "transfer_money", precision = 20, scale = 2, nullable = false)
+	public Double getTransferMoney() {
 		return this.transferMoney;
 	}
 
-	public void setTransferMoney(Long transferMoney) {
+	public void setTransferMoney(Double transferMoney) {
 		this.transferMoney = transferMoney;
 	}
 

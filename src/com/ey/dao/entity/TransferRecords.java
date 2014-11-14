@@ -21,8 +21,8 @@ public class TransferRecords implements java.io.Serializable {
 	private Date transferTime;
 	private double poundage;
 	private double transferMoney;
-	private String transferOutAccountId;
-	private String transferInAccountId;
+	private Long transferOutAccountId;
+	private Long transferInAccountId;
 	private Integer transferType;
 	private Integer transferStatus;
 
@@ -34,8 +34,8 @@ public class TransferRecords implements java.io.Serializable {
 
 	/** minimal constructor */
 	public TransferRecords(Long id, Date transferTime, double poundage,
-			double transferMoney, String transferOutAccountId,
-			String transferInAccountId, Integer transferType) {
+			double transferMoney, Long transferOutAccountId,
+			Long transferInAccountId, Integer transferType) {
 		this.id = id;
 		this.transferTime = transferTime;
 		this.poundage = poundage;
@@ -47,8 +47,8 @@ public class TransferRecords implements java.io.Serializable {
 
 	/** full constructor */
 	public TransferRecords(Long id, Date transferTime, double poundage,
-			double transferMoney, String transferOutAccountId,
-			String transferInAccountId, Integer transferType,
+			double transferMoney, Long transferOutAccountId,
+			Long transferInAccountId, Integer transferType,
 			Integer transferStatus) {
 		this.id = id;
 		this.transferTime = transferTime;
@@ -99,21 +99,21 @@ public class TransferRecords implements java.io.Serializable {
 		this.transferMoney = transferMoney;
 	}
 
-	@Column(name = "transfer_out_account_id", nullable = false, length = 30)
-	public String getTransferOutAccountId() {
+	@Column(name = "transfer_out_account_id", nullable = false)
+	public Long getTransferOutAccountId() {
 		return this.transferOutAccountId;
 	}
 
-	public void setTransferOutAccountId(String transferOutAccountId) {
+	public void setTransferOutAccountId(Long transferOutAccountId) {
 		this.transferOutAccountId = transferOutAccountId;
 	}
 
-	@Column(name = "transfer_in_account_id", nullable = false, length = 30)
-	public String getTransferInAccountId() {
+	@Column(name = "transfer_in_account_id", nullable = false)
+	public Long getTransferInAccountId() {
 		return this.transferInAccountId;
 	}
 
-	public void setTransferInAccountId(String transferInAccountId) {
+	public void setTransferInAccountId(Long transferInAccountId) {
 		this.transferInAccountId = transferInAccountId;
 	}
 
