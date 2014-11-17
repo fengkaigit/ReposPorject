@@ -19,5 +19,25 @@ public class YdtxController extends BaseController {
 		mav.setViewName("jf/ydtx/first");
 		return mav;
 	}
-	
+	@RequestMapping(value = "/second")
+	public ModelAndView second(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/ydtx/second");
+		return mav;
+	}
+	@RequestMapping(value = "/third")
+	public ModelAndView third(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/ydtx/third");
+		return mav;
+	}
+	@RequestMapping(value = "/fourth")
+	public ModelAndView fourth(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/ydtx/fourth");
+		return mav;
+	}
 }

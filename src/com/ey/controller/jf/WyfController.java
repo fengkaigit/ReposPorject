@@ -19,5 +19,25 @@ public class WyfController extends BaseController {
 		mav.setViewName("jf/wyf/first");
 		return mav;
 	}
-	
+	@RequestMapping(value = "/second")
+	public ModelAndView second(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/wyf/second");
+		return mav;
+	}
+	@RequestMapping(value = "/third")
+	public ModelAndView third(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/wyf/third");
+		return mav;
+	}
+	@RequestMapping(value = "/fourth")
+	public ModelAndView fourth(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/wyf/fourth");
+		return mav;
+	}
 }

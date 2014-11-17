@@ -19,5 +19,25 @@ public class RQfController extends BaseController {
 		mav.setViewName("jf/rqf/first");
 		return mav;
 	}
-	
+	@RequestMapping(value = "/second")
+	public ModelAndView second(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/rqf/second");
+		return mav;
+	}
+	@RequestMapping(value = "/third")
+	public ModelAndView third(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/rqf/third");
+		return mav;
+	}
+	@RequestMapping(value = "/fourth")
+	public ModelAndView fourth(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/rqf/fourth");
+		return mav;
+	}
 }

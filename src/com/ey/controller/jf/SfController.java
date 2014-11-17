@@ -19,5 +19,25 @@ public class SfController extends BaseController {
 		mav.setViewName("jf/sf/first");
 		return mav;
 	}
-	
+	@RequestMapping(value = "/second")
+	public ModelAndView second(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/sf/second");
+		return mav;
+	}
+	@RequestMapping(value = "/third")
+	public ModelAndView third(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/sf/third");
+		return mav;
+	}
+	@RequestMapping(value = "/fourth")
+	public ModelAndView fourth(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jf/sf/fourth");
+		return mav;
+	}
 }
