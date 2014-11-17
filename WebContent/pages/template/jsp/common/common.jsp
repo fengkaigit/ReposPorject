@@ -2,7 +2,6 @@
     pageEncoding="utf-8"%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<title>e缴365</title>
 <meta content="" name="description">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
