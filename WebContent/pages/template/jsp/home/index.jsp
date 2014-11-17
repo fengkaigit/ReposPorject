@@ -2,6 +2,7 @@
     pageEncoding="utf-8" import="com.ey.dao.entity.UserBase,com.ey.consts.SystemConst"%>
 <html>
 <head>
+<title>e缴365</title>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <script language="javascript">
 var keywordtitle="输入验证码";
@@ -217,6 +218,6 @@ if(w>1000){
 }
 
 </script>
-		<script type="text/javascript" src="js/zzsc.js"></script> 
-<script src="js/funs.js" type="text/javascript"></script>
+		<script type="text/javascript" src="<%=request.getContextPath() %>/js/zzsc.js"></script> 
+<script src="<%=request.getContextPath() %>/js/funs.js" type="text/javascript"></script>
 </body></html>
