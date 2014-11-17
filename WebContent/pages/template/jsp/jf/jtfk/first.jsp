@@ -2,6 +2,7 @@
     pageEncoding="utf-8"%>
 <html>
 <head>
+<title>交通罚款缴费 - 生活助手</title>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <link href="<%=request.getContextPath() %>/css/apps.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
 <link href="<%=request.getContextPath() %>/css/jiaofei.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
@@ -29,49 +30,49 @@
 					</div>
 					<div class="ui-box-container">
 						<ul>
-								<li class="myapp-item  myapp-item-selected fn-clear">
-								<a seed="myapp-item-1000000016" href="jiaofei_s.html">
+								<li class="myapp-item   fn-clear">
+								<a seed="myapp-item-1000000016" href="<%=request.getContextPath() %>/sf/first.do">
 									<span data-id="10016" class="myapp-icon icon-apps24-10016">自来水缴费</span>
 									<span class="myapp-item-name">自来水缴费</span>	<span class="my-app-item-hot" title="热门应用">热门应用</span>																</a>
 								</li>
 								<li class="myapp-item   fn-clear">
-								<a seed="myapp-item-1000000048" href="jiaofei_d.html">
+								<a seed="myapp-item-1000000048" href="<%=request.getContextPath() %>/df/first.do">
 									<span data-id="10048" class="myapp-icon icon-apps24-10048">电费缴费</span>
 									<span class="myapp-item-name">电费缴费</span>
 																		</a>
 															</li>
 															<li class="myapp-item  fn-clear">
-								<a seed="myapp-item-1000000048" href="jiaofei_q.html">
+								<a seed="myapp-item-1000000048" href="<%=request.getContextPath() %>/rqf/first.do">
 									<span data-id="10051" class="myapp-icon icon-apps24-10051">燃气缴费</span>
 									<span class="myapp-item-name">燃气费</span>
 																										</a>
 															</li>
 															<li class="myapp-item  fn-clear">
-								<a seed="myapp-item-1000000056" href="jiaofei_sj.html">
+								<a seed="myapp-item-1000000056" href="<%=request.getContextPath() %>/ydtx/first.do">
 									<span data-id="10056" class="myapp-icon icon-apps24-10056">移动通信</span>
 									<span class="myapp-item-name">移动通信</span>
 																										</a>
 															</li>
 															<li class="myapp-item  fn-clear">
-								<a seed="myapp-item-1000000063" href="jiaofei_gh.html">
+								<a seed="myapp-item-1000000063" href="<%=request.getContextPath() %>/ghf/first.do">
 									<span data-id="10063" class="myapp-icon icon-apps24-10063">固话宽带</span>
 									<span class="myapp-item-name">固话宽带</span>
 																										</a>
 															</li>
-																<li class="myapp-item  fn-clear">
-								<a seed="myapp-item-1000000086" href="jiaofei_jt.html">
+																<li class="myapp-item myapp-item-selected  fn-clear">
+								<a seed="myapp-item-1000000086" href="<%=request.getContextPath() %>/jtfk/first.do">
 									<span data-id="10073" class="myapp-icon icon-apps24-10073">交通罚款</span>
 									<span class="myapp-item-name">交通罚款</span>
 																										</a>
 															</li>
 															<li class="myapp-item  fn-clear">
-								<a seed="myapp-item-1000000108" href="jiaofei_ds.html">
+								<a seed="myapp-item-1000000108" href="<%=request.getContextPath() %>/yxds/first.do">
 									<span data-id="10075" class="myapp-icon icon-apps24-10075">有线电视缴费</span>
 									<span class="myapp-item-name">有线电视缴费</span>
 																										</a>
 															</li>
 															<li class="myapp-item  fn-clear">
-								<a seed="myapp-item-1000000113" href="jiaofei_wy.html">
+								<a seed="myapp-item-1000000113" href="<%=request.getContextPath() %>/wyf/first.do">
 									<span data-id="10108" class="myapp-icon icon-apps24-10108">物业缴费</span>
 									<span class="myapp-item-name">物业缴费</span>
 																										</a>
@@ -162,7 +163,7 @@
 
         	<div class="jf_txxx_left">
         	
-            	<form target="_blank" method="post" id="form1" action="#">
+            	<form  method="post" id="form1" action="<%=request.getContextPath() %>/jtfk/second.do">
 
 					<input type="hidden" id="searchNumber" value="" name="searchNumber">
 					
@@ -264,7 +265,7 @@
         </a>
         <!-- 图片验证码 -->
 </div>
-<div class="jfxx_btns"><input  type="button"class="jfxx_btn3" onClick="openWin('jiaofei_qr.html')" value="下一步" name="searchBill"></div>
+<div class="jfxx_btns"><input  type="submit" class="jfxx_btn3" value="下一步" name="searchBill"></div>
 
 
 </div>
@@ -333,5 +334,5 @@
 <%@include file="/pages/template/jsp/common/about.jsp"%> 
  <%@include file="/pages/template/jsp/common/footer.jsp"%>
 <%@include file="/pages/template/jsp/common/links.jsp"%>
-<script src="js/funs.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath() %>/js/funs.js" type="text/javascript"></script>
 </body></html>
