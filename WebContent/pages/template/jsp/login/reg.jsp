@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <html>
+<title>会员注册</title>
 <head>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/reg.js" charset="UTF-8"></script>
@@ -370,5 +371,5 @@
 </div>   
  <%@include file="/pages/template/jsp/common/footer.jsp"%>
 <%@include file="/pages/template/jsp/common/links.jsp"%>
-<script src="js/funs.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath() %>/js/funs.js" type="text/javascript"></script>
 </body></html>
