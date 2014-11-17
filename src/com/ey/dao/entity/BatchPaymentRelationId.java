@@ -58,4 +58,5 @@ public class BatchPaymentRelationId implements java.io.Serializable {
 		return (this.getPaymentBillId() == castOther.getPaymentBillId())
 				&& (this.getRelationId() == castOther.getRelationId());
 	}
+
 }

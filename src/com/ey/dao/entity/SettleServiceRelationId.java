@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * SettleProfitRelationId entity. @author MyEclipse Persistence Tools
+ * SettleServiceRelationId entity. @author MyEclipse Persistence Tools
  */
 @Embeddable
 public class SettleServiceRelationId implements java.io.Serializable {
@@ -37,7 +37,7 @@ public class SettleServiceRelationId implements java.io.Serializable {
 		this.serviceBillId = serviceBillId;
 	}
 
-	@Column(name = "settle_id", nullable = false)
+	@Column(name = "settle_bill_id", nullable = false)
 	public Long getSettleBillId() {
 		return this.settleBillId;
 	}
@@ -58,4 +58,5 @@ public class SettleServiceRelationId implements java.io.Serializable {
 		return (this.getServiceBillId() == castOther.getServiceBillId())
 				&& (this.getSettleBillId() == castOther.getSettleBillId());
 	}
+
 }

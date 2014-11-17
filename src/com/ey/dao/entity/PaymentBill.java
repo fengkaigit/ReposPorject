@@ -211,19 +211,19 @@ public class PaymentBill implements java.io.Serializable {
 	public void setPaymentMode(Integer paymentMode) {
 		this.paymentMode = paymentMode;
 	}
-	
+
 	@Column(name = "uuid", length = 50)
 	public String getUuid() {
-		return uuid;
+		return this.uuid;
 	}
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
 
-	@Column(name = "divide_status")
+	@Column(name = "divide_status", nullable = false)
 	public Integer getDivideStatus() {
-		return divideStatus;
+		return this.divideStatus;
 	}
 
 	public void setDivideStatus(Integer divideStatus) {

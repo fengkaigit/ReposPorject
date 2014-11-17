@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * ServiceProfitRelationId entity. @author MyEclipse Persistence Tools
+ * ServicePaymentRelationId entity. @author MyEclipse Persistence Tools
  */
 @Embeddable
 public class ServicePaymentRelationId implements java.io.Serializable {
@@ -58,4 +58,6 @@ public class ServicePaymentRelationId implements java.io.Serializable {
 		return (this.getServiceBillId() == castOther.getServiceBillId())
 				&& (this.getPaymentBillId() == castOther.getPaymentBillId());
 	}
+
+
 }

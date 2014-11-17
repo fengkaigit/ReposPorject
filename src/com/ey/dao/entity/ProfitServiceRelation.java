@@ -32,7 +32,7 @@ public class ProfitServiceRelation implements java.io.Serializable {
 	// Property accessors
 	@EmbeddedId
 	@AttributeOverrides({
-			@AttributeOverride(name = "paymentBillId", column = @Column(name = "payment_bill_id", nullable = false)),
+			@AttributeOverride(name = "serviceBillId", column = @Column(name = "service_bill_id", nullable = false)),
 			@AttributeOverride(name = "profitBillId", column = @Column(name = "profit_bill_id", nullable = false)) })
 	public ProfitServiceRelationId getId() {
 		return this.id;

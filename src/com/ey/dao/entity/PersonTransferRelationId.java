@@ -60,4 +60,5 @@ public class PersonTransferRelationId implements java.io.Serializable {
 						.getTransferRecordsId());
 	}
 
+
 }

@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * IncomeProfitRelationId entity. @author MyEclipse Persistence Tools
+ * IncomeServiceRelationId entity. @author MyEclipse Persistence Tools
  */
 @Embeddable
 public class IncomeServiceRelationId implements java.io.Serializable {

@@ -45,4 +45,18 @@ public class AgentTransferRelationId implements java.io.Serializable {
 	public void setCardNumber(Long cardNumber) {
 		this.cardNumber = cardNumber;
 	}
+
+	public boolean equals(Object other) {
+		if ((this == other))
+			return true;
+		if ((other == null))
+			return false;
+		if (!(other instanceof AgentTransferRelationId))
+			return false;
+		AgentTransferRelationId castOther = (AgentTransferRelationId) other;
+
+		return (this.getId() == castOther.getId())
+				&& (this.getCardNumber() == castOther.getCardNumber());
+	}
+
 }

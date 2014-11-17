@@ -59,4 +59,5 @@ public class PersonRefundPaymentRelationId implements java.io.Serializable {
 				&& (this.getRelationId() == castOther.getRelationId());
 	}
 
+
 }

@@ -59,4 +59,6 @@ public class IncomeTransferRelationId implements java.io.Serializable {
 				&& (this.getTransferRecordsId() == castOther
 						.getTransferRecordsId());
 	}
+
+
 }

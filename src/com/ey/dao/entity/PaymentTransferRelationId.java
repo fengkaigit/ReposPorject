@@ -60,4 +60,5 @@ public class PaymentTransferRelationId implements java.io.Serializable {
 						.getTransferRecordsId());
 	}
 
+
 }

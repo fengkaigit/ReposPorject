@@ -110,6 +110,4 @@ public class DebtNoticeId implements java.io.Serializable {
 						&& castOther.getNoticeStatus() != null && this
 						.getNoticeStatus().equals(castOther.getNoticeStatus())));
 	}
-	
-
 }

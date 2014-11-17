@@ -89,7 +89,6 @@ public class EntRefundBill implements java.io.Serializable {
 	public Double getTransferMoney() {
 		return this.transferMoney;
 	}
-
 	public void setTransferMoney(Double transferMoney) {
 		this.transferMoney = transferMoney;
 	}

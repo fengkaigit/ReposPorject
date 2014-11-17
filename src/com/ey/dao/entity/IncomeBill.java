@@ -77,12 +77,10 @@ public class IncomeBill implements java.io.Serializable {
 	public void setConfirmDate(Date confirmDate) {
 		this.confirmDate = confirmDate;
 	}
-
 	@Column(name = "profit_money", precision = 20, scale = 2, nullable = false)
 	public Double getProfitMoney() {
 		return this.profitMoney;
 	}
-
 	public void setProfitMoney(Double profitMoney) {
 		this.profitMoney = profitMoney;
 	}

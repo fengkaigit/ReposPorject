@@ -32,7 +32,7 @@ public class TransferRate implements java.io.Serializable {
 	// Property accessors
 	@EmbeddedId
 	@AttributeOverrides({
-			@AttributeOverride(name = "bankId", column = @Column(name = "bank_id", nullable = false)),
+			@AttributeOverride(name = "bankId", column = @Column(name = "bank_id", nullable = false, length = 10)),
 			@AttributeOverride(name = "limitMoney", column = @Column(name = "limit_money", nullable = false, precision = 22, scale = 0)),
 			@AttributeOverride(name = "rate", column = @Column(name = "rate", nullable = false, precision = 22, scale = 0)) })
 	public TransferRateId getId() {

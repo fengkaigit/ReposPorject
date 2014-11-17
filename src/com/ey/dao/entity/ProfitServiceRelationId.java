@@ -11,7 +11,7 @@ public class ProfitServiceRelationId implements java.io.Serializable {
 
 	// Fields
 
-	private Long paymentBillId;
+	private Long serviceBillId;
 	private Long profitBillId;
 
 	// Constructors
@@ -21,28 +21,26 @@ public class ProfitServiceRelationId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public ProfitServiceRelationId(Long paymentBillId, Long profitBillId) {
-		this.paymentBillId = paymentBillId;
+	public ProfitServiceRelationId(Long serviceBillId, Long profitBillId) {
+		this.serviceBillId = serviceBillId;
 		this.profitBillId = profitBillId;
 	}
 
 	// Property accessors
 
-	@Column(name = "payment_bill_id", nullable = false)
-	public Long getPaymentBillId() {
-		return this.paymentBillId;
+	@Column(name = "service_bill_id", nullable = false)
+	public Long getServiceBillId() {
+		return this.serviceBillId;
 	}
 
-	public void setPaymentBillId(Long paymentBillId) {
-		this.paymentBillId = paymentBillId;
+	public void setServiceBillId(Long serviceBillId) {
+		this.serviceBillId = serviceBillId;
 	}
 
 	@Column(name = "profit_bill_id", nullable = false)
 	public Long getProfitBillId() {
 		return this.profitBillId;
 	}
-
-	
 
 	public void setProfitBillId(Long profitBillId) {
 		this.profitBillId = profitBillId;
@@ -57,8 +55,9 @@ public class ProfitServiceRelationId implements java.io.Serializable {
 			return false;
 		ProfitServiceRelationId castOther = (ProfitServiceRelationId) other;
 
-		return (this.getPaymentBillId() == castOther.getPaymentBillId())
+		return (this.getServiceBillId() == castOther.getServiceBillId())
 				&& (this.getProfitBillId() == castOther.getProfitBillId());
 	}
+
 
 }

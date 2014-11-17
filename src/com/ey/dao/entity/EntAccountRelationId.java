@@ -58,5 +58,4 @@ public class EntAccountRelationId implements java.io.Serializable {
 		return (this.getId() == castOther.getId())
 				&& (this.getCardNumber() == castOther.getCardNumber());
 	}
-
 }

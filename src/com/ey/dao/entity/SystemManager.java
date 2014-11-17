@@ -15,10 +15,11 @@ public class SystemManager implements java.io.Serializable {
 	// Fields
 
 	private Long id;
-	private Long managerName;
+	private String managerName;
 	private String passwd;
 	private String EMail;
 	private String mobilePhone;
+	private String managerRealname;
 
 	// Constructors
 
@@ -27,20 +28,23 @@ public class SystemManager implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public SystemManager(Long id, Long managerName, String passwd) {
+	public SystemManager(Long id, String managerName, String passwd,
+			String managerRealname) {
 		this.id = id;
 		this.managerName = managerName;
 		this.passwd = passwd;
+		this.managerRealname = managerRealname;
 	}
 
 	/** full constructor */
-	public SystemManager(Long id, Long managerName, String passwd,
-			String EMail, String mobilePhone) {
+	public SystemManager(Long id, String managerName, String passwd,
+			String EMail, String mobilePhone, String managerRealname) {
 		this.id = id;
 		this.managerName = managerName;
 		this.passwd = passwd;
 		this.EMail = EMail;
 		this.mobilePhone = mobilePhone;
+		this.managerRealname = managerRealname;
 	}
 
 	// Property accessors
@@ -54,16 +58,16 @@ public class SystemManager implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "manager_name", nullable = false)
-	public Long getManagerName() {
+	@Column(name = "manager_name", nullable = false, length = 50)
+	public String getManagerName() {
 		return this.managerName;
 	}
 
-	public void setManagerName(Long managerName) {
+	public void setManagerName(String managerName) {
 		this.managerName = managerName;
 	}
 
-	@Column(name = "passwd", nullable = false, length = 50)
+	@Column(name = "passwd", nullable = false, length = 150)
 	public String getPasswd() {
 		return this.passwd;
 	}
@@ -88,6 +92,15 @@ public class SystemManager implements java.io.Serializable {
 
 	public void setMobilePhone(String mobilePhone) {
 		this.mobilePhone = mobilePhone;
+	}
+
+	@Column(name = "manager_realname", nullable = false, length = 50)
+	public String getManagerRealname() {
+		return this.managerRealname;
+	}
+
+	public void setManagerRealname(String managerRealname) {
+		this.managerRealname = managerRealname;
 	}
 
 }

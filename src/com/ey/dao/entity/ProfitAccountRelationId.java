@@ -60,4 +60,5 @@ public class ProfitAccountRelationId implements java.io.Serializable {
 						.getTransferRecordsId());
 	}
 
+
 }

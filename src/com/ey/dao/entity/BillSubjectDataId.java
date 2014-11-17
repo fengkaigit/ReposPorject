@@ -58,4 +58,5 @@ public class BillSubjectDataId implements java.io.Serializable {
 		return (this.getModelId() == castOther.getModelId())
 				&& (this.getId() == castOther.getId());
 	}
+
 }

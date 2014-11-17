@@ -59,4 +59,6 @@ public class ServiceTransferRelationId implements java.io.Serializable {
 				&& (this.getTransferRecordsId() == castOther
 						.getTransferRecordsId());
 	}
+
+
 }

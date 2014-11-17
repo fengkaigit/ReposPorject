@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * ServiceProfitRelation entity. @author MyEclipse Persistence Tools
+ * ServicePaymentRelation entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "service_payment_relation")

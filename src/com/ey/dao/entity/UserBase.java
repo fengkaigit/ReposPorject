@@ -4,12 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * UserBase entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "user_base")
+@Table(name = "user_base", uniqueConstraints = @UniqueConstraint(columnNames = "account_number"))
 public class UserBase implements java.io.Serializable {
 
 	// Fields
@@ -20,7 +21,7 @@ public class UserBase implements java.io.Serializable {
 	private String realName;
 	private Integer registType;
 	private String passwd;
-	private String email;
+	private String EMail;
 	private String mobilePhone;
 	private double accountScore;
 
@@ -53,19 +54,19 @@ public class UserBase implements java.io.Serializable {
 		this.realName = realName;
 		this.registType = registType;
 		this.passwd = passwd;
-		this.email = EMail;
+		this.EMail = EMail;
 		this.mobilePhone = mobilePhone;
 		this.accountScore = accountScore;
 	}
 
 	// Property accessors
 	@Id
-	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	@Column(name = "id", unique = true, nullable = false)
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -78,7 +79,7 @@ public class UserBase implements java.io.Serializable {
 		this.areaId = areaId;
 	}
 
-	@Column(name = "account_number", nullable = false, length = 50)
+	@Column(name = "account_number", unique = true, nullable = false, length = 50)
 	public String getAccountNumber() {
 		return this.accountNumber;
 	}
@@ -115,20 +116,18 @@ public class UserBase implements java.io.Serializable {
 	}
 
 	@Column(name = "e_mail", length = 30)
-	public String getEmail() {
-		return email;
+	public String getEMail() {
+		return this.EMail;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEMail(String EMail) {
+		this.EMail = EMail;
 	}
 
 	@Column(name = "mobile_phone", length = 15)
 	public String getMobilePhone() {
 		return this.mobilePhone;
 	}
-
-	
 
 	public void setMobilePhone(String mobilePhone) {
 		this.mobilePhone = mobilePhone;

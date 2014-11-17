@@ -9,7 +9,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * PaymentBill entity. @author MyEclipse Persistence Tools
+ * TempPaymentBill entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "temp_payment_bill")
@@ -44,7 +44,7 @@ public class TempPaymentBill implements java.io.Serializable {
 	public TempPaymentBill(Long id, Long accountBillId, Long userId,
 			double remainBalance, Date createTime, double paidMoney,
 			double balance, Integer payType, Long entId, Integer businessType,
-			Integer paymentMode, Integer stageStatus) {
+			Integer paymentMode, String uuid, Integer stageStatus) {
 		this.id = id;
 		this.accountBillId = accountBillId;
 		this.userId = userId;
@@ -56,6 +56,7 @@ public class TempPaymentBill implements java.io.Serializable {
 		this.entId = entId;
 		this.businessType = businessType;
 		this.paymentMode = paymentMode;
+		this.uuid = uuid;
 		this.stageStatus = stageStatus;
 	}
 
@@ -211,19 +212,19 @@ public class TempPaymentBill implements java.io.Serializable {
 	public void setPaymentMode(Integer paymentMode) {
 		this.paymentMode = paymentMode;
 	}
-	
-	@Column(name = "uuid", length = 50)
+
+	@Column(name = "uuid", nullable = false, length = 50)
 	public String getUuid() {
-		return uuid;
+		return this.uuid;
 	}
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
 
-	@Column(name = "stage_status")
+	@Column(name = "stage_status", nullable = false)
 	public Integer getStageStatus() {
-		return stageStatus;
+		return this.stageStatus;
 	}
 
 	public void setStageStatus(Integer stageStatus) {

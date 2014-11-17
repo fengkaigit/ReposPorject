@@ -4,10 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * PoundageTransferRelationId entity. @author MyEclipse Persistence Tools
+ * EntTransferRelationId entity. @author MyEclipse Persistence Tools
  */
 @Embeddable
-public class PoundageTransferRelationId implements java.io.Serializable {
+public class EntTransferRelationId implements java.io.Serializable {
 
 	// Fields
 
@@ -17,11 +17,11 @@ public class PoundageTransferRelationId implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public PoundageTransferRelationId() {
+	public EntTransferRelationId() {
 	}
 
 	/** full constructor */
-	public PoundageTransferRelationId(Long receiptsId, Long transferRecordsId) {
+	public EntTransferRelationId(Long receiptsId, Long transferRecordsId) {
 		this.receiptsId = receiptsId;
 		this.transferRecordsId = transferRecordsId;
 	}
@@ -51,9 +51,9 @@ public class PoundageTransferRelationId implements java.io.Serializable {
 			return true;
 		if ((other == null))
 			return false;
-		if (!(other instanceof PoundageTransferRelationId))
+		if (!(other instanceof EntTransferRelationId))
 			return false;
-		PoundageTransferRelationId castOther = (PoundageTransferRelationId) other;
+		EntTransferRelationId castOther = (EntTransferRelationId) other;
 
 		return (this.getReceiptsId() == castOther.getReceiptsId())
 				&& (this.getTransferRecordsId() == castOther

@@ -61,4 +61,6 @@ public class NoticeSettingId implements java.io.Serializable {
 						&& castOther.getNoticeType() != null && this
 						.getNoticeType().equals(castOther.getNoticeType())));
 	}
+
+
 }

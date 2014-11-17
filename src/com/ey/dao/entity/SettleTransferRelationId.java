@@ -59,4 +59,6 @@ public class SettleTransferRelationId implements java.io.Serializable {
 				&& (this.getTransferRecordsId() == castOther
 						.getTransferRecordsId());
 	}
+
+
 }

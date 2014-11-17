@@ -15,10 +15,11 @@ public class ChargeEnterprise implements java.io.Serializable {
 	// Fields
 
 	private Long id;
-	private Long areaId;
+	private String areaId;
 	private String enterpriseName;
 	private String careNumber;
 	private Integer payType;
+	private byte[] exPic;
 
 	// Constructors
 
@@ -27,22 +28,30 @@ public class ChargeEnterprise implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public ChargeEnterprise(Long id, Long areaId, String enterpriseName,
+	public ChargeEnterprise(Long id, String areaId, String enterpriseName,
 			Integer payType) {
 		this.id = id;
 		this.areaId = areaId;
 		this.enterpriseName = enterpriseName;
 		this.payType = payType;
 	}
-
-	/** full constructor */
-	public ChargeEnterprise(Long id, Long areaId, String enterpriseName,
-			String careNumber, Integer payType) {
+	public ChargeEnterprise(Long id, String areaId, String enterpriseName,
+			String careNumber,Integer payType) {
 		this.id = id;
 		this.areaId = areaId;
 		this.enterpriseName = enterpriseName;
 		this.careNumber = careNumber;
 		this.payType = payType;
+	}
+	/** full constructor */
+	public ChargeEnterprise(Long id, String areaId, String enterpriseName,
+			String careNumber, Integer payType, byte[] exPic) {
+		this.id = id;
+		this.areaId = areaId;
+		this.enterpriseName = enterpriseName;
+		this.careNumber = careNumber;
+		this.payType = payType;
+		this.exPic = exPic;
 	}
 
 	// Property accessors
@@ -56,12 +65,12 @@ public class ChargeEnterprise implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "area_id", nullable = false)
-	public Long getAreaId() {
+	@Column(name = "area_id", nullable = false, length = 20)
+	public String getAreaId() {
 		return this.areaId;
 	}
 
-	public void setAreaId(Long areaId) {
+	public void setAreaId(String areaId) {
 		this.areaId = areaId;
 	}
 
@@ -90,6 +99,15 @@ public class ChargeEnterprise implements java.io.Serializable {
 
 	public void setPayType(Integer payType) {
 		this.payType = payType;
+	}
+
+	@Column(name = "ex_pic")
+	public byte[] getExPic() {
+		return this.exPic;
+	}
+
+	public void setExPic(byte[] exPic) {
+		this.exPic = exPic;
 	}
 
 }
