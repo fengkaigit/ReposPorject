@@ -1,0 +1,155 @@
+@charset "utf-8";
+
+.jf_main {font-family:"宋体"}
+.jf_main .jf_lefts {
+    width: 225px;
+    float: left;
+    margin-right: 0px;
+	
+}
+
+.jf_main .jf_lefts .jfztc_nav {
+    width: 100%;
+    border: 1px solid #ddd;
+    float: left;
+}
+
+.jf_main .jf_lefts .jfztc_nav .left_tt {
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    background: url(../images/left_iocn.gif) 0px -1px repeat-x ;
+    float: left;
+}
+
+.jf_main .jf_lefts .jfztc_nav .left_tt span {
+    margin-left: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+}
+
+.jf_main .jf_lefts .jfztc_nav .left_lists {
+    width: 213px;
+    float: left;
+    padding-left: 13px;
+}
+
+.bg10 {
+    background-attachment: scroll;
+    background: url(../images/3-8.jpg) no-repeat;
+    background-position: center center;
+}
+
+.bg11 {
+    background-attachment: scroll;
+    background: url(../images/3-9.png) no-repeat;
+    background-position: center center;
+}
+
+
+.bg17 {
+    background-attachment: scroll;
+    background-image: url(../images/1-8.jpg);
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+.line2 {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #D0D0D0;
+}
+
+.line3 {
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: #3780A8;
+}
+
+a:link {
+    color: #333333;
+    font-size: 12px;
+    line-height: 22px;
+    text-decoration: none;
+}
+
+a:hover {
+    font-size: 12px;
+    line-height: 22px;
+    color: #0066FF;
+    text-decoration: none !important;
+}
+
+a:visited {
+    font-size: 12px;
+    line-height: 22px;
+    color: #333333;
+    text-decoration: none;
+}
+
+.font20 {
+    color: #4985A9;
+    font-family: "黑体";
+    font-size: 20px;
+    text-decoration: none;
+	line-height:32px;
+}
+.font16 {
+    color: #4985A9;
+    font-family: "黑体";
+    font-size: 16px;
+    text-decoration: none;
+	line-height:32px;
+}
+.font12 {
+  
+    font-family: "黑体";
+    font-size: 14px;
+    text-decoration: none;
+	line-height:32px;
+}
+
+.zw {
+    font-size: 12px;
+    line-height: 22px;
+    color: #666666;
+}
+/****面包屑开始****/
+.tcxx_tt {
+    width: 735px;
+    float: left;
+}
+
+.tcxx_tt .tcxx_tt_a {
+    margin-left: 0px;
+    color: #666666;
+}
+
+.tcxx_tt .tcxx_tt_a a:hover {
+    color: #ff0000;
+}
+
+.tcxx_tt .tcxx_tt_b {
+    color: #077ABD;
+}
+/****面包屑结束****/
+
+.pinl{ width:100%; float:left; margin-top:15px; margin-bottom:20px;}
+
+.font20 {
+    color: #4985A9;
+    font-family: "黑体";
+    font-size: 20px;
+    text-decoration: none;
+}
+.znx_r{ width:735px; float:right;}
+
+.bg17 {
+	background-attachment: scroll;
+	background-image: url(../images/1-8.jpg);
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+/**关于我们  end**/

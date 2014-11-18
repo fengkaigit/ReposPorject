@@ -7,7 +7,7 @@ ul{ list-style:none; }
 img{ border:0px;  }
 .hand{ cursor:pointer; _cursor:hand} */
 
-.banner{ position:relative; height:314px; top:0px; text-align:center; background:url(../images/banner1.png) no-repeat center 0; }
+.banner{ position:relative; height:314px; top:0px; text-align:center; background:url(../images/banner1.png) no-repeat center 0px; }
 .bannerWrap{ width:100px; overflow:auto; margin:0 auto; position:relative; top:-60px; z-index:3; text-align:center;}
 .bannerWrap ul.showList{ margin:0 auto; width:100%; text-align:center;}
 .bannerWrap ul.showList li{ width:23px; height:23px; background:url(../images/circle1.png) no-repeat; margin:5px; float:left; color:#fff; padding-top:3px; text-align:center;  }

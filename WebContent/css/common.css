@@ -2,7 +2,7 @@
 
 body {
 	margin: 0 auto;
-	padding: 0;
+	padding: 0px;
 	font-family:"微软雅黑";
 }
 
@@ -118,7 +118,7 @@ margin-top:10px;
     float: right;
     font-size: 14px;
     height: 30px;
-    padding: 0px 0 0 0;
+    padding: 0px 0 0 0px;
     width: 75px;
     overflow:hidden;
 }
@@ -128,6 +128,7 @@ margin-top:10px;
     line-height: 40px;
     text-decoration: none;
     font-weight:bold;font-family: "微软雅黑";
+	cursor:pointer;
 }
 .dkts{background:url(../../images/validate/point3.jpg) no-repeat scroll 8px 8px #FFFDEE;border: 1px solid #D7D7D7;clear: both; margin:6px 0 5px 0px; padding:8px 8px 8px 25px; width:280px;}
 .icon_futitle { color: #969696; font-size: 14px; padding-left: 10px;}
@@ -146,19 +147,19 @@ margin-top:10px;
 	color: #077ABD;
 	font-family: "微软雅黑";
 	float: left;
-	margin: 10px 0 10px 0;
+	margin: 10px 0 10px 0px;
 }
 .ywjs { background: url("../../images/common/intro.jpg") no-repeat scroll 64px 3px transparent;
     display: block;
     float: right;
     font-size: 14px;
     height: 25px;
-    padding: 0px 10px 0 0;
+    padding: 0px 10px 0 0px;
     width: 88px;
     float:left;
 }
 .ywjs00 { background: url("../../images/common/intro.jpg") no-repeat scroll 68px -19px transparent;display: block;float: right;font-size: 14px;height: 25px; padding: 0px 0 0 6px; width: 100px;float:left;}
-.lcyst03 a{font-size:14px; color:#007ABD; font-weight:bold;line-height:22px;}
+.lcyst03 a{font-size:14px; color:#007ABD; font-weight:bold;line-height:22px; cursor:pointer;}
 .newdk_inputqian_green{background: url("../../images/billAgent/newidkicon.jpg") no-repeat scroll 0px -32px transparent;border: 0 none; color: #666; cursor: pointer; font-size: 14px; font-weight: bold; height: 31px; width: 109px;}
 .newdk_inputhou_green{background: url("../../images/billAgent/newidkicon.jpg") no-repeat scroll 0 0px transparent;border: 0 none; color: #666; cursor: pointer; font-size: 14px; font-weight: bold; height: 31px; width: 109px;}
 
@@ -166,7 +167,7 @@ margin-top:10px;
 .lcyst02 a:link{color:#666;font-size:12px;line-height:40px;text-decoration:none}
 
 .mdCard { font-size: 14px;   text-indent: 0px;  padding-bottom: 8px; font-weight: bold;}
-.bg17{ background-color:#f7f7f7; border-bottom:1px solid #ddd;}
+.bg17{ background-color:#f9f9f9; border-bottom:1px solid #ddd;}
 p{line-height:24px;}
 .left_lists{ padding: 0 20px 0 6px}
 
@@ -212,8 +213,8 @@ span.grey {
     width: 550px;
 }
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
 }
 article, aside, div, dt, figcaption, footer, form, header, hgroup, html, main, nav, section {
     display: block;
@@ -233,7 +234,7 @@ body {
 }
 .jfxx_btns{text-align:center}
 .jfxx_btn3 {
-    background: url("../images/common/small_pic2.gif") no-repeat scroll 0 -330px rgba(0, 0, 0, 0);
+    background: url("../images/common/small_pic2.gif") no-repeat scroll 0 -330px ;
     border: 0 none;
     color: #fff;
     cursor: pointer;
@@ -250,3 +251,6 @@ body {
 .dls-con .con3{border:1px solid #f4f4f4;padding:5px; min-height:484px;}
 .con .title,.dls-con .con3{font-size:12px; font-weight:700;}
 .con3 td,.con3 th{font-size:12px;}
+/*遮罩层*/
+#bg{ display: none; position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; background-color: #fff; z-index:9; -moz-opacity: 0.7; opacity:.70; filter: alpha(opacity=70);}
+

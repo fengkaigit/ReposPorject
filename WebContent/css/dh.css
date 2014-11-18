@@ -1,13 +1,13 @@
 @charset "utf-8";
         #navv > li { list-style-type:none; float:left; display:block; margin:0px 10px; 
-                    position:relative; padding:0px; width:80px;font-family:Arial, Sans-Serif;41px; line-height:41px;font-size: 14px;}
+                    position:relative; padding:0px; width:80px;font-family: "微软雅黑"; line-height:41px;font-size: 14px;}
         #navv > li:hover ul { display:block; }
         #navv > li:hover {border-bottom:0px solid #ddd; color:#ff6600;}
 		#navv > li a:hover{text-decoration:none;color:#ff6600;}
         
         #navv li ul { margin:0px; padding: 0px 0px -220px 0px; display:none;font-size:14px;width:150px; background-color:#ffffff; font-size: 12px;}
-        #navv li ul li { list-style-type:none; margin:0px 0px 0 0;height:32px;line-height:32px;display:block; width:130px;display:block;padding:0px 10px; }
+        #navv li ul li { list-style-type:none; margin:0px 0px 0 0px;height:32px;line-height:32px;display:block; width:130px;display:block;padding:0px 10px; }
         #navv li ul li a {display:block; padding: 0px 0px 0px 0px; color:#000000; text-decoration:none;}
         #navv li ul li:hover{ background-color:#f5f5f5; width:130px;display:block;padding:0px 10px; }
-        #navv li span { cursor:pointer; margin:0px 10px; font-weight:bold; }
-		 #navv li span a{ font-size: 14px; color:#000000;font-family:Arial, Sans-Serif;}
+        #navv li span { cursor:pointer; margin:0px 10px;}
+		 #navv li span a{ font-size: 14px; color:#000000;font-family: "微软雅黑";}

@@ -1,17 +1,22 @@
+@charset "utf-8";
+body{font-family:"微软雅黑"}
+.cur{cursor:pointer}
 .jfzh-title{border-bottom:1px solid #ddd; width::100%;padding-left:20px;height:32px;line-height:32px; font-size:16px; font-family:"微软雅黑"; font-weight:700;}
+.jfzh-title1{border-bottom:1px solid #ddd; width::100%; font-weight:700;}
 .label{font-size:14px; width:85px; overflow:hidden; padding-left:6px; float:left;}
-.jbxx{width:420px}
+.jbxx{width:430px}
+.jbxx .items{width:420px;}
 .jbxx .items,.zdtx .items{margin-top:10px;}
 .zdtx{width:440px;padding-left:20px;border-left:1px solid #ddd;}
-.jfzh-con{width:888px; margin:10px auto;padding:10 50px; border:1px solid #ddd;}
+.jfzh-con{width:908px; margin:10px auto;padding:10px 40px; border:1px solid #ddd;}
 .tab {border-top:1px solid #ddd;border-right:1px solid #ddd;width:440px;;}
-.tab td{border-bottom:1px solid #ddd;border-left:1px solid #ddd; height:26px; line-height:24px;padding-left:5px;font-size: 12px;}
+.tab td{border-bottom:1px solid #ddd;border-left:1px solid #ddd; height:26px; line-height:24px;padding-left:5px;font-size: 12px;padding-right:5px; text-align:center;}
 .tab .even{background:#f7f7f7;}
 .tab .add{background:#f2f2f3;}
 .tab .add1{background:#f2f2f3;font-size: 14px;}
 .jfzh-con .name{font-weight:700; height:24px; line-height:24px;}
 .save{height:31px;line-height:31px;margin:5px auto; text-align:center;}
-#addbills {
+.divWin {
     position:absolute;
     font-size: 12px;
 padding:10px;
@@ -22,13 +27,14 @@ padding:10px;
 	left:340px;
 	border:2px solid #ddd;
 	background:#fff;
+	display:none;
 }
-#addbills td{border-left:1px solid #ddd;border-bottom:1px solid #ddd; height:28px; line-height:28px;padding:5px 10px;}
-#addbills select {
+.divWin td{border-left:1px solid #ddd;border-bottom:1px solid #ddd; height:28px; line-height:28px;padding:5px 10px;}
+.divWin select {
     font-size: 12px;
 }
 
-#addbills table {
+.divWin table {
     font-size: 12px;
 	
 	width:460px;
@@ -37,8 +43,8 @@ padding:10px;
 	border-right:1px solid #ddd;
 	
 }
-
-#addbills .close {
+table.jqplot-table-legend{width:100px;}
+.divWin .close {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -46,7 +52,7 @@ padding:10px;
 
 
 
-#addbills h1 {
+.divWin h1 {
 	height:25px;
     text-indent: 70px;
     border-bottom-style: solid;
@@ -79,11 +85,11 @@ select {
     display: inline-block;
     font: ;
     line-height: normal !important;
-    margin: 0;
+    margin: 0px;
     overflow: -moz-hidden-unscrollable;
     page-break-inside: avoid;
     text-align: start;
-    text-indent: 0;
+    text-indent: 0px;
     text-shadow: none;
     white-space: nowrap !important;
     word-wrap: normal !important;
@@ -99,4 +105,94 @@ select {
 input {
     font-size: 14px;
 }
-.cur{cursor:pointer}
+
+/*交通缴费 */
+.jt{width:600px;}
+.jt .items{width:600px;}
+.jt .item{width:590px;}
+.jt .fl,.jt .fr{width:240px;  text-align:left;}
+.jt .items div{height:24px; line-height:24px; padding-top:10px; padding-left:10px;}
+.jt .items  select{height:24px; line-height:24px;}
+
+.bulletin {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #e7eaec;
+ 
+    margin-bottom: 20px;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+.bulletin li {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    padding-left: 10px;
+    position: relative;
+    width: 100%;
+}
+.bulletin li b {
+    background: none repeat scroll 0 0 #15456f;
+    font-size: 0px;
+    height: 3px;
+    left: 0px;
+    margin-top: -2px;
+    overflow: hidden;
+    position: absolute;
+    text-indent: -9999em;
+    top: 50%;
+    width: 3px;
+}
+/*手机增加删除*/
+#tooltip{border:1px solid red; background:#FF6;
+position:absolute;
+padding:1px;
+color:#333;
+display:none;
+
+}
+a.delTel {
+ 	background: url(../images/del.png) no-repeat 0px 0px;
+    cursor: pointer;
+    display: inline-block;
+    height: 11px;
+    width: 11px;
+	margin-left:10px;
+}
+a.delTel:hover{
+ 	background: url(../images/del.png) no-repeat 0px -13px;
+    cursor: pointer;
+    display:inline-block;
+    height: 11px;
+    width: 11px;
+}
+#defaultTel label,#items label,#yzm label{float:left;width:80px; font-size:14px;}
+#defaultTel span ,#items span{font-size:14px;padding-left:5px;}
+#add-btn-wrap .add {
+font-size: 16px;
+    border: 1px dashed #bfbfbf;
+    color: #9d9d9d;
+    cursor: pointer;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 40px 0 40px;
+    position: relative;
+    text-decoration: none;
+	margin-left:90px;
+}
+.add .add-icon {
+    background:url(../../images/add.png) no-repeat;
+    display: block;
+    height: 10px;
+    left: 53px;
+    position: absolute;
+    top: 10px;
+    width: 10px;
+}
+.w350{width:350px;}
+.cxbh_s{width:140px;border:1px solid #d5d5d5;height:28px;line-height:28px;  padding:4px 4px 2px 5px;margin-left:2px;color:#666}
+.bby{border-bottom:1px solid #ddd;}
+.pl4{padding-left:4px;}
+.pb10{padding-bottom:10px;}

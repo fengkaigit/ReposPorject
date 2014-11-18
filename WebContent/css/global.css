@@ -8,10 +8,10 @@
 	_background-attachment: fixed
 }
 .both{clear:both}
-.clearfix:after {content: " ";display: block;clear: both;height: 0;}
+.clearfix:after {content: " ";display: block;clear: both;height: 0px;}
 .clearfix {zoom: 1;display: table;}
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
-	margin: 0;
+	margin: 0px;
 	padding: 0
 }
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,mark,audio,video,canvas {
@@ -46,8 +46,8 @@ input {
 	outline: 0
 }
 textarea {
-	-moz-outline: 0;
-	outline: 0;
+	-moz-outline: 0px;
+	outline: 0px;
 	overflow: auto;
 	vertical-align: top;
 	resize: none;
@@ -57,9 +57,9 @@ img {
 	vertical-align: middle
 }
 iframe {
-	margin: 0;
-	padding: 0;
-	border: 0;
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
 	font-size: 100%
 }
 a {
@@ -103,10 +103,10 @@ a: hover {
 .clearfix: after,#header: after,#footer: after,.model-box: after,#main: after,#wrapper: after,#wrap: after,.yol-top: after,.redeem-items: after,#mainsub: after {
 	visibility: hidden;
 	display: block;
-	font-size: 0;
+	font-size: 0px;
 	content: ".";
 	clear: both;
-	height: 0;
+	height: 0px;
 	overflow: hidden
 }
 .clearfix,#header,#footer,.model-box,#main,#wrapper,#wrap,.yol-top,.redeem-items,#mainsub {
@@ -143,8 +143,8 @@ a: hover {
 }
 [class^="arrows-"],[class*=" arrows-"] {
 	display: inline-block;
-	width: 0;
-	height: 0;
+	width: 0px;
+	height: 0px;
 	vertical-align: top;
 	border-width: 8px;
 	border-style: solid;
@@ -190,8 +190,8 @@ a: hover {
 	width: 16px;
 	height: 16px;
 	overflow: hidden;
-	font-size: 0;
-	line-height: 0;
+	font-size: 0px;
+	line-height: 0px;
 	text-indent: -9999px;
 	display: inline-block;
 	background: url(../images/common/sprites.png) no-repeat
@@ -281,7 +281,7 @@ a: hover {
 	height: 13px
 }
 .arrow-blue-r {
-	background-position: -434px 0;
+	background-position: -434px 0px;
 	width: 14px;
 	height: 13px
 }
@@ -475,7 +475,7 @@ a: hover {
 	font-style: normal
 }
 .ask50 {
-	background-position: -136px 0;
+	background-position: -136px 0px;
 	width: 50px;
 	height: 50px;
 	font-style: normal
@@ -518,7 +518,7 @@ a: hover {
 	background-position: -446px -203px
 }
 .success-green60 {
-	background-position: -372px 0;
+	background-position: -372px 0px;
 	width: 60px;
 	height: 60px
 }
@@ -543,7 +543,7 @@ a: hover {
 	height: 60px
 }
 .hot-green80 {
-	background-position: -522px 0;
+	background-position: -522px 0px;
 	width: 80px;
 	height: 80px
 }
@@ -595,8 +595,8 @@ a: hover {
 	width: 12px;
 	height: 16px;
 	position: absolute;
-	left: 0;
-	top: 0;
+	left: 0px;
+	top: 0px;
 	cursor: pointer;
 	background: url(../images/common/fs.png) no-repeat 0 -99px
 }
@@ -616,8 +616,8 @@ a: hover {
 	width: 18px;
 	height: 18px;
 	position: absolute;
-	left: 0;
-	top: 0;
+	left: 0px;
+	top: 0px;
 	cursor: pointer;
 	background: url(../images/common/fs.png) no-repeat 0 -40px
 }
@@ -659,8 +659,8 @@ a: hover {
 	width: 12px;
 	height: 16px;
 	position: absolute;
-	left: 0;
-	top: 0;
+	left: 0px;
+	top: 0px;
 	cursor: pointer;
 	background: url(../images/common/fs.png) no-repeat 0 -99px
 }
@@ -680,8 +680,8 @@ a: hover {
 	width: 18px;
 	height: 18px;
 	position: absolute;
-	left: 0;
-	top: 0;
+	left: 0px;
+	top: 0px;
 	cursor: pointer;
 	background: url(../images/common/fs.png) no-repeat 0 -40px
 }
@@ -784,7 +784,7 @@ a: hover {
 	width: 1000px
 }
 #header {
-	height: 110px;
+	height: 100px;
 	position: relative;
 	z-index: 101;
 	margin-bottom: 10px;
@@ -841,8 +841,8 @@ a: hover {
 	height: 40px;
 	background: #444;
 	position: absolute;
-	left: 0;
-	top: 0;
+	left: 0px;
+	top: 0px;
 	width: 100%;
 	min-width: 1000px;
 	z-index: 1
@@ -850,8 +850,8 @@ a: hover {
 #header .service {
 	height: 40px;
 	position: absolute;
-	left: 0;
-	top: 0;
+	left: 0px;
+	top: 0px;
 	line-height: 40px;
 	color: #8a949c
 }
@@ -871,7 +871,7 @@ a: hover {
 	width: 14px;
 	height: 14px;
 	position: absolute;
-	left: 0;
+	left: 0px;
 	top: 14px
 }
 #header .hotline .icons {
@@ -879,7 +879,7 @@ a: hover {
 	width: 14px;
 	height: 14px;
 	position: absolute;
-	left: 0;
+	left: 0px;
 	top: 14px
 }
 #header .hotline em {
@@ -921,7 +921,7 @@ a: hover {
 	height: 40px;
 	position: absolute;
 	right: 10px;
-	top: 0;
+	top: 0px;
 	line-height: 40px
 }
 .loginbar .for {
@@ -1035,7 +1035,7 @@ a: hover {
 	height: 51px;
 	overflow: hidden;
 	position: absolute;
-	left: 0;
+	left: 0px;
 	top: 50px
 }
 #header .logo img {
@@ -1096,7 +1096,7 @@ a: hover {
 .userbar .nav .dropdown {
 	position: absolute;
 	left: 50%;
-	top: 0;
+	top: 0px;
 	width: 75px;
 	margin-left: -38px;
 	text-align: center;
@@ -1112,9 +1112,9 @@ a: hover {
 	top: -13px;
 	overflow: hidden;
 	margin-left: -6px;
-	width: 0;
-	height: 0;
-	font-size: 0;
+	width: 0px;
+	height: 0px;
+	font-size: 0px;
 	border-width: 6px;
 	border-style: dashed dashed solid dashed;
 	border-color: transparent transparent #adadad transparent
@@ -1166,13 +1166,13 @@ a: hover {
 	text-align:center;
 	margin:0 auto;
 }
-#footer .navsub p{padding:5px 0;}
+#footer .navsub p{padding:5px 0px;}
 #footer .navsub a{padding:0 5px;}
-.fw-con{background-color:#fff;border-top:1px solid #eee;padding:10px 0;margin-top:10px;}
-.fw{width:1000px; margin:10px auto 0 auto; }
+.fw-con{background-color:#fff;border-top:1px solid #eee;padding:10px 0px;margin-top:10px;}
+.fw{width:1000px; margin:10px auto 0px auto; }
 .fw dl{width:240px; float: left; text-align:center; border-right:1px dashed #ddd;}
 .fw dl.end{border:0px;}
-.fw dl dt{font-weight:700; font-size:14px; padding:5px 0;}
+.fw dl dt{font-weight:700; font-size:14px; padding:5px 0px;}
 .fw dl dd{padding:5px 0}
 .fcr{color:#FC8026}
 .fcg{color:#999;}

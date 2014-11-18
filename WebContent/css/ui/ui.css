@@ -7,7 +7,7 @@
     width: 990px;
 }
 .u-banner {
-    background: url("../images/T18VIqFadaXXbLCnw9-1-330.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("../images/T18VIqFadaXXbLCnw9-1-330.png") repeat-x scroll 0 0px;
     height: 330px;
 }
 .u-slide {
@@ -54,20 +54,20 @@
 .u-title .leftcor, .u-title .rightcor {
     border: 5px solid #fff;
     bottom: -5px;
-    height: 0;
+    height: 0px;
     overflow: hidden;
     position: absolute;
-    width: 0;
+    width: 0px;
 }
 .u-title .leftcor {
     border-left: 0 none;
     border-right-color: #a04801;
-    left: 0;
+    left: 0px;
 }
 .u-title .rightcor {
     border-left-color: #a04801;
     border-right: 0 none;
-    right: 0;
+    right: 0px;
 }
 .u-main {
 
@@ -91,20 +91,20 @@
     font-weight: bolder;
 }
 .u-main ul {
-    background: url("../../images/T1SwY.FdlgXXc4v7s.-1-40.png") repeat-x scroll center bottom rgba(0, 0, 0, 0);
+    background: url("../../images/T1SwY.FdlgXXc4v7s.-1-40.png") repeat-x scroll center bottom ;
     height: 180px;
     margin-top: -10px;
     padding-left: 31px;
 }
 .u-main li {
-    background: url("../../images/icon-title.png") no-repeat scroll center bottom rgba(0, 0, 0, 0);
+    background: url("../../images/icon-title.png") no-repeat scroll center bottom ;
     float: left;
     height: 165px;
     margin-right: 32px;
     width: 135px;
 }
 .u-main li a, .u-main li .null {
-    background: url("../../images/icon-bg.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+    background: url("../../images/icon-bg.png") no-repeat scroll center top ;
     display: block;
     height: 155px;
     position: relative;
@@ -122,7 +122,7 @@
     color: #d08400;
     font-size: 14px;
     font-weight: bold;
-    left: 0;
+    left: 0px;
     position: absolute;
     top: 12px;
     width: 135px;
@@ -139,7 +139,7 @@
     color: #eee;
     font-size: 22px;
     font-weight: bold;
-    left: 0;
+    left: 0px;
     position: absolute;
     top: 99px;
     width: 135px;
@@ -147,7 +147,7 @@
 .u-main li .note {
     color: #91836f;
     height: 37px;
-    left: 0;
+    left: 0px;
     line-height: 37px;
     position: absolute;
     top: 115px;
@@ -202,7 +202,7 @@
     border-color: #dfdfdf;
     border-image: none;
     border-style: dotted;
-    border-width: 0 1px 1px 0;
+    border-width: 0 1px 1px 0px;
     float: left;
     height: 72px;
     width: 72px;
@@ -214,7 +214,7 @@
     text-decoration: none;
 }
 .u-lifesave li em {
-    background: url("../../images/T15r_oFgRjXXcPdqf4-167-193.png") no-repeat scroll left top rgba(0, 0, 0, 0);
+    background: url("../../images/T15r_oFgRjXXcPdqf4-167-193.png") no-repeat scroll left top ;
     display: block;
     height: 28px;
     margin-left: 22px;

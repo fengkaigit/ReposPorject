@@ -1,5 +1,5 @@
 $(function(){
-	  //banner滚动
+	  //banner婊氬姩
 	  var bannerLength = $('.showList li').length;
 	  for(i=0; i<bannerLength; i++){
 		  $('.showList li').eq(i).text(i+1)
@@ -14,7 +14,7 @@ $(function(){
 			 thisIndex = $(this).index()+1>=bannerLength ? 0 :  $(this).index()+1
 			 timer = window.setTimeout( "$('.showList li').eq(thisIndex).trigger('click') ", 6000  )
 	})
-	//自动调用banner，case滚动
+	//鑷姩璋冪敤banner锛宑ase婊氬姩
 	timer = window.setTimeout( "$('.showList li').eq(1).trigger('click')"  , 3000  )
 	window.setInterval( "$('.case-left-arrow').trigger('click')"  , 2000  )
 

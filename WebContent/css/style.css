@@ -50,20 +50,20 @@ a:hover {
 .slider {
     display: none;
     height: 260px;
-    left: 0;
+    left: 0px;
     min-width: 1000px;
     overflow: hidden;
     position: absolute;
-    top: 0;
+    top: 0px;
     width: 100%;
 }
 .slider li {
     display: none;
     height: 260px;
-    left: 0;
+    left: 0px;
     overflow: hidden;
     position: absolute;
-    top: 0;
+    top: 0px;
     width: 100%;
 }
 .slider li a {
@@ -75,7 +75,7 @@ a:hover {
 .slider-index .items {
     bottom: 10px;
     height: 20px;
-    left: 0;
+    left: 0px;
     position: absolute;
 }
 .slider-index li {
@@ -102,7 +102,7 @@ a:hover {
     width: 30px;
 }
 .slider-updown .prev {
-    left: 0;
+    left: 0px;
 }
 .slider-updown .next {
     left: 100px;
@@ -111,17 +111,17 @@ a:hover {
     height: 270px;
     overflow: hidden;
     position: absolute;
-    right: 0;
+    right: 0px;
     top: -600px;
     width: 320px;
 }
 .gain .opacity {
     background: none repeat scroll 0 0 #000;
     height: 270px;
-    left: 0;
+    left: 0px;
     opacity: 0.5;
     position: absolute;
-    top: 0;
+    top: 0px;
     width: 320px;
     z-index: 1;
 }
@@ -188,7 +188,7 @@ a:hover {
     height: 40px;
     line-height: 40px;
     overflow: hidden;
-    padding: 10px 0;
+    padding: 10px 0px;
 }
 .yol-info {
     overflow: hidden;
@@ -199,13 +199,13 @@ a:hover {
     height: 20px;
     padding-left: 20px;
     position: absolute;
-    right: 0;
+    right: 0px;
     top: 38px;
 }
 .yol-info .more .icons {
     background-position: -389px -65px;
     height: 16px;
-    left: 0;
+    left: 0px;
     position: absolute;
     top: 2px;
     width: 16px;
@@ -230,7 +230,7 @@ a:hover {
     float: right;
     height: 100px;
     position: absolute;
-    right: 0;
+    right: 0px;
     text-align: right;
     top: 60px;
 }
@@ -266,7 +266,7 @@ a:hover {
     width: 225px;
 }
 .yol-safe dl dt {
-    background: url("../../../local/img/common/safe.png") no-repeat scroll 0 -350px rgba(0, 0, 0, 0);
+    background: url("../../../local/img/common/safe.png") no-repeat scroll 0 -350px ;
     height: 151px;
     overflow: hidden;
     position: relative;
@@ -275,11 +275,11 @@ a:hover {
 .yol-safe dl dt a {
     display: block;
     height: 151px;
-    left: 0;
+    left: 0px;
     overflow: hidden;
     position: absolute;
     text-indent: -9999em;
-    top: 0;
+    top: 0px;
     width: 151px;
 }
 .yol-safe dl dd {
@@ -306,10 +306,10 @@ a:hover {
     font-weight: normal;
 }
 .yol-safe dl .more {
-    bottom: 0;
+    bottom: 0px;
     color: #15456f;
     height: auto;
-    left: 0;
+    left: 0px;
     position: absolute;
 }
 .yol-safe dl .more a, .yol-safe dl .more a:visited {
@@ -319,7 +319,7 @@ a:hover {
     color: #349cd8;
 }
 .yol-safe dl.low dt a {
-    background: url("../../../local/img/home/001.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("../../../local/img/home/001.gif") no-repeat scroll 0 0px;
 }
 .yol-safe dl.safe {
     width: 250px;
@@ -328,7 +328,7 @@ a:hover {
     margin-left: 20px;
 }
 .yol-safe dl.safe dt a {
-    background: url("../../../local/img/home/002.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("../../../local/img/home/002.gif") no-repeat scroll 0 0px;
 }
 .yol-safe dl.safe dd {
     padding-left: 20px;
@@ -338,16 +338,16 @@ a:hover {
     left: 20px;
 }
 .yol-safe dl.any dt a {
-    background: url("../../../local/img/home/003.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("../../../local/img/home/003.gif") no-repeat scroll 0 0px;
 }
 .yol-safe dl.low dd {
-    background: url("../../../local/img/home/text_1.png") no-repeat scroll 0 17px rgba(0, 0, 0, 0);
+    background: url("../../../local/img/home/text_1.png") no-repeat scroll 0 17px ;
 }
 .yol-safe dl.safe dd {
-    background: url("../../../local/img/home/text_2.png") no-repeat scroll 17px 17px rgba(0, 0, 0, 0);
+    background: url("../../../local/img/home/text_2.png") no-repeat scroll 17px 17px ;
 }
 .yol-safe dl.any dd {
-    background: url("../../../local/img/home/text_3.png") no-repeat scroll 0 17px rgba(0, 0, 0, 0);
+    background: url("../../../local/img/home/text_3.png") no-repeat scroll 0 17px ;
 }
 .help-minute {
     background: none repeat scroll 0 0 #525252;
@@ -359,7 +359,7 @@ a:hover {
 }
 .help-minute img {
     display: block;
-    margin: 10px auto 0;
+    margin: 10px auto 0px;
 }
 .help-minute .play {
     background-position: -389px -87px;
@@ -423,7 +423,7 @@ a:hover {
 }
 .yol-entry .head h2 .icons {
     height: 30px;
-    left: 0;
+    left: 0px;
     position: absolute;
     top: 18px;
     width: 30px;
@@ -467,7 +467,7 @@ a:hover {
     float: right;
     overflow: hidden;
     position: absolute;
-    right: 0;
+    right: 0px;
     top: 22px;
 }
 .top-desc .stat dl {
@@ -593,7 +593,7 @@ a:hover {
     bottom: 105px;
     font-size: 12px;
     height: 20px;
-    left: 0;
+    left: 0px;
     line-height: normal;
     position: absolute;
     text-align: center;
@@ -612,10 +612,10 @@ a:hover {
 .plans-items .button {
     background: none repeat scroll 0 0 #f0f5f7;
     border-top: 1px solid #d9dee2;
-    bottom: 0;
+    bottom: 0px;
     font-size: 12px;
     height: 99px;
-    left: 0;
+    left: 0px;
     position: absolute;
     text-align: center;
     width: 100%;
@@ -637,10 +637,10 @@ a:hover {
     border-radius: 15px;
     display: inline;
     float: left;
-    font-size: 0;
+    font-size: 0px;
     height: 10px;
     left: 70px;
-    line-height: 0;
+    line-height: 0px;
     overflow: hidden;
     position: absolute;
     top: 12px;
@@ -651,7 +651,7 @@ a:hover {
     border-radius: 15px;
     float: left;
     height: 10px;
-    width: 0;
+    width: 0px;
 }
 .plans-items .sur {
     padding-left: 15px;
@@ -741,7 +741,7 @@ a:hover {
     font-size: 14px;
     height: 24px;
     line-height: 24px;
-    margin: 14px -7px 0 0;
+    margin: 14px -7px 0 0px;
     text-align: center;
     width: 60px;
 }
@@ -764,10 +764,10 @@ a:hover {
     background: none repeat scroll 0 0 #e7ecee;
     display: none;
     float: left;
-    font-size: 0;
+    font-size: 0px;
     height: 1px;
-    left: 0;
-    line-height: 0;
+    left: 0px;
+    line-height: 0px;
     overflow: hidden;
     position: absolute;
     top: 25px;
@@ -777,7 +777,7 @@ a:hover {
     background: none repeat scroll 0 0 #fff;
     font-size: 18px;
     height: 30px;
-    left: 0;
+    left: 0px;
     line-height: 30px;
     padding-right: 15px;
     position: absolute;
@@ -788,7 +788,7 @@ a:hover {
     font-size: 13px;
     left: auto;
     padding: 0 0 0 15px;
-    right: 0;
+    right: 0px;
 }
 .bulletin {
     background: none repeat scroll 0 0 #fff;
@@ -807,12 +807,13 @@ a:hover {
     padding-left: 10px;
     position: relative;
     width: 100%;
+	font-family:"微软雅黑";
 }
 .bulletin li b {
     background: none repeat scroll 0 0 #15456f;
-    font-size: 0;
+    font-size: 0px;
     height: 3px;
-    left: 0;
+    left: 0px;
     margin-top: -2px;
     overflow: hidden;
     position: absolute;
@@ -861,7 +862,7 @@ a:hover {
     float: left;
     font-size: 16px;
     height: 24px;
-    left: 0;
+    left: 0px;
     line-height: 24px;
     overflow: hidden;
     padding-left: 30px;
@@ -873,7 +874,7 @@ a:hover {
 }
 .rfs li .icons {
     height: 20px;
-    left: 0;
+    left: 0px;
     position: absolute;
     top: 4px;
     width: 20px;
@@ -946,10 +947,10 @@ a:hover {
     width: 16px;
 }
 .ranking-items .ago b {
-    background: url("../../../local/img/common/sprites.png") no-repeat scroll -246px -221px rgba(0, 0, 0, 0);
+    background: url("../../../local/img/common/sprites.png") no-repeat scroll -246px -221px ;
     height: 17px;
     line-height: 22px;
-    margin: 5px 0 0;
+    margin: 5px 0 0px;
     width: 21px;
 }
 .ranking-items li.title {
@@ -986,7 +987,7 @@ a:hover {
     float: left;
     font-size: 16px;
     height: 24px;
-    left: 0;
+    left: 0px;
     line-height: 24px;
     overflow: hidden;
     padding-left: 30px;
@@ -998,7 +999,7 @@ a:hover {
 }
 .toolbox li .icons {
     height: 20px;
-    left: 0;
+    left: 0px;
     position: absolute;
     top: 2px;
     width: 20px;
@@ -1032,7 +1033,7 @@ a:hover {
 .safe-items {
     height: 50px;
     overflow: hidden;
-    padding: 20px 0;
+    padding: 20px 0px;
     width: 1000px;
 }
 .safe-items ul {
@@ -1049,7 +1050,7 @@ a:hover {
     margin-right: 30px;
 }
 .safe-items li span {
-    background: url("../../../local/img/common/sprites.png") no-repeat scroll -150px -209px rgba(0, 0, 0, 0);
+    background: url("../../../local/img/common/sprites.png") no-repeat scroll -150px -209px ;
     display: inline;
     float: left;
     height: 50px;
@@ -1174,7 +1175,7 @@ a:hover {
     font-size: 14px;
     height: 24px;
     line-height: 24px;
-    margin: 14px -7px 0 0;
+    margin: 14px -7px 0 0px;
     text-align: center;
     width: 60px;
 }
@@ -1193,7 +1194,7 @@ a:hover {
     text-align: center;
 }
 .ywebapp {
-    background: url("../../img/common/appfd-code.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("../../img/common/appfd-code.png") no-repeat scroll 0 0px;
     height: 183px;
     position: fixed;
     right: 20px;
@@ -1202,7 +1203,7 @@ a:hover {
     z-index: 1100;
 }
 .ywebapp .close {
-    bottom: 0;
+    bottom: 0px;
     cursor: pointer;
     display: block;
     height: 17px;
@@ -1307,7 +1308,7 @@ a:hover {
 .plans-v .rate {
     font-size: 12px;
     height: 20px;
-    left: 0;
+    left: 0px;
     line-height: normal;
     position: relative;
     text-align: center;
@@ -1379,7 +1380,7 @@ a:hover {
     width: 13%;
 }
 .icon-novice {
-    background-position: -605px 0;
+    background-position: -605px 0px;
 }
 .icon-plans {
     background-position: -605px -20px;
@@ -1399,7 +1400,7 @@ a:hover {
     width: 100%;
 }
 .wealth:last-child {
-    margin-bottom: 0;
+    margin-bottom: 0px;
 }
 .wealth .title h2 {
     display: inline;
@@ -1411,7 +1412,7 @@ a:hover {
 }
 .wealth .title h2 .icons {
     height: 20px;
-    left: 0;
+    left: 0px;
     position: absolute;
     top: 15px;
     width: 20px;
@@ -1436,7 +1437,7 @@ a:hover {
 .countdown .icons-time {
     background-position: -605px -81px;
     height: 20px;
-    left: 0;
+    left: 0px;
     margin-top: -9px;
     position: absolute;
     top: 50%;
@@ -1488,7 +1489,7 @@ a:hover {
 .wealth .refresh .icons-refresh {
     background-position: -605px -100px;
     height: 20px;
-    left: 0;
+    left: 0px;
     margin-top: -10px;
     position: absolute;
     top: 50%;
@@ -1518,7 +1519,7 @@ a:hover {
     border-top: 1px solid #e7eaec;
     color: #5d666d;
     height: 90px;
-    margin: -1px 25px 0;
+    margin: -1px 25px 0px;
 }
 .wealth .items li {
     display: inline;
@@ -1540,7 +1541,7 @@ a:hover {
 }
 .wealth h3 .icons {
     float: left;
-    margin: 4px 3px 0 0;
+    margin: 4px 3px 0 0px;
     vertical-align: middle;
 }
 .wealth .assure {
@@ -1551,7 +1552,7 @@ a:hover {
     position: relative;
 }
 .wealth .assure .icons {
-    left: 0;
+    left: 0px;
     position: absolute;
     top: 5px;
 }
@@ -1610,7 +1611,7 @@ a:hover {
     line-height: 30px;
     overflow: hidden;
     position: absolute;
-    right: 0;
+    right: 0px;
     top: 15px;
 }
 .wealth li.col-4 .gbtn {
@@ -1619,7 +1620,7 @@ a:hover {
     line-height: 24px;
     margin-top: -12px;
     position: absolute;
-    right: 0;
+    right: 0px;
     text-align: center;
     top: 50%;
     width: 60px;
@@ -1652,26 +1653,26 @@ html, body	{
 
 body {
 	font: 12px/18px Arial, sans-serif;
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
 	color: #333333;
 	background-color: #fff;
 }
 
 h1, h2, h3, h4, h5, h6, span, p, input {
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
 }
 
 table, tr, td {
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
 	border-collapse: collapse;
 }
 
 ul, li, ol {
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
 }
 
 img {
@@ -1689,7 +1690,7 @@ a:hover {
 }
 
 a:focus {
-	outline: 0;
+	outline: 0px;
 }
 
 .clear {
@@ -1721,14 +1722,14 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 .content-wrapper .content {
 	width: 1000px;
 	margin: 0 auto;
-	padding: 0 0 25px 0;
+	padding: 0 0 25px 0px;
 	overflow: hidden;
 }
 
 .content-wrapper .content .left-side {
 	width: 587px;
-	padding: 0 33px 0 0;
-	margin: 24px 0 0 0;
+	padding: 0 33px 0 0px;
+	margin: 24px 0 0 0px;
 	background: url(../images/content-left-side-bg.png) top right repeat-y;
 	float: left;
 }
@@ -1736,7 +1737,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 .content-wrapper .content .right-side {
 	width: 250px;
 	padding: 0 0 0 30px;
-	margin: 24px 0 0 0;
+	margin: 24px 0 0 0px;
 	float: left;
 }
 
@@ -1757,38 +1758,38 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .header-wrapper .header .logo {
 	width: 418px;
-	padding: 30px 0 0 0;
+	padding: 30px 0 0 0px;
 	float: left;
 }
 
 .header-wrapper .header .logo h1 a {
 	color: #fff;
 	text-decoration: none;
-	text-shadow: #464646 0 2px 0;
+	text-shadow: #464646 0 2px 0px;
 	font-size: 28px;
 	line-height: 40px;
 }
 
 .header-wrapper .header .logo h1 a:hover {
 	color: #e7e7e7;
-	text-shadow: #464646 0 2px 0;
+	text-shadow: #464646 0 2px 0px;
 }
 
 .header-wrapper .header-right {
 	width: 315px;
-	padding: 22px 0 0 0;
+	padding: 22px 0 0 0px;
 	float: right;
 }
 
 .header-wrapper .searchform {
-	padding: 16px 0 0 0;
+	padding: 16px 0 0 0px;
 }
 
 .header-wrapper .searchform .input-text {
 	width: 220px;
 	height: 24px;
 	padding: 1px 0 0 15px;
-	margin: 0 5px 0 0;
+	margin: 0 5px 0 0px;
 	font: 11px/24px Arial, sans-serif;
 	color: #1e1e1e;
 	background: url(../images/searchform-input-text-bg.png) 0 0 no-repeat;
@@ -1802,7 +1803,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	height: 25px;
 	text-align: center;
 	font: bold 11px/16px Arial, sans-serif;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 	display: block;
 	float: left;
 }
@@ -1834,7 +1835,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .menu-primary ul {
-	margin: 0;
+	margin: 0px;
 	list-style: none;
 }
 
@@ -1847,12 +1848,12 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	background: url(../images/menu-item-act.png) top left repeat-x;
 	border-bottom: 1px solid #303030;
 	color: #23ceff;
-	text-shadow: #252525 0 1px 0;
+	text-shadow: #252525 0 1px 0px;
 }
 
 .menu-primary li:hover > a span {
 	background: url(../images/ico-bullet-20.png) right 6px no-repeat;
-	padding: 0 15px 0 0;
+	padding: 0 15px 0 0px;
 }
 
 .menu-primary ul ul {
@@ -1861,7 +1862,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	left: -4px;
 	width: 224px;
 	background: url(../images/jqueryslidemenu-bg.png) bottom center no-repeat;
-	padding: 0 0 9px 0;
+	padding: 0 0 9px 0px;
 	float: left;
 	display: none;
 	z-index: 100;
@@ -1873,7 +1874,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	left: 214px;
 	width: 224px;
 	background: url(../images/jqueryslidemenu-bg.png) bottom center no-repeat;
-	padding: 0 0 9px 0;
+	padding: 0 0 9px 0px;
 	float: left;
 	display: none;
 	z-index: 100;
@@ -1888,7 +1889,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .menu-primary .menu-item a {
-	margin: 0 -1px 0 0;
+	margin: 0 -1px 0 0px;
 	padding: 10px 25px 0 25px;
 	height: 26px;
 	border-bottom: 1px solid #cccccc;
@@ -1898,7 +1899,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	font-size: 14px;
 	font-weight: bold;
 	text-decoration: none;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 	display: block;
 	position: relative;
 	z-index: 1;
@@ -1906,11 +1907,11 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .menu-primary .menu-item a span {
 	background: url(../images/ico-bullet-1.png) right 6px no-repeat;
-	padding: 0 15px 0 0;
+	padding: 0 15px 0 0px;
 }
 
 .menu-primary .menu-item a:hover {
-	margin: 0 -1px 0 0;
+	margin: 0 -1px 0 0px;
 	padding: 10px 25px 0 25px;
 	height: 26px;
 	background: url(../images/menu-item-act.png) top left repeat-x;
@@ -1920,13 +1921,13 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	font-weight: bold;
 	text-decoration: none;
 	color: #23ceff;
-	text-shadow: #252525 0 1px 0;
+	text-shadow: #252525 0 1px 0px;
 	display: block;
 }
 
 .menu-primary .menu-item a:hover span {
 	background: url(../images/ico-bullet-20.png) right 6px no-repeat;
-	padding: 0 15px 0 0;
+	padding: 0 15px 0 0px;
 }
 
 .menu-primary ul ul .menu-item a {
@@ -1940,7 +1941,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	font-size: 12px;
 	font-weight: bold;
 	text-align: left;
-	text-shadow: #252525 0 1px 0;
+	text-shadow: #252525 0 1px 0px;
 	text-decoration: none;
 	display: block;
 }
@@ -1956,19 +1957,19 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	font-size: 12px;
 	font-weight: bold;
 	text-align: left;
-	text-shadow: #252525 0 1px 0;
+	text-shadow: #252525 0 1px 0px;
 	text-decoration: none;
 	display: block;
 }
 
 .menu-primary ul ul .menu-item a span {
 	background: url(../images/ico-bullet-10.png) right 6px no-repeat;
-	padding: 0 15px 0 0;
+	padding: 0 15px 0 0px;
 }
 
 .menu-primary ul ul .menu-item a:hover span {
 	background: url(../images/ico-bullet-10.png) right 6px no-repeat;
-	padding: 0 15px 0 0;
+	padding: 0 15px 0 0px;
 }
 
 
@@ -1981,7 +1982,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .menu-primary-color-dark .menu-item a {
 	color: #fff;
-	text-shadow: #0c0c0c 0 2px 0;
+	text-shadow: #0c0c0c 0 2px 0px;
 	border-bottom: 1px solid #272727;
 	border-left: 1px solid #5a5a5a;
 	border-right: 1px solid #5a5a5a;
@@ -1989,7 +1990,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .menu-primary-color-dark .menu-item a span {
 	background: url(../images/ico-bullet-19.png) right 6px no-repeat;
-	padding: 0 15px 0 0;
+	padding: 0 15px 0 0px;
 }
 
 .menu-primary-color-dark .menu-item a:hover {
@@ -2008,7 +2009,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	font-size: 12px;
 	font-weight: bold;
 	text-align: left;
-	text-shadow: #252525 0 1px 0;
+	text-shadow: #252525 0 1px 0px;
 	text-decoration: none;
 	display: block;
 }
@@ -2024,7 +2025,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	font-size: 12px;
 	font-weight: bold;
 	text-align: left;
-	text-shadow: #252525 0 1px 0;
+	text-shadow: #252525 0 1px 0px;
 	text-decoration: none;
 	display: block;
 }
@@ -2033,36 +2034,36 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	background: url(../images/menu-item-act-black.png) top left repeat-x;
 	border-bottom: 1px solid #303030;
 	color: #23ceff;
-	text-shadow: #252525 0 1px 0;
+	text-shadow: #252525 0 1px 0px;
 }
 
 .menu-primary-color-dark li:hover > a span {
 	background: url(../images/ico-bullet-20.png) right 6px no-repeat;
-	padding: 0 15px 0 0;
+	padding: 0 15px 0 0px;
 }
 
 .menu-primary-color-dark ul ul .menu-item a span {
 	background: url(../images/ico-bullet-10.png) right 6px no-repeat;
-	padding: 0 15px 0 0;
+	padding: 0 15px 0 0px;
 }
 
 .menu-primary-color-dark ul ul .menu-item a:hover span {
 	background: url(../images/ico-bullet-10.png) right 6px no-repeat;
-	padding: 0 15px 0 0;
+	padding: 0 15px 0 0px;
 }
 
 
 /* 5.0 News List Index & Items */
 
 .news-list-index .last-item {
-	margin: 0;
+	margin: 0px;
 	border: none;
 }
 
 .news-item {
 	border-bottom: 1px solid #c5c5c5;
-	padding: 0 0 23px 0;
-	margin: 0 0 28px 0;
+	padding: 0 0 23px 0px;
+	margin: 0 0 28px 0px;
 }
 
 .news-item td {
@@ -2075,7 +2076,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .news-item .image img {
-	padding: 0 0 9px 0;
+	padding: 0 0 9px 0px;
 	background: url(../images/image-shadow-1.png) bottom center no-repeat;
 }
 
@@ -2083,7 +2084,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	font-size: 16px;
 	font-weight: bold;
 	line-height: 20px;
-	margin: -4px 0 4px 0;
+	margin: -4px 0 4px 0px;
 }
 
 .news-item .text h2 a {
@@ -2097,7 +2098,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .news-item .text h3 {
-	margin: 0 0 10px 0;
+	margin: 0 0 10px 0px;
 	font-size: 11px;
 	font-weight: normal;
 	color: #5a5a5a;
@@ -2124,11 +2125,11 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 /* 6.0 Open Article Styling */
 
 .article-wrapper .title {
-	margin: -6px 0 9px 0;
+	margin: -6px 0 9px 0px;
 	font-size: 18px;
 	line-height: 24px;
 	font-weight: bold;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 }
 
 .article-wrapper .title a {
@@ -2142,7 +2143,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .article-wrapper .info {
-	margin: 0 0 25px 0;
+	margin: 0 0 25px 0px;
 	font-size: 11px;
 	font-weight: normal;
 	color: #5a5a5a;
@@ -2171,69 +2172,69 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .article-wrapper .text {
-	margin: -5px 0 10px 0;
+	margin: -5px 0 10px 0px;
 	overflow: hidden;
 }
 
 .article-wrapper .text .article-image {
-	margin: 5px 20px 0 0;
-	padding: 0 0 9px 0;
+	margin: 5px 20px 0 0px;
+	padding: 0 0 9px 0px;
 	background: url(../images/image-shadow-1.png) bottom center no-repeat;
 	float: left;
 }
 
 .article-wrapper .text p {
-	margin: 0 0 12px 0;
+	margin: 0 0 12px 0px;
 }
 
 .article-wrapper .text .image {
-	padding: 12px 0 0 0;
-	margin: 0 0 20px 0;
+	padding: 12px 0 0 0px;
+	margin: 0 0 20px 0px;
 	text-align: center;
 }
 
 .article-wrapper .text h2 {
 	font-size: 28px;
-	padding: 9px 0 0 0;
-	margin: 0 0 7px 0;
+	padding: 9px 0 0 0px;
+	margin: 0 0 7px 0px;
 	font-weight: bold;
 	color: #1c1c1c;
 }
 
 .article-wrapper .text h3 {
 	font-size: 18px;
-	padding: 9px 0 0 0;
-	margin: 0 0 7px 0;
+	padding: 9px 0 0 0px;
+	margin: 0 0 7px 0px;
 	font-weight: bold;
 	color: #1c1c1c;
 }
 
 .article-wrapper .text h4 {
 	font-size: 16px;
-	padding: 9px 0 0 0;
-	margin: 0 0 7px 0;
+	padding: 9px 0 0 0px;
+	margin: 0 0 7px 0px;
 	font-weight: bold;
 	color: #1c1c1c;
 }
 
 .article-wrapper .text h5 {
 	font-size: 14px;
-	padding: 9px 0 0 0;
-	margin: 0 0 7px 0;
+	padding: 9px 0 0 0px;
+	margin: 0 0 7px 0px;
 	font-weight: bold;
 	color: #1c1c1c;
 }
 
 .article-wrapper .text h6 {
 	font-size: 11px;
-	padding: 9px 0 0 0;
-	margin: 0 0 7px 0;
+	padding: 9px 0 0 0px;
+	margin: 0 0 7px 0px;
 	font-weight: bold;
 	color: #1c1c1c;
 }
 
 .article-wrapper .text ul {
-	padding: 4px 0 0 0;
+	padding: 4px 0 0 0px;
 	margin: 0 23px 15px 23px;
 }
 
@@ -2250,7 +2251,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .article-wrapper .text ol li {
-	padding: 0;
+	padding: 0px;
 	line-height: 22px;
 	background: none;
 }
@@ -2263,13 +2264,13 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .gallery-preview-box-wrapper {
-	padding: 12px 0 0 0;
-	margin: 0 0 25px 0;
+	padding: 12px 0 0 0px;
+	margin: 0 0 25px 0px;
 }
 
 .gallery-preview-box {
 	width: 490px;
-	padding: 5px 0 0 0;
+	padding: 5px 0 0 0px;
 	margin: 0 auto;
 	background: url(../images/gallery-preview-box-top-bg.png) top center no-repeat;
 }
@@ -2283,7 +2284,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .gallery-preview-box .gallery-preview-box-title {
 	height: 15px;
-	margin: 0 0 13px 0;
+	margin: 0 0 13px 0px;
 	font-weight: normal;
 	font-size: 12px;
 	overflow: hidden;
@@ -2301,13 +2302,13 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .gallery-preview-box .gallery-preview-box-title b {
 	padding: 0 0 0 17px;
-	margin: 0 5px 0 0;
+	margin: 0 5px 0 0px;
 	color: #c61919;
 	background: url(../images/ico-photo-1.png) 0 3px no-repeat;
 }
 
 .gallery-preview-box img {
-	margin: 0 15px 0 0;
+	margin: 0 15px 0 0px;
 	display: block;
 	float: left;
 }
@@ -2347,7 +2348,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .comments-item {
 	padding: 0 14px 13px 65px;
-	margin: 0 0 13px 0;
+	margin: 0 0 13px 0px;
 	background: url(../images/comments-item-bg.png) bottom left repeat-x;
 }
 
@@ -2357,7 +2358,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .comments-item h2 {
-	padding: 0 5px 0 0;
+	padding: 0 5px 0 0px;
 	margin-bottom: 5px;
 	font-size: 11px;
 	font-weight: normal;
@@ -2391,8 +2392,8 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .author .comments-item {
 	padding: 12px 14px 13px 65px;
-	margin: -12px 0 13px 0;
-	text-shadow: #fff 0 1px 0;
+	margin: -12px 0 13px 0px;
+	text-shadow: #fff 0 1px 0px;
 	background: url(../images/comments-item-author-body-bg.png) bottom left repeat-x;
 }
 
@@ -2414,7 +2415,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .add-comment {
 	margin: 0 14px;
-	padding: 10px 0 0 0;
+	padding: 10px 0 0 0px;
 }
 
 .add-comment td {
@@ -2422,7 +2423,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .add-comment .label {
-	padding: 4px 0 0 0;
+	padding: 4px 0 0 0px;
 	width: 100px;
 	font-size: 11px;
 	font-weight: bold;
@@ -2468,13 +2469,13 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .latest-articles .last {
 	background: none;
-	margin: 0;
+	margin: 0px;
 	padding: 5px 15px 0 15px;
 }
 
 .latest-article-item {
 	padding: 5px 15px 9px 15px;
-	margin: 0 0 10px 0;
+	margin: 0 0 10px 0px;
 	background: url(../images/block-1-item-bg.png) bottom left repeat-x;
 }
 
@@ -2488,7 +2489,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .latest-article-item .image img {
-	padding: 0 0 6px 0;
+	padding: 0 0 6px 0px;
 	background: url(../images/image-shadow-2.png) bottom center no-repeat;
 	float: left;
 }
@@ -2497,7 +2498,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	font-size: 12px;
 	line-height: 16px;
 	font-weight: bold;
-	margin: -3px 0 5px 0;
+	margin: -3px 0 5px 0px;
 }
 
 .latest-article-item .text h3 a {
@@ -2512,13 +2513,13 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .latest-activity .last {
 	background: none;
-	margin: 0;
+	margin: 0px;
 	padding: 5px 15px 0 15px;
 }
 
 .latest-activity-item {
 	padding: 5px 15px 9px 15px;
-	margin: 0 0 10px 0;
+	margin: 0 0 10px 0px;
 	background: url(../images/block-1-item-bg.png) bottom left repeat-x;
 }
 
@@ -2532,7 +2533,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .latest-activity-item .image img {
-	padding: 0 0 6px 0;
+	padding: 0 0 6px 0px;
 	background: url(../images/image-shadow-2.png) bottom center no-repeat;
 	float: left;
 }
@@ -2541,7 +2542,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	font-size: 12px;
 	line-height: 16px;
 	font-weight: bold;
-	margin: -3px 0 7px 0;
+	margin: -3px 0 7px 0px;
 }
 
 .latest-activity-item .text h3 a {
@@ -2555,7 +2556,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .latest-activity-item .text h4 {
-	margin: 0;
+	margin: 0px;
 	font-size: 11px;
 	font-weight: normal;
 	color: #5a5a5a;
@@ -2606,13 +2607,13 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .top-stories-slider .navigation {
-	padding: 16px 0;
+	padding: 16px 0px;
 	margin: -9px 0 0 248px;
 	overflow: hidden;
 }
 
 .top-stories-slider .navigation a {
-	margin: 0 10px 0 0;
+	margin: 0 10px 0 0px;
 	width: 10px;
 	height: 10px;
 	background: url(../images/ico-bullet-8.png) 0 0 no-repeat;
@@ -2635,7 +2636,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .top-stories-item .background {
-	margin: 137px 0 0 0;
+	margin: 137px 0 0 0px;
 	width: 587px;
 	height: 83px;
 	background: url(../images/top-stories-info-bg.png) 0 0 no-repeat;
@@ -2644,7 +2645,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .top-stories-item .title {
-	margin: 137px 0 0 0;
+	margin: 137px 0 0 0px;
 	padding: 13px 21px 0 16px;
 	width: 550px;
 	height: 70px;
@@ -2681,14 +2682,14 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 /* 9.0 Latest Events Sidebar */
 
 .latest-events .last {
-	margin: 0;
+	margin: 0px;
 	padding: 0 15px 2px 15px;
 	background: none;
 }
 
 .latest-event-item {
 	padding: 0 15px 12px 15px;
-	margin: 0 0 11px 0;
+	margin: 0 0 11px 0px;
 	background: url(../images/block-1-item-bg.png) bottom left repeat-x;
 }
 
@@ -2730,7 +2731,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .section-spacer img {
-	margin: 8px 0 0 0;
+	margin: 8px 0 0 0px;
 	float: right;
 }
 
@@ -2738,7 +2739,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	font-size: 14px;
 	font-weight: bold;
 	text-transform: uppercase;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 	color: #4d4d4d;
 	float: left;
 }
@@ -2763,21 +2764,21 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .section-header {
-	margin: 0 0 25px 0;
+	margin: 0 0 25px 0px;
 }
 
 .section-header h2 {
-	margin: 0 0 21px 0;
+	margin: 0 0 21px 0px;
 	font-size: 18px;
 	font-weight: bold;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 }
 
 .section-header h3 {
-	padding: 0 0 11px 0;
+	padding: 0 0 11px 0px;
 	font-size: 18px;
 	font-weight: normal;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 	background: url(../images/section-header-bg.png) bottom left no-repeat;
 }
 
@@ -2792,7 +2793,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .ad-250x250 img {
 	display: block;
-	margin: 0 0 10px 0;
+	margin: 0 0 10px 0px;
 }
 
 
@@ -2806,7 +2807,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	color: #003458;
 	text-transform: uppercase;
 	text-decoration: none;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 	background: #ffde00 url(../images/ico-bullet-3.png) right 5px no-repeat;
 }
 
@@ -2832,23 +2833,23 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .footer-wrapper .social {
 	width: 450px;
-	padding: 45px 0 0 0;
+	padding: 45px 0 0 0px;
 	float: left;
 }
 
 .footer-wrapper .social img {
-	margin: 0 12px 0 0;
+	margin: 0 12px 0 0px;
 	float: left;
 }
 
 .footer-wrapper .social .phone {
 	width: 424px;
-	margin: 33px 0 8px 0;
+	margin: 33px 0 8px 0px;
 	padding: 0 0 0 26px;
 	font-size: 20px;
 	font-weight: normal;
 	color: #fff;
-	text-shadow: #00466f 0 1px 0;
+	text-shadow: #00466f 0 1px 0px;
 	background: url(../images/ico-phone-1.png) 0 5px no-repeat;
 	float: left;
 }
@@ -2857,7 +2858,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	width: 424px;
 	padding: 0 0 0 26px;
 	font-size: 12px;
-	text-shadow: #00466f 0 1px 0;
+	text-shadow: #00466f 0 1px 0px;
 	background: url(../images/ico-email-1.png) 0 6px no-repeat;
 	float: left;
 }
@@ -2869,7 +2870,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .footer-wrapper .footer-right {
 	width: 400px;
-	padding: 45px 0 0 0;
+	padding: 45px 0 0 0px;
 	font-size: 11px;
 	line-height: 16px;
 	color: #fff;
@@ -2890,7 +2891,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 /* 13.1 News List Footer */
 
 .list-footer {
-	padding: 20px 0 0 0;
+	padding: 20px 0 0 0px;
 	border-top: 3px solid #c5c5c5;
 }
 
@@ -2898,7 +2899,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 /* 13.2 Open Article Footer */
 
 .article-footer {
-	padding: 20px 0 22px 0;
+	padding: 20px 0 22px 0px;
 	border-top: 3px solid #c5c5c5;
 	overflow: hidden;
 }
@@ -2912,7 +2913,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	line-height: 16px;
 	text-decoration: none;
 	color: #1e1e1e;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 	cursor: pointer;
 	text-align: center;
 }
@@ -2945,7 +2946,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	line-height: 30px;
 	text-decoration: none;
 	color: #1e1e1e;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 	cursor: pointer;
 	text-align: center;
 }
@@ -2980,7 +2981,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .btn-align-left img {
-	margin: 0 7px 0 0;
+	margin: 0 7px 0 0px;
 }
 
 .btn-align-right {
@@ -3004,7 +3005,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .btn-next span {
-	padding: 0 12px 0 0;
+	padding: 0 12px 0 0px;
 	background: url(../images/ico-bullet-7.png) right 5px no-repeat;
 }
 
@@ -3014,13 +3015,13 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .btn-2-next span {
-	padding: 0 25px 0 0;
+	padding: 0 25px 0 0px;
 	background: url(../images/ico-bullet-11.png) right 10px no-repeat;
 }
 
 .btn-1-disabled {
 	color: #5c5c5c;
-	text-shadow: #ececec 0 1px 0;
+	text-shadow: #ececec 0 1px 0px;
 }
 
 .btn-1-disabled i {
@@ -3037,7 +3038,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .btn-previous-disabled {
 	color: #5c5c5c;
-	text-shadow: #ececec 0 1px 0;
+	text-shadow: #ececec 0 1px 0px;
 }
 
 .btn-previous-disabled span {
@@ -3059,11 +3060,11 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .btn-next-disabled {
 	color: #5c5c5c;
-	text-shadow: #ececec 0 1px 0;
+	text-shadow: #ececec 0 1px 0px;
 }
 
 .btn-next-disabled span {
-	padding: 0 12px 0 0;
+	padding: 0 12px 0 0px;
 	background: url(../images/ico-bullet-7.png) right -6px no-repeat;
 }
 
@@ -3086,7 +3087,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .block-1 {
 	width: 250px;
-	margin: 0 0 20px 0;
+	margin: 0 0 20px 0px;
 }
 
 .block-1 h2 {
@@ -3100,7 +3101,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	font-size: 14px;
 	font-weight: bold;
 	text-transform: uppercase;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 	color: #4d4d4d;
 	float: left;
 }
@@ -3112,7 +3113,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .block-1 .block-1-content {
-	padding: 10px 0;
+	padding: 10px 0px;
 	background: url(../images/block-1-content-bg.png) bottom center no-repeat;
 }
 
@@ -3146,13 +3147,13 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .homepage-slider .navigation {
-	padding: 16px 0;
+	padding: 16px 0px;
 	margin: -9px 0 5px 400px;
 	overflow: hidden;
 }
 
 .homepage-slider .navigation a {
-	margin: 0 10px 0 0;
+	margin: 0 10px 0 0px;
 	width: 10px;
 	height: 10px;
 	background: url(../images/ico-bullet-8.png) 0 0 no-repeat;
@@ -3206,7 +3207,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .homepage-slider-item .background {
-	margin: 237px 0 0 0;
+	margin: 237px 0 0 0px;
 	width: 1000px;
 	height: 83px;
 	background: url(../images/top-stories-info-bg.png) 0 0 no-repeat;
@@ -3215,7 +3216,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .homepage-slider-item .title {
-	margin: 237px 0 0 0;
+	margin: 237px 0 0 0px;
 	padding: 13px 220px 0 16px;
 	width: 664px;
 	height: 70px;
@@ -3255,23 +3256,23 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .homepage-columns {
-	margin: 0 0 30px 0;
+	margin: 0 0 30px 0px;
 	overflow: hidden;
 }
 
 .homepage-columns .last {
-	margin: 0;
+	margin: 0px;
 }
 
 .homepage-columns-item {
-	margin: 0 40px 0 0;
+	margin: 0 40px 0 0px;
 	width: 195px;
 	float: left;
 }
 
 .homepage-columns-item .title {
-	margin: 0 0 12px 0;
-	padding: 0 0 9px 0;
+	margin: 0 0 12px 0px;
+	padding: 0 0 9px 0px;
 	font-size: 18px;
 	font-weight: bold;
 	color: #004a7b;
@@ -3284,27 +3285,27 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .homepage-spacer {
-	margin: 0 0 30px 0;
+	margin: 0 0 30px 0px;
 	height: 3px;
 	line-height: 3px;
 	background: url(../images/shortcode-spacer-2-bg.png) top left repeat-x;
 }
 
 .homepage-about {
-	margin: 0 30px 0 0;
+	margin: 0 30px 0 0px;
 	width: 620px;
 	float: left;
 }
 
 .homepage-about .caps:first-letter {
-	margin: 5px 6px 0 0;
+	margin: 5px 6px 0 0px;
 	font-size: 40px;
 	font-weight: bold;
 	float: left;
 }
 
 .homepage-about p {
-	margin: 0 0 12px 0;
+	margin: 0 0 12px 0px;
 }
 
 .homepage-footer .block-1 {
@@ -3312,22 +3313,22 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .homepage-footer .last {
-	margin-bottom: 0;
+	margin-bottom: 0px;
 }
 
 
 /* 17.0 Full Width Page Styling */
 
 .full-width-wrapper {
-	padding: 24px 0 0 0;
+	padding: 24px 0 0 0px;
 }
 
 .full-width-wrapper p {
-	margin: 0 0 12px 0;
+	margin: 0 0 12px 0px;
 }
 
 .full-width-wrapper .caps:first-letter {
-	margin: 5px 6px 0 0;
+	margin: 5px 6px 0 0px;
 	font-size: 40px;
 	font-weight: bold;
 	float: left;
@@ -3335,21 +3336,21 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .full-width-header {
 	background: url(../images/full-width-header-bg.png) bottom center no-repeat;
-	margin: 0 0 25px 0;
+	margin: 0 0 25px 0px;
 }
 
 .full-width-header h2 {
-	margin: 0 0 21px 0;
+	margin: 0 0 21px 0px;
 	font-size: 18px;
 	font-weight: bold;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 }
 
 .full-width-header h3 {
-	padding: 0 0 11px 0;
+	padding: 0 0 11px 0px;
 	font-size: 18px;
 	font-weight: normal;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 	background: url(../images/section-header-bg.png) bottom left no-repeat;
 }
 
@@ -3371,7 +3372,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 
 .tab-1 {
 	text-transform: uppercase;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #fff 0 1px 0px;
 	color: #4d4d4d;
 	font-size: 10px;
 	font-weight: bold;
@@ -3435,7 +3436,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .portfolio-wrapper h2 {
-	margin: -2px 0 15px 0;
+	margin: -2px 0 15px 0px;
 	font-size: 18px;
 	font-weight: normal;
 }
@@ -3450,14 +3451,14 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .portfolio-wrapper .spacer {
-	margin: 8px 0 21px 0;
+	margin: 8px 0 21px 0px;
 	width: 1000px;
 	background: url(../images/shortcode-spacer-3-bg.png) center center repeat-x;
 	float: left;
 }
 
 .portfolio-single .image {
-	margin: 0 30px 0 0;
+	margin: 0 30px 0 0px;
 	width: 435px;
 	float: left;
 }
@@ -3465,7 +3466,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 .portfolio-single .image img {
 	width: 435px;
 	height: 250px;
-	padding: 0 0 9px 0;
+	padding: 0 0 9px 0px;
 	background: url(../images/image-shadow-7.png) bottom center no-repeat;
 }
 
@@ -3479,14 +3480,14 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .portfolio-two .image {
-	margin: 0 30px 0 0;
+	margin: 0 30px 0 0px;
 	width: 435px;
 	float: left;
 }
 
 .portfolio-two .image img {
-	margin: 0 0 10px 0;
-	padding: 0 0 9px 0;
+	margin: 0 0 10px 0px;
+	padding: 0 0 9px 0px;
 	width: 435px;
 	height: 250px;
 	background: url(../images/image-shadow-7.png) bottom center no-repeat;
@@ -3497,14 +3498,14 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .portfolio-three .image {
-	margin: 0 30px 0 0;
+	margin: 0 30px 0 0px;
 	width: 280px;
 	float: left;
 }
 
 .portfolio-three .image img {
-	margin: 0 0 10px 0;
-	padding: 0 0 9px 0;
+	margin: 0 0 10px 0px;
+	padding: 0 0 9px 0px;
 	width: 280px;
 	height: 180px;
 	background: url(../images/image-shadow-8.png) bottom center no-repeat;
@@ -3517,7 +3518,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 	width: 100%;
 	text-align: center;
 	font-size: 11px;
-	padding: 21px 0 0 0;
+	padding: 21px 0 0 0px;
 }
 
 .pages table {
@@ -3525,7 +3526,7 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 }
 
 .pages a {
-	margin: 0 1px 0 0;
+	margin: 0 1px 0 0px;
 	padding: 2px 6px;
 	font-weight: bold;
 	line-height: 12px;
@@ -3564,3 +3565,10 @@ input[type=text]:focus, input[type=submit]:focus, input[type=password]:focus, te
 .bigfont{font-size:24px; font-family:"微软雅黑"; color:#009933}
 .note1{width:90%; color:#006699;}
 .fc-blue{ color:#006699;}
+/*代理商 */
+.con .title{padding:0px 20px;  font-family:"微软雅黑"; color:#339933;}
+.tab {border: 1px solid #ddd; border-left:0px; border-bottom:0px;}
+.tab th{font-family:"微软雅黑"; font-weight:800;height:24px; background-color:#ddd; text-align:center;}
+.tab th,.tab td{font-family:"微软雅黑";border-left:1px solid #ddd ; border-bottom:1px solid #ddd ;}
+.tab td{text-align:right}
+.tab .even td{background-color:#f6f6f6}
