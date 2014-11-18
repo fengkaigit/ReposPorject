@@ -1,18 +1,13 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <html>
 <head>
 <title>移动缴费确认 - 生活助手</title>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
-<link href="<%=request.getContextPath() %>/css/apps.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
-<link href="<%=request.getContextPath() %>/css/jiaofei.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
-<link charset="utf-8" rel="stylesheet" href="<%=request.getContextPath() %>/css/appaside.css" media="all">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/billCenter.css">
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/loginin/loginin.css"></link>
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/zhsz.css"></link>
 
 
 </head>
@@ -122,7 +117,7 @@
       <div class="tx_step2">
         	<span >1、填写表单</span>
             <span class="on">2、确认信息</span>
-            <span>3、上线支付</span>
+            <span>3、线上支付</span>
             <span>4、支付成功</span>
           
         </div>
@@ -131,12 +126,11 @@
        <fieldset>
     <legend>缴费信息确认</legend>
     <ul >
-  	<li><span>订单编号：</span>2014082201005000000001</li>
+  <li><span>订单编号：</span>2014082201005000000001</li>
     <li><span>收费单位：</span>北京勤蜂易缴电子商务有限公司</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帐期：</span>2014年8月</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>123.4元（包含代缴服务费1元）</li>
-    <li><span>缴费户号：</span>200206342</li>
-	  <li><span>缴费住址：</span>呼和浩特市海东路丽苑小区8号楼201</li>
+ 
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>30元</li>
+    <li><span>手机号码：</span>15804719999</li>
    </ul>
   </fieldset>
 

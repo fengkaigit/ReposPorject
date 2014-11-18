@@ -1,20 +1,13 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <html>
 <head>
 <title>交通罚款缴费确认 - 生活助手</title>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
-<link href="<%=request.getContextPath() %>/css/apps.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
-<link href="<%=request.getContextPath() %>/css/jiaofei.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
-<link charset="utf-8" rel="stylesheet" href="<%=request.getContextPath() %>/css/appaside.css" media="all">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/billCenter.css">
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/loginin/loginin.css"></link>
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/zhsz.css"></link>
-
-
 </head>
 <body>
 <%@include file="/pages/template/jsp/common/header.jsp"%>
@@ -114,7 +107,7 @@
           <span style="float:right; margin-top:15px; margin-right:40px;" class="lcyst03">
 		  <a class="ywjs" target="_blank" onClick="show('addbills')">缴费账号设置</a>
 		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" target="_blank" href="jiaofei_jftx.html">账单提醒设置</a>
+	 <a class="ywjs00" style="color:#007abd;float:left;" onClick="show('zdtx')">账单提醒设置</a>
 		  <a style="color:#007abd;float:left;">|</a>
 		  <a class="ywjs00" target="_blank" href="jiaofei_jlcx.html">缴费记录查询</a>
 		  </span></div> 
@@ -122,7 +115,7 @@
       <div class="tx_step2">
         	<span >1、填写表单</span>
             <span class="on">2、确认信息</span>
-            <span>3、上线支付</span>
+            <span>3、线上支付</span>
             <span>4、支付成功</span>
           
         </div>
@@ -133,21 +126,17 @@
     <ul >
   	<li><span>订单编号：</span>2014082201005000000001</li>
     <li><span>收费单位：</span>北京勤蜂易缴电子商务有限公司</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帐期：</span>2014年8月</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>123.4元（包含代缴服务费1元）</li>
-    <li><span>缴费户号：</span>200206342</li>
-	  <li><span>缴费住址：</span>呼和浩特市海东路丽苑小区8号楼201</li>
-   </ul>
+     <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>120元（包含代缴服务费20元）</li>
+    <li><span>车牌号码：</span>蒙A99999</li>
+  </ul>
   </fieldset>
 
 
   </div>
  <form method="post" id="form1" action="<%=request.getContextPath() %>/jtfk/third.do">
   <div class="zffs">
-   
        <fieldset>
     <legend>支付方式</legend>
-    
     <ul class="list-bank">
     				    					    						<li onClick="bankSelect(this)" clstag="payment|keycount|bank|c-icbc">
 								<input type="radio" name="bankRadio" value="{'channelCode':'ICBC','channelName':'工商银行','channelType':'20','isRoute':true,'commonCredit':{'agencyCode':'147','cardTypeCode':'2','activityId':0},'commonDebit':{'agencyCode':'147','cardTypeCode':'1','activityId':0},'quickCredit':{'agencyCode':'300','cardTypeCode':'2','activityId':0},'quickDebit':{'agencyCode':'300','cardTypeCode':'1','activityId':0},'imageUrl':'../images/icbc_1301.png'}" class="jdradio" id="bank_ICBC">
@@ -241,12 +230,10 @@
 								</label>
 															</li>
     					    				                </ul>
-    					    				                
   </fieldset>
 
-<div style="margin-top:10px; padding:0px 80px;"><input type="button" class="jfxx_btn3" value="上一步"  onClick="goback()" name="searchBill" >&nbsp;&nbsp;
-                                                <input  type="submit" class="jfxx_btn3"  value="下一步" name="searchBill"  ></div>
-                                               
+<div style="margin-top:10px; padding:0px 80px;"><input   type="button" class="jfxx_btn3" value="上一步"  onClick="goback()" name="searchBill" >&nbsp;&nbsp;
+                                                <input  type="submit"class="jfxx_btn3"  value="下一步" name="searchBill"  ></div>
   </div>
    </form>
   </div>

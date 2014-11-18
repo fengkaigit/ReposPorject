@@ -1,21 +1,13 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <html>
 <head>
 <title>燃气费缴费 - 生活助手</title>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
-<link href="<%=request.getContextPath() %>/css/apps.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
-<link href="<%=request.getContextPath() %>/css/jiaofei.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
-<link charset="utf-8" rel="stylesheet" href="<%=request.getContextPath() %>/css/appaside.css" media="all">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/billCenter.css">
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/loginin/loginin.css"></link>
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/zhsz.css"></link>
-
-
-</head>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css"></head>
 <body>
 <%@include file="/pages/template/jsp/common/header.jsp"%>
 <div class="ui-container clearfix" id="container">  
@@ -123,7 +115,7 @@
       <div class="tx_step">
         	<span class="on">1、填写表单</span>
             <span>2、确认信息</span>
-            <span>3、上线支付</span>
+            <span>3、线上支付</span>
             <span>4、支付成功</span>
             
         </div>
@@ -243,12 +235,12 @@
  
  	<div>
 		<label style=" margin-right:8px;line-height:30px;"> 缴费金额：</label>
-		   <input type="text"value="122.4" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
+		   <input type="text"value="122.4" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">&nbsp;&nbsp;元
 	</div>
      
 	<div style="margin-top:10px;clear:both;">
 		<label style=" margin-right:8px;line-height:30px;">代缴劳务费：</label>
-		   <input type="text"value="1" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
+		   <input type="text"value="1" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">&nbsp;&nbsp;元
 	</div>
 	
  <!-- end -->
@@ -258,10 +250,10 @@
  <div style="margin-bottom: 0px; margin-top:5px;clear:both;">
       <label style="margin-right: 8px;line-height:40px;">
       验证码：</label> 
-      <input type="text" style="width:86px;border:1px solid #d5d5d5;height:29px;line-height:29px;  padding:3px;margin-top:7px;color:#666" class="cxbh_s" name="billSubmitVo.verify" maxlength="4" onclick="jQuery.shfftBillCharge.getVerifyCode('validateImg');{value='';this.style.color='#333'}" onblur="if(!value){value=defaultValue;this.style.color='#666'}" value="点此获取验证码">
+      <input type="text" style="width:86px;border:1px solid #d5d5d5;height:29px;line-height:29px;  padding:3px;margin-top:7px;color:#666" class="cxbh_s" name="billSubmitVo.verify" maxlength="4" onClick="jQuery.shfftBillCharge.getVerifyCode('validateImg');{value='';this.style.color='#333'}" onBlur="if(!value){value=defaultValue;this.style.color='#666'}" value="点此获取验证码">&nbsp;&nbsp;<img src="<%=request.getContextPath() %>/images/registerRandomImg.action.jpg" > 	
        <!-- 图片验证码 -->
         <a href="javascript:jQuery.shfftBillCharge.refreshVerifyCode('validateImg');">
-        <img onclick="javascript:jQuery.shfftBillCharge.refreshVerifyCode(this.id);" style="vertical-align: middle;margin-left:10px;display: none" title="点击验证码图片更换验证码!" id="validateImg">
+        <img onClick="javascript:jQuery.shfftBillCharge.refreshVerifyCode(this.id);" style="vertical-align: middle;margin-left:10px;display: none" title="点击验证码图片更换验证码!" id="validateImg">
         </a>
         <!-- 图片验证码 -->
 </div>

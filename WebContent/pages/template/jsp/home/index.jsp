@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8" import="com.ey.dao.entity.UserBase,com.ey.consts.SystemConst"%>
 <html>
@@ -108,13 +109,27 @@ jQuery(document).ready(
     <div class="yol-top">
         <div class="sidebar" style="position: static; right: 0px; top: 0px;">
             <div class="bulletin">
-                <div class="title-items">
+                   <div class="title-items">
                     <h2>公告栏</h2>
-                    <a class="more" href="">更多&gt;</a></div>
-               <br/>
-                <br/>
-                 <br/>
-                  <br/>
+                    <a class="more" href="javascript:void(0)">更多&gt;</a></div>
+                <ul>  <li class="clearfix"><b></b>
+                      <a target="_blank" href="#">
+                      <span title="缴费一点通全年365天" class="fcg2 ">缴费一点通全年365天...</span><span class="fcg fr">[08-12]</span></a>
+                    </li>  <li class="clearfix"><b></b>
+                      <a target="_blank" href="#">
+                      <span title="缴费一点通全年365天" class="fcg2 ">缴费一点通全年365天...</span><span class="fcg fr">[08-12]</span></a>
+                    </li>  <li class="clearfix"><b></b>
+                      <a target="_blank" href="#">
+                      <span title="缴费一点通全年365天" class="fcg2 ">缴费一点通全年365天...</span><span class="fcg fr">[08-12]</span></a>
+                    </li>  <li class="clearfix"><b></b>
+                      <a target="_blank" href="#">
+                      <span title="缴费一点通全年365天" class="fcg2 ">缴费一点通全年365天...</span><span class="fcg fr">[08-12]</span></a>
+                    </li> 
+          
+                    
+                        
+                </ul>
+               
             </div>
             
             
@@ -141,28 +156,28 @@ jQuery(document).ready(
     <div class="headtitle"><em><i class="icons icon-novice"></i></em> 缴费专区</div>
     <ul class="clearfix">
       <li>
-        <a href="<%=request.getContextPath() %>/sf/first.do" target="_blank" >
+        <a href="<%=request.getContextPath() %>/sf/first.do">
           <div style="color:#f85f20" class="title">水费</div>
           <div style="background-position:-62px 0px" class="pic"></div>
           <div class="note">7*24小时服务</div>
         </a>
       </li>
       <li>
-        <a href="<%=request.getContextPath() %>/df/first.do" target="_blank">
+        <a href="<%=request.getContextPath() %>/df/first.do">
           <div style="color:#ac73c1" class="title">电费</div>
           <div style="background-position:0px 0px" class="pic"></div>
           <div class="note">无需排队</div>
         </a>
       </li>
       <li>
-        <a href="<%=request.getContextPath() %>/rqf/first.do" target="_blank">
+        <a href="<%=request.getContextPath() %>/rqf/first.do">
           <div style="color:#3aabda" class="title">燃气费</div>
           <div style="background-position:-124px 0px" class="pic"></div>
           <div class="note">足不出户</div>
         </a>
       </li>
       <li>
-        <a href="<%=request.getContextPath() %>/ghf/first.do" target="_blank">
+        <a href="<%=request.getContextPath() %>/ghf/first.do">
           <div style="color:#88b838" class="title">固话费</div>
           <div style="background-position:-186px 0px" class="pic"></div>
           <div class="note">动动拇指</div>
@@ -171,14 +186,14 @@ jQuery(document).ready(
     </ul>
     <ul class="clearfix">
       <li>
-        <a href="<%=request.getContextPath() %>/ydtx/first.do" target="_blank">
+        <a href="<%=request.getContextPath() %>/ydtx/first.do">
           <div style="color:#55c6c6" class="title">移动通讯</div>
           <div style="background-position:-248px 0px" class="pic"></div>
           <div class="note">一站式缴费</div>
         </a>
       </li>
       <li>
-        <a href="<%=request.getContextPath() %>/jtfk/first.do" target="_blank">
+        <a href="<%=request.getContextPath() %>/jtfk/first.do">
           <div style="color:#f94c03" class="title">交通罚款</div>
           <div style="background-position:-62px  -62px" class="pic"></div>
           <div class="note">第一时间 推送提醒</div>
@@ -186,7 +201,7 @@ jQuery(document).ready(
       </li>
 
       <li>
-        <a target="_blank" href="<%=request.getContextPath() %>/wyf/first.do">
+        <a href="<%=request.getContextPath() %>/wyf/first.do">
           <div class="title" style="color:#5d83ce">物业费</div>
           <div class="pic" style="background-position:0px -62px"></div>
           <div class="note">无障碍沟通</div>
@@ -194,7 +209,7 @@ jQuery(document).ready(
       </li>
    
          <li>
-        <a target="_blank" href="<%=request.getContextPath() %>/yxds/first.do">
+        <a href="<%=request.getContextPath() %>/yxds/first.do">
           <div class="title" style="color:#5d83ce">有线电视</div>
           <div class="pic" style="background-position:-124px -62px"></div>
           <div class="note">轻松缴费</div>

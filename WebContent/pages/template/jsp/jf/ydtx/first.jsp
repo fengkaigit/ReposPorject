@@ -1,20 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <html>
 <head>
 <title>移动缴费 - 生活助手</title>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
-<link href="<%=request.getContextPath() %>/css/apps.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
-<link href="<%=request.getContextPath() %>/css/jiaofei.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
-<link charset="utf-8" rel="stylesheet" href="<%=request.getContextPath() %>/css/appaside.css" media="all">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/billCenter.css">
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/loginin/loginin.css"></link>
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/zhsz.css"></link>
 
+<script type="text/javascript">
+var tabId=0;
+$(function(){
+	addsj(1000,'defaultTel');
 
+	var x=10;
+var y=20;
+$("a.tooltip").mouseover(function(e){
+this.myTitle=this.title;
+this.title="";
+var tooltip="<div id='tooltip'>"+this.myTitle+"</div>";   //创建DIV元素
+$("#link").append(tooltip);  //追加到文档中
+$("#tooltip").css({"top": (e.pageY+y) + "px","left": (e.pageX+x) + "px"}).show(); //设置X  Y坐标， 并且显示
+}).mouseout(function(){
+this.title=this.myTitle;
+$("#tooltip").remove();    //移除
+}).mousemove(function(e){
+$("#tooltip").css({"top": (e.pageY+y) + "px","left": (e.pageX+x) + "px"});
+})
+	
+});
+
+</script>
 </head>
 <body>
 <%@include file="/pages/template/jsp/common/header.jsp"%>
@@ -118,13 +135,13 @@
 		  <a style="color:#007abd;float:left;">|</a>
 		  <a class="ywjs00" target="_blank" href="jiaofei_jftx.html">账单提醒设置</a>
 		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" target="_blank" href="jiaofei_jlcx.html">缴税记录查询</a>
+		  <a class="ywjs00" target="_blank" href="jiaofei_jlcx.html">缴费记录查询</a>
 		  </span></div> 
         <div class="clear"></div>
       <div class="tx_step">
         	<span class="on">1、填写表单</span>
             <span>2、确认信息</span>
-            <span>3、上线支付</span>
+            <span>3、线上支付</span>
             <span>4、支付成功</span>
             
         </div>
@@ -162,51 +179,17 @@
 
 <!--新缴费流程代码-->
 
-	<div style="margin-top:10px;clear:both;">
-		<label style=" margin-right:8px;line-height:35px;">手机号码：</label>
-		<input type="hidden" value="1" id="singleBillType" name="billSubmitVo.billType">
-		   <input type="text"value="15804719999" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
-		   &nbsp;&nbsp;
-           <input name="" type="checkbox" value=""> <span class="font2">备存账号信息</span>
-	</div  >
-	
-	<div style="margin-top:10px;clear:both;">
-		<label style=" margin-right:8px;line-height:30px;">确认号码：</label>
-		<input type="hidden" value="1" id="singleBillType" name="billSubmitVo.billType">
-		   <input type="text"value="15804719999" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
-		   
-	</div>
+	<div id="defaultTel" style="height:auto;"></div>
+    <div id="items" style="height:auto;"></div>
     
-    <div style="font-size:14px; width:110px; overflow:hidden; padding-left:0px; float:left;">
-				  
-				  <span style=" margin-right:8px;line-height:40px;" >充值金额：</span>
-				  
-	</div>
-				  
-	<div style="float:left;">
-				 
-				  
-                  <select style="width:85px; margin-left:0px; " class="selectCss" default="2014" onchange="jQuery.shfftBillCharge.billCityChange()" id="billCity" name="billCitySel" onmousewheel="return false">
-                  <option id="08" value="08" statuscode="00" statusname="" limit="" paymentcart="">30</option>
-                  <option id="09" value="09" statuscode="00" statusname="" limit="" paymentcart="">50</option>
-                  <option id="10" value="10" statuscode="00" statusname="" limit="" paymentcart="">100</option>
-                  <option id="11" value="11" statuscode="00" statusname="" limit="" paymentcart="">200</option>
-                  <option id="12" value="12" statuscode="00" statusname="" limit="" paymentcart="">500</option>
-                  </select>
-                  </div>元
-                  <div style="clear:both;height:1px; overflow:hidden;"></div>
-				  
-
- <div style="margin-bottom: 0px; margin-top:5px;clear:both;">
-      <label style="margin-right: 8px;line-height:40px;">
-      验证码：</label> 
-      <input type="text" style="width:86px;border:1px solid #d5d5d5;height:29px;line-height:29px;  padding:3px;margin-top:7px;color:#666" class="cxbh_s" name="billSubmitVo.verify" maxlength="4" onclick="jQuery.shfftBillCharge.getVerifyCode('validateImg');{value='';this.style.color='#333'}" onblur="if(!value){value=defaultValue;this.style.color='#666'}" value="点此获取验证码">
-       <!-- 图片验证码 -->
-        <a href="javascript:jQuery.shfftBillCharge.refreshVerifyCode('validateImg');">
-        <img onclick="javascript:jQuery.shfftBillCharge.refreshVerifyCode(this.id);" style="vertical-align: middle;margin-left:10px;display: none" title="点击验证码图片更换验证码!" id="validateImg">
-        </a>
-        <!-- 图片验证码 -->
-</div>
+    	<div style="margin-top:10px;clear:both;" id="add-btn-wrap">
+		<a class="add"  href="javascript:void(0)" onClick="addsj(tabId,'items')">添加号码<span class="add-icon"></span></a>
+		   <input name="" type="checkbox" value=""> <span class="font2 pl4">备存账号信息</span>
+	</div>			  
+     <div id="yzm">
+          <label class="label"style="  margin-top:10px;"  > 验证码：</label> 
+          <input type="text"  class="cxbh_s"  style="  margin-top:15px;" name="billSubmitVo.verify" maxlength="4" value="点此获取验证码">&nbsp;&nbsp;<img  height="30" src="<%=request.getContextPath() %>/images/registerRandomImg.action.jpg" > 
+    </div>
 
 	  <div style="border-bottom:1px solid #9D9D9D; width:770px; margin:0px 0px 20px 0px; padding:0px 0px 10px 0px;"> 
 	</div>
@@ -280,4 +263,5 @@
  <%@include file="/pages/template/jsp/common/footer.jsp"%>
 <%@include file="/pages/template/jsp/common/links.jsp"%>
 <script src="<%=request.getContextPath() %>/js/funs.js" type="text/javascript"></script>
+
 </body></html>

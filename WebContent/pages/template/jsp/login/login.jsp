@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <html>
@@ -77,7 +78,7 @@ function SearchFocus(obj){
 		</tr>
 		<tr>
 			<td colspan="2"><span onClick="login()" class="fft-loginbtn">登&nbsp;录</span>&nbsp;&nbsp;<a
-				target="_blank" href="reg.do" class="fft-fr cblue f12px fn">免费注册</a>
+				 href="reg.do" class="fft-fr cblue f12px fn">免费注册</a>
 			</td>
 		</tr>
 		<tr>

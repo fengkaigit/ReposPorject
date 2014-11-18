@@ -3,10 +3,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
+<script type="text/javascript">
+var url="";
+    $(document).ready(function() {
+      $('ul.sf-menu').sooperfish();
+    });
+</script>
 </head>
 <body>
-<div id="header">
+<div id="header" class="bg17">
     <div class="inner">
         <ul class="service">
             <li class="hotline"><i class="icons"></i><b>客服热线</b><em>400 888 888</em></li>
@@ -19,6 +24,7 @@
             
                 
                      <div class="for">
+                    
                      <%
                      UserBase user = (UserBase)session.getAttribute(SystemConst.USER);
                      if(user==null){ %>
@@ -28,25 +34,28 @@
                 	<a style="color:#a0db00" href="javascript:void(0)">欢迎你，<%=user.getRealName() %></a>
                 	 <a rel="nofollow" style="color:#fc8936" href="<%=request.getContextPath() %>/logout.do">注销</a>
                 	<%} %>
-        </div>
+                     
+                     </div>
+                
+                
+        
         </div>
         <div class="logo">
             <h2><a href="<%=request.getContextPath() %>/main.do"><img width="450" height="51" src="<%=request.getContextPath() %>/images/common/logo.png" alt="E缴365"></a></h2>
         </div>
         <div class="userbar">
 
-			<ul id="navv" >
-			<li><span><a href="index.html">我的e缴</a></span>
-				<ul>
-					<li><a href="jiaofei_zhsz.html">缴费账号设置</a></li>
+			<ul class="sf-menu" id="nav" >
+			<li class="current"><a href="<%=request.getContextPath() %>/main.do">我的e缴</a>				<ul>
+					<li class="current"><a href="jiaofei_zhsz.html">缴费账号设置</a></li>
 					<li><a href="jiaofei_jftx.html">账单代扣\提醒设置</a></li>
-					<li><a href="jiaofei_jlcx.html">记录查询</a></li>
-					<li><a href="jiaofei_tjfx.html">统计分析 </a></li>
+					<li><a href="<%=request.getContextPath() %>/jf/query.do">记录查询</a></li>
+					<li><a href="jiaofei_tjfx.html">代理商 </a></li>
 			  </ul></li>
 			
-			  <li><span><a href="aqbz.html">安全保障</a></span></li>
-		   <li><span><a href="yjfk.html">意见反馈</a></span></li>
-		   <li><span><a href="gywm.html">关于我们</a></span></li>
+			  <li><span><a href="<%=request.getContextPath() %>/ej/security.do">安全保障</a></span></li>
+		   <li><span><a href="<%=request.getContextPath() %>/ej/ieda.do">意见反馈</a></span></li>
+		   <li><span><a href="<%=request.getContextPath() %>/ej/about.do">关于我们</a></span></li>
 	       </ul>
 		</div>
 		
