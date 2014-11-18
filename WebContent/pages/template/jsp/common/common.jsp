@@ -17,12 +17,14 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/login/login.css">  
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/zzsc.css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/home.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/funs.js"></script>
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/validator.css"></link>
 <script src="<%=request.getContextPath() %>/js/formValidator-4.0.1.js" type="text/javascript" charset="UTF-8"></script>
 <script src="<%=request.getContextPath() %>/js/formValidatorRegex.js" type="text/javascript" charset="UTF-8"></script>
 <link href="<%=request.getContextPath() %>/css/apps.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
 <link href="<%=request.getContextPath() %>/css/jiaofei.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
 <link charset="utf-8" rel="stylesheet" href="<%=request.getContextPath() %>/css/appaside.css" media="all">
+<link charset="utf-8" rel="stylesheet" href="<%=request.getContextPath() %>/css/apps.css" media="all">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/loginin/billCenter.css">
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/loginin/loginin.css"></link>
