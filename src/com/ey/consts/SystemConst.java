@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class SystemConst {
 	static public String USER = "USER";
+	static public String MANAGER = "MANAGER";
 	static public String JSONRESULT = "JSONRESULT";
 	static public String SPLITE_SIGN = "[|]";
 	static public String SPLITE_SIGN_COMMON = "[,]";

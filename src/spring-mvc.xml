@@ -113,7 +113,6 @@
                         <value>/dologin.do</value>
                         <value>/logout.do</value>
                         <value>/checkreg.do</value>
-                        
                         <value>/ej/security.do</value>
                         <value>/ej/ieda.do</value>
                          <value>/ej/about.do</value>

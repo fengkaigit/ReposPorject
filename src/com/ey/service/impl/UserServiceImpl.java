@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		user.setId(DbidGenerator.getDbidGenerator().getNextId());
 		userDAO.save(user);
-		userDAO.saveOrUpdate(new UserOrgan(150105,user.getId()));
+		userDAO.saveOrUpdate(new UserOrgan(150105L,user.getId()));
 	}
 
 	@Override

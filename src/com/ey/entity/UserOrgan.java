@@ -17,8 +17,8 @@ public class UserOrgan implements java.io.Serializable {
 
 	// Fields
 
-	private long organId;
-	private long userId;
+	private Long organId;
+	private Long userId;
 
 	// Constructors
 
@@ -32,22 +32,22 @@ public class UserOrgan implements java.io.Serializable {
     public UserOrgan() {
 		
 	}
-	public UserOrgan(long organId, long userId) {
+	public UserOrgan(Long organId, Long userId) {
 		super();
 		this.organId = organId;
 		this.userId = userId;
 	}
 
-	public void setOrganId(long organId) {
+	public void setOrganId(Long organId) {
 		this.organId = organId;
 	}
 	@Id
 	@Column(name = "user_id", nullable = false)
-	public long getUserId() {
+	public Long getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
