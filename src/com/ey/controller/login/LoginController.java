@@ -13,12 +13,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.UserBase;
+import com.ey.forms.UserForm;
 import com.ey.service.LoginService;
 import com.ey.util.MD5;
 import com.ey.util.RequestUtils;
@@ -30,28 +30,28 @@ public class LoginController extends BaseController {
 
 	@Autowired
 	private LoginService loginService;
-
+	
 	@RequestMapping(value = "/dologin")
 	public ModelAndView login(HttpServletRequest request,
-			HttpServletResponse response) {
-		String verify = request.getParameter("verify");
-		String loginCode = request.getParameter("loginCode");
-		String password = request.getParameter("password");
+			HttpServletResponse response,UserForm form) {
+		if(!StringUtil.isEmptyString(form.getForwardUrl())){
+			 request.setAttribute("forwardUrl", form.getForwardUrl());
+		} 
 		ModelAndView mav = new ModelAndView();
-		if (StringUtil.isEmptyString(loginCode)) {
+		if (StringUtil.isEmptyString(form.getLoginCode())) {
 			mav.addObject("message", RequestUtils.getMessage("nologin",
 					request));
 			mav.setViewName("login/login");
 			return mav;
 		}
-		if (StringUtil.isEmptyString(password)) {
+		if (StringUtil.isEmptyString(form.getPassword())) {
 			mav.addObject("message", RequestUtils.getMessage("nopassword",
 					request));
 			mav.setViewName("login/login");
 			return mav;
 		}
 
-		if (StringUtil.isEmptyString(verify)) {
+		if (StringUtil.isEmptyString(form.getVerify())) {
 			mav.addObject("message", RequestUtils.getMessage("noverify",
 					request));
 			mav.setViewName("login/login");
@@ -59,21 +59,32 @@ public class LoginController extends BaseController {
 		} else {
 			String validateCode = (String) request.getSession().getAttribute(
 					"validateCode");
-			if (!verify.equalsIgnoreCase(validateCode)) {
+			if (!form.getVerify().equalsIgnoreCase(validateCode)) {
 				mav.addObject("message", RequestUtils.getMessage(
 						"invalidateverify", request));
 				mav.setViewName("login/login");
 				return mav;
 			}
 		}
-		UserBase currentUser = loginService.findUserByLoginCode(loginCode, MD5
-				.getMD5Str(password));
+		UserBase currentUser = loginService.findUserByLoginCode(form.getLoginCode(), MD5
+				.getMD5Str(form.getPassword()));
 
 		if (currentUser == null) {
 			mav.addObject("message", RequestUtils.getMessage("login", request));
 			mav.setViewName("login/login");
 		} else {
-			mav.setViewName("redirect:/main.do");
+			if(StringUtil.isEmptyString(form.getForwardUrl())){
+				mav.setViewName("redirect:/main.do");
+			}else{
+				String contextPath = request.getContextPath();
+				if(contextPath!=null&&contextPath.length()>1){
+					mav.setViewName("redirect:"+form.getForwardUrl().replaceFirst(contextPath, ""));
+				}else{
+					mav.setViewName("redirect:"+form.getForwardUrl());
+				}
+				
+			}
+			
 			mav.addObject(SystemConst.USER, currentUser);
 			request.getSession().setAttribute(SystemConst.USER,currentUser);
 		}
@@ -86,15 +97,12 @@ public class LoginController extends BaseController {
 		VerifyCodeUtil verify = new VerifyCodeUtil();
 		StringBuffer randomCode = new StringBuffer("");
 		BufferedImage bufferImg = verify.generateCode(randomCode);
-		// 将四位数字的验证码保存到Session中。
 		HttpSession session = request.getSession();
 		session.setAttribute("validateCode", randomCode.toString());
-		// 禁止图像缓存。
 		response.setHeader("Pragma", "no-cache");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setDateHeader("Expires", 0);
 		response.setContentType("image/jpeg");
-		// 将图像输出到Servlet输出流中。
 		ServletOutputStream sos = response.getOutputStream();
 		ImageIO.write(bufferImg, "jpeg", sos);
 		sos.close();
@@ -128,12 +136,14 @@ public class LoginController extends BaseController {
 			mav.setViewName("login/reg");
 			return mav;
 		}
-		if (StringUtil.isEmptyString(user.getRealName())) {
+		user.setRealName(user.getAccountNumber());
+		user.setMobilePhone(user.getAccountNumber());
+		/*if (StringUtil.isEmptyString(user.getRealName())) {
 			mav.addObject("message", RequestUtils.getMessage("norealname",
 					request));
 			mav.setViewName("login/reg");
 			return mav;
-		}
+		}*/
 		if (StringUtil.isEmptyString(user.getPasswd())) {
 			mav.addObject("message", RequestUtils.getMessage("nopassword",
 					request));
@@ -167,6 +177,7 @@ public class LoginController extends BaseController {
 				loginService.saveUser(user);
 				mav.setViewName("redirect:/main.do");
 				mav.addObject(SystemConst.USER, user);
+				request.getSession().setAttribute(SystemConst.USER,user);
 			}catch(Exception ex){
 				mav.addObject("message", RequestUtils.getMessage("registererror", request));
 				mav.setViewName("login/reg");
@@ -202,4 +213,5 @@ public class LoginController extends BaseController {
 		out.close();
 		return null;
 	}
+	
 }

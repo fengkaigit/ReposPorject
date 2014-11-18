@@ -67,7 +67,7 @@ public class UserDAOImpl extends BaseDAOImpl implements UserDAO {
 
 	@Override
 	public void saveUser(UserBase user) {
-		if(user.getId()==0){
+		if(user.getId()==null){
 			super.getDbId(user);
 		}
 		super.save(user);

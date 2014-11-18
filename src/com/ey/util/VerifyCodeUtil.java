@@ -23,7 +23,7 @@ public class VerifyCodeUtil {
 
 	public VerifyCodeUtil() {
 		x = width / (codeCount + 1);
-		fontHeight = height - 2;
+		fontHeight = height - 5;
 		codeY = height - 4;
 	}
 	public BufferedImage generateCode(StringBuffer randomCode){
@@ -56,15 +56,21 @@ public class VerifyCodeUtil {
 	              
 	        // 随机产生codeCount数字的验证码。    
 	        
-	        for (int i = 0; i < codeCount; i++) {         
+	        for (int i = 0; i < codeCount; i++) { 
+	        	g.rotate(0) ; 
 	            // 得到随机产生的验证码数字。         
 	            String strRand = String.valueOf(codeSequence[random.nextInt(36)]);         
 	            // 产生随机的颜色分量来构造颜色值，这样输出的每位数字的颜色值都将不同。         
 	           /* red = random.nextInt(255);         
 	            green = random.nextInt(255);         
 	            blue = random.nextInt(255);     */    
-	            // 用随机产生的颜色将验证码绘制到图像中。         
-	                     
+	            // 用随机产生的颜色将验证码绘制到图像中。 
+	           // if(i<2){
+	            	 //g.rotate(0.45) ; 
+	           // }else{
+	            	//g.rotate(-0.45,i * x+10,codeY) ; 
+	           // }
+	                  
 	            g.drawString(strRand, i * x+10, codeY);         
 	            // 将产生的四个随机数组合在一起。         
 	            randomCode.append(strRand);         
