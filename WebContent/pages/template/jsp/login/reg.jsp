@@ -11,7 +11,7 @@
 <%@include file="/pages/template/jsp/common/header.jsp"%>
 <div>
 <div class="jf_main">
-<form method="post" action="doreg.do" id="registerForm">
+<form method="post" action="<%=request.getContextPath() %>/doreg.do" id="registerForm">
     <input type="hidden" id="sign" value="" name="sign">
     <div class="zc_zone">
         <div class="zc_title">
@@ -28,7 +28,7 @@
             <table width="88%" border="0" align="center" cellspacing="0" cellpadding="0">
                 <tbody>
                     <tr>
-                        <td height="40" width="100" align="right">登录名：</td>
+                        <td height="40" width="100" align="right">手机号：</td>
                         <td align="left">
                             <table>
                                 <tbody>
@@ -39,23 +39,6 @@
                             </table>
                         </td>
                          <td><div id="accountNumberTip" style="width:250px"></div></td>
-                    </tr>
-
-                   
-
-
-                    <tr>
-                        <td height="40" align="right">真实姓名：</td>
-                        <td align="left">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text" name="realName" class="on-show" autocomplete="off" maxlength="50" id="realName"> <span></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                        <td><div id="realNameTip" style="width:250px"></div></td>
                     </tr>
 					<tr>
                         <td height="40" align="right">注册人类型：</td>
@@ -249,38 +232,6 @@
                         </td>
                         <td><div id="confirmPasswordTip" style="width:250px"></div></td>
                     </tr>
-
-                   
-                    <tr>
-                        <td height="40" colspan="3">
-                            <div id="tishixinxi">为方便您找回密码及获取交易凭证，建议选填以下信息:</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="40" align="right">E-mail：</td>
-                        <td align="left" colspan="2">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text" name="email" class="on-show" autocomplete="off" maxlength="50" id="email"><span></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                   
-                    <tr>
-                        <td height="40" align="right">手机：</td>
-                        <td align="left" colspan="2">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text"  name="mobilePhone" class="on-show" autocomplete="off" maxlength="11" id="mobilePhone"><span></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
                   
                     <tr>
                         <td align="right">验证码:</td>
@@ -291,8 +242,8 @@
                                         <input type="text" style="padding-left: 3px;" maxlength="4" size="10" class="loginform" name="verify" id="verify">
                                     </td>
                                     <td width="70" align="left">
-                                    <a href="javascript:changeVerifyFP();">
-                                     <img src="getVerify.do" name="loginValidateImg" id="loginValidateImg" title="看不清？点击图片刷新验证码" />                                        </a>                                    </td>
+                                    <a href="javascript:changeVerifyFP('<%=request.getContextPath() %>/getVerify.do');">
+                                     <img src="<%=request.getContextPath() %>/getVerify.do" name="loginValidateImg" id="loginValidateImg" title="看不清？点击图片刷新验证码" />                                        </a>                                    </td>
                                     </a>
                                    
                                 </tr>

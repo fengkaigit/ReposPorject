@@ -19,7 +19,7 @@ function SearchFocus(obj){
 <%@include file="/pages/template/jsp/common/header.jsp"%>
 <div>
 <div class="jf_main">
-<form method="post" action="dologin.do" id="loginForm">
+<form method="post" action="<%=request.getContextPath() %>/dologin.do" id="loginForm">
 <div class="zc_zone">
 <div class="zc_title">
 <div class="card_title1">
@@ -60,10 +60,10 @@ function SearchFocus(obj){
 
 			<td colspan="2"><input type="text" value="输入验证码" tabindex="3"
 				class="code js-code fft-fl " maxlength="4" name="verify" id="verify"
-				onfocus="SearchFocus(this)"> <img src="getVerify.do"
+				onfocus="SearchFocus(this)"> <img src="<%=request.getContextPath() %>/getVerify.do"
 				style="width: 100px; height: 40px; "
 				id="loginValidateImg"> <font class="orange">
-			<span class="alllink"><a href="javascript:changeVerifyFP();">
+			<span class="alllink"><a href="javascript:changeVerifyFP('<%=request.getContextPath() %>/getVerify.do');">
 			看不清，换一张 </a></span> </font></td>
 		</tr>
 		<tr>
@@ -78,7 +78,7 @@ function SearchFocus(obj){
 		</tr>
 		<tr>
 			<td colspan="2"><span onClick="login()" class="fft-loginbtn">登&nbsp;录</span>&nbsp;&nbsp;<a
-				 href="reg.do" class="fft-fr cblue f12px fn">免费注册</a>
+				 href="<%=request.getContextPath() %>/reg.do" class="fft-fr cblue f12px fn">免费注册</a>
 			</td>
 		</tr>
 		<tr>
@@ -90,6 +90,7 @@ function SearchFocus(obj){
 </table>
 </div>
 </div>
+<input type="hidden" id="forwardUrl" name="forwardUrl" value="${forwardUrl}"/>"
 </form>
 </div>
 

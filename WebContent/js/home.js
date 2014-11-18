@@ -1,7 +1,7 @@
-function changeVerifyFP(){
+function changeVerifyFP(url){
 	 var imgSrc = $("#loginValidateImg");     
 	 //var src = imgSrc.attr("src");     
-	 imgSrc.attr("src",chgUrl("getVerify.do"));
+	 imgSrc.attr("src",chgUrl(url));
 }
 function chgUrl(url){     
     var timestamp = (new Date()).valueOf();     

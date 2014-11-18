@@ -44,11 +44,11 @@ jQuery(document).ready(
     <div class="fft-login">
 		<!-- 	 <div class="fft-login-fixed"></div> -->
 			
-				<form id="loginForm" method="post" action="dologin.do" class="clearfix">
+				<form id="loginForm" method="post" action="<%=request.getContextPath() %>/dologin.do" class="clearfix">
 				        <input type="hidden" id="loginSercuWord" name="loginSercuWord">	                    	
 						<input type="hidden" name="MFM">
 						<input type="hidden" value="login" name="reqfrom">
-					<h2><a target="_blank" href="reg.do" class="fft-fr cblue f12px fn">免费注册&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;欢迎登录</h2>
+					<h2><a href="<%=request.getContextPath() %>/reg.do" class="fft-fr cblue f12px fn">免费注册&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;欢迎登录</h2>
 					<p class="error"></p>
 					<p class="js-tips">
 						<i class="ico-username"></i>
@@ -74,12 +74,12 @@ jQuery(document).ready(
                     <div style="display:none" id="SSOVerify">
                          <label>验证码：</label>
                             <input type="text" data-placeholder="输入验证码" autocomplete="off" value="" tabindex="3" class="code js-code fft-fl " maxlength="4" name="ssoverify" id="ssoverify">
-                         	<img alt="点击改变验证码" src="#" onClick="changeVerifyFP()" style="width:100px;height:40px;" id="imgVerifyFP">                    </div>
+                         	<img alt="点击改变验证码" src="#" onClick="changeVerifyFP('<%=request.getContextPath() %>/getVerify.do')" style="width:100px;height:40px;" id="imgVerifyFP">                    </div>
                     <!-- 非单点登录验证码 -->                     
                     <div id="NoSSOVerify" style="display:block">
 					<p class="js-tips">
 						<input type="text" data-placeholder="输入验证码" autocomplete="off" value="输入验证码" tabindex="3"  class="code js-code fft-fl " maxlength="4" name="verify" id="verify" onfocus="SearchFocus(this)">
-                        	<img src="getVerify.do" style="width:100px;height:40px;float:right;" id="loginValidateImg" title="看不清？点击图片刷新验证码" onClick="changeVerifyFP()"></p>
+                        	<img src="<%=request.getContextPath() %>/getVerify.do" style="width:100px;height:40px;float:right;" id="loginValidateImg" title="看不清？点击图片刷新验证码" onClick="changeVerifyFP('<%=request.getContextPath() %>/getVerify.do')"></p>
 					</div>
 					<div style="width:204px;height:20px;float:left;text-align:left;margin-top: 0px;">
                             
