@@ -99,9 +99,9 @@ public class SysManController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/del/{ids}")
+	@RequestMapping(value="/del")
 	@ResponseBody
-	public Object del(@PathVariable("ids") String ids,HttpServletRequest request,HttpServletResponse response){
+	public Object del(String ids,HttpServletRequest request,HttpServletResponse response){
 	  sysManService.deleteBySysManIds(ids.split(SystemConst.SPLITE_SIGN_COMMON));
   	  Map<String,Object> map = new HashMap<String,Object>();
 	  map.put("result",true);
@@ -119,8 +119,14 @@ public class SysManController {
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addOrUpdate(SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
-	  sysManService.saveSysMan(sysMan);
-	  return "redirect:/sysman/list.do";
+		if(sysMan.getId() == null)
+			sysMan.setPasswd(MD5.getMD5Str(sysMan.getPasswd()));
+		else{
+			SystemManager sysManager = sysManService.getSySManager(sysMan.getId());
+			sysMan.setPasswd(sysManager.getPasswd());
+		}
+	    sysManService.saveSysMan(sysMan);
+	    return "redirect:/sysman/list.do";
 	}
 	
 	@RequestMapping(value="/add")
@@ -156,11 +162,11 @@ public class SysManController {
 	
 	@RequestMapping(value = "/checkreg")
 	@ResponseBody
-	public Object checkreg(String managerName,HttpServletRequest request,
+	public Object checkreg(String loginCode,HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("result",false);
-		SystemManager manager = sysManService.findManagerByLoginName(managerName);
+		SystemManager manager = sysManService.findManagerByLoginName(loginCode);
 		if(manager!=null){
 			map.put("result",true);
 		}
