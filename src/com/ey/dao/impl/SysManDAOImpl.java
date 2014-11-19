@@ -24,7 +24,7 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 	@Override
 	public List<SystemManager> findManagers(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException {
 		// TODO Auto-generated method stub
-		List paramList = new ArrayList();
+		//List paramList = new ArrayList();
 		StringBuffer hql = new StringBuffer("from SystemManager a where 1=1");
 		return this.find(hql.toString(), page, rows);
 	}
