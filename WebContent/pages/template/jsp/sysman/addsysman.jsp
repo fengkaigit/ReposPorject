@@ -22,7 +22,7 @@ $(document).ready(function(){
 		dataType : "json",
 		async : true,
 		data: {
-			managerName: $("#managerName").val()
+			loginCode: $("#managerName").val()
          },
 		url : "<%=request.getContextPath() %>/sysman/checkreg.do",
 		success : function(data){
@@ -65,7 +65,7 @@ $(document).ready(function(){
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" maxlength="40" value="" name="managerName" class="on-show" autocomplete="off" id="managerName" value="${sysMan.managerName}"><span></span></td>
+                                        <td><input type="text" maxlength="40" name="managerName" class="on-show" autocomplete="off" id="managerName" value="${sysMan.managerName}" /><span></span></td>
                                     </tr>
                                 </tbody>
                             </table>
