@@ -23,12 +23,6 @@ import com.ey.dao.common.dbid.DatabaseDbidGenerator;
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.service.InitDbIdService;
 
-/**  
- * Desc:     
- * @version 1.0  
- * @author hujie@ieds.com.cn  
- * @update 2012-4-6 下午03:30:19  
- */
 
 public class CommonListener implements HttpSessionListener,ServletContextListener{ 
 	
