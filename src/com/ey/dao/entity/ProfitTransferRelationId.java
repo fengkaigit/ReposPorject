@@ -7,7 +7,7 @@ import javax.persistence.Embeddable;
  * ProfitAccountRelationId entity. @author MyEclipse Persistence Tools
  */
 @Embeddable
-public class ProfitAccountRelationId implements java.io.Serializable {
+public class ProfitTransferRelationId implements java.io.Serializable {
 
 	// Fields
 
@@ -17,11 +17,11 @@ public class ProfitAccountRelationId implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public ProfitAccountRelationId() {
+	public ProfitTransferRelationId() {
 	}
 
 	/** full constructor */
-	public ProfitAccountRelationId(Long receiptsId, Long transferRecordsId) {
+	public ProfitTransferRelationId(Long receiptsId, Long transferRecordsId) {
 		this.receiptsId = receiptsId;
 		this.transferRecordsId = transferRecordsId;
 	}
@@ -51,9 +51,9 @@ public class ProfitAccountRelationId implements java.io.Serializable {
 			return true;
 		if ((other == null))
 			return false;
-		if (!(other instanceof ProfitAccountRelationId))
+		if (!(other instanceof ProfitTransferRelationId))
 			return false;
-		ProfitAccountRelationId castOther = (ProfitAccountRelationId) other;
+		ProfitTransferRelationId castOther = (ProfitTransferRelationId) other;
 
 		return (this.getReceiptsId() == castOther.getReceiptsId())
 				&& (this.getTransferRecordsId() == castOther

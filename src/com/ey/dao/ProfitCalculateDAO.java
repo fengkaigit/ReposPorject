@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.ey.dao.base.BaseDAO;
 import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.TempPaymentBill;
+import com.ey.dao.entity.TransferRecords;
 
 public interface ProfitCalculateDAO extends BaseDAO {
 
@@ -24,5 +25,9 @@ public interface ProfitCalculateDAO extends BaseDAO {
 	public Long getAccountId(Integer acctType) throws RuntimeException;
 	
 	public void deleteTempPaymentBill() throws RuntimeException;
+	
+	public Double findTransferRecordsPoundage(Long serviceBillId) throws RuntimeException;
+	
+	public Double findServiceBillMoney(Long serviceBillId) throws RuntimeException;
 	
 }

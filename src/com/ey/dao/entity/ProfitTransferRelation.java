@@ -12,20 +12,20 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "profit_account_relation")
-public class ProfitAccountRelation implements java.io.Serializable {
+public class ProfitTransferRelation implements java.io.Serializable {
 
 	// Fields
 
-	private ProfitAccountRelationId id;
+	private ProfitTransferRelationId id;
 
 	// Constructors
 
 	/** default constructor */
-	public ProfitAccountRelation() {
+	public ProfitTransferRelation() {
 	}
 
 	/** full constructor */
-	public ProfitAccountRelation(ProfitAccountRelationId id) {
+	public ProfitTransferRelation(ProfitTransferRelationId id) {
 		this.id = id;
 	}
 
@@ -34,11 +34,11 @@ public class ProfitAccountRelation implements java.io.Serializable {
 	@AttributeOverrides({
 			@AttributeOverride(name = "receiptsId", column = @Column(name = "receipts_id", nullable = false)),
 			@AttributeOverride(name = "transferRecordsId", column = @Column(name = "transfer_records_id", nullable = false)) })
-	public ProfitAccountRelationId getId() {
+	public ProfitTransferRelationId getId() {
 		return this.id;
 	}
 
-	public void setId(ProfitAccountRelationId id) {
+	public void setId(ProfitTransferRelationId id) {
 		this.id = id;
 	}
 

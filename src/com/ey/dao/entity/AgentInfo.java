@@ -21,6 +21,7 @@ public class AgentInfo implements java.io.Serializable {
 	private String EMail;
 	private Integer mobile;
 	private String areaId;
+	private double rebackDot;
 
 	// Constructors
 
@@ -29,22 +30,24 @@ public class AgentInfo implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public AgentInfo(Long id, String registAccount, String passwd, String areaId) {
+	public AgentInfo(Long id, String registAccount, String passwd, String areaId, double rebackDot) {
 		this.id = id;
 		this.registAccount = registAccount;
 		this.passwd = passwd;
 		this.areaId = areaId;
+		this.rebackDot = rebackDot;
 	}
 
 	/** full constructor */
 	public AgentInfo(Long id, String registAccount, String passwd,
-			String EMail, Integer mobile, String areaId) {
+			String EMail, Integer mobile, String areaId, double rebackDot) {
 		this.id = id;
 		this.registAccount = registAccount;
 		this.passwd = passwd;
 		this.EMail = EMail;
 		this.mobile = mobile;
 		this.areaId = areaId;
+		this.rebackDot = rebackDot;
 	}
 
 	// Property accessors
@@ -103,4 +106,12 @@ public class AgentInfo implements java.io.Serializable {
 		this.areaId = areaId;
 	}
 
+	@Column(name = "reback_dot", nullable = false, precision = 10, scale = 4)
+	public double getRebackDot() {
+		return this.rebackDot;
+	}
+
+	public void setRebackDot(double rebackDot) {
+		this.rebackDot = rebackDot;
+	}
 }

@@ -9,6 +9,7 @@ import org.quartz.JobExecutionContext;
 
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.PaymentBill;
+import com.ey.dao.entity.TransferRecords;
 import com.ey.service.ProfitCalculateService;
 
 public class AutoDivideJob implements Job{
@@ -30,7 +31,9 @@ public class AutoDivideJob implements Job{
 		Long serviceBillId = calculateServiceBill(calculateService);
 		if (serviceBillId!=null){
 			//处理系统收益账户划款单
-			calculateProfitBill(calculateService,serviceBillId);
+			Long profitBillId = calculateProfitBill(calculateService,serviceBillId);
+			//按代理商处理系统结算账户划款单(返回结算单位划款单号List)
+			List<Long> settleIdList = calculateSettleBill(calculateService,serviceBillId);
 		}
 	}
 	
@@ -57,8 +60,18 @@ public class AutoDivideJob implements Job{
 			calculateService.saveServicePaymentRelation(serviceBillId,billList);
 			//生成劳务费账户转账单单号
 			Long transferBillId = DbidGenerator.getDbidGenerator().getNextId();
+			
+			//获取系统大账户ID 获取转出账户Id
+			Long systemAccountId = calculateService.getSystemAccountId(0);
+			if (systemAccountId==null)
+				throw new Exception("未设置系统大账户"); 
+			//获取系统劳务费账户ID　获取转入账户Id
+			Long serviceAccountId = calculateService.getSystemAccountId(4);
+			if (serviceAccountId==null)
+				throw new Exception("未设置系统劳务费账户");
+			
 			//生成劳务费账户转账单
-			calculateService.createServiceTransferBill(transferBillId,profitMoney);
+			calculateService.createTransferBill(transferBillId,profitMoney,systemAccountId,serviceAccountId);
 			//保存劳务费划款单与转账单关系表
 			calculateService.saveServiceTransferRecords(serviceBillId,transferBillId);
 			//清空临时缴费单表
@@ -75,11 +88,44 @@ public class AutoDivideJob implements Job{
 	}
 	
 	//处理系统收益账户划款单
-	private void calculateProfitBill(ProfitCalculateService calculateService, 
+	private Long calculateProfitBill(ProfitCalculateService calculateService, 
 			Long serviceBillId) throws Exception{
+		//获取系统大账户ID 获取转出账户Id
+		Long systemAccountId = calculateService.getSystemAccountId(0);
+		if (systemAccountId==null)
+			throw new Exception("未设置系统大账户"); 
+		//获取系统劳务费账户ID　获取转入账户Id
+		Long profitAccountId = calculateService.getSystemAccountId(1);
+		if (profitAccountId==null)
+			throw new Exception("未设置系统收益账户");
+		
 		//生成收益划款单单号
 		Long profitBillId = DbidGenerator.getDbidGenerator().getNextId();
+		//查询符合划款的所有缴费单明细对应转账记录的手续费合计金额
+		Double poundage=calculateService.findTransferRecordsPoundage(serviceBillId);
+		//查询劳务费划款单的金额
+		Double serviceMoney=calculateService.findServiceBillMoney(serviceBillId);
+		//收益账户划款单金额:劳务费划款单金额-对应缴费记录的手续费
+		Double profitMoney = serviceMoney-poundage;
+		//生成收益账户划款单
+		calculateService.saveProfitBill(profitBillId,profitMoney);
 		
+		//保存收益账户划款单与劳务费划款单关系表
+		calculateService.saveServiceProfitRelation(serviceBillId,profitBillId);
+		//生成收益账户转账单单号
+		Long transferBillId = DbidGenerator.getDbidGenerator().getNextId();
+		//生成收益账户转账单
+		calculateService.createTransferBill(transferBillId,profitMoney,systemAccountId,profitAccountId);
+		//保存收益账户转账关系表
+		calculateService.saveProfitTransferRecords(profitBillId,transferBillId);
+		return profitBillId;
+	}
+	
+	//按代理商处理系统结算账户划款单(返回结算单位划款单号List)
+	private List<Long> calculateSettleBill(ProfitCalculateService calculateService, 
+			Long serviceBillId) throws Exception{
+		
+		return null;
 	}
 	
 	

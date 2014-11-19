@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import com.ey.dao.ProfitCalculateDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.PaymentBill;
+import com.ey.dao.entity.ServiceChargeBill;
 import com.ey.dao.entity.TempPaymentBill;
+import com.ey.dao.entity.TransferRecords;
 
 @Repository("ProfitCalculateDAO") 
 public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalculateDAO{
@@ -33,7 +35,7 @@ public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalcula
 	@Override
 	public List<PaymentBill> findPaymentBills(Integer paymentStatus,Integer divideStatus)
 			throws RuntimeException {
-		String hql = "from PaymentBill where paymentStatus=? and divideStatus=? and uuid is null";
+		String hql = "from PaymentBill where paymentStatus=? and divideStatus=? and (uuid is null or uuid='')";
 		List<PaymentBill> payment = this.find(hql, new Object[]{paymentStatus,divideStatus});
 		return payment;
 	}
@@ -50,7 +52,7 @@ public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalcula
 
 	@Override
 	public void updatePaymentBillUUID(UUID uuid) throws RuntimeException {
-		String hql = "update PaymentBill set uuid=? where divideStatus=? and paymentStatus=? and uuid is null";
+		String hql = "update PaymentBill set uuid=? where divideStatus=? and paymentStatus=? and (uuid is null or uuid='')";
 		this.executeHql(hql, new Object[]{uuid.toString(),1,10});
 	}
 
@@ -68,6 +70,28 @@ public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalcula
 	public void deleteTempPaymentBill() throws RuntimeException {
 		String hql = "delete from TempPaymentBill";
 		this.executeHql(hql);
+	}
+
+	@Override
+	public Double findTransferRecordsPoundage(
+			Long serviceBillId) throws RuntimeException {
+		String hql = "select sum(poundage) from TransferRecords where id in (select id.paymentBillId from ServicePaymentRelation where id.serviceBillId=?)";
+		List<Double> poundage=this.find(hql,new Object[]{serviceBillId});
+		if (poundage!=null && poundage.size()>0)
+			return poundage.get(0);
+		else
+			return null;
+	}
+
+	@Override
+	public Double findServiceBillMoney(Long serviceBillId)
+			throws RuntimeException {
+		String hql = "from ServiceChargeBill where id=?";
+		List<ServiceChargeBill> serviceBillList = this.find(hql,new Object[]{serviceBillId});
+		if (serviceBillList!=null && serviceBillList.size()>0)
+			return serviceBillList.get(0).getProfitMoney();
+		else
+			return null;
 	}
 	
 	

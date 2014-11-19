@@ -10,6 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.ey.dao.ProfitCalculateDAO;
 import com.ey.dao.entity.PaymentBill;
+import com.ey.dao.entity.ProfitBill;
+import com.ey.dao.entity.ProfitServiceRelation;
+import com.ey.dao.entity.ProfitServiceRelationId;
+import com.ey.dao.entity.ProfitTransferRelation;
+import com.ey.dao.entity.ProfitTransferRelationId;
 import com.ey.dao.entity.ServiceChargeBill;
 import com.ey.dao.entity.ServicePaymentRelation;
 import com.ey.dao.entity.ServicePaymentRelationId;
@@ -91,25 +96,17 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 
 	@Override
-	public void createServiceTransferBill(Long serviceTransferBillId,Double profitMoney)
+	public void createTransferBill(Long serviceTransferBillId,Double profitMoney, Long outAccountId, Long inAccountId)
 			throws Exception {
-		//获取系统大账户ID
-		Long systemAccountId = profitDao.getAccountId(1);
-		if (systemAccountId==null)
-			throw new Exception("未设置系统大账户"); 
-		//获取系统劳务费账户ID
-		Long serviceAccountId = profitDao.getAccountId(4);
-		if (serviceAccountId==null)
-			throw new Exception("未设置系统劳务费账户");
-		
+
 		//是否需要修改系统账户表中的劳务费账户余额，劳务费账户余额增加，系统大账户余额是否需要变更
 		
 		TransferRecords transferRecord = new TransferRecords();
 		transferRecord.setId(serviceTransferBillId);
 		transferRecord.setPoundage(0);
 		transferRecord.setTransferMoney(profitMoney);
-		transferRecord.setTransferOutAccountId(systemAccountId);
-		transferRecord.setTransferInAccountId(serviceAccountId);
+		transferRecord.setTransferOutAccountId(outAccountId);
+		transferRecord.setTransferInAccountId(inAccountId);
 		transferRecord.setTransferTime(new Date());
 		transferRecord.setTransferStatus(0);
 		transferRecord.setTransferType(11);
@@ -135,6 +132,61 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 	public void clearTempPaymentBill() throws Exception {
 		profitDao.deleteTempPaymentBill();
 		profitDao.updateStatus("PaymentBill", "divideStatus", "divideStatus", 5, 6);
+	}
+
+
+	@Override
+	public Double findTransferRecordsPoundage(Long serviceBillId)
+			throws Exception {
+		Double poundage = profitDao.findTransferRecordsPoundage(serviceBillId);
+		return poundage;
+	}
+
+
+	@Override
+	public Double findServiceBillMoney(Long serviceBillId) throws Exception {
+		Double serviceMoney = profitDao.findServiceBillMoney(serviceBillId);
+		return serviceMoney;
+	}
+
+
+	@Override
+	public void saveProfitBill(Long profitBillId, Double profitMoney)
+			throws Exception {
+		ProfitBill profitBill = new ProfitBill();
+		profitBill.setId(profitBillId);
+		profitBill.setProfitMoney(profitMoney);
+		profitBill.setCreateDate(new Date());
+		profitBill.setConfirmDate(new Date());
+		profitBill.setStatus(2);
+		profitDao.save(profitBill);
+	}
+
+
+	@Override
+	public void saveServiceProfitRelation(Long serviceBillId, Long profitBillId)
+			throws Exception {
+		ProfitServiceRelationId profitServiceId = new ProfitServiceRelationId();
+		profitServiceId.setProfitBillId(profitBillId);
+		profitServiceId.setServiceBillId(serviceBillId);
+		ProfitServiceRelation profitServiceRelation = new ProfitServiceRelation(profitServiceId);
+		profitDao.save(profitServiceRelation);
+	}
+
+
+	@Override
+	public Long getSystemAccountId(Integer accountType) throws Exception {
+		Long accountId = profitDao.getAccountId(accountType);
+		return accountId;
+	}
+
+
+	@Override
+	public void saveProfitTransferRecords(Long profitBillId,
+			Long transferAccountId) throws Exception {
+		ProfitTransferRelationId relationId = new ProfitTransferRelationId(profitBillId,transferAccountId);
+		ProfitTransferRelation relation = new ProfitTransferRelation(relationId);
+		profitDao.save(relation);
 	}
 
 }
