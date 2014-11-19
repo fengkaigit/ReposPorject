@@ -25,9 +25,9 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	public List<AgentBo> getAllAgent(Map<String, Object> Qparam,
 			Integer page, Integer rows) throws RuntimeException {
 		// TODO Auto-generated method stub
-		List paramList = new ArrayList();
+		//List paramList = new ArrayList();
 		StringBuffer hql = new StringBuffer("select new com.ey.bo.AgentBo(a.id,a.registAccount,a.passwd,a.EMail,a.mobile,a.areaId,b.province) from AgentInfo a,Area b where a.areaId = b.id");
-		return this.find(hql.toString(), paramList, page, rows);
+		return this.find(hql.toString(), page, rows);
 	}
 
 	@Override
