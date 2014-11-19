@@ -25,9 +25,9 @@ public class AreaDAOImpl extends BaseDAOImpl implements AreaDAO {
 	public List<Area> getAreas(Map<String, Object> Qparam,
 			Integer page, Integer rows) throws RuntimeException {
 		// TODO Auto-generated method stub
-		List paramList = new ArrayList();
+		//List paramList = new ArrayList();
 		StringBuffer hql = new StringBuffer("from Area a where 1=1");
-		return this.find(hql.toString(), paramList, page, rows);
+		return this.find(hql.toString(), page, rows);
 	}
 
 }

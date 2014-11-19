@@ -27,9 +27,9 @@ public class ChargeEntDAOImpl extends BaseDAOImpl implements ChargeEntDAO {
 			Map<String, Object> Qparam, Integer page, Integer rows)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		List paramList = new ArrayList();
+		//List paramList = new ArrayList();
 		StringBuffer hql = new StringBuffer("select new com.ey.bo.ChargeEntBo(a.id,a.areaId,a.enterpriseName,a.careNumber,a.payType,b.province) from ChargeEnterprise a,Area b where a.areaId = b.id");
-		return this.find(hql.toString(), paramList, page, rows);
+		return this.find(hql.toString(),page, rows);
 	}
 
 	@Override

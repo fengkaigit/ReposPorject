@@ -26,7 +26,7 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 		// TODO Auto-generated method stub
 		List paramList = new ArrayList();
 		StringBuffer hql = new StringBuffer("from SystemManager a where 1=1");
-		return this.find(hql.toString(), paramList, page, rows);
+		return this.find(hql.toString(), page, rows);
 	}
 
 	@Override
