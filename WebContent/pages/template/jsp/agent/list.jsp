@@ -9,7 +9,7 @@
 <meta content="" name="description">
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <script>
-function delManager(id){
+function delAgent(id){
 	if(confirm("确实要删除该信息吗?")){
 	   $.ajax({
             url:"<%=request.getContextPath() %>/sysman/del.do",
@@ -45,11 +45,12 @@ function delManager(id){
     <td>序号</td>
     <td>登录名</td>
     <td>名称</td>
+    <td>地区</td>
     <td>邮箱</td>
     <td>联系电话</td>
     <td>操作</td>
   </tr>
-  <c:forEach var="item" items="${syslist}" varStatus="status">
+  <c:forEach var="item" items="${agentList}" varStatus="status">
    <tr <c:choose>
        <c:when test="${(status.index+1) % 2 == 0}">
          class="add"
@@ -59,13 +60,14 @@ function delManager(id){
        </c:otherwise>
      </c:choose> >
     <td>&nbsp;${status.index+1}</td>
-    <td>&nbsp;${item.managerName}</td>
-    <td>&nbsp;${item.managerRealname}</td>
+    <td>&nbsp;${item.registAccount}</td>
+    <td>&nbsp;${item.registRealName}</td>
+    <td>&nbsp;${item.areaName}</td>
     <td>&nbsp;${item.EMail}</td>
-    <td>&nbsp;${item.mobilePhone}</td>
+    <td>&nbsp;${item.mobile}</td>
     <td>
-	<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/sysman/edit/${item.id}.do')" >修改</a>&nbsp;
-	<c:if test="${item.id!=0}"><a class="cur" style="color:#007abd;" onclick="delManager(${item.id})">删除</a></c:if></td>
+	<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/agent/edit/${item.id}.do')" >修改</a>&nbsp;
+	<a class="cur" style="color:#007abd;" onclick="delAgent(${item.id})">删除</a></td>
 
   </tr>
  </c:forEach>

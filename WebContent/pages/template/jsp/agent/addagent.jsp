@@ -7,7 +7,7 @@
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <script>
 $(document).ready(function(){
-	$.formValidator.initConfig({formID:"sysManForm",debug:false,submitOnce:true,
+	$.formValidator.initConfig({formID:"agentForm",debug:false,submitOnce:true,
 		onError:function(msg,obj,errorlist){
 			$("#errorlist").empty();
 			alert(msg);
@@ -36,7 +36,7 @@ function loginChk(){
 					     return $("#managerName").val();
 					}
 	         },
-			url : "<%=request.getContextPath() %>/sysman/checkreg.do",
+			url : "<%=request.getContextPath() %>/agent/checkreg.do",
 			success : function(data){
 	            if(!data.result) return true;
 	            if(data.result) return false;
@@ -56,12 +56,12 @@ function loginChk(){
 <%@include file="/pages/template/jsp/common/sysheader.jsp"%>
 <div>
 <div class="jf_main">
-<form method="post" action="<%=request.getContextPath() %>/sysman/add.do?id=${sysMan.id}" id="sysManForm">
+<form method="post" action="<%=request.getContextPath() %>/agent/add.do?id=${agent.id}" id="agentForm">
     <div class="zc_zone">
         <div class="zc_title">
             <div class="card_title1">
                 <ul>
-                <li style="float:left;"><span>添加管理员信息</span></li> 
+                <li style="float:left;"><span>添加代理商信息</span></li> 
                  </ul>
     
             </div>
