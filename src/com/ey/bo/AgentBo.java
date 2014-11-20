@@ -10,8 +10,8 @@ public class AgentBo extends AgentInfo {
    }
     
    public AgentBo(Long id, String registAccount, String passwd, String EMail,
-		Integer mobile, String areaId, String areaName, double rebackDot) {
-	super(id, registAccount, passwd, EMail, mobile, areaId, rebackDot);
+		Integer mobile, double rebackDot,String registRealName,String areaId, String areaName) {
+	super(id, registAccount, passwd, EMail, mobile, areaId, rebackDot,registRealName);
 	this.areaName = areaName;
 }
 

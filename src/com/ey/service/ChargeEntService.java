@@ -10,7 +10,9 @@ public interface ChargeEntService {
     
 	
 	void saveChargeEnt(ChargeEnterprise chargeEnt) throws RuntimeException;
-    
+	
+	void updateChargeEnt(ChargeEnterprise chargeEnt) throws RuntimeException;
+
     void deleteChargeEntByIds(String[] ids) throws RuntimeException;
     
     List<ChargeEntBo> getAllChargeEnt(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;

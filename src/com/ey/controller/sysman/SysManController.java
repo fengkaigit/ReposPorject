@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -119,13 +120,18 @@ public class SysManController {
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addOrUpdate(SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
-		if(sysMan.getId() == null)
+		if(sysMan.getId() == null){
 			sysMan.setPasswd(MD5.getMD5Str(sysMan.getPasswd()));
+			sysManService.saveSysMan(sysMan);
+		}
 		else{
 			SystemManager sysManager = sysManService.getSySManager(sysMan.getId());
-			sysMan.setPasswd(sysManager.getPasswd());
+			String password = sysManager.getPasswd();
+			BeanUtils.copyProperties(sysMan, sysManager);
+			sysManager.setPasswd(password);
+			sysManService.updateSysman(sysManager);
 		}
-	    sysManService.saveSysMan(sysMan);
+	    
 	    return "redirect:/sysman/list.do";
 	}
 	
@@ -166,8 +172,8 @@ public class SysManController {
 			HttpServletResponse response) throws IOException {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("result",false);
-		SystemManager manager = sysManService.findManagerByLoginName(loginCode);
-		if(manager!=null){
+		Long num = sysManService.findManagerByLoginName(loginCode);
+		if(num>0){
 			map.put("result",true);
 		}
 		return map;

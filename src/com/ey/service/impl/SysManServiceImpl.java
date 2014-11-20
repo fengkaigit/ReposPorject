@@ -46,9 +46,8 @@ public class SysManServiceImpl implements SysManService {
 	@Override
 	public void saveSysMan(SystemManager sysMan) throws RuntimeException {
 		// TODO Auto-generated method stub
-		if(sysMan.getId() == null)
-			sysMan.setId(DbidGenerator.getDbidGenerator().getNextId());
-		sysManDAO.saveOrUpdate(sysMan);
+	    sysMan.setId(DbidGenerator.getDbidGenerator().getNextId());
+		sysManDAO.save(sysMan);
 	}
 
 	@Override
@@ -65,10 +64,16 @@ public class SysManServiceImpl implements SysManService {
 	}
 
 	@Override
-	public SystemManager findManagerByLoginName(String loginName)
+	public Long findManagerByLoginName(String loginName)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		return sysManDAO.findManagerByLoginName(loginName, null);
+		return sysManDAO.findManagerByLoginName(loginName);
+	}
+
+	@Override
+	public void updateSysman(SystemManager sysMan) throws RuntimeException {
+		// TODO Auto-generated method stub
+		sysManDAO.update(sysMan);
 	}
 
 }

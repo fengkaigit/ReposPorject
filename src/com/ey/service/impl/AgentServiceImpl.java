@@ -23,9 +23,8 @@ public class AgentServiceImpl implements AgentService {
 	@Override
 	public void saveAgent(AgentInfo agent) throws RuntimeException {
 		// TODO Auto-generated method stub
-           if(agent.getId() == null)
-        	   agent.setId(DbidGenerator.getDbidGenerator().getNextId());
-           agentDAO.saveOrUpdate(agent);
+        agent.setId(DbidGenerator.getDbidGenerator().getNextId());
+           agentDAO.save(agent);
 	}
 
 	@Override
@@ -49,6 +48,33 @@ public class AgentServiceImpl implements AgentService {
 	public AgentBo getAgent(Long id) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return agentDAO.getAgent(id);
+	}
+
+	@Override
+	public void updateAgent(AgentInfo agent) throws RuntimeException {
+		// TODO Auto-generated method stub
+		agentDAO.update(agent);
+	}
+
+	@Override
+	public AgentBo findAgentByLoginName(String loginName, String password)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.findAgentByLoginName(loginName, password);
+	}
+
+	@Override
+	public Long findAgentByLoginName(String loginName)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.findAgentByLoginName(loginName);
+	}
+
+	@Override
+	public void updatePassById(Long id, String password)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

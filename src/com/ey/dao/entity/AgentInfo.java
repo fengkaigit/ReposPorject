@@ -22,6 +22,7 @@ public class AgentInfo implements java.io.Serializable {
 	private Integer mobile;
 	private String areaId;
 	private double rebackDot;
+	private String registRealName;
 
 	// Constructors
 
@@ -40,7 +41,7 @@ public class AgentInfo implements java.io.Serializable {
 
 	/** full constructor */
 	public AgentInfo(Long id, String registAccount, String passwd,
-			String EMail, Integer mobile, String areaId, double rebackDot) {
+			String EMail, Integer mobile, String areaId, double rebackDot,String registRealName) {
 		this.id = id;
 		this.registAccount = registAccount;
 		this.passwd = passwd;
@@ -48,6 +49,7 @@ public class AgentInfo implements java.io.Serializable {
 		this.mobile = mobile;
 		this.areaId = areaId;
 		this.rebackDot = rebackDot;
+		this.registRealName = registRealName;
 	}
 
 	// Property accessors
@@ -114,4 +116,13 @@ public class AgentInfo implements java.io.Serializable {
 	public void setRebackDot(double rebackDot) {
 		this.rebackDot = rebackDot;
 	}
+	@Column(name = "regist_realname",length = 200)
+	public String getRegistRealName() {
+		return registRealName;
+	}
+   
+	public void setRegistRealName(String registRealName) {
+		this.registRealName = registRealName;
+	}
+	
 }

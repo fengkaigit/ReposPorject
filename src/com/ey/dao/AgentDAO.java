@@ -14,4 +14,12 @@ public interface AgentDAO extends BaseDAO {
     List<AgentBo> getAllAgent(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
     
     AgentBo getAgent(Long id) throws RuntimeException;
+    
+    AgentBo findAgentByLoginName(String loginName,String password) throws RuntimeException;
+    
+    Long findAgentByLoginName(String loginName) throws RuntimeException;
+    
+	void updatePassById(Long id,String password) throws RuntimeException;
+
+
 }

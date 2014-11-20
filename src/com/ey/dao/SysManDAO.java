@@ -13,6 +13,7 @@ public interface SysManDAO extends BaseDAO {
 	 List<SystemManager> findManagers(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
 	 SystemManager findManagerByLoginName(String loginName,String password) throws RuntimeException;
      void updatePassById(Long id,String password) throws RuntimeException;
+     Long findManagerByLoginName(String loginName) throws RuntimeException;
 
 
 }

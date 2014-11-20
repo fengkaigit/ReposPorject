@@ -33,14 +33,8 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 	public SystemManager findManagerByLoginName(String loginName,
 			String password) throws RuntimeException {
 		// TODO Auto-generated method stub
-		List paramList = new ArrayList();
-		StringBuffer hql = new StringBuffer("from SystemManager a where a.managerName = ?");
-		paramList.add(loginName);
-		if(!StringUtil.isEmptyString(password)){
-		     hql.append( "and a.passwd = ?");
-		     paramList.add(password);
-		}
-		List<SystemManager> sysMans = this.find(hql.toString(), paramList.toArray());
+		String hql = "from SystemManager a where a.managerName = ? and a.passwd = ?";
+		List<SystemManager> sysMans = this.find(hql,new Object[]{loginName,password});
 		if(sysMans!=null&&sysMans.size()>0)
 			return sysMans.get(0);
 		return null;
@@ -52,6 +46,14 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 		// TODO Auto-generated method stub
 		String hql = "update SystemManager set passwd = ? where id = ?";
 		this.executeHql(hql, new Object[]{password,id});
+	}
+
+	@Override
+	public Long findManagerByLoginName(String loginName)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "select count(id) from SystemManager a where a.managerName = ?";
+		return this.count(hql, new Object[]{loginName});
 	}
 
 }

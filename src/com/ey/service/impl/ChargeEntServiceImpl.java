@@ -23,8 +23,7 @@ public class ChargeEntServiceImpl implements ChargeEntService {
 	@Override
 	public void saveChargeEnt(ChargeEnterprise chargeEnt) throws RuntimeException {
 		// TODO Auto-generated method stub
-		 if(chargeEnt.getId() == null)
-			 chargeEnt.setId(DbidGenerator.getDbidGenerator().getNextId());
+	     chargeEnt.setId(DbidGenerator.getDbidGenerator().getNextId());
 		 chargeEntDAO.saveOrUpdate(chargeEnt);
 	}
 
@@ -49,6 +48,13 @@ public class ChargeEntServiceImpl implements ChargeEntService {
 	public ChargeEntBo getChargeEnt(Long id) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return chargeEntDAO.getChargeEnt(id);
+	}
+
+	@Override
+	public void updateChargeEnt(ChargeEnterprise chargeEnt)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		chargeEntDAO.update(chargeEnt);
 	}
 
 }
