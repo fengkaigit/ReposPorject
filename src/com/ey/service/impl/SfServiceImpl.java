@@ -42,7 +42,7 @@ public class SfServiceImpl implements SfService {
 					date, form.getBillMoney(), form.getBillMoney(), 0, form
 							.getPoundage(), form.getPayType(), form.getEntId(),
 					form.getBusinessType(), form.getPaymentStatus(), form
-							.getPaymentMode(), null, form.getDivideStatus());
+							.getPaymentMode(), null, form.getDivideStatus(),null,null,null,null,null,null,null);
 			String begin = form.getYear() + "-" + form.getMonth()
 					+ "-01 00:00:01";
 			String end = form.getYear() + "-" + form.getMonth() + "-30 23:59:59";
