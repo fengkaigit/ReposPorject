@@ -11,16 +11,11 @@
 <script>
 function delAgent(id){
 	if(confirm("确实要删除该信息吗?")){
-	   $.ajax({
-            url:"<%=request.getContextPath() %>/sysman/del.do",
-			dataType: "json",
-			async:false,
-			data:{ids:id},
-		    success: function(data, textStatus) {
-		    	alert(data.message);
-			    window.location.href = "<%=request.getContextPath() %>/sysman/list.do";
-		     }
-		});
+	   
+	   jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/agent/del.do",{ids:id},"get","json",function(data){
+		    alert(data.message);
+		    window.location.href = "<%=request.getContextPath() %>/agent/list.do";
+	    });
 	}
 }
 </script>
@@ -29,15 +24,15 @@ function delAgent(id){
 <%@include file="/pages/template/jsp/common/sysheader.jsp"%>
 <div class="ui-container clearfix" id="container">  
   <div class="jfzh-title"><span class="icon1"></span>
-  管理员设置 
+  代理商设置 
   </div>
 <div class="jfzh-con">
 
 	
     <div class="jfzh-bottom clearfix">    
-	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;管理员详细设置</span>
+	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;代理商信息</span>
 	
-	<span class="fr cur" onClick="openWin('<%=request.getContextPath() %>/sysman/add.do')"><span class="fcr">新建帐户</span></span>	
+	<span class="fr cur" onClick="openWin('<%=request.getContextPath() %>/agent/add.do')"><span class="fcr">新建代理商</span></span>	
 	</div>
   
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
@@ -62,7 +57,7 @@ function delAgent(id){
     <td>&nbsp;${status.index+1}</td>
     <td>&nbsp;${item.registAccount}</td>
     <td>&nbsp;${item.registRealName}</td>
-    <td>&nbsp;${item.areaName}</td>
+    <td>&nbsp;${item.areaPathName}</td>
     <td>&nbsp;${item.EMail}</td>
     <td>&nbsp;${item.mobile}</td>
     <td>

@@ -40,17 +40,16 @@ $(document).ready(function() {
         <div class="userbar">
 
 			<ul class="sf-menu" id="nav" >
-			<li class="current"><span><a href="index.html">我的e缴</a></span>
+			<li class="current"><span><a href="index.html">信息维护</a></span>
 				<ul>
-					<li class="current"><a href="jiaofei_zhsz.html">缴费账号设置</a></li>
-					<li><a href="jiaofei_jftx.html">账单代扣\提醒设置</a></li>
-					<li><a href="jiaofei_jlcx.html">记录查询</a></li>
-					<li><a href="jiaofei_tjfx.html">统计分析 </a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/sysman/list.do">管理员维护</a></li>
+					<li><a href="<%=request.getContextPath() %>/agent/list.do">代理商维护</a></li>
+					<li><a href="<%=request.getContextPath() %>/charge/list.do">收费单位维护</a></li>
 			  </ul></li>
 			
-			  <li><span><a href="aqbz.html">安全保障</a></span></li>
-		   <li><span><a href="yjfk.html">意见反馈</a></span></li>
-		   <li><span><a href="gywm.html">关于我们</a></span></li>
+			  <li><span><a href="<%=request.getContextPath() %>/ej/security.do">安全保障</a></span></li>
+		   <li><span><a href="<%=request.getContextPath() %>/ej/ieda.do">意见反馈</a></span></li>
+		   <li><span><a href="<%=request.getContextPath() %>/ej/about.do">关于我们</a></span></li>
 	       </ul>
 		</div>
 		

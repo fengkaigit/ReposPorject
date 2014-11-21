@@ -11,16 +11,11 @@
 <script>
 function delManager(id){
 	if(confirm("确实要删除该信息吗?")){
-	   $.ajax({
-            url:"<%=request.getContextPath() %>/sysman/del.do",
-			dataType: "json",
-			async:false,
-			data:{ids:id},
-		    success: function(data, textStatus) {
-		    	alert(data.message);
-			    window.location.href = "<%=request.getContextPath() %>/sysman/list.do";
-		     }
-		});
+	  
+	   jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/sysman/del.do",{ids:id},"get","json",function(data){
+		    alert(data.message);
+		    window.location.href = "<%=request.getContextPath() %>/sysman/list.do";
+	    });
 	}
 }
 </script>
@@ -35,7 +30,7 @@ function delManager(id){
 
 	
     <div class="jfzh-bottom clearfix">    
-	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;管理员详细设置</span>
+	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;管理员信息</span>
 	
 	<span class="fr cur" onClick="openWin('<%=request.getContextPath() %>/sysman/add.do')"><span class="fcr">新建帐户</span></span>	
 	</div>

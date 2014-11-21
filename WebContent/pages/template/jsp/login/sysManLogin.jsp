@@ -18,7 +18,7 @@ function SearchFocus(obj){
 </script> 
 </head>
 <body>
-<%@include file="/pages/template/jsp/common/sysheader.jsp"%>
+<%@include file="/pages/template/jsp/common/header.jsp"%>
 <div>
 <div class="jf_main">
 <form method="post" action="<%=request.getContextPath() %>/sysman/login.do" id="loginForm">
