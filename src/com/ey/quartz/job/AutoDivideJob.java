@@ -8,8 +8,8 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 
 import com.ey.dao.common.dbid.DbidGenerator;
+import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
-import com.ey.dao.entity.TransferRecords;
 import com.ey.service.ProfitCalculateService;
 
 public class AutoDivideJob implements Job{
@@ -124,7 +124,10 @@ public class AutoDivideJob implements Job{
 	//按代理商处理系统结算账户划款单(返回结算单位划款单号List)
 	private List<Long> calculateSettleBill(ProfitCalculateService calculateService, 
 			Long serviceBillId) throws Exception{
-		
+		//通过serviceBillI查找所有缴费单
+		List<PaymentBill> paymentList = calculateService.findPaymentBillList(serviceBillId);
+		//通过缴费单查找区域信息及对应区域代理商信息
+		List<AgentInfo> agentList = calculateService.findAgentInfo(paymentList);
 		return null;
 	}
 	
