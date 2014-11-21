@@ -20,6 +20,7 @@ public class ChargeEnterprise implements java.io.Serializable {
 	private String careNumber;
 	private Integer payType;
 	private byte[] exPic;
+	private Boolean delFlag;
 
 	// Constructors
 
@@ -108,6 +109,14 @@ public class ChargeEnterprise implements java.io.Serializable {
 
 	public void setExPic(byte[] exPic) {
 		this.exPic = exPic;
+	}
+	@Column(name = "del_flag")
+	public Boolean getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Boolean delFlag) {
+		this.delFlag = delFlag;
 	}
 
 }

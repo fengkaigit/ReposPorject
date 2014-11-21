@@ -50,13 +50,13 @@ public class ChargeEntServiceImpl implements ChargeEntService {
 	}
 
 	@Override
-	public List<ChargeEntBo> getChargesByArea(String areaId) {
+	public List<ChargeEntBo> getChargesByArea(String areaId) throws RuntimeException{
 		// TODO Auto-generated method stub
 		return chargeEntDAO.getChargesByArea(areaId);
 	}
 
 	@Override
-	public List<ChargeEnterprise> getChargesByArea(String areaId, int payType) {
+	public List<ChargeEnterprise> getChargesByArea(String areaId, int payType) throws RuntimeException{
 		// TODO Auto-generated method stub
 		return chargeEntDAO.getChargesByArea(areaId,payType);
 	}
@@ -66,6 +66,13 @@ public class ChargeEntServiceImpl implements ChargeEntService {
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		chargeEntDAO.update(chargeEnt);
+	}
+
+	@Override
+	public ChargeEnterprise getChargeEnterprise(Long id)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return (ChargeEnterprise)chargeEntDAO.get(ChargeEnterprise.class, id);
 	}
 
 }

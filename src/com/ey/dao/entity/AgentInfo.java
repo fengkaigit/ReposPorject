@@ -19,10 +19,11 @@ public class AgentInfo implements java.io.Serializable {
 	private String registAccount;
 	private String passwd;
 	private String EMail;
-	private Integer mobile;
+	private String mobile;
 	private String areaId;
 	private double rebackDot;
 	private String registRealName;
+	private Boolean delFlag;
 
 	// Constructors
 
@@ -41,7 +42,7 @@ public class AgentInfo implements java.io.Serializable {
 
 	/** full constructor */
 	public AgentInfo(Long id, String registAccount, String passwd,
-			String EMail, Integer mobile, String areaId, double rebackDot,String registRealName) {
+			String EMail, String mobile, String areaId, double rebackDot,String registRealName) {
 		this.id = id;
 		this.registAccount = registAccount;
 		this.passwd = passwd;
@@ -72,7 +73,7 @@ public class AgentInfo implements java.io.Serializable {
 		this.registAccount = registAccount;
 	}
 
-	@Column(name = "passwd", nullable = false, length = 20)
+	@Column(name = "passwd", nullable = false, length = 50)
 	public String getPasswd() {
 		return this.passwd;
 	}
@@ -91,11 +92,11 @@ public class AgentInfo implements java.io.Serializable {
 	}
 
 	@Column(name = "mobile")
-	public Integer getMobile() {
+	public String getMobile() {
 		return this.mobile;
 	}
 
-	public void setMobile(Integer mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
@@ -124,5 +125,15 @@ public class AgentInfo implements java.io.Serializable {
 	public void setRegistRealName(String registRealName) {
 		this.registRealName = registRealName;
 	}
+	@Column(name = "del_flag")
+	public Boolean getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Boolean delFlag) {
+		this.delFlag = delFlag;
+	}
+	
+	
 	
 }

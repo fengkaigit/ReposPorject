@@ -29,11 +29,8 @@ public class AreaDAOImpl extends BaseDAOImpl implements AreaDAO {
 		StringBuffer hql = new StringBuffer("from Area a where 1=1");
 		return this.find(hql.toString(), page, rows);
 	}
-
-	@Override
 	public List<Area> getAreasByCity(String cityId) {
 		String hql = "from Area where city=? order by id";
 		return this.find(hql, new Object[]{cityId});
 	}
-
 }

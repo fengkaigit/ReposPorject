@@ -5,6 +5,8 @@ import com.ey.dao.entity.ChargeEnterprise;
 public class ChargeEntBo extends ChargeEnterprise {
      private String payTypeName;
      private String areaName;
+     private String areaPathName;
+     private String areaPath;
      
 	public String getPayTypeName() {
 		return payTypeName;
@@ -19,10 +21,34 @@ public class ChargeEntBo extends ChargeEnterprise {
 		this.areaName = areaName;
 	}
 	public ChargeEntBo(Long id, String areaId, String enterpriseName,
-			String careNumber, Integer payType,String areaName) {
-		super(id, areaId, enterpriseName, careNumber, payType);
+			String careNumber, Integer payType,byte[] exPic,String areaName,String areaPathName,String areaPath,String payTypeName ) {
+		super(id, areaId, enterpriseName, careNumber, payType,exPic);
 		this.areaName = areaName;
+		this.areaPathName = areaPathName.substring(9);
+		this.areaPath = areaPath.substring(8);
+		this.payTypeName = payTypeName;
+		
 	}
-     
+	public ChargeEntBo(Long id, String areaId, String enterpriseName,
+			String careNumber, Integer payType,byte[] exPic,String areaName,String areaPathName,String areaPath ) {
+		super(id, areaId, enterpriseName, careNumber, payType,exPic);
+		this.areaName = areaName;
+		this.areaPathName = areaPathName.substring(9);
+		this.areaPath = areaPath.substring(8);
+		
+	}
+	public String getAreaPathName() {
+		return areaPathName;
+	}
+	public void setAreaPathName(String areaPathName) {
+		this.areaPathName = areaPathName;
+	}
+	public String getAreaPath() {
+		return areaPath;
+	}
+	public void setAreaPath(String areaPath) {
+		this.areaPath = areaPath;
+	}
+    
      
 }

@@ -121,7 +121,7 @@ public class SysManController {
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addOrUpdate(SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
 		if(sysMan.getId() == null){
-			sysMan.setPasswd(MD5.getMD5Str(sysMan.getPasswd()));
+			sysMan.setPasswd(MD5.getMD5Str(SystemConst.INITPASSWORD));
 			sysManService.saveSysMan(sysMan);
 		}
 		else{

@@ -1,4 +1,4 @@
-package com.ey.dao;
+package com.ey.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.BaseCustomProp;
 import com.ey.dao.entity.BaseCustomValue;
 import com.ey.util.StringUtil;
+import com.ey.dao.StaticDAO;
 @Repository("staticDAO")
 public class StaticDAOImpl extends BaseDAOImpl implements StaticDAO {
 

@@ -48,9 +48,8 @@ public class AreaServiceImpl implements AreaService {
 	}
 
 	@Override
-	public List<Area> getAreasByCity(String cityId) {
+	public List<Area> getAreasByCity(String cityId) throws RuntimeException{
 		// TODO Auto-generated method stub
 		return areaDAO.getAreasByCity(cityId);
 	}
-
 }

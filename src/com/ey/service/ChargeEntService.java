@@ -18,7 +18,8 @@ public interface ChargeEntService {
     List<ChargeEntBo> getAllChargeEnt(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
     
     ChargeEntBo getChargeEnt(Long id) throws RuntimeException;
-    
-    List<ChargeEntBo> getChargesByArea(String areaId);
-    List<ChargeEnterprise> getChargesByArea(String areaId,int payType);
+               
+    ChargeEnterprise getChargeEnterprise(Long id) throws RuntimeException;
+    List<ChargeEntBo> getChargesByArea(String areaId) throws RuntimeException;;
+    List<ChargeEnterprise> getChargesByArea(String areaId,int payType) throws RuntimeException;;
 }

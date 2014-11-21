@@ -12,9 +12,12 @@ public class SystemConst {
 	static public String JSONRESULT = "JSONRESULT";
 	static public String SPLITE_SIGN = "[|]";
 	static public String SPLITE_SIGN_COMMON = "[,]";
+	static public String SPLITE_SIGN_STATIC = "[/]";
 	static public String SPLITE = "[#]";
 	static public String ATTR_SPLITE_SIGN = ":";
 	static public String POINT_SPLITE = "[.]";
+	static public String ROOTAREAID = "0";
+	static public String INITPASSWORD = "8888";
 	/**
 	 * HTTP POST«Î«Û
 	 */

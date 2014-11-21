@@ -45,7 +45,7 @@ public class AgentServiceImpl implements AgentService {
 	}
 
 	@Override
-	public AgentBo getAgent(Long id) throws RuntimeException {
+	public AgentBo getAgentBo(Long id) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return agentDAO.getAgent(id);
 	}
@@ -74,7 +74,13 @@ public class AgentServiceImpl implements AgentService {
 	public void updatePassById(Long id, String password)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		
+		agentDAO.updatePassById(id, password);
+	}
+
+	@Override
+	public AgentInfo getAgent(Long id) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return (AgentInfo)agentDAO.get(AgentInfo.class, id);
 	}
 
 }

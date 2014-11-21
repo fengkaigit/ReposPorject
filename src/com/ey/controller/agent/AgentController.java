@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +22,11 @@ import com.ey.bo.AgentBo;
 import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.AgentInfo;
+import com.ey.dao.entity.Area;
 import com.ey.dao.entity.SystemManager;
+import com.ey.exception.BusinessException;
 import com.ey.service.AgentService;
-import com.ey.service.SysManService;
+import com.ey.service.AreaService;
 import com.ey.util.MD5;
 import com.ey.util.RequestUtils;
 import com.ey.util.StringUtil;
@@ -39,6 +42,9 @@ public class AgentController extends BaseController {
 	private static final String ADD_PAGE = "agent/addagent";
 	@Autowired
     private AgentService agentService;
+	
+	@Autowired
+    private AreaService areaService;
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
     public ModelAndView login(String verify,String loginCode,String password,HttpServletRequest request,HttpServletResponse response){  	  
@@ -100,37 +106,68 @@ public class AgentController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		List<AgentBo> agentList = agentService.getAllAgent(null, 0, 0);
 		mav.addObject("agentList", agentList);
-		mav.setViewName("LIST_PAGE");
+		mav.setViewName(LIST_PAGE);
 		return mav;
 	}
 	
 	@RequestMapping(value="/edit/{id}")
 	public ModelAndView edit(@PathVariable("id") Long id,HttpServletRequest request,HttpServletResponse response){
-	  AgentBo agent = agentService.getAgent(id);
+	  AgentBo agent = agentService.getAgentBo(id);
 	  ModelAndView mav = new ModelAndView(ADD_PAGE);
 	  mav.addObject("agent", agent);
+	  initAreas(request,mav.getModelMap());
+	  /*String[] codePaths = agent.getAreaPath().split(SystemConst.SPLITE_SIGN_STATIC);
+	  List<Area> areaList = null;
+	  if(codePaths.length==2){
+		  areaList = areaService.getAreaByParentId(codePaths[0].trim());
+	      mav.addObject("secarea", areaList);
+	      mav.addObject("secAreaId", codePaths[0].trim());
+	  }
+	  if(codePaths.length==3){
+		  areaList = areaService.getAreaByParentId(codePaths[0].trim());
+	      mav.addObject("secarea", areaList);
+		  areaList = areaService.getAreaByParentId(codePaths[1].trim());
+		  mav.addObject("thirarea", areaList);
+		  mav.addObject("secAreaId", codePaths[0].trim());
+		  mav.addObject("thirAreaId", codePaths[1].trim());
+	  }*/
 	  return mav;
 	}
 	
+	@RequestMapping(value="/del")
+	@ResponseBody
+	public Object del(String ids,HttpServletRequest request,HttpServletResponse response){
+		agentService.deleteByAgentIds(ids.split(SystemConst.SPLITE_SIGN_COMMON));
+  	  Map<String,Object> map = new HashMap<String,Object>();
+	  map.put("result",true);
+	  map.put("message",RequestUtils.getMessage("delete", request));
+	  return map;
+	}
+	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String addOrUpdate(AgentBo agent,HttpServletRequest request,HttpServletResponse response){
+	public String addOrUpdate(AgentInfo agent,HttpServletRequest request,HttpServletResponse response){
 		if(agent.getId() == null){
-			agent.setPasswd(MD5.getMD5Str(agent.getPasswd()));
+			agent.setPasswd(MD5.getMD5Str(SystemConst.INITPASSWORD));
+			agent.setDelFlag(false);
 			agentService.saveAgent(agent);
 		}
 		else{
-			AgentBo agentbo = agentService.getAgent(agent.getId());
-			String password = agentbo.getPasswd();
-			BeanUtils.copyProperties(agent, agentbo);
-			agentbo.setPasswd(password);
-			agentService.updateAgent(agentbo);
+			AgentInfo agentinfo = agentService.getAgent(agent.getId());
+			String password = agentinfo.getPasswd();
+			double dot = agentinfo.getRebackDot();
+			BeanUtils.copyProperties(agent, agentinfo);
+			agentinfo.setPasswd(password);
+			agentinfo.setDelFlag(false);
+			agentinfo.setRebackDot(dot);
+			agentService.updateAgent(agentinfo);
 		}
 	    
 	    return REDIRECT;
 	}
 	
 	@RequestMapping(value="/add")
-	public String add(SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
+	public String add(ModelMap modelMap,SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
+	  initAreas(request,modelMap);
 	  return ADD_PAGE;
 	}
 	
@@ -171,5 +208,28 @@ public class AgentController extends BaseController {
 			map.put("result",true);
 		}
 		return map;
+	}
+	
+	@RequestMapping(value = "/getarea")
+	@ResponseBody
+	public Object getArea(String id,HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		List<Area> areas = areaService.getAreasByCity(id);
+		return areas;
+	}
+	@SuppressWarnings("unused")
+	private void initAreas(HttpServletRequest request,ModelMap modelMap){
+		 List<Area> areas = areaService.getAreasByCity(SystemConst.ROOTAREAID);
+		  modelMap.addAttribute("areas", areas);
+	}
+	
+	@RequestMapping(value = "/gettest")
+	public String test(String id,HttpServletRequest request,
+			HttpServletResponse response){
+		String str=null;
+		
+		System.out.println(str.length());
+	   
+		return null;
 	}
 }

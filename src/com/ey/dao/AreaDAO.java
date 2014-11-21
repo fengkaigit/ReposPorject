@@ -11,7 +11,7 @@ public interface AreaDAO extends BaseDAO {
 	void deleteByAreaId(String id) throws RuntimeException;
 	
     List<Area> getAreas(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
-
-	List<Area> getAreasByCity(String cityId);
+    
+	List<Area> getAreasByCity(String cityId) throws RuntimeException;
 
 }
