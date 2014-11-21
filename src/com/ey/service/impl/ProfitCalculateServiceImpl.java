@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ey.dao.ProfitCalculateDAO;
+import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.ProfitBill;
 import com.ey.dao.entity.ProfitServiceRelation;
@@ -187,6 +188,21 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 		ProfitTransferRelationId relationId = new ProfitTransferRelationId(profitBillId,transferAccountId);
 		ProfitTransferRelation relation = new ProfitTransferRelation(relationId);
 		profitDao.save(relation);
+	}
+
+
+	@Override
+	public List<PaymentBill> findPaymentBillList(Long serviceBillId) throws Exception {
+		
+		return profitDao.findPaymentBills(serviceBillId);
+	}
+
+
+	@Override
+	public List<AgentInfo> findAgentInfo(List<PaymentBill> paymentList)
+			throws Exception {
+		
+		return profitDao.findAgentInfo(paymentList);
 	}
 
 }
