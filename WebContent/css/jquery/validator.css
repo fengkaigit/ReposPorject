@@ -1,6 +1,6 @@
 .onShow
 {
-    background:url(../../images/validate/onShow.gif) no-repeat 0px -2px; 
+    background:url(../../images/validate/onShow.gif) no-repeat; 
     padding-left:25px; 
 	font-size: 12px;
 	line-height:22px; 

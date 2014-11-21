@@ -101,3 +101,55 @@ function doreg(){
 	}
 	document.getElementById("registerForm").submit();
 }
+function refreshCity(obj,site,targetObjId){
+	if(obj&&obj.value){
+		if(obj.value!=""){
+			
+			document.getElementById(targetObjId).options.length = 0;
+			$.ajax({
+		         type: "post",
+		         url: chgUrl(site+"/refeshCity.do"),
+		         dataType: "html",
+		         data: {
+					areaId: obj.value
+		         },
+		         success: function(data, textStatus) {
+		        	 //alert(data);
+		        	if(data){
+		        		var city = data.split(";");
+		        		
+		        		for(var i=0;i<city.length;i++){
+		        			var _opt = city[i];
+		        			var _opts = _opt.split(",");
+		        			var option = new Option(_opts[1],_opts[0]);
+			        		document.getElementById(targetObjId).options.add(option);
+		        		}
+		        		
+		        	}
+		         }
+		     });
+		}
+	}
+}
+function refreshAreaId(obj){
+	var tcity = document.getElementById("_areaId");
+	var area = document.getElementById("parentAreaId");
+	var city = document.getElementById("areaId");
+	if(area&&obj){
+		area.value=obj.value;
+	}
+	if(tcity&&city){
+		city.value=tcity.value;
+	}
+}
+function refreshCityId(obj){
+	var tarea = document.getElementById("_parentAreaId");
+	var area = document.getElementById("parentAreaId");
+	var city = document.getElementById("areaId");
+	if(area&&tarea){
+		area.value=tarea.value;
+	}
+	if(obj&&city){
+		city.value=obj.value;
+	}
+}

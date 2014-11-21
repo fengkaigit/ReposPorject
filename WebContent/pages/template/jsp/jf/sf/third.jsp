@@ -9,7 +9,21 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
 
+<script language="javascript">
+$(document).ready(function(){
+	$.formValidator.initConfig({formID:"form1",alertMessage:true,debug:false,submitOnce:true,
+		onError:function(msg,obj,errorlist){
+			alert(msg);
+		},
+		submitAfterAjaxPrompt : '有数据正在异步验证，请稍等...'
+	});
+	$("#bankAccount").formValidator().inputValidator({min:1,max:30,onError:"请输入合法的支付卡号/支付卡别名"});
+	$("#mobile").formValidator().inputValidator({min:4,max:4,onError:"请输入手机号码后四位"}).regexValidator({regExp:"num",dataType:"enum",onError:"请输入手机号码后四位"});
+	$("#mobileVerify").formValidator({onShow:"请输入验证码",onFocus:"请输入验证码"}).inputValidator({min:1,max:10,onError:"请输入验证码"});
 
+	
+});
+</script>
 </head>
 <body>
 <%@include file="/pages/template/jsp/common/header.jsp"%>
@@ -94,14 +108,7 @@
    <div coor="default-content" class=" ui-grid-20">
       <div style="overflow: hidden;" class="znx_r clear">
     	<div class="tcxx_tt">
-    		<input type="hidden" value="0000" id="divId">
-    		<input type="hidden" value="" id="isCommunica">
-    		<input type="hidden" value="" id="fromCart">
-    		<input type="hidden" value="" id="catalogEntryId">
-
-        	<!--<span class="tcxx_tt_a">
-        	 <a href="/shanghai/shuifei">水费</a>
-        	  &gt; <span class="tcxx_tt_b">填写付费信息</span></span>-->
+    		
         	  
         </div>
         <div class="clear"></div>
@@ -126,9 +133,9 @@
        <fieldset>
     <legend>缴费信息确认</legend>
     <ul >
-  	<li><span>订单编号：</span>2014082201005000000001</li>
-    <li><span>收费单位：</span>北京勤蜂易缴电子商务有限公司</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>123.4元（包含代缴服务费1元）</li>
+  	<li><span>订单编号：</span>${WATER_BILL.billNo}</li>
+    <li><span>收费单位：</span>${WATER_BILL.endName}</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${WATER_BILL.billMoney+WATER_BILL.poundage}元（包含代缴服务费1元）</li>
    </ul>
   </fieldset>
 
@@ -146,27 +153,27 @@
     
     	<div>
 		<label style=" margin-left:8px;line-height:30px;"> 支付卡号/支付卡别名：</label>
-		   <input type="text"value="6222 4023 1234 8923" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
+		   <input type="text" value="" class="on-show" id="bankAccount" name="bankAccount" maxlength="30">
 	</div>
      
 	<div style="margin-top:10px;clear:both;">
 		<label style=" margin-left:42px;line-height:30px;">手机号码后四位：</label>
-		   <input type="text"value="4423" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
+		   <input type="text" value="" class="on-show" id="mobile" name="mobile" maxlength="4">
 	</div>
 	
 	<div style="margin-top:10px;clear:both;">
 		<label style=" margin-left:98px;line-height:30px;">验证码：</label>
-		   <input type="text"value="1232" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
+		   <input type="text" value="" class="on-show" id="mobileVerify" name="mobileVerify" maxlength="10">
 	</div>
 	
 	<div style="margin-top:10px;padding:0px 0px 0px 85px;">
 						<label>备忘信息：</label>
-		                <select class="selectCss" default="" onChange="jQuery.shfftBillCharge.billOrgChange(this,'queryBillChargeMode')" id="billOrg" name="billOrgSel" onmousewheel="return false"><option id="888883200942900" value="888883200942900" statuscode="00" statusname="" limit="" paymentcart="0">自定义</option></select>
+		                <select class="selectCss" default="" onChange="" id="billOrg" name="billOrgSel" onmousewheel="return false"><option id="888883200942900" value="888883200942900">自定义</option></select>
 					</div>
 	<div style="margin-top:10px;clear:both;">
 	
 		<label style=" margin-left:98px;line-height:30px;">请输入：</label>
-		   <input type="text"value="19880412" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
+		   <input type="text" value="" class="on-show" id="remark" name="remark" maxlength="30">
 	</div>
 	
   </fieldset>

@@ -1,10 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+    pageEncoding="utf-8" import="com.ey.consts.SystemConst"%>
 <html>
 <title>会员注册</title>
 <head>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/reg.js" charset="UTF-8"></script>
 </head>
 <body>
@@ -43,163 +46,29 @@
 					<tr>
                         <td height="40" align="right">注册人类型：</td>
                         <td align="left" colspan="2">
-                        <select class="zc_city" default="" id="registType" name="registType">
-                                
-                                    <option value="0">
-                                        家庭用户
-                                    </option>
-									  <option value="1">
-                                        单位用户
-                                    </option>
-									  <option value="2">
-                                        个体工商户
-                                    </option>
-                                
+                        <select class="zc_city" id="registType" name="registType">
+                        <c:forEach var="item" items="${PERSON_ACCOUNT_TYPE}" varStatus="status">
+                        	<option value="${item.id.dataValue}">${item.propChName}</option>
+                        </c:forEach>
                         </select></td>
                     </tr>
                    
                     <tr>
                         <td height="40" align="right">所在城市：</td>
                         <td align="left" colspan="2">
-                        <select class="zc_city"  id="areaId" name="areaId">
-                                
-                                    <option value="310000">
-                                        内蒙古
-                                    </option>
-                                
-                                    <option value="710000">
-                                        台湾
-                                    </option>
-                                
-                                    <option value="510000">
-                                        四川
-                                    </option>
-                                
-                                    <option value="520000">
-                                        贵州
-                                    </option>
-                                
-                                    <option value="530000">
-                                        云南
-                                    </option>
-                                
-                                    <option value="540000">
-                                        西藏
-                                    </option>
-                                
-                                    <option value="110000">
-                                        北京
-                                    </option>
-                                
-                                    <option value="120000">
-                                        天津
-                                    </option>
-                                
-                                    <option value="130000">
-                                        河北
-                                    </option>
-                                
-                                    <option value="140000">
-                                        山西
-                                    </option>
-                                
-                                    <option value="150000">
-                                        内蒙古
-                                    </option>
-                                
-                                    <option value="210000">
-                                        辽宁
-                                    </option>
-                                
-                                    <option value="220000">
-                                        吉林
-                                    </option>
-                                
-                                    <option value="230000">
-                                        黑龙江
-                                    </option>
-                                
-                                    <option value="460000">
-                                        海南
-                                    </option>
-                                
-                                    <option value="320000">
-                                        江苏
-                                    </option>
-                                
-                                    <option value="330000">
-                                        浙江
-                                    </option>
-                                
-                                    <option value="340000">
-                                        安徽
-                                    </option>
-                                
-                                    <option value="350000">
-                                        福建
-                                    </option>
-                                
-                                    <option value="360000">
-                                        江西
-                                    </option>
-                                
-                                    <option value="370000">
-                                        山东
-                                    </option>
-                                
-                                    <option value="410000">
-                                        河南
-                                    </option>
-                                
-                                    <option value="420000">
-                                        湖北
-                                    </option>
-                                
-                                    <option value="430000">
-                                        湖南
-                                    </option>
-                                
-                                    <option value="440000">
-                                        广东
-                                    </option>
-                                
-                                    <option value="450000">
-                                        广西
-                                    </option>
-                                
-                                    <option value="610000">
-                                        陕西
-                                    </option>
-                                
-                                    <option value="620000">
-                                        甘肃
-                                    </option>
-                                
-                                    <option value="630000">
-                                        青海
-                                    </option>
-                                
-                                    <option value="640000">
-                                        宁夏
-                                    </option>
-                                
-                                    <option value="650000">
-                                        新疆
-                                    </option>
-                                
-                                    <option value="810000">
-                                        香港
-                                    </option>
-                                
-                                    <option value="820000">
-                                        澳门
-                                    </option>
-                                
-                                    <option value="500000">
-                                        重庆
-                                    </option>
-                                
-                        </select></td>
+                        <select  class="zc_city" onchange="refreshCity(this,'<%=request.getContextPath() %>','areaId')" id="parentAreaId" name="parentAreaId" onmousewheel="return false">
+				  
+				  	<c:forEach var="item" items="${AREA}" varStatus="status">
+                      <option value="${item.id}">${item.province}</option>
+                    </c:forEach>
+				 </select>
+                  
+				  <select  class="zc_city" id="areaId" name="areaId" onmousewheel="return false">
+				  	<c:forEach var="item" items="${cityList}" varStatus="status">
+                      <option value="${item.id}">${item.province}</option>
+                    </c:forEach>
+				  </select>
+                        </td>
                     </tr>
 
 

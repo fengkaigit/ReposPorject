@@ -94,14 +94,6 @@
      <div coor="default-content" class=" ui-grid-20">
       <div style="overflow: hidden;" class="znx_r clear">
     	<div class="tcxx_tt">
-    		<input type="hidden" value="0000" id="divId">
-    		<input type="hidden" value="" id="isCommunica">
-    		<input type="hidden" value="" id="fromCart">
-    		<input type="hidden" value="" id="catalogEntryId">
-
-        	<!--<span class="tcxx_tt_a">
-        	 <a href="/shanghai/shuifei">水费</a>
-        	  &gt; <span class="tcxx_tt_b">填写付费信息</span></span>-->
         	  
         </div>
         <div class="clear"></div>
@@ -127,10 +119,10 @@
     <legend>支付结果</legend>
     <ul >
 	 	<li><span>支付结果：</span><span class="bigfont">成功支付</span></li>
-  	<li><span>订单编号：</span>2014082201005000000001</li>
+  	<li><span>订单编号：</span>${WATER_BILL.billNo}</li>
    
-    <li><span>订单日期：</span>2014年8月25日</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>123.4元</li>
+    <li><span>订单日期：</span>${WATER_BILL.billDate}</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${WATER_BILL.billMoney+WATER_BILL.poundage}元（包含代缴服务费1元）</li>
 
 	
    </ul>
@@ -150,14 +142,14 @@
   <div class="zfcg clear" id="zfpz" style="display:none;">
   <table class="tab1"  cellpadding="0" cellspacing="0">
   <tr>
-  <td>订单号：2014082201005000000001
+  <td>订单号：${WATER_BILL.billNo}
   </td>
   <td>流水号：15104710036
   </td>
   </tr>
   </table>
    <div class="div1">
-   本次：水费&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账单总金额：123.4元
+   本次：水费&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账单总金额：${WATER_BILL.billMoney+WATER_BILL.poundage}元
    </div>
    <table width="90%" border="0" cellspacing="0" cellpadding="0" class="tab2 tab-style">
   <tr bgcolor="#e6edfb">
@@ -173,32 +165,21 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	
-	呼和浩特春华水务自来水公司</td>
+	${WATER_BILL.endName}</td>
     </tr>
   <tr>
     <td width="15%">&nbsp;分户账号</td>
-    <td width="30%">&nbsp;200206342</td>
+    <td width="30%">&nbsp;${WATER_BILL.billNumber}</td>
     <td width="15%">&nbsp;缴费地址</td>
     <td width="30%">&nbsp;呼和浩特新城区希望小区19#502</td>
   </tr>
   <tr>
     <td>&nbsp;账期</td>
-    <td>&nbsp;2014年8月</td>
+    <td>&nbsp;${WATER_BILL.year}年${WATER_BILL.month}月</td>
     <td>&nbsp;金额</td>
-    <td>&nbsp;100元</td>
+    <td>&nbsp;${WATER_BILL.billMoney}元</td>
   </tr>
-  <tr>
-    <td>&nbsp;分户账号</td>
-    <td>&nbsp;200206342</td>
-    <td>&nbsp;缴费地址</td>
-    <td>&nbsp;呼和浩特新城区希望小区19#602</td>
-  </tr>
-  <tr>
-    <td>&nbsp;账期</td>
-    <td>&nbsp;2014年8月</td>
-    <td>&nbsp;金额</td>
-    <td>&nbsp;23.4元</td>
-  </tr>
+ 
 </table>
 <table width="90%" border="0" cellspacing="0" cellpadding="0" class="tab3 tab-style" style="border-top:0px;">
    <tr bgcolor="#e6edfb">
@@ -211,7 +192,7 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计：</td>
-    <td>&nbsp;123.4元</td>
+    <td>&nbsp;${WATER_BILL.billMoney+WATER_BILL.poundage}元</td>
   </tr>
   <tr>
     <td>&nbsp;
@@ -223,21 +204,21 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大写金额：</td>
-    <td>&nbsp;壹佰贰拾叁元肆角整</td>
+    <td>&nbsp;${WATER_BILL.moneycn}</td>
   </tr>
 </table>
 
 <table width="90%" border="0" cellspacing="0" cellpadding="0" class="tab-style tab2">
    <tr bgcolor="#e6edfb">
-    <td colspan="6">&nbsp;支付信息（累计支付2张账单，支付总金额：123.4元）</td>
+    <td colspan="6">&nbsp;支付信息（累计支付1张账单，支付总金额：${WATER_BILL.billMoney+WATER_BILL.poundage}元）</td>
   </tr>
    <tr >
     <td>&nbsp;支付机构</td>
-    <td>&nbsp;中国银行</td>
+    <td>&nbsp;${WATER_BILL.bankName}</td>
     <td>&nbsp;卡号/账号</td>
-    <td>&nbsp;6222 4023 1234 8923</td>
+    <td>&nbsp;${WATER_BILL.bankAccount}</td>
     <td>&nbsp;支付金额</td>
-    <td>&nbsp;123.4元</td>
+    <td>&nbsp;${WATER_BILL.billMoney+WATER_BILL.poundage}元</td>
   </tr>
 </table>
 <div class="note"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;感谢您使用E缴365生活缴费支付服务，使用中的任何疑问，可拨打客户专线

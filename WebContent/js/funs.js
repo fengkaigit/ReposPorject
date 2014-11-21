@@ -72,8 +72,11 @@ function hidden(id){
 	
 }
 function show(id){
-	$("#"+id).css("display","block");
-	
+	if(document.getElementById(id)&&document.getElementById(id).style.display=="block"){
+		hidden(id);
+	}else{
+		$("#"+id).css("display","block");
+	}
 }
 function showDivWin(id,w,h,pageUrl){
 	url=pageUrl
