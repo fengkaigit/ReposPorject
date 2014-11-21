@@ -33,6 +33,13 @@ public class TempPaymentBill implements java.io.Serializable {
 	private Integer paymentMode;
 	private String uuid;
 	private Integer stageStatus;
+	private String areaId;
+	private String areaName;
+	private Long agentId;
+	private String agentName;
+	private String orderNumber;
+	private String remarks;
+	private String payAddress;
 
 	// Constructors
 
@@ -44,7 +51,8 @@ public class TempPaymentBill implements java.io.Serializable {
 	public TempPaymentBill(Long id, Long accountBillId, Long userId,
 			double remainBalance, Date createTime, double paidMoney,
 			double balance, Integer payType, Long entId, Integer businessType,
-			Integer paymentMode, String uuid, Integer stageStatus) {
+			Integer paymentMode, String uuid, Integer stageStatus,
+			String areaId, Long agentId, String orderNumber) {
 		this.id = id;
 		this.accountBillId = accountBillId;
 		this.userId = userId;
@@ -58,6 +66,9 @@ public class TempPaymentBill implements java.io.Serializable {
 		this.paymentMode = paymentMode;
 		this.uuid = uuid;
 		this.stageStatus = stageStatus;
+		this.areaId = areaId;
+		this.agentId = agentId;
+		this.orderNumber = orderNumber;
 	}
 
 	/** full constructor */
@@ -65,7 +76,9 @@ public class TempPaymentBill implements java.io.Serializable {
 			double remainBalance, Date createTime, double paidMoney,
 			double payMoney, double balance, double poundage, Integer payType,
 			Long entId, Integer businessType, Integer paymentStatus,
-			Integer paymentMode, String uuid, Integer stageStatus) {
+			Integer paymentMode, String uuid, Integer stageStatus,
+			String areaId, String areaName, Long agentId, String agentName,
+			String orderNumber, String remarks, String payAddress) {
 		this.id = id;
 		this.accountBillId = accountBillId;
 		this.userId = userId;
@@ -82,6 +95,13 @@ public class TempPaymentBill implements java.io.Serializable {
 		this.paymentMode = paymentMode;
 		this.uuid = uuid;
 		this.stageStatus = stageStatus;
+		this.areaId = areaId;
+		this.areaName = areaName;
+		this.agentId = agentId;
+		this.agentName = agentName;
+		this.orderNumber = orderNumber;
+		this.remarks = remarks;
+		this.payAddress = payAddress;
 	}
 
 	// Property accessors
@@ -229,6 +249,69 @@ public class TempPaymentBill implements java.io.Serializable {
 
 	public void setStageStatus(Integer stageStatus) {
 		this.stageStatus = stageStatus;
+	}
+
+	@Column(name = "area_id", length = 50, nullable = false)
+	public String getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(String areaId) {
+		this.areaId = areaId;
+	}
+
+	@Column(name = "area_name", length = 150)
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+	
+	@Column(name = "agent_id", nullable = false)
+	public Long getAgentId() {
+		return agentId;
+	}
+
+	public void setAgentId(Long agentId) {
+		this.agentId = agentId;
+	}
+
+	@Column(name = "agent_name", length = 150)
+	public String getAgentName() {
+		return agentName;
+	}
+
+	public void setAgentName(String agentName) {
+		this.agentName = agentName;
+	}
+	
+	@Column(name = "order_number", length = 250)
+	public String getOrderNumber() {
+		return orderNumber;
+	}
+
+	public void setOrderNumber(String orderNumber) {
+		this.orderNumber = orderNumber;
+	}
+
+	@Column(name = "remarks", length = 250)
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	@Column(name = "pay_address", length = 250)
+	public String getPayAddress() {
+		return payAddress;
+	}
+
+	public void setPayAddress(String payAddress) {
+		this.payAddress = payAddress;
 	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ey.dao.ProfitCalculateDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
+import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.ServiceChargeBill;
 import com.ey.dao.entity.TempPaymentBill;
@@ -92,6 +93,20 @@ public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalcula
 			return serviceBillList.get(0).getProfitMoney();
 		else
 			return null;
+	}
+
+	@Override
+	public List<PaymentBill> findPaymentBills(Long serviceBillId)
+			throws RuntimeException {
+		String hql = "from PaymentBill where id in (select id.paymentBillId from ServicePaymentRelation where id.serviceBillId=?)";
+		return this.find(hql, new Object[]{serviceBillId});
+	}
+
+	@Override
+	public List<AgentInfo> findAgentInfo(
+			List<PaymentBill> paymentList) throws RuntimeException {
+		String hql = "";
+		return null;
 	}
 	
 	
