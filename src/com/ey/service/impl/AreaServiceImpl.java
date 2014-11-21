@@ -47,4 +47,10 @@ public class AreaServiceImpl implements AreaService {
 		return (Area)areaDAO.get(Area.class, id);
 	}
 
+	@Override
+	public List<Area> getAreasByCity(String cityId) {
+		// TODO Auto-generated method stub
+		return areaDAO.getAreasByCity(cityId);
+	}
+
 }

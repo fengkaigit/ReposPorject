@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ey.bo.ChargeEntBo;
-import com.ey.dao.AgentDAO;
 import com.ey.dao.ChargeEntDAO;
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.ChargeEnterprise;
@@ -48,6 +47,18 @@ public class ChargeEntServiceImpl implements ChargeEntService {
 	public ChargeEntBo getChargeEnt(Long id) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return chargeEntDAO.getChargeEnt(id);
+	}
+
+	@Override
+	public List<ChargeEntBo> getChargesByArea(String areaId) {
+		// TODO Auto-generated method stub
+		return chargeEntDAO.getChargesByArea(areaId);
+	}
+
+	@Override
+	public List<ChargeEnterprise> getChargesByArea(String areaId, int payType) {
+		// TODO Auto-generated method stub
+		return chargeEntDAO.getChargesByArea(areaId,payType);
 	}
 
 	@Override

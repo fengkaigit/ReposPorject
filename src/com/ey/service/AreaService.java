@@ -15,5 +15,5 @@ public interface AreaService {
     List<Area> getAreas(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
     
     Area getArea(String id) throws RuntimeException;
-
+    List<Area> getAreasByCity(String cityId);
 }
