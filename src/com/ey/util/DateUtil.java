@@ -23,7 +23,7 @@ public class DateUtil {
 	
 	private static String timePatternSim = "MM-dd HH:mm";
 	private static String timePatternSimSec = "yyyy-MM-dd HH:mm";
-
+	private static String timecnpattern = "yyyy年M月d日";
 	public static synchronized String getDatePattern() {
 		defaultDatePattern = "yyyy-MM-dd";
 		return defaultDatePattern;
@@ -282,6 +282,13 @@ public class DateUtil {
 			return cal.getTime();
 
 		}
+	    public static int getYear(Date date){
+	    	Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			//int month = cal.get(cal.MONTH)+1;
+			int year = cal.get(cal.YEAR);
+			return year;
+	    }
 	public static void main(String[] args){
 		System.out.println(getAfterWeek(new Date(),1));
 		System.out.println(getAfterMonth(new Date(),1));
@@ -291,5 +298,13 @@ public class DateUtil {
 		//System.out.println(getCurSeaDay(date));
 		//System.out.println(convertStringToDate("yyyy-MM-dd HH:mm:ss","2011-02-02 00:00:00"));
 		//System.out.println(convertStringToDate("yyyy-MM-dd HH:mm:ss","2011-02-02 23:59:59"));
+	}
+
+	public static int getMonth(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int month = cal.get(cal.MONTH)+1;
+		//int year = cal.get(cal.YEAR);
+		return month;
 	}
 }
