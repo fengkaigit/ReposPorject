@@ -43,5 +43,8 @@ public class SystemConst {
 	public static final String CONTEXT_ATTACHEDIR = "attachDirectory";
 	
 	public static final String DB_VERSION_KEY = "db.version";
-	  public static final String NEXT_DBID_KEY = "next.dbid";
+	public static final String NEXT_DBID_KEY = "next.dbid";
+	public static final String AREA = "AREA";
+	public static final String PERSON_ACCOUNT_TYPE = "PERSON_ACCOUNT_TYPE";
+	public static final String WATER_BILL = "WATER_BILL";
 }
