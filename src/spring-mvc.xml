@@ -46,7 +46,16 @@
 			</list>
 		</property>
 	</bean>
-
+    <bean id="exceptionResolver" class="com.ey.exception.CustomSimpleMappingExceptionResolver">  
+      <property name="exceptionMappings">   
+        <props>   
+          <prop key="java.lang.RuntimeException">error/errorpage</prop>   
+          <prop key="com.ey.exception.BusinessException">error/errorpage</prop>  
+          <prop key="java.lang.Exception">error/errorpage</prop>
+          <prop key="java.io.IOException">error/errorpage</prop> 
+       </props>   
+     </property> 
+    </bean>
 	<!-- springMVC 对 freemarker的支持 -->
 	<!-- spring对Freemarker支持的配置(顺序应在 InternalResourceViewResolver 之前) -->
 	<bean
