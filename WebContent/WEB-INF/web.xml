@@ -117,19 +117,19 @@
 	<!-- 错误页面 -->
 	<error-page>
 		<error-code>403</error-code>
-		<location>/jsp/common/403.jsp</location>
+		<location>/pages/template/jsp/error/403.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>404</error-code>
-		<location>/jsp/common/404.jsp</location>
+		<location>/pages/template/jsp/error/404.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>406</error-code>
-		<location>/jsp/common/406.jsp</location>
+		<location>/pages/template/jsp/error/406.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/jsp/common/500.jsp</location>
+		<location>/pages/template/jsp/error/500.jsp</location>
 	</error-page>
 
 
