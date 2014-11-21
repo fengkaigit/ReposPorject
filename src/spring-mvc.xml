@@ -115,7 +115,8 @@
                         <value>/checkreg.do</value>
                         <value>/ej/security.do</value>
                         <value>/ej/ieda.do</value>
-                         <value>/ej/about.do</value>
+                        <value>/ej/about.do</value>
+                        <value>/refeshCity.do</value>
                    </list> 
          </property>
           
