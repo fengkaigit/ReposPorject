@@ -1,15 +1,15 @@
 package com.ey.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import com.ey.bo.AgentBo;
 import com.ey.bo.ChargeEntBo;
 import com.ey.dao.ChargeEntDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
+import com.ey.dao.entity.ChargeEnterprise;
 
 
 @Repository("chargeEntDAO")
@@ -40,6 +40,18 @@ public class ChargeEntDAOImpl extends BaseDAOImpl implements ChargeEntDAO {
 		if(list!=null&&list.size()>0)
 			return list.get(0);
 		return null;
+	}
+
+	@Override
+	public List<ChargeEntBo> getChargesByArea(String areaId) {
+		String hql = "from ChargeEnterprise where areaId=? order by id";
+		return this.find(hql, new Object[]{areaId});
+	}
+
+	@Override
+	public List<ChargeEnterprise> getChargesByArea(String areaId, int payType) {
+		String hql = "from ChargeEnterprise where areaId=? and payType=? order by id";
+		return this.find(hql, new Object[]{areaId,payType});
 	}
 
 }

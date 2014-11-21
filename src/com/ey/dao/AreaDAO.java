@@ -12,4 +12,6 @@ public interface AreaDAO extends BaseDAO {
 	
     List<Area> getAreas(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
 
+	List<Area> getAreasByCity(String cityId);
+
 }
