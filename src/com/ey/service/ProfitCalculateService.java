@@ -3,6 +3,7 @@ package com.ey.service;
 import java.util.List;
 import java.util.UUID;
 
+import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.TransferRecords;
 
@@ -37,5 +38,9 @@ public interface ProfitCalculateService {
 	public Long getSystemAccountId(Integer accountType) throws Exception;
 	
 	public void saveProfitTransferRecords(Long profitBillId, Long transferAccountId) throws Exception;
+	
+	public List<PaymentBill> findPaymentBillList(Long serviceBillId) throws Exception;
+	
+	public List<AgentInfo> findAgentInfo(List<PaymentBill> paymentList) throws Exception;
 
 }
