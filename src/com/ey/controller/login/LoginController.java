@@ -3,6 +3,8 @@ package com.ey.controller.login;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -17,9 +19,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
+import com.ey.dao.entity.Area;
+import com.ey.dao.entity.BaseCustomValue;
 import com.ey.dao.entity.UserBase;
 import com.ey.forms.UserForm;
+import com.ey.service.AreaService;
 import com.ey.service.LoginService;
+import com.ey.service.StaticService;
 import com.ey.util.MD5;
 import com.ey.util.RequestUtils;
 import com.ey.util.StringUtil;
@@ -30,6 +36,10 @@ public class LoginController extends BaseController {
 
 	@Autowired
 	private LoginService loginService;
+	@Autowired
+	private StaticService staticService;
+	@Autowired
+	private AreaService areaService;
 	
 	@RequestMapping(value = "/dologin")
 	public ModelAndView login(HttpServletRequest request,
@@ -113,6 +123,21 @@ public class LoginController extends BaseController {
 	public ModelAndView reg(HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
+		List<BaseCustomValue> values = staticService.listValues("person_account_type");
+		List<Area> areas = areaService.getAreasByCity("0");
+		List<Area> cityList = null;
+		if(areas!=null&&areas.size()>0){
+			cityList = areaService.getAreasByCity(areas.get(0).getId());
+		}
+		if(areas==null){
+			areas = new ArrayList();
+		}
+		if(cityList==null){
+			cityList = new ArrayList();
+		}
+		mav.addObject("cityList", cityList);
+		mav.addObject(SystemConst.PERSON_ACCOUNT_TYPE, values);
+		mav.addObject(SystemConst.AREA, areas);
 		mav.setViewName("login/reg");
 		return mav;
 	}
@@ -210,6 +235,27 @@ public class LoginController extends BaseController {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.print(message);
+		out.close();
+		return null;
+	}
+	@RequestMapping(value = "/refeshCity")
+	public ModelAndView refeshCity(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		String areaId = request.getParameter("areaId");
+		List<Area> citys = areaService.getAreasByCity(areaId);
+		StringBuffer buffer = new StringBuffer("");
+		for(Area city:citys){
+			if(buffer.length()>0){
+				buffer.append(";");
+			}
+			buffer.append(city.getId()+","+city.getProvince());
+		}
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		out.print(buffer.toString());
 		out.close();
 		return null;
 	}
