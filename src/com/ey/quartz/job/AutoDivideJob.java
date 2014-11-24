@@ -7,6 +7,7 @@ import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 
+import com.ey.bo.AgentBo;
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
@@ -109,7 +110,6 @@ public class AutoDivideJob implements Job{
 		Double profitMoney = serviceMoney-poundage;
 		//生成收益账户划款单
 		calculateService.saveProfitBill(profitBillId,profitMoney);
-		
 		//保存收益账户划款单与劳务费划款单关系表
 		calculateService.saveServiceProfitRelation(serviceBillId,profitBillId);
 		//生成收益账户转账单单号
@@ -124,10 +124,15 @@ public class AutoDivideJob implements Job{
 	//按代理商处理系统结算账户划款单(返回结算单位划款单号List)
 	private List<Long> calculateSettleBill(ProfitCalculateService calculateService, 
 			Long serviceBillId) throws Exception{
-		//通过serviceBillI查找所有缴费单
-		List<PaymentBill> paymentList = calculateService.findPaymentBillList(serviceBillId);
 		//通过缴费单查找区域信息及对应区域代理商信息
-		List<AgentInfo> agentList = calculateService.findAgentInfo(paymentList);
+		List<AgentInfo> agentList = calculateService.findAgentInfo(serviceBillId);
+		//通过代理商信息查找代理商返规则，计算代理商返点金额，生成结算单
+		for (AgentInfo agentInfo:agentList){
+			//查询代理商返点规则
+			AgentBo agent = calculateService.findAgentRule(agentInfo.getId());
+			//计算代理商返点金额
+			//Double rebackMoney = 
+		}
 		return null;
 	}
 	

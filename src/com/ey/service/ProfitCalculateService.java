@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.UUID;
 
+import com.ey.bo.AgentBo;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
 
@@ -41,6 +42,8 @@ public interface ProfitCalculateService {
 	
 	public List<PaymentBill> findPaymentBillList(Long serviceBillId) throws RuntimeException;
 	
-	public List<AgentInfo> findAgentInfo(List<PaymentBill> paymentList) throws RuntimeException;
+	public List<AgentInfo> findAgentInfo(Long serviceBillId) throws RuntimeException;
+	
+	public AgentBo findAgentRule(Long agentId) throws RuntimeException;
 
 }

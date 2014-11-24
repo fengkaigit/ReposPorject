@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
+import com.ey.bo.AgentBo;
 import com.ey.dao.ProfitCalculateDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.AgentInfo;
@@ -103,9 +104,15 @@ public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalcula
 	}
 
 	@Override
-	public List<AgentInfo> findAgentInfo(
-			List<PaymentBill> paymentList) throws RuntimeException {
-		String hql = "";
+	public List<AgentInfo> findAgentInfo(Long serviceBillId) 
+			throws RuntimeException {
+		String hql = "from AgentInfo where (select agentId from PaymentBill where id in (select id.paymentBillId from ServicePaymentRelation where id.serviceBillId=?))";
+		return this.find(hql, new Object[]{serviceBillId});
+	}
+
+	@Override
+	public AgentBo findAgentRule(Long agentId) throws RuntimeException {
+		String hql = "select new com.ey.bo.AgentBo(a.id,a.registAccount,a.passwd,a.EMail,a.mobile,a.rebackDot,a.registRealName,a.areaId,b.province,b.namePath,b.encodePath,c.rule,d.bankAccountId) from AgentInfo a,Area b where a.areaId = b.id and a.registAccount = ? and a.passwd = ? and a.delFlag = 0";
 		return null;
 	}
 	

@@ -9,6 +9,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ey.bo.AgentBo;
 import com.ey.dao.ProfitCalculateDAO;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
@@ -200,10 +201,17 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 
 	@Override
-	public List<AgentInfo> findAgentInfo(List<PaymentBill> paymentList)
+	public List<AgentInfo> findAgentInfo(Long serviceBillId)
 			throws RuntimeException {
 		
-		return profitDao.findAgentInfo(paymentList);
+		return profitDao.findAgentInfo(serviceBillId);
+	}
+
+
+	@Override
+	public AgentBo findAgentRule(Long agentId) throws RuntimeException {
+		
+		return profitDao.findAgentRule(agentId);
 	}
 
 }

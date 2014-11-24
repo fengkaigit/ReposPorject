@@ -3,6 +3,7 @@ package com.ey.dao;
 import java.util.List;
 import java.util.UUID;
 
+import com.ey.bo.AgentBo;
 import com.ey.dao.base.BaseDAO;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
@@ -31,8 +32,10 @@ public interface ProfitCalculateDAO extends BaseDAO {
 	
 	public Double findTransferRecordsPoundage(Long serviceBillId) throws RuntimeException;
 	
-	public List<AgentInfo> findAgentInfo(List<PaymentBill> paymentList) throws RuntimeException;
+	public List<AgentInfo> findAgentInfo(Long serviceBillId) throws RuntimeException;
 	
 	public Double findServiceBillMoney(Long serviceBillId) throws RuntimeException;
+	
+	public AgentBo findAgentRule(Long agentId) throws RuntimeException;
 	
 }

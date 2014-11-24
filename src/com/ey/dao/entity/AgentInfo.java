@@ -24,6 +24,7 @@ public class AgentInfo implements java.io.Serializable {
 	private double rebackDot;
 	private String registRealName;
 	private Boolean delFlag;
+	
 
 	// Constructors
 

@@ -27,6 +27,7 @@ public class PaymentProperty implements java.io.Serializable {
 	private double poundage;
 	private Date paymentTime;
 	private String billNumber;
+	private String payAddress;
 
 	// Constructors
 
@@ -36,22 +37,20 @@ public class PaymentProperty implements java.io.Serializable {
 
 	/** minimal constructor */
 	public PaymentProperty(Long id, Long userId, Date beginPeriod,
-			String periodFrequency, double billMoney, Date paymentTime,
-			String billNumber) {
+			String periodFrequency, double billMoney, Date paymentTime) {
 		this.id = id;
 		this.userId = userId;
 		this.beginPeriod = beginPeriod;
 		this.periodFrequency = periodFrequency;
 		this.billMoney = billMoney;
 		this.paymentTime = paymentTime;
-		this.billNumber = billNumber;
 	}
 
 	/** full constructor */
 	public PaymentProperty(Long id, Long userId, Long modelId,
 			Date beginPeriod, Date endPeriod, String periodFrequency,
 			double billMoney, double poundage, Date paymentTime,
-			String billNumber) {
+			String billNumber, String payAddress) {
 		this.id = id;
 		this.userId = userId;
 		this.modelId = modelId;
@@ -62,6 +61,7 @@ public class PaymentProperty implements java.io.Serializable {
 		this.poundage = poundage;
 		this.paymentTime = paymentTime;
 		this.billNumber = billNumber;
+		this.payAddress = payAddress;
 	}
 
 	// Property accessors
@@ -150,13 +150,22 @@ public class PaymentProperty implements java.io.Serializable {
 		this.paymentTime = paymentTime;
 	}
 
-	@Column(name = "bill_number", nullable = false, length = 30)
+	@Column(name = "bill_number", length = 30)
 	public String getBillNumber() {
 		return this.billNumber;
 	}
 
 	public void setBillNumber(String billNumber) {
 		this.billNumber = billNumber;
+	}
+	
+	@Column(name = "pay_address", length = 250)
+	public String getPayAddress() {
+		return this.payAddress;
+	}
+
+	public void setPayAddress(String payAddress) {
+		this.payAddress = payAddress;
 	}
 
 }
