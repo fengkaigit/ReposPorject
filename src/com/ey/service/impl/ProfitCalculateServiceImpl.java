@@ -1,5 +1,6 @@
 package com.ey.service.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -33,14 +34,14 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 	private ProfitCalculateDAO profitDao;
 
 	@Override
-	public Integer changePaymentBillStatus() { 
+	public Integer changePaymentBillStatus() throws RuntimeException{ 
 		Integer status = profitDao.updateStatus("PaymentBill", "paymentStatus", "divideStatus", 10, 1);
 		return status;
 	}
 	
 
 	@Override
-	public void saveTempPaymentBillTask(PaymentBill paymentBill,UUID uuid) throws Exception {
+	public void saveTempPaymentBillTask(PaymentBill paymentBill,UUID uuid) throws RuntimeException, IllegalAccessException, InvocationTargetException {
 		if (paymentBill!=null){
 			TempPaymentBill tempPaymentBill = new TempPaymentBill();
 			BeanUtils.copyProperties(tempPaymentBill,paymentBill);
@@ -54,14 +55,14 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 
 	@Override
-	public List<PaymentBill> findPaymentBillList(Integer paymentStatus,Integer divideStatus) {
+	public List<PaymentBill> findPaymentBillList(Integer paymentStatus,Integer divideStatus) throws RuntimeException {
 		List<PaymentBill> lst = profitDao.findPaymentBills(paymentStatus,divideStatus);
 		return lst;
 	}
 
 
 	@Override
-	public Double createServiceChargeBill(Long serviceBillId) throws Exception {
+	public Double createServiceChargeBill(Long serviceBillId) throws RuntimeException {
 		ServiceChargeBill serviceBill = new ServiceChargeBill();
 		serviceBill.setId(serviceBillId);
 		serviceBill.setCreateDate(new Date());
@@ -77,14 +78,14 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 
 	@Override
-	public void updatePaymentBillUUID(UUID uuid) throws Exception {
+	public void updatePaymentBillUUID(UUID uuid) throws RuntimeException {
 		profitDao.updatePaymentBillUUID(uuid);
 	}
 
 
 	@Override
 	public void saveServicePaymentRelation(Long serviceBillId,
-			List<PaymentBill> billList) throws Exception {
+			List<PaymentBill> billList) throws RuntimeException {
 		for(PaymentBill paymentBill:billList){
 			ServicePaymentRelation relation = new ServicePaymentRelation();
 			ServicePaymentRelationId relationId = new ServicePaymentRelationId(serviceBillId,paymentBill.getId());
@@ -98,7 +99,7 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 	@Override
 	public void createTransferBill(Long serviceTransferBillId,Double profitMoney, Long outAccountId, Long inAccountId)
-			throws Exception {
+			throws RuntimeException {
 
 		//是否需要修改系统账户表中的劳务费账户余额，劳务费账户余额增加，系统大账户余额是否需要变更
 		
@@ -119,7 +120,7 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 	@Override
 	public void saveServiceTransferRecords(Long serviceBillId,
-			Long transferAccountId) throws Exception {
+			Long transferAccountId) throws RuntimeException {
 		ServiceTransferRelation relation = new ServiceTransferRelation();
 		ServiceTransferRelationId relationId = new ServiceTransferRelationId(serviceBillId,transferAccountId);
 		relation.setId(relationId);
@@ -130,7 +131,7 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 
 	@Override
-	public void clearTempPaymentBill() throws Exception {
+	public void clearTempPaymentBill() throws RuntimeException {
 		profitDao.deleteTempPaymentBill();
 		profitDao.updateStatus("PaymentBill", "divideStatus", "divideStatus", 5, 6);
 	}
@@ -138,14 +139,14 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 	@Override
 	public Double findTransferRecordsPoundage(Long serviceBillId)
-			throws Exception {
+			throws RuntimeException {
 		Double poundage = profitDao.findTransferRecordsPoundage(serviceBillId);
 		return poundage;
 	}
 
 
 	@Override
-	public Double findServiceBillMoney(Long serviceBillId) throws Exception {
+	public Double findServiceBillMoney(Long serviceBillId) throws RuntimeException {
 		Double serviceMoney = profitDao.findServiceBillMoney(serviceBillId);
 		return serviceMoney;
 	}
@@ -153,7 +154,7 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 	@Override
 	public void saveProfitBill(Long profitBillId, Double profitMoney)
-			throws Exception {
+			throws RuntimeException {
 		ProfitBill profitBill = new ProfitBill();
 		profitBill.setId(profitBillId);
 		profitBill.setProfitMoney(profitMoney);
@@ -166,7 +167,7 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 	@Override
 	public void saveServiceProfitRelation(Long serviceBillId, Long profitBillId)
-			throws Exception {
+			throws RuntimeException {
 		ProfitServiceRelationId profitServiceId = new ProfitServiceRelationId();
 		profitServiceId.setProfitBillId(profitBillId);
 		profitServiceId.setServiceBillId(serviceBillId);
@@ -176,7 +177,7 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 
 	@Override
-	public Long getSystemAccountId(Integer accountType) throws Exception {
+	public Long getSystemAccountId(Integer accountType) throws RuntimeException {
 		Long accountId = profitDao.getAccountId(accountType);
 		return accountId;
 	}
@@ -184,7 +185,7 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 	@Override
 	public void saveProfitTransferRecords(Long profitBillId,
-			Long transferAccountId) throws Exception {
+			Long transferAccountId) throws RuntimeException {
 		ProfitTransferRelationId relationId = new ProfitTransferRelationId(profitBillId,transferAccountId);
 		ProfitTransferRelation relation = new ProfitTransferRelation(relationId);
 		profitDao.save(relation);
@@ -192,7 +193,7 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 
 	@Override
-	public List<PaymentBill> findPaymentBillList(Long serviceBillId) throws Exception {
+	public List<PaymentBill> findPaymentBillList(Long serviceBillId) throws RuntimeException {
 		
 		return profitDao.findPaymentBills(serviceBillId);
 	}
@@ -200,7 +201,7 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 
 	@Override
 	public List<AgentInfo> findAgentInfo(List<PaymentBill> paymentList)
-			throws Exception {
+			throws RuntimeException {
 		
 		return profitDao.findAgentInfo(paymentList);
 	}
