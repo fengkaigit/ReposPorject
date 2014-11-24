@@ -38,7 +38,7 @@ public class BankCardInfo implements java.io.Serializable {
 		return this.bankId;
 	}
 
-	public void setBankCode(Long bankId) {
+	public void setBankId(Long bankId) {
 		this.bankId = bankId;
 	}
 
