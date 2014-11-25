@@ -29,8 +29,9 @@ public class AgentAccountRelation implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public AgentAccountRelation(AgentAccountRelationId id) {
+	public AgentAccountRelation(AgentAccountRelationId id,Boolean flag) {
 		this.id = id;
+		this.flag = flag;
 	}
 	@EmbeddedId
 	@AttributeOverrides({

@@ -26,8 +26,9 @@ public class EntAccountRelation implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public EntAccountRelation(EntAccountRelationId id) {
+	public EntAccountRelation(EntAccountRelationId id,Boolean flag) {
 		this.id = id;
+		this.flag = flag;
 	}
 
 	// Property accessors
