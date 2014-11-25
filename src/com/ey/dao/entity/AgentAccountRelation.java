@@ -1,6 +1,9 @@
 package com.ey.dao.entity;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,39 +17,39 @@ public class AgentAccountRelation implements java.io.Serializable {
 
 	// Fields
 
-	private Long id;
-	private Long bankAccountId;
+	
+	private AgentAccountRelationId id;
+	private Boolean flag;
 
 	// Constructors
+
 
 	/** default constructor */
 	public AgentAccountRelation() {
 	}
 
 	/** full constructor */
-	public AgentAccountRelation(Long id, Long bankAccountId) {
+	public AgentAccountRelation(AgentAccountRelationId id) {
 		this.id = id;
-		this.bankAccountId = bankAccountId;
 	}
-
-	// Property accessors
-	@Id
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
+	@EmbeddedId
+	@AttributeOverrides({
+			@AttributeOverride(name = "id", column = @Column(name = "ID", nullable = false)),
+			@AttributeOverride(name = "bankAccountId", column = @Column(name = "bank_account_id", nullable = false)) })
+	public AgentAccountRelationId getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(AgentAccountRelationId id) {
 		this.id = id;
 	}
-
-	@Column(name = "bank_account_id", nullable = false)
-	public Long getBankAccountId() {
-		return this.bankAccountId;
+	@Column(name = "flag")
+	public Boolean getFlag() {
+		return flag;
 	}
 
-	public void setBankAccountId(Long bankAccountId) {
-		this.bankAccountId = bankAccountId;
+	public void setFlag(Boolean flag) {
+		this.flag = flag;
 	}
-
+    
 }

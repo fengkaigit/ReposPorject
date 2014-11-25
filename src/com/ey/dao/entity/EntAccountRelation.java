@@ -17,6 +17,7 @@ public class EntAccountRelation implements java.io.Serializable {
 	// Fields
 
 	private EntAccountRelationId id;
+	private Boolean flag;
 
 	// Constructors
 
@@ -40,6 +41,14 @@ public class EntAccountRelation implements java.io.Serializable {
 
 	public void setId(EntAccountRelationId id) {
 		this.id = id;
+	}
+	@Column(name = "flag")
+	public Boolean getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Boolean flag) {
+		this.flag = flag;
 	}
 
 }

@@ -118,6 +118,7 @@ public class AgentInfo implements java.io.Serializable {
 	public void setRebackDot(double rebackDot) {
 		this.rebackDot = rebackDot;
 	}
+
 	@Column(name = "regist_real_name",length = 200)
 	public String getRegistRealName() {
 		return registRealName;
