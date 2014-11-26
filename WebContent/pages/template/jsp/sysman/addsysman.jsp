@@ -72,7 +72,7 @@ function loginChk(){
         <div class="fm-item1">
             <table width="88%" border="0" align="center" cellspacing="0" cellpadding="0">
                 <tbody>
-                    <tr <c:if test="${sysMan.id!=null}">display:none;</c:if> >
+                    <tr <c:if test="${sysMan.id!=null}">style="display:none;"</c:if> >
                         <td height="40" width="100" align="right">登录名：</td>
                         <td align="left">
                             <table>

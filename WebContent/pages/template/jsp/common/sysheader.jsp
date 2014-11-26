@@ -40,11 +40,16 @@ $(document).ready(function() {
         <div class="userbar">
 
 			<ul class="sf-menu" id="nav" >
-			<li class="current"><span><a href="index.html">信息维护</a></span>
+			<li class="current"><span><a href="<%=request.getContextPath() %>/agent/list.do">信息维护</a></span>
 				<ul>
 					<li class="current"><a href="<%=request.getContextPath() %>/sysman/list.do">管理员维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/agent/list.do">代理商维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/charge/list.do">收费单位维护</a></li>
+			  </ul></li>
+			  <li class="current"><span><a href="<%=request.getContextPath() %>/announce/list.do">系统公告</a></span>
+				<ul>
+					<li class="current"><a href="<%=request.getContextPath() %>/announce/add.do">公告发布</a></li>
+					<li><a href="<%=request.getContextPath() %>/announce/list.do">公告管理</a></li>
 			  </ul></li>
 			<li class="current"><span><a href="<%=request.getContextPath() %>/bill/servicelist.do">单据查询</a></span>
 				<ul>
