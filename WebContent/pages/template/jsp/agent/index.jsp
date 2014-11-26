@@ -9,42 +9,43 @@
 <meta content="" name="description">
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <script>
-function delCharge(id){
+function delAgent(id){
 	if(confirm("确实要删除该信息吗?")){
 	   
-	   jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/charge/del.do",{ids:id},"get","json",function(data){
+	   jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/agent/del.do",{ids:id},"get","json",function(data){
 		    alert(data.message);
-		    window.location.href = "<%=request.getContextPath() %>/charge/list.do";
+		    window.location.href = "<%=request.getContextPath() %>/agent/list.do";
 	    });
 	}
 }
 </script>
 </head>
 <body>
-<%@include file="/pages/template/jsp/common/sysheader.jsp"%>
+<%@include file="/pages/template/jsp/common/agentheader.jsp"%>
 <div class="ui-container clearfix" id="container">  
   <div class="jfzh-title"><span class="icon1"></span>
-  收费单位设置 
+  代理商设置 
   </div>
 <div class="jfzh-con">
 
 	
     <div class="jfzh-bottom clearfix">    
-	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;收费单位信息</span>
+	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;代理商信息</span>
 	
-	<span class="fr cur" onClick="openWin('<%=request.getContextPath() %>/charge/add.do')"><span class="fcr">新建收费单位</span></span>	
+	<span class="fr cur" onClick="openWin('<%=request.getContextPath() %>/agent/add.do')"><span class="fcr">新建代理商</span></span>	
 	</div>
   
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
   <tr class="add">
     <td>序号</td>
-    <td>收费单位名称</td>
+    <td>登录名</td>
+    <td>名称</td>
     <td>地区</td>
-    <td>收费类型</td>
-    <td>有效银行账户</td>
+    <td>邮箱</td>
+    <td>联系电话</td>
     <td>操作</td>
   </tr>
-  <c:forEach var="item" items="${charges}" varStatus="status">
+  <c:forEach var="item" items="${agentList}" varStatus="status">
    <tr <c:choose>
        <c:when test="${(status.index+1) % 2 == 0}">
          class="add"
@@ -54,13 +55,14 @@ function delCharge(id){
        </c:otherwise>
      </c:choose> >
     <td>&nbsp;${status.index+1}</td>
-    <td>&nbsp;${item.enterpriseName}</td>
+    <td>&nbsp;${item.registAccount}</td>
+    <td>&nbsp;${item.registRealName}</td>
     <td>&nbsp;${item.areaPathName}</td>
-    <td>&nbsp;${item.payTypeName}费</td>
-    <td>&nbsp;${item.careNumber}</td>
+    <td>&nbsp;${item.EMail}</td>
+    <td>&nbsp;${item.mobile}</td>
     <td>
-	<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/charge/edit/${item.id}.do')" >修改</a>&nbsp;
-	<a class="cur" style="color:#007abd;" onclick="delCharge(${item.id})">删除</a></td>
+	<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/agent/edit/${item.id}.do')" >修改</a>&nbsp;
+	<a class="cur" style="color:#007abd;" onclick="delAgent(${item.id})">删除</a></td>
 
   </tr>
  </c:forEach>

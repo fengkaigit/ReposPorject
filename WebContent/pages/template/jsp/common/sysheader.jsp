@@ -55,8 +55,6 @@ $(document).ready(function() {
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/incomelist.do">最终盈利划款单查询</a></li>
 			  </ul></li>
 			  <li><span><a href="<%=request.getContextPath() %>/ej/security.do">安全保障</a></span></li>
-		   <li><span><a href="<%=request.getContextPath() %>/ej/ieda.do">意见反馈</a></span></li>
-		   <li><span><a href="<%=request.getContextPath() %>/ej/about.do">关于我们</a></span></li>
 	       </ul>
 		</div>
 		

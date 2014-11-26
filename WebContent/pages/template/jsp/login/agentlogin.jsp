@@ -26,7 +26,7 @@ function SearchFocus(obj){
 <div class="zc_title">
 <div class="card_title1">
 <ul>
-	<li style="float: left;"><span>管理员登录</span></li>
+	<li style="float: left;"><span>代理商登录</span></li>
 
 </ul>
 

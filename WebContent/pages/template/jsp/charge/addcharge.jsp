@@ -17,10 +17,14 @@ $(document).ready(function(){
   
 	$("#enterpriseName").formValidator({onShow:"请输入收费单位名称",onFocus:"登录名至少5个字符,最多50个字符",onCorrect:"输入合法"}).inputValidator({min:5,max:50,onError:"名称非法,请确认"});
 	$("#provinc").formValidator({onShow:"请选择省份",onFocus:"省份必须选择",onCorrect:"选择合法"}).inputValidator({min:1,onError: "省份未选择,请选择!"});
-	$("#city").formValidator({empty:true,onShow:"请选择城市",onFocus:"请选择城市",onCorrect:"选择合法"}).inputValidator({min:1,onError: "城市未选择,请选择!"});
+	$("#city").formValidator({onShow:"请选择城市",onFocus:"城市必须选择",onCorrect:"选择合法"}).inputValidator({min:1,onError: "城市未选择,请选择!"});
 	$("#area").formValidator({empty:true,onShow:"请选择市区",onFocus:"请选择市区",onCorrect:"选择合法"}).inputValidator({min:1,onError: "市区未选择,请选择!"});
 	$("#payType").formValidator({onShow:"请选择收费类型",onFocus:"收费类型必须选择",onCorrect:"选择合法"}).inputValidator({min:1,onError: "收费类型未选择,请选择!"});
 	$("#careNumber").formValidator({onShow:"请输入有效银行账户",onFocus:"名称至少16个字符,最多20个字符",onCorrect:"输入合法"}).inputValidator({min:16,max:20,onError:"有效银行账户非法,请确认"});
+	$("#bankId").formValidator({onShow:"请选择所属银行",onCorrect:"选择合法"}).inputValidator({min:1,onError: "银行未选择,请选择!"});
+	$("#bankDeposit").formValidator({onShow:"请输入开户行",onFocus:"开户行至少5个字符,最多200个字符",onCorrect:"输入合法"}).inputValidator({min:5,max:200,onError:"开户行非法,请确认"});
+	$("#cardNumber").formValidator({onShow:"请输入银行账号",onFocus:"银行账号至少16个字符,最多32个字符",onCorrect:"输入合法"}).inputValidator({min:16,max:32,onError:"银行账号非法,请确认"});
+	$("#cardName").formValidator({onShow:"请输入户名",onFocus:"户名至少2个汉字,最多5个汉字",onCorrect:"输入合法"}).inputValidator({min:4,max:10,onError:"户名非法,请确认"});
 	//$("#passwd").formValidator({onShow:"请输入密码",onFocus:"至少4个长度,最多20个长度",onCorrect:"密码合法"}).inputValidator({min:4,max:20,empty:{leftEmpty:false,rightEmpty:false,emptyError:"密码两边不能有空符号"},onError:"密码不合法,请确认"});
 	//$("#confirmPassword").formValidator({onShow:"输再次输入密码",onFocus:"至少4个长度,最多20个长度",onCorrect:"密码一致"}).inputValidator({min:4,max:20,empty:{leftEmpty:false,rightEmpty:false,emptyError:"重复密码两边不能有空符号"},onError:"重复密码密码不合法,请确认"}).compareValidator({desID:"passwd",operateor:"=",onError:"两次密码不一致,请确认"});
 	<c:if test="${charge.id!=null}">
@@ -78,7 +82,7 @@ function initArea(){
 <%@include file="/pages/template/jsp/common/sysheader.jsp"%>
 <div>
 <div class="jf_main">
-<form method="post" action="<%=request.getContextPath() %>/charge/add.do?id=${charge.id}" id="chargeForm" onsubmit="return initArea()" enctype="multipart/form-data">
+<form method="post" action="<%=request.getContextPath() %>/charge/add.do?id=${charge.id}&accId=${bankAcc.id}" id="chargeForm" onsubmit="return initArea()" enctype="multipart/form-data">
     <div class="zc_zone">
         <div class="zc_title">
             <div class="card_title1">
@@ -140,7 +144,7 @@ function initArea(){
                                         <td> <select class="zc_city"  style="width:190px;" id="payType" name="payType">
                                         <option value="">请选择收费类型</option>
                                          <c:forEach var="cus" items="${cusvalues}" varStatus="status">
-                                              <option value="${cus.id.dataValue}" <c:if test="${cus.id.dataValue==charge.payType}">selected</c:if>>${cus.propChName}</option>
+                                              <option value="${cus.id.dataValue}" <c:if test="${cus.id.dataValue==charge.payType}">selected</c:if>>${cus.propChName}费</option>
                                          </c:forEach>
                                          </select></td>
                                     </tr>
@@ -148,19 +152,6 @@ function initArea(){
                             </table>
                         </td>
                          <td><div id="payTypeTip" style="width:250px"></div></td>
-                    </tr>
-                    <tr>
-                        <td height="40" align="right">银行账户：</td>
-                        <td align="left">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text"  name="careNumber" class="on-show" autocomplete="off" id="careNumber" value="${charge.careNumber}"><span></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                        <td><div id="careNumberTip" style="width:250px"></div></td>
                     </tr>
                     <tr>
                         <td height="40" align="right">示例图片：</td>
@@ -173,6 +164,57 @@ function initArea(){
                                 </tbody>
                             </table>
                         </td>
+                    </tr>
+                     <tr>
+                        <td height="40" align="right">所属银行：</td>
+                        <td align="left"> 
+                        <select class="zc_city"  style="width:190px;" id="bankId" name="bankId">
+                              <option value="">请选择所属银行</option>
+                              <c:forEach var="bank" items="${banks}" varStatus="status"> 
+                                <option value="${bank.bankCode}" <c:if test="${bank.bankCode==bankAcc.bankId}">selected</c:if>>${bank.bankName}</option>
+                              </c:forEach>
+                        </select><input type="hidden" name="cardType" value="0"/></td>
+                       <td><div id="bankIdTip" style="width:250px"></div></td>
+                        
+                    </tr>
+                     <tr>
+                        <td height="40" align="right">开户行：</td>
+                        <td align="left">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" name="bankDeposit" class="on-show" autocomplete="off" id="bankDeposit" value="${bankAcc.bankDeposit}"> <span></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td><div id="bankDepositTip" style="width:250px"></div></td>
+                    </tr>
+                     <tr>
+                        <td height="40" align="right">银行账号：</td>
+                        <td align="left">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" name="cardNumber" class="on-show" autocomplete="off" maxlength="50" id="cardNumber" value="${bankAcc.cardNumber}"> <span></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td><div id="cardNumberTip" style="width:250px"></div></td>
+                    </tr>
+                     <tr>
+                        <td height="40" align="right">银行户名：</td>
+                        <td align="left">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" name="cardName" class="on-show" autocomplete="off" maxlength="50" id="cardName" value="${bankAcc.cardName}"> <span></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td><div id="cardNameTip" style="width:250px"></div></td>
                     </tr>
                     <tr>
                         <td style="padding-left: 87px;" colspan="3"><input id="btnadd" name="btnadd"  type="submit" class="dk_pay1" value="确定"/></td>
