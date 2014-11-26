@@ -126,9 +126,11 @@ public class SysManController {
 		}
 		else{
 			SystemManager sysManager = sysManService.getSySManager(sysMan.getId());
-			String password = sysManager.getPasswd();
-			BeanUtils.copyProperties(sysMan, sysManager);
-			sysManager.setPasswd(password);
+			//String password = sysManager.getPasswd();
+			//BeanUtils.copyProperties(sysMan, sysManager);
+			sysManager.setManagerRealname(sysMan.getManagerRealname());
+			sysManager.setEMail(sysMan.getEMail());
+			sysManager.setMobilePhone(sysMan.getMobilePhone());
 			sysManService.updateSysman(sysManager);
 		}
 	    
