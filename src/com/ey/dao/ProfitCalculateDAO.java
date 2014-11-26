@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ey.bo.AgentBo;
+import com.ey.bo.PaymentAgentBo;
 import com.ey.dao.base.BaseDAO;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
@@ -16,7 +17,7 @@ public interface ProfitCalculateDAO extends BaseDAO {
 	
 	public void saveTempPaymentBill(TempPaymentBill paymentBill) throws RuntimeException;
 	
-	public Integer updateStatus(String tableName, String columnName1, String columnName2, Integer status1, Integer status2) throws RuntimeException;
+	public Integer updateStatus(String tableName, String columnName1, String columnName2, Integer status1, Integer status2, String strWhere) throws RuntimeException;
 	
 	public List<PaymentBill> findPaymentBills(Integer paymentStatus,Integer divideStatus) throws RuntimeException;
 	
@@ -32,10 +33,14 @@ public interface ProfitCalculateDAO extends BaseDAO {
 	
 	public Double findTransferRecordsPoundage(Long serviceBillId) throws RuntimeException;
 	
-	public List<AgentInfo> findAgentInfo(Long serviceBillId) throws RuntimeException;
+	public List<PaymentAgentBo> findAgentInfo(Long serviceBillId) throws RuntimeException;
 	
 	public Double findServiceBillMoney(Long serviceBillId) throws RuntimeException;
 	
 	public AgentBo findAgentRule(Long agentId) throws RuntimeException;
+	
+	public Double getSystemProfitMoney(Long serviceBillId) throws RuntimeException;
+	
+	public Double getSystemSettleMoney(Long serviceBillId) throws RuntimeException;
 	
 }

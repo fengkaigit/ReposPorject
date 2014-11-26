@@ -7,8 +7,8 @@ public class AgentBo extends AgentInfo {
 	private String areaPathName;
     private String areaPath;
     
-    private String rule;//返点规则
-    private Long agentAccount;//银行账户
+    private String rule;//杩旂偣瑙勫垯
+    private Long agentAccount;//閾惰璐︽埛
 
 	public AgentBo() {
 

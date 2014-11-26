@@ -82,7 +82,7 @@ public class Feedback implements java.io.Serializable {
 		this.userIdea = userIdea;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "view_time", nullable = false, length = 10)
 	public Date getViewTime() {
 		return this.viewTime;
@@ -92,7 +92,7 @@ public class Feedback implements java.io.Serializable {
 		this.viewTime = viewTime;
 	}
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "system_time", nullable = false, length = 10)
 	public Date getSystemTime() {
 		return this.systemTime;

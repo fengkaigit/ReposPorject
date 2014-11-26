@@ -142,7 +142,7 @@ public class TempPaymentBill implements java.io.Serializable {
 		this.remainBalance = remainBalance;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_time", nullable = false, length = 10)
 	public Date getCreateTime() {
 		return this.createTime;

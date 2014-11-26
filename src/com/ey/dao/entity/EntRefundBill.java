@@ -65,7 +65,7 @@ public class EntRefundBill implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_time", nullable = false, length = 10)
 	public Date getCreateTime() {
 		return this.createTime;
@@ -75,7 +75,7 @@ public class EntRefundBill implements java.io.Serializable {
 		this.createTime = createTime;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "confirm_time", length = 10)
 	public Date getConfirmTime() {
 		return this.confirmTime;

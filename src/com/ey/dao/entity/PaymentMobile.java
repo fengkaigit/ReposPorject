@@ -100,7 +100,7 @@ public class PaymentMobile implements java.io.Serializable {
 		this.poundage = poundage;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "payment_time", nullable = false, length = 10)
 	public Date getPaymentTime() {
 		return this.paymentTime;

@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Repository;
 
 import com.ey.bo.AgentBo;
+import com.ey.bo.PaymentAgentBo;
 import com.ey.dao.ProfitCalculateDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.AgentInfo;
@@ -27,9 +28,9 @@ public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalcula
 	}
 
 	@Override
-	public Integer updateStatus(String tableName, String columnName1, String columnName2, Integer status1, Integer status2)
+	public Integer updateStatus(String tableName, String columnName1, String columnName2, Integer status1, Integer status2, String strWhere)
 			throws RuntimeException {
-		String hql = "update "+ tableName +" set "+ columnName2 +" =? where "+ columnName1 + "=?"; 
+		String hql = "update "+ tableName +" set "+ columnName2 +" =? where "+ columnName1 + "=? " + strWhere; 
 		Integer status = this.executeHql(hql, new Object[]{status2,status1});
 		return status;
 	}
@@ -104,16 +105,45 @@ public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalcula
 	}
 
 	@Override
-	public List<AgentInfo> findAgentInfo(Long serviceBillId) 
+	public List<PaymentAgentBo> findAgentInfo(Long serviceBillId) 
 			throws RuntimeException {
-		String hql = "from AgentInfo where (select agentId from PaymentBill where id in (select id.paymentBillId from ServicePaymentRelation where id.serviceBillId=?))";
+		String hql = "select new com.ey.bo.PaymentAgentBo(a.id,a.registAccount,a.passwd,a.EMail,a.mobile,a.rebackDot,a.registRealName,a.areaId,sum(b.poundage)) " +
+				"from AgentInfo a, PaymentBill b where a.id=b.agentId and b.id in (select id.paymentBillId from ServicePaymentRelation where id.serviceBillId=?)" +
+				"group by a.id,a.registAccount,a.passwd,a.EMail,a.mobile,a.rebackDot,a.registRealName,a.areaId";
 		return this.find(hql, new Object[]{serviceBillId});
 	}
 
 	@Override
 	public AgentBo findAgentRule(Long agentId) throws RuntimeException {
-		String hql = "select new com.ey.bo.AgentBo(a.id,a.registAccount,a.passwd,a.EMail,a.mobile,a.rebackDot,a.registRealName,a.areaId,b.province,b.namePath,b.encodePath,c.rule,d.bankAccountId) from AgentInfo a,Area b where a.areaId = b.id and a.registAccount = ? and a.passwd = ? and a.delFlag = 0";
-		return null;
+		String hql = "select new com.ey.bo.AgentBo(a.id,a.registAccount,a.passwd,a.EMail,a.mobile,a.rebackDot,a.registRealName,a.areaId,b.province,b.namePath,b.encodePath,c.rule,d.id.bankAccountId) from AgentInfo a,Area b,AgentRule c, AgentAccountRelation d" +
+				" where a.areaId = b.id and a.id=c.agentId and a.id=d.id.id and a.id = ? and a.delFlag = 0 and d.flag=0";
+		List<AgentBo> lst = this.find(hql,new Object[]{agentId});
+		if (lst!=null && lst.size()>0)
+			return lst.get(0);
+		else
+			return null;
+	}
+
+	@Override
+	public Double getSystemProfitMoney(Long serviceBillId)
+			throws RuntimeException {
+		String hql = "select sum(profitMoney) from ProfitBill where status=2 and id in (select a.id.profitBillId from ProfitServiceRelation a where a.id.serviceBillId=?)";
+		List<Double> lst = this.find(hql,new Object[]{serviceBillId});
+		if (lst!=null && lst.size()>0)
+			return lst.get(0);
+		else
+			return null;
+	}
+
+	@Override
+	public Double getSystemSettleMoney(Long serviceBillId)
+			throws RuntimeException {
+		String hql = "select sum(profitMoney) from SettleBill where status=2 and id in (select a.id.settleBillId from SettleServiceRelation a where a.id.serviceBillId=?)";
+		List<Double> lst = this.find(hql,new Object[]{serviceBillId});
+		if (lst!=null && lst.size()>0)
+			return lst.get(0);
+		else
+			return null;
 	}
 	
 	

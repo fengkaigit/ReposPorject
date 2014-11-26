@@ -109,7 +109,7 @@ public class FeeRule implements java.io.Serializable {
 		this.paymentType = paymentType;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "begin_time", nullable = false, length = 10)
 	public Date getBeginTime() {
 		return this.beginTime;
@@ -119,7 +119,7 @@ public class FeeRule implements java.io.Serializable {
 		this.beginTime = beginTime;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "end_time", length = 10)
 	public Date getEndTime() {
 		return this.endTime;

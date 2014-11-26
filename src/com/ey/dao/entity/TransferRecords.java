@@ -71,7 +71,7 @@ public class TransferRecords implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "transfer_time", nullable = false, length = 10)
 	public Date getTransferTime() {
 		return this.transferTime;

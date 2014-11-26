@@ -59,7 +59,7 @@ public class ServiceChargeBill implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_date", nullable = false, length = 10)
 	public Date getCreateDate() {
 		return this.createDate;
@@ -69,7 +69,7 @@ public class ServiceChargeBill implements java.io.Serializable {
 		this.createDate = createDate;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "confirm_date", length = 10)
 	public Date getConfirmDate() {
 		return this.confirmDate;

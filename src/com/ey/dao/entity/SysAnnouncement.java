@@ -68,7 +68,7 @@ public class SysAnnouncement implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_time", nullable = false, length = 10)
 	public Date getCreateTime() {
 		return this.createTime;

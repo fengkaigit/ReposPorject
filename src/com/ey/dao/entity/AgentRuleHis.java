@@ -89,7 +89,7 @@ public class AgentRuleHis implements java.io.Serializable {
 		this.IExplain = IExplain;
 	}
 
-	@Column(name = "rule", length = 120)
+	@Column(name = "rule", length = 250)
 	public String getRule() {
 		return this.rule;
 	}
@@ -98,7 +98,7 @@ public class AgentRuleHis implements java.io.Serializable {
 		this.rule = rule;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "begin_time", nullable = false, length = 10)
 	public Date getBeginTime() {
 		return this.beginTime;
@@ -108,7 +108,7 @@ public class AgentRuleHis implements java.io.Serializable {
 		this.beginTime = beginTime;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "end_time", nullable = false, length = 10)
 	public Date getEndTime() {
 		return this.endTime;

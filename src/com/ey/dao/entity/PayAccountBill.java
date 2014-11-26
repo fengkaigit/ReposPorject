@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * PayAccountBill entity. @author MyEclipse Persistence Tools
@@ -68,6 +70,7 @@ public class PayAccountBill implements java.io.Serializable {
 		this.userId = userId;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_time", nullable = false, length = 8)
 	public Date getCreateTime() {
 		return this.createTime;

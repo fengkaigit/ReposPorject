@@ -1,5 +1,8 @@
 package com.ey.quartz.job;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,6 +11,7 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 
 import com.ey.bo.AgentBo;
+import com.ey.bo.PaymentAgentBo;
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
@@ -28,54 +32,59 @@ public class AutoDivideJob implements Job{
 	}
 	
 	public void profitCalculate(ProfitCalculateService calculateService) throws Exception {
-		//´¦ÀíÀÍÎñ·Ñ»®¿îµ¥
+		//å¤„ç†åŠ³åŠ¡è´¹åˆ’æ¬¾å•
 		Long serviceBillId = calculateServiceBill(calculateService);
 		if (serviceBillId!=null){
-			//´¦ÀíÏµÍ³ÊÕÒæÕË»§»®¿îµ¥
+			//å¤„ç†ç³»ç»Ÿæ‰‹ç»­è´¹åˆ’æ¬¾å•(åŒ…æ‹¬ï¼šç”¨æˆ·ç¼´è´¹æ—¶æ‰‹ç»­è´¹æ‰‹ç»­è´¹)
+			Long poundageBillId = calculatePoundagetBill(calculateService,serviceBillId);
+			//å¤„ç†ç³»ç»Ÿæ”¶ç›Šè´¦æˆ·åˆ’æ¬¾å•(è¿”å›æ”¶ç›Šåˆ’æ¬¾å•å·List)
 			Long profitBillId = calculateProfitBill(calculateService,serviceBillId);
-			//°´´úÀíÉÌ´¦ÀíÏµÍ³½áËãÕË»§»®¿îµ¥(·µ»Ø½áËãµ¥Î»»®¿îµ¥ºÅList)
-			List<Long> settleIdList = calculateSettleBill(calculateService,serviceBillId);
+			//æŒ‰ä»£ç†å•†å¤„ç†ç³»ç»Ÿç»“ç®—è´¦æˆ·åˆ’æ¬¾å•(è¿”å›ç»“ç®—åˆ’æ¬¾å•å·List)
+			List<PaymentAgentBo> settleIdList = calculateSettleBill(calculateService,serviceBillId);
+			//å¤„ç†ç³»ç»Ÿæœ€ç»ˆç›ˆåˆ©åˆ’æ¬¾å•(æ”¶ç›Šï¼ä»£ç†å•†ç»“ç®—ï¼æ‰‹ç»­è´¹)
+			Long incomeBillId = calculateIncomeBill(calculateService,serviceBillId);
 		}
+		
 	}
 	
-	//´¦ÀíÀÍÎñ·Ñ»®¿îµ¥
-	private Long calculateServiceBill(ProfitCalculateService calculateService) throws Exception{
+	//å¤„ç†åŠ³åŠ¡è´¹åˆ’æ¬¾å•
+	private Long calculateServiceBill(ProfitCalculateService calculateService) throws RuntimeException, IllegalAccessException, InvocationTargetException{
 		List<PaymentBill> billList=null;
-		//Éú³ÉÀÍÎñ·Ñ»®¿îµ¥µ¥ºÅ
+		//ç”ŸæˆåŠ³åŠ¡è´¹åˆ’æ¬¾å•å•å·
 		Long serviceBillId = DbidGenerator.getDbidGenerator().getNextId();
-		//ĞŞ¸Ä½É·Ñµ¥Ã÷Ï¸×´Ì¬£¨Ëø¶¨½É·Ñ×´Ì¬Îª°ìÀí³É¹¦£¬ÇÒÎ´Éú³É¹ıÀÍÎñ·Ñ»®¿îµ¥µÄ½É·Ñ¼ÇÂ¼£©
+		//ä¿®æ”¹ç¼´è´¹å•æ˜ç»†çŠ¶æ€ï¼ˆé”å®šç¼´è´¹çŠ¶æ€ä¸ºåŠç†æˆåŠŸï¼Œä¸”æœªç”Ÿæˆè¿‡åŠ³åŠ¡è´¹åˆ’æ¬¾å•çš„ç¼´è´¹è®°å½•ï¼‰
 		Integer intStatus= calculateService.changePaymentBillStatus();
 		if (intStatus>0){
-			//²éÑ¯·ûºÏ»®¿îµÄËùÓĞ½É·Ñµ¥Ã÷Ï¸£¨½É·Ñ×´Ì¬Îª°ìÀí³É¹¦£¬ÇÒÎ´Éú³É¹ıÀÍÎñ·Ñ»®¿îµ¥µÄ½É·Ñ¼ÇÂ¼£©
+			//æŸ¥è¯¢ç¬¦åˆåˆ’æ¬¾çš„æ‰€æœ‰ç¼´è´¹å•æ˜ç»†ï¼ˆç¼´è´¹çŠ¶æ€ä¸ºåŠç†æˆåŠŸï¼Œä¸”æœªç”Ÿæˆè¿‡åŠ³åŠ¡è´¹åˆ’æ¬¾å•çš„ç¼´è´¹è®°å½•ï¼‰
 			billList=calculateService.findPaymentBillList(10,1);
 		}
 		if(null != billList && billList.size() > 0){
 			UUID uuid = UUID.randomUUID();
 			for(PaymentBill paymentBill:billList){
-				//½«½É·ÑÃ÷Ï¸²åÈëÁÙÊ±½É·Ñµ¥±í
+				//å°†ç¼´è´¹æ˜ç»†æ’å…¥ä¸´æ—¶ç¼´è´¹å•è¡¨
 				processTask(calculateService,paymentBill,uuid,serviceBillId);
 			}
-			//Éú³ÉÀÍÎñ·Ñ»®¿îµ¥
+			//ç”ŸæˆåŠ³åŠ¡è´¹åˆ’æ¬¾å•
 			Double profitMoney = calculateService.createServiceChargeBill(serviceBillId);
-			//±£´æÀÍÎñ·Ñ»®¿îµ¥Óë½É·Ñµ¥¹ØÏµ±í
+			//ä¿å­˜åŠ³åŠ¡è´¹åˆ’æ¬¾å•ä¸ç¼´è´¹å•å…³ç³»è¡¨
 			calculateService.saveServicePaymentRelation(serviceBillId,billList);
-			//Éú³ÉÀÍÎñ·ÑÕË»§×ªÕËµ¥µ¥ºÅ
+			//ç”ŸæˆåŠ³åŠ¡è´¹è´¦æˆ·è½¬è´¦å•å•å·
 			Long transferBillId = DbidGenerator.getDbidGenerator().getNextId();
 			
-			//»ñÈ¡ÏµÍ³´óÕË»§ID »ñÈ¡×ª³öÕË»§Id
+			//è·å–ç³»ç»Ÿå¤§è´¦æˆ·ID è·å–è½¬å‡ºè´¦æˆ·Id
 			Long systemAccountId = calculateService.getSystemAccountId(0);
 			if (systemAccountId==null)
-				throw new Exception("Î´ÉèÖÃÏµÍ³´óÕË»§"); 
-			//»ñÈ¡ÏµÍ³ÀÍÎñ·ÑÕË»§ID¡¡»ñÈ¡×ªÈëÕË»§Id
+				throw new RuntimeException("æœªè®¾ç½®ç³»ç»Ÿå¤§è´¦æˆ·"); 
+			//è·å–ç³»ç»ŸåŠ³åŠ¡è´¹è´¦æˆ·IDã€€è·å–è½¬å…¥è´¦æˆ·Id
 			Long serviceAccountId = calculateService.getSystemAccountId(4);
 			if (serviceAccountId==null)
-				throw new Exception("Î´ÉèÖÃÏµÍ³ÀÍÎñ·ÑÕË»§");
+				throw new RuntimeException("æœªè®¾ç½®ç³»ç»ŸåŠ³åŠ¡è´¹è´¦æˆ·");
 			
-			//Éú³ÉÀÍÎñ·ÑÕË»§×ªÕËµ¥
-			calculateService.createTransferBill(transferBillId,profitMoney,systemAccountId,serviceAccountId);
-			//±£´æÀÍÎñ·Ñ»®¿îµ¥Óë×ªÕËµ¥¹ØÏµ±í
+			//ç”ŸæˆåŠ³åŠ¡è´¹è´¦æˆ·è½¬è´¦å•
+			calculateService.createServiceTransferBill(transferBillId,profitMoney,systemAccountId,serviceAccountId);
+			//ä¿å­˜åŠ³åŠ¡è´¹åˆ’æ¬¾å•ä¸è½¬è´¦å•å…³ç³»è¡¨
 			calculateService.saveServiceTransferRecords(serviceBillId,transferBillId);
-			//Çå¿ÕÁÙÊ±½É·Ñµ¥±í
+			//æ¸…ç©ºä¸´æ—¶ç¼´è´¹å•è¡¨
 			calculateService.clearTempPaymentBill();
 			return serviceBillId;
 		}
@@ -83,58 +92,145 @@ public class AutoDivideJob implements Job{
 	}
 	
 	protected void processTask(ProfitCalculateService calculateService,
-			PaymentBill paymentBill,UUID uuid, Long serviceBillId) throws Exception{
+			PaymentBill paymentBill,UUID uuid, Long serviceBillId) throws RuntimeException, IllegalAccessException, InvocationTargetException{
 		calculateService.updatePaymentBillUUID(uuid);
 		calculateService.saveTempPaymentBillTask(paymentBill,uuid);
 	}
 	
-	//´¦ÀíÏµÍ³ÊÕÒæÕË»§»®¿îµ¥
-	private Long calculateProfitBill(ProfitCalculateService calculateService, 
-			Long serviceBillId) throws Exception{
-		//»ñÈ¡ÏµÍ³´óÕË»§ID »ñÈ¡×ª³öÕË»§Id
+	private Long calculatePoundagetBill(ProfitCalculateService calculateService, 
+			Long serviceBillId) throws RuntimeException{
+		//è·å–ç³»ç»Ÿå¤§è´¦æˆ·ID è·å–è½¬å‡ºè´¦æˆ·Id
 		Long systemAccountId = calculateService.getSystemAccountId(0);
 		if (systemAccountId==null)
-			throw new Exception("Î´ÉèÖÃÏµÍ³´óÕË»§"); 
-		//»ñÈ¡ÏµÍ³ÀÍÎñ·ÑÕË»§ID¡¡»ñÈ¡×ªÈëÕË»§Id
+			throw new RuntimeException("æœªè®¾ç½®ç³»ç»Ÿå¤§è´¦æˆ·"); 
+		//è·å–ç³»ç»Ÿæ‰‹ç»­è´¹è´¦æˆ·IDã€€è·å–è½¬å…¥è´¦æˆ·Id
+		Long profitAccountId = calculateService.getSystemAccountId(3);
+		if (profitAccountId==null)
+			throw new RuntimeException("æœªè®¾ç½®ç³»ç»Ÿæ‰‹ç»­è´¦æˆ·");
+		//ç”Ÿæˆæ‰‹ç»­è´¹åˆ’æ¬¾å•å•å·
+		Long poundageBillId = DbidGenerator.getDbidGenerator().getNextId();
+		//æŸ¥è¯¢ç¬¦åˆåˆ’æ¬¾çš„æ‰€æœ‰ç¼´è´¹å•æ˜ç»†å¯¹åº”è½¬è´¦è®°å½•çš„æ‰‹ç»­è´¹åˆè®¡é‡‘é¢
+		Double poundage=calculateService.findTransferRecordsPoundage(serviceBillId);
+		//ç”Ÿæˆç³»ç»Ÿæ‰‹ç»­è´¹åˆ’æ¬¾å•
+		calculateService.savePoundageBill(poundageBillId,poundage);
+		//ä¿å­˜æ‰‹ç»­è´¹è´¦æˆ·åˆ’æ¬¾å•ä¸åŠ³åŠ¡è´¹åˆ’æ¬¾å•å…³ç³»è¡¨
+		calculateService.saveServicePoundageRelation(serviceBillId,poundageBillId);
+		//ç”Ÿæˆæ‰‹ç»­è´¹è´¦æˆ·è½¬è´¦å•å•å·
+		Long transferBillId = DbidGenerator.getDbidGenerator().getNextId();
+		//ç”Ÿæˆæ‰‹ç»­è´¹è´¦æˆ·è½¬è´¦å•
+		calculateService.createTransferBill(transferBillId,poundage,systemAccountId,profitAccountId,10);
+		//ä¿å­˜æ‰‹ç»­è´¹è´¦æˆ·è½¬è´¦å…³ç³»è¡¨
+		calculateService.savePoundageTransferRecords(poundageBillId,transferBillId);
+		return poundageBillId;
+	}
+	
+	//å¤„ç†ç³»ç»Ÿæ”¶ç›Šè´¦æˆ·åˆ’æ¬¾å•
+	private Long calculateProfitBill(ProfitCalculateService calculateService, 
+			Long serviceBillId) throws RuntimeException{
+		//è·å–ç³»ç»Ÿå¤§è´¦æˆ·ID è·å–è½¬å‡ºè´¦æˆ·Id
+		Long systemAccountId = calculateService.getSystemAccountId(0);
+		if (systemAccountId==null)
+			throw new RuntimeException("æœªè®¾ç½®ç³»ç»Ÿå¤§è´¦æˆ·"); 
+		//è·å–ç³»ç»Ÿæ”¶ç›Šè´¦æˆ·IDã€€è·å–è½¬å…¥è´¦æˆ·Id
 		Long profitAccountId = calculateService.getSystemAccountId(1);
 		if (profitAccountId==null)
-			throw new Exception("Î´ÉèÖÃÏµÍ³ÊÕÒæÕË»§");
+			throw new RuntimeException("æœªè®¾ç½®ç³»ç»Ÿæ”¶ç›Šè´¦æˆ·");
 		
-		//Éú³ÉÊÕÒæ»®¿îµ¥µ¥ºÅ
+		//ç”Ÿæˆæ”¶ç›Šåˆ’æ¬¾å•å•å·
 		Long profitBillId = DbidGenerator.getDbidGenerator().getNextId();
-		//²éÑ¯·ûºÏ»®¿îµÄËùÓĞ½É·Ñµ¥Ã÷Ï¸¶ÔÓ¦×ªÕË¼ÇÂ¼µÄÊÖĞø·ÑºÏ¼Æ½ğ¶î
+		//æŸ¥è¯¢ç¬¦åˆåˆ’æ¬¾çš„æ‰€æœ‰ç¼´è´¹å•æ˜ç»†å¯¹åº”è½¬è´¦è®°å½•çš„æ‰‹ç»­è´¹åˆè®¡é‡‘é¢
 		Double poundage=calculateService.findTransferRecordsPoundage(serviceBillId);
-		//²éÑ¯ÀÍÎñ·Ñ»®¿îµ¥µÄ½ğ¶î
+		//æŸ¥è¯¢åŠ³åŠ¡è´¹åˆ’æ¬¾å•çš„é‡‘é¢
 		Double serviceMoney=calculateService.findServiceBillMoney(serviceBillId);
-		//ÊÕÒæÕË»§»®¿îµ¥½ğ¶î:ÀÍÎñ·Ñ»®¿îµ¥½ğ¶î-¶ÔÓ¦½É·Ñ¼ÇÂ¼µÄÊÖĞø·Ñ
+		//æ”¶ç›Šè´¦æˆ·åˆ’æ¬¾å•é‡‘é¢:åŠ³åŠ¡è´¹åˆ’æ¬¾å•é‡‘é¢-å¯¹åº”ç¼´è´¹è®°å½•çš„æ‰‹ç»­è´¹
 		Double profitMoney = serviceMoney-poundage;
-		//Éú³ÉÊÕÒæÕË»§»®¿îµ¥
+		//ç”Ÿæˆæ”¶ç›Šè´¦æˆ·åˆ’æ¬¾å•
 		calculateService.saveProfitBill(profitBillId,profitMoney);
-		//±£´æÊÕÒæÕË»§»®¿îµ¥ÓëÀÍÎñ·Ñ»®¿îµ¥¹ØÏµ±í
+		//ä¿å­˜æ”¶ç›Šè´¦æˆ·åˆ’æ¬¾å•ä¸åŠ³åŠ¡è´¹åˆ’æ¬¾å•å…³ç³»è¡¨
 		calculateService.saveServiceProfitRelation(serviceBillId,profitBillId);
-		//Éú³ÉÊÕÒæÕË»§×ªÕËµ¥µ¥ºÅ
+		//ç”Ÿæˆæ”¶ç›Šè´¦æˆ·è½¬è´¦å•å•å·
 		Long transferBillId = DbidGenerator.getDbidGenerator().getNextId();
-		//Éú³ÉÊÕÒæÕË»§×ªÕËµ¥
-		calculateService.createTransferBill(transferBillId,profitMoney,systemAccountId,profitAccountId);
-		//±£´æÊÕÒæÕË»§×ªÕË¹ØÏµ±í
+		//ç”Ÿæˆæ”¶ç›Šè´¦æˆ·è½¬è´¦å•
+		calculateService.createTransferBill(transferBillId,profitMoney,systemAccountId,profitAccountId,6);
+		//ä¿å­˜æ”¶ç›Šè´¦æˆ·è½¬è´¦å…³ç³»è¡¨
 		calculateService.saveProfitTransferRecords(profitBillId,transferBillId);
 		return profitBillId;
 	}
 	
-	//°´´úÀíÉÌ´¦ÀíÏµÍ³½áËãÕË»§»®¿îµ¥(·µ»Ø½áËãµ¥Î»»®¿îµ¥ºÅList)
-	private List<Long> calculateSettleBill(ProfitCalculateService calculateService, 
-			Long serviceBillId) throws Exception{
-		//Í¨¹ı½É·Ñµ¥²éÕÒÇøÓòĞÅÏ¢¼°¶ÔÓ¦ÇøÓò´úÀíÉÌĞÅÏ¢
-		List<AgentInfo> agentList = calculateService.findAgentInfo(serviceBillId);
-		//Í¨¹ı´úÀíÉÌĞÅÏ¢²éÕÒ´úÀíÉÌ·µ¹æÔò£¬¼ÆËã´úÀíÉÌ·µµã½ğ¶î£¬Éú³É½áËãµ¥
-		for (AgentInfo agentInfo:agentList){
-			//²éÑ¯´úÀíÉÌ·µµã¹æÔò
+	//æŒ‰ä»£ç†å•†å¤„ç†ç³»ç»Ÿç»“ç®—è´¦æˆ·åˆ’æ¬¾å•(è¿”å›ç»“ç®—å•ä½åˆ’æ¬¾å•å·List)
+	private List<PaymentAgentBo> calculateSettleBill(ProfitCalculateService calculateService, 
+			Long serviceBillId) throws RuntimeException, ClassNotFoundException, 
+			NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException{
+		//è·å–ç³»ç»Ÿå¤§è´¦æˆ·ID è·å–è½¬å‡ºè´¦æˆ·Id
+		Long systemAccountId = calculateService.getSystemAccountId(0);
+		if (systemAccountId==null)
+			throw new RuntimeException("æœªè®¾ç½®ç³»ç»Ÿå¤§è´¦æˆ·"); 
+		//è·å–ç³»ç»Ÿç»“ç®—è´¦æˆ·IDã€€è·å–è½¬å…¥è´¦æˆ·Id
+		Long profitAccountId = calculateService.getSystemAccountId(5);
+		if (profitAccountId==null)
+			throw new RuntimeException("æœªè®¾ç½®ç³»ç»Ÿç»“ç®—è´¦æˆ·");
+		//é€šè¿‡ç¼´è´¹å•æŸ¥æ‰¾åŒºåŸŸä¿¡æ¯åŠå¯¹åº”åŒºåŸŸä»£ç†å•†ä¿¡æ¯
+		List<PaymentAgentBo> agentList = calculateService.findAgentInfo(serviceBillId);
+		//é€šè¿‡ä»£ç†å•†ä¿¡æ¯æŸ¥æ‰¾ä»£ç†å•†è¿”è§„åˆ™ï¼Œè®¡ç®—ä»£ç†å•†è¿”ç‚¹é‡‘é¢ï¼Œç”Ÿæˆç»“ç®—å•
+		for (PaymentAgentBo agentInfo:agentList){
+			//æŸ¥è¯¢ä»£ç†å•†è¿”ç‚¹è§„åˆ™
 			AgentBo agent = calculateService.findAgentRule(agentInfo.getId());
-			//¼ÆËã´úÀíÉÌ·µµã½ğ¶î
-			//Double rebackMoney = 
+			String className="";
+			String funName="";
+			//è®¡ç®—ä»£ç†å•†è¿”ç‚¹é‡‘é¢
+			String[] ruleArray = agent.getRule().split(";");
+			for (String rule:ruleArray){
+				if (rule.contains("1")){
+					String[] strRule = rule.split(":");
+					className=strRule[1];
+					funName=strRule[2].substring(0,strRule[2].indexOf("("));
+				}
+			}
+			//å®šä¹‰åå°„ç±»
+			Class<?> calculate = Class.forName(className);
+			Method func=calculate.getDeclaredMethod(funName, Double.class, Double.class);
+			Double settleMoney = (Double)func.invoke(calculate.newInstance(), agentInfo.getServiceFee(), agent.getRebackDot());
+			//ç”Ÿæˆä»£ç†å•†ç»“ç®—åˆ’æ¬¾å•ï¼ˆå•å·ç”Ÿæˆè§„åˆ™ï¼šä»£ç†å•†ID+ç”Ÿæˆæ—¥æœŸ,è¿”å›ç»“ç®—å•å·ï¼‰
+			Long settleBillId=calculateService.saveSettleBill(agentInfo.getId(),settleMoney);
+			agentInfo.setBillId(settleBillId);
+			agentInfo.setServiceFee(settleMoney);
+			agentInfo.setAccountId(agent.getAgentAccount());
 		}
-		return null;
+		//ä¿å­˜ä»£ç†å•†ç»“ç®—åˆ’æ¬¾å•ä¸åŠ³åŠ¡è´¹åˆ’æ¬¾å•å…³ç³»è¡¨
+		calculateService.saveServiceSettleRelation(serviceBillId,agentList);
+		//ç”Ÿæˆä»£ç†å•†ç»“ç®—è½¬è´¦å•å¹¶ä¿å­˜ä»£ç†å•†ç»“ç®—åˆ’æ¬¾å•ä¸è½¬è´¦å•å…³ç³»
+		calculateService.saveTransferSettle(agentList);
+		return agentList;
 	}
 	
-	
+	//å¤„ç†ç³»ç»Ÿæœ€ç»ˆç›ˆåˆ©
+	private Long calculateIncomeBill(ProfitCalculateService calculateService,
+			Long serviceBillId) throws RuntimeException{
+		//è·å–ç³»ç»Ÿå¤§è´¦æˆ·ID è·å–è½¬å‡ºè´¦æˆ·Id
+		Long systemAccountId = calculateService.getSystemAccountId(0);
+		if (systemAccountId==null)
+			throw new RuntimeException("æœªè®¾ç½®ç³»ç»Ÿå¤§è´¦æˆ·"); 
+		//è·å–ç³»ç»Ÿæœ€ç»ˆç›ˆåˆ©è´¦æˆ·IDã€€è·å–è½¬å…¥è´¦æˆ·Id
+		Long profitAccountId = calculateService.getSystemAccountId(2);
+		if (profitAccountId==null)
+			throw new RuntimeException("æœªè®¾ç½®ç³»ç»Ÿæœ€ç»ˆç›ˆåˆ©è´¦æˆ·");
+		//ç”Ÿæˆç³»ç»Ÿæœ€ç»ˆç›ˆåˆ©è´¦æˆ·åˆ’æ¬¾å•å•å·
+		Long incomeBillId = DbidGenerator.getDbidGenerator().getNextId();
+		//è·å–ç³»ç»Ÿæ”¶ç›Šé‡‘é¢
+		Double profitMoney = calculateService.getSystemProfitMoney(serviceBillId);
+		//è·å–ç³»ç»Ÿç»“ç®—é‡‘é¢
+		Double poundageMoney = calculateService.getSystemSettleMoney(serviceBillId);
+		//è·å–ç³»ç»Ÿæœ€ç»ˆç›ˆåˆ©é‡‘é¢(=ç³»ç»Ÿæ”¶ç›Šé‡‘é¢ï¼ç³»ç»Ÿç»“ç®—é‡‘é¢)
+		Double incomeMoney = profitMoney - poundageMoney;
+		//ç”Ÿæˆç³»ç»Ÿæœ€ç»ˆç›ˆåˆ©è´¦æˆ·åˆ’æ¬¾å•
+		calculateService.saveIncomeBill(incomeBillId, incomeMoney);
+		//ä¿å­˜æœ€ç»ˆç›ˆåˆ©è´¦æˆ·åˆ’æ¬¾å•ä¸åŠ³åŠ¡è´¹åˆ’æ¬¾å•å…³ç³»
+		calculateService.saveServiceIncomeRelation(serviceBillId, incomeBillId);
+		Long transferBillId = DbidGenerator.getDbidGenerator().getNextId();
+		//ç”Ÿæˆæœ€ç»ˆç›ˆåˆ©è´¦æˆ·è½¬è´¦è®°å½•
+		calculateService.createTransferBill(transferBillId,incomeMoney,systemAccountId,profitAccountId,8);
+		//ä¿å­˜è½¬è´¦å…³ç³»
+		calculateService.saveIncomeTransferRecords(incomeBillId,transferBillId);
+		return incomeBillId;
+	}
 }
