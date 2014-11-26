@@ -63,7 +63,7 @@ public class Area implements java.io.Serializable {
 		this.city = city;
 	}
 
-	@Column(name = "province", nullable = false, length = 24)
+	@Column(name = "province", nullable = false, length = 200)
 	public String getProvince() {
 		return this.province;
 	}
