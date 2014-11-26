@@ -46,7 +46,14 @@ $(document).ready(function() {
 					<li><a href="<%=request.getContextPath() %>/agent/list.do">代理商维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/charge/list.do">收费单位维护</a></li>
 			  </ul></li>
-			
+			<li class="current"><span><a href="<%=request.getContextPath() %>/bill/servicelist.do">单据查询</a></span>
+				<ul>
+					<li class="current"><a href="<%=request.getContextPath() %>/bill/servicelist.do">劳务费划款单查询</a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/bill/poundagelist.do">手续费划款单查询</a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/bill/profitlist.do">收益划款单查询</a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/bill/settlelist.do">结算划款单查询</a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/bill/incomelist.do">最终盈利划款单查询</a></li>
+			  </ul></li>
 			  <li><span><a href="<%=request.getContextPath() %>/ej/security.do">安全保障</a></span></li>
 		   <li><span><a href="<%=request.getContextPath() %>/ej/ieda.do">意见反馈</a></span></li>
 		   <li><span><a href="<%=request.getContextPath() %>/ej/about.do">关于我们</a></span></li>
