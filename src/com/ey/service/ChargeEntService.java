@@ -4,14 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import com.ey.bo.ChargeEntBo;
+import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.ChargeEnterprise;
 
 public interface ChargeEntService {
     
 	
-	void saveChargeEnt(ChargeEnterprise chargeEnt) throws RuntimeException;
+	void saveChargeEnt(ChargeEnterprise chargeEnt,BankAccount bankAccount) throws RuntimeException;
 	
-	void updateChargeEnt(ChargeEnterprise chargeEnt) throws RuntimeException;
+	void updateChargeEnt(ChargeEnterprise chargeEnt,BankAccount bankAccount) throws RuntimeException;
 
     void deleteChargeEntByIds(String[] ids) throws RuntimeException;
     
@@ -21,5 +22,7 @@ public interface ChargeEntService {
                
     ChargeEnterprise getChargeEnterprise(Long id) throws RuntimeException;
     List<ChargeEntBo> getChargesByArea(String areaId) throws RuntimeException;;
-    List<ChargeEnterprise> getChargesByArea(String areaId,int payType) throws RuntimeException;;
+    List<ChargeEnterprise> getChargesByArea(String areaId,int payType) throws RuntimeException;
+	BankAccount getBankAccount(Long id) throws RuntimeException;
+
 }

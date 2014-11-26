@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ey.bo.StaticDataBO;
 import com.ey.dao.StaticDAO;
+import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.BaseCustomProp;
 import com.ey.dao.entity.BaseCustomValue;
 import com.ey.service.StaticService;
@@ -50,6 +51,18 @@ public class StaticServiceImpl implements StaticService {
 	@Override
 	public List<BaseCustomValue> listValues(String typeCode) {
 		return staticDAO.listValues(typeCode);
+	}
+
+	@Override
+	public List<BankInfo> listBanks() throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.listBanks();
+	}
+
+	@Override
+	public Object saveObject(Object obj) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.save(obj);
 	}
 
 }

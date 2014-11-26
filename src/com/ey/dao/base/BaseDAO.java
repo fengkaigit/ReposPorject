@@ -174,4 +174,11 @@ public interface BaseDAO {
 	     * @return 
 	     */  
 	    public Integer executeHql(String hql, List<Object> param);
+	    /** 
+	     * 返回id主键值
+	     *  
+	     * @param o 主键对象 
+	     * @return 
+	     */ 
+	    Object getDbId(Object o);
 }

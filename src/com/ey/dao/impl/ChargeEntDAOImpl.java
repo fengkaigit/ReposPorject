@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.ey.bo.ChargeEntBo;
 import com.ey.dao.ChargeEntDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
+import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.ChargeEnterprise;
 
 
@@ -52,6 +53,16 @@ public class ChargeEntDAOImpl extends BaseDAOImpl implements ChargeEntDAO {
 	public List<ChargeEnterprise> getChargesByArea(String areaId, int payType) {
 		String hql = "from ChargeEnterprise where areaId=? and payType=? order by id";
 		return this.find(hql, new Object[]{areaId,payType});
+	}
+
+	@Override
+	public BankAccount getBankAccount(Long id) throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "select b from EntAccountRelation a,BankAccount b where a.id.cardNumber = b.id and a.id.id = ? and a.flag = ?";
+		List<BankAccount> list = this.find(hql, new Object[]{id,false});
+		if(list!=null&&list.size()>0)
+			return list.get(0);
+		return null;
 	}
 
 }

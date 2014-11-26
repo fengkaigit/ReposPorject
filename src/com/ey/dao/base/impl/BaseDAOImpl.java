@@ -91,19 +91,16 @@ public class BaseDAOImpl implements BaseDAO{
     }
   
     public List find(String hql, Object[] param, Integer page, Integer rows) {  
-        if (page == null || page < 1) {  
-            page = 1;  
-        }  
-        if (rows == null || rows < 1) {  
-            rows = 10;  
-        }  
         Query q = this.getCurrentSession().createQuery(hql);  
         if (param != null && param.length > 0) {  
             for (int i = 0; i < param.length; i++) {  
                 q.setParameter(i, param[i]);  
             }  
-        }  
-        return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();  
+        } 
+        if(page!=null&&page>0&&rows!=null&&rows>0){
+        	q.setFirstResult((page - 1) * rows).setMaxResults(rows);
+        }
+        return q.list();  
     }  
   
     public List find(String hql, List<Object> param, Integer page, Integer rows) {  
@@ -196,14 +193,14 @@ public class BaseDAOImpl implements BaseDAO{
         }  
         return q.executeUpdate();  
     }  
-  protected void getDbId(Object o){
+  public Object getDbId(Object o){
 	  try {
 		  BeanUtils.setProperty(o, "id", DbidGenerator.getDbidGenerator().getNextId());
 	}catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	
+	return o;
   }
   private void setQueryParameters(Query query, Map parameters) {
 		if (parameters != null) {

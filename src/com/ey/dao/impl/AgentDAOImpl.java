@@ -10,6 +10,7 @@ import com.ey.bo.AgentBo;
 import com.ey.dao.AgentDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.AgentInfo;
+import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.SystemManager;
 import com.ey.util.StringUtil;
 
@@ -67,6 +68,16 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 		// TODO Auto-generated method stub
 		String hql = "update AgentInfo set passwd = ? where id = ?";
 		this.executeHql(hql, new Object[]{password,id});
+	}
+
+	@Override
+	public BankAccount getBankAccount(Long id) throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "select b from AgentAccountRelation a,BankAccount b where a.id.bankAccountId = b.id and a.id.id = ? and a.flag = ?";
+		List<BankAccount> list = this.find(hql, new Object[]{id,false});
+		if(list!=null&&list.size()>0)
+			return list.get(0);
+		return null;
 	}
 
 }

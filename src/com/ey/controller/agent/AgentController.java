@@ -23,10 +23,13 @@ import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.Area;
+import com.ey.dao.entity.BankAccount;
+import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.SystemManager;
 import com.ey.exception.BusinessException;
 import com.ey.service.AgentService;
 import com.ey.service.AreaService;
+import com.ey.service.StaticService;
 import com.ey.util.MD5;
 import com.ey.util.RequestUtils;
 import com.ey.util.StringUtil;
@@ -40,11 +43,15 @@ public class AgentController extends BaseController {
 	private static final String LIST_PAGE = "agent/list";
 	private static final String REDIRECT = "redirect:/agent/list.do";
 	private static final String ADD_PAGE = "agent/addagent";
+	private static final String INDEX_PAGE = "agent/index";
 	@Autowired
     private AgentService agentService;
 	
 	@Autowired
     private AreaService areaService;
+	
+	@Autowired
+	private StaticService staticService;
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
     public ModelAndView login(String verify,String loginCode,String password,HttpServletRequest request,HttpServletResponse response){  	  
@@ -82,7 +89,7 @@ public class AgentController extends BaseController {
   		  mav.addObject("message", RequestUtils.getMessage("login", request));
   		  mav.setViewName(LOGIN_PAGE);
   	  }else{
-  		  mav.setViewName(REDIRECT);
+  		  mav.setViewName(INDEX_PAGE);
   		  mav.addObject(SystemConst.USER,agent);
   		  request.getSession().setAttribute(SystemConst.USER, agent);
   	  }
@@ -113,9 +120,12 @@ public class AgentController extends BaseController {
 	@RequestMapping(value="/edit/{id}")
 	public ModelAndView edit(@PathVariable("id") Long id,HttpServletRequest request,HttpServletResponse response){
 	  AgentBo agent = agentService.getAgentBo(id);
+	  BankAccount bankAccount = agentService.getBankAccount(id);
 	  ModelAndView mav = new ModelAndView(ADD_PAGE);
 	  mav.addObject("agent", agent);
+	  mav.addObject("bankAcc", bankAccount);
 	  initAreas(request,mav.getModelMap());
+	  initBankInfo(request,mav.getModelMap());
 	  /*String[] codePaths = agent.getAreaPath().split(SystemConst.SPLITE_SIGN_STATIC);
 	  List<Area> areaList = null;
 	  if(codePaths.length==2){
@@ -145,11 +155,12 @@ public class AgentController extends BaseController {
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String addOrUpdate(AgentInfo agent,HttpServletRequest request,HttpServletResponse response){
+	public String addOrUpdate(AgentInfo agent,BankAccount bankAccount,Long accId,HttpServletRequest request,HttpServletResponse response){
+		bankAccount.setId(accId);
 		if(agent.getId() == null){
 			agent.setPasswd(MD5.getMD5Str(SystemConst.INITPASSWORD));
 			agent.setDelFlag(false);
-			agentService.saveAgent(agent);
+			agentService.saveAgent(agent,bankAccount);
 		}
 		else{
 			AgentInfo agentinfo = agentService.getAgent(agent.getId());
@@ -159,7 +170,7 @@ public class AgentController extends BaseController {
 			agentinfo.setPasswd(password);
 			agentinfo.setDelFlag(false);
 			agentinfo.setRebackDot(dot);
-			agentService.updateAgent(agentinfo);
+			agentService.updateAgent(agentinfo,bankAccount);
 		}
 	    
 	    return REDIRECT;
@@ -168,6 +179,7 @@ public class AgentController extends BaseController {
 	@RequestMapping(value="/add")
 	public String add(ModelMap modelMap,SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
 	  initAreas(request,modelMap);
+	  initBankInfo(request,modelMap);
 	  return ADD_PAGE;
 	}
 	
@@ -221,6 +233,11 @@ public class AgentController extends BaseController {
 	private void initAreas(HttpServletRequest request,ModelMap modelMap){
 		 List<Area> areas = areaService.getAreasByCity(SystemConst.ROOTAREAID);
 		  modelMap.addAttribute("areas", areas);
+	}
+	@SuppressWarnings("unused")
+	private void initBankInfo(HttpServletRequest request,ModelMap modelMap){
+		 List<BankInfo> banks = staticService.listBanks();
+		  modelMap.addAttribute("banks", banks);
 	}
 	
 	@RequestMapping(value = "/gettest")

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.ey.dao.base.impl.BaseDAOImpl;
+import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.BaseCustomProp;
 import com.ey.dao.entity.BaseCustomValue;
 import com.ey.util.StringUtil;
@@ -34,6 +35,12 @@ public class StaticDAOImpl extends BaseDAOImpl implements StaticDAO {
 		}
 		buffer.append(" order by id.customEngName,id.dataValue");
 		return this.find(buffer.toString(), params);
+	}
+
+	@Override
+	public java.util.List<BankInfo> listBanks() throws RuntimeException {
+		// TODO Auto-generated method stub
+		return this.find("from BankInfo");
 	}
 
 }

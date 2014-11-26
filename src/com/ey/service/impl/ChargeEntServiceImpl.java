@@ -3,13 +3,17 @@ package com.ey.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ey.bo.ChargeEntBo;
 import com.ey.dao.ChargeEntDAO;
 import com.ey.dao.common.dbid.DbidGenerator;
+import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.ChargeEnterprise;
+import com.ey.dao.entity.EntAccountRelation;
+import com.ey.dao.entity.EntAccountRelationId;
 import com.ey.service.ChargeEntService;
 import com.ey.util.StringUtil;
 
@@ -20,10 +24,14 @@ public class ChargeEntServiceImpl implements ChargeEntService {
     private ChargeEntDAO chargeEntDAO;
 	
 	@Override
-	public void saveChargeEnt(ChargeEnterprise chargeEnt) throws RuntimeException {
+	public void saveChargeEnt(ChargeEnterprise chargeEnt,BankAccount bankAccount) throws RuntimeException {
 		// TODO Auto-generated method stub
 	     chargeEnt.setId(DbidGenerator.getDbidGenerator().getNextId());
-		 chargeEntDAO.saveOrUpdate(chargeEnt);
+	     chargeEnt.setCareNumber(bankAccount.getCardNumber());
+		 chargeEntDAO.save(chargeEnt);
+		 bankAccount.setId(DbidGenerator.getDbidGenerator().getNextId());
+		 chargeEntDAO.save(bankAccount);
+		 chargeEntDAO.save(new EntAccountRelation(new EntAccountRelationId(chargeEnt.getId(),bankAccount.getId()),false));
 	}
 
 	@Override
@@ -62,10 +70,22 @@ public class ChargeEntServiceImpl implements ChargeEntService {
 	}
 
 	@Override
-	public void updateChargeEnt(ChargeEnterprise chargeEnt)
+	public void updateChargeEnt(ChargeEnterprise chargeEnt,BankAccount bankAccount)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
+		chargeEnt.setCareNumber(bankAccount.getCardNumber());
 		chargeEntDAO.update(chargeEnt);
+		BankAccount account = (BankAccount)chargeEntDAO.get(BankAccount.class, bankAccount.getId());
+		if(account.getCardNumber().equalsIgnoreCase(bankAccount.getCardNumber())){
+			BeanUtils.copyProperties(bankAccount, account);
+			chargeEntDAO.update(account);
+		}
+		else{
+			 chargeEntDAO.update(new EntAccountRelation(new EntAccountRelationId(chargeEnt.getId(),bankAccount.getId()),true));
+			 bankAccount.setId(DbidGenerator.getDbidGenerator().getNextId());
+			 chargeEntDAO.save(bankAccount);
+			 chargeEntDAO.save(new EntAccountRelation(new EntAccountRelationId(chargeEnt.getId(),bankAccount.getId()),false));
+		}
 	}
 
 	@Override
@@ -73,6 +93,12 @@ public class ChargeEntServiceImpl implements ChargeEntService {
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return (ChargeEnterprise)chargeEntDAO.get(ChargeEnterprise.class, id);
+	}
+
+	@Override
+	public BankAccount getBankAccount(Long id) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return chargeEntDAO.getBankAccount(id);
 	}
 
 }

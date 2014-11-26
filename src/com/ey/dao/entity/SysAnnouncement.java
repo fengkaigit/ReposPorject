@@ -20,7 +20,7 @@ public class SysAnnouncement implements java.io.Serializable {
 	private Long id;
 	private Date createTime;
 	private String title;
-	private byte[] content;
+	private String content;
 	private Integer announcementScope;
 	private Integer announcementGroup;
 	private String areaId;
@@ -45,7 +45,7 @@ public class SysAnnouncement implements java.io.Serializable {
 
 	/** full constructor */
 	public SysAnnouncement(Long id, Date createTime, String title,
-			byte[] content, Integer announcementScope,
+			String content, Integer announcementScope,
 			Integer announcementGroup, String areaId, Integer status) {
 		this.id = id;
 		this.createTime = createTime;
@@ -88,11 +88,11 @@ public class SysAnnouncement implements java.io.Serializable {
 	}
 
 	@Column(name = "content")
-	public byte[] getContent() {
+	public String getContent() {
 		return this.content;
 	}
 
-	public void setContent(byte[] content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 

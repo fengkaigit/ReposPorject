@@ -103,5 +103,6 @@ public class BankAccount implements java.io.Serializable {
 	public void setCardType(Integer cardType) {
 		this.cardType = cardType;
 	}
+	
 
 }

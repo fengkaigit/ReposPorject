@@ -6,6 +6,7 @@ import java.util.Map;
 import com.ey.bo.AgentBo;
 import com.ey.dao.base.BaseDAO;
 import com.ey.dao.entity.AgentInfo;
+import com.ey.dao.entity.BankAccount;
 
 public interface AgentDAO extends BaseDAO {
 	
@@ -20,6 +21,8 @@ public interface AgentDAO extends BaseDAO {
     Long findAgentByLoginName(String loginName) throws RuntimeException;
     
 	void updatePassById(Long id,String password) throws RuntimeException;
+	
+	BankAccount getBankAccount(Long id) throws RuntimeException;
 
 
 }

@@ -26,6 +26,8 @@ import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.Area;
+import com.ey.dao.entity.BankAccount;
+import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.BaseCustomValue;
 import com.ey.dao.entity.ChargeEnterprise;
 import com.ey.dao.entity.SystemManager;
@@ -68,20 +70,24 @@ public class ChargeEntController extends BaseController{
 	@RequestMapping(value="/edit/{id}")
 	public ModelAndView edit(@PathVariable("id") Long id,HttpServletRequest request,HttpServletResponse response) throws IOException{
 	  ChargeEntBo chargeBo = chargeEntService.getChargeEnt(id);
+	  BankAccount bankAccount = chargeEntService.getBankAccount(id);
 	  ModelAndView mav = new ModelAndView(ADD_PAGE);
 	  mav.addObject("charge", chargeBo);
+	  mav.addObject("bankAcc", bankAccount);
 	  initAreas(request,mav.getModelMap());
 	  initPayTypes(request,mav.getModelMap());
+	  initBankInfo(request,mav.getModelMap());
 	  return mav;
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String addOrUpdate(ChargeEnterprise chargeEnt,@RequestParam("file")  MultipartFile uploadFile,HttpServletRequest request,HttpServletResponse response) throws RuntimeException, IOException {
+	public String addOrUpdate(ChargeEnterprise chargeEnt,BankAccount bankAccount,Long accId,@RequestParam("file")  MultipartFile uploadFile,HttpServletRequest request,HttpServletResponse response) throws RuntimeException, IOException {
+		bankAccount.setId(accId);
 		if(!StringUtil.isEmptyString(uploadFile.getOriginalFilename()))
 			   chargeEnt.setExPic(uploadFile.getBytes());
 		if(chargeEnt.getId() == null){
 			chargeEnt.setDelFlag(false);
-			chargeEntService.saveChargeEnt(chargeEnt);
+			chargeEntService.saveChargeEnt(chargeEnt,bankAccount);
 		}
 		else{
 			ChargeEnterprise chargeEntInfo = chargeEntService.getChargeEnterprise(chargeEnt.getId());
@@ -90,7 +96,7 @@ public class ChargeEntController extends BaseController{
 			if(chargeEntInfo.getExPic()==null)
 				chargeEntInfo.setExPic(pic);
 			chargeEntInfo.setDelFlag(false);
-			chargeEntService.updateChargeEnt(chargeEntInfo);
+			chargeEntService.updateChargeEnt(chargeEntInfo,bankAccount);
 		}
 	    
 	    return REDIRECT;
@@ -100,6 +106,7 @@ public class ChargeEntController extends BaseController{
 	public String add(ModelMap modelMap,SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
 	  initAreas(request,modelMap);
 	  initPayTypes(request,modelMap);
+	  initBankInfo(request,modelMap);
 	  return ADD_PAGE;
 	}
 	
@@ -117,6 +124,12 @@ public class ChargeEntController extends BaseController{
 	private void initAreas(HttpServletRequest request,ModelMap modelMap){
 		 List<Area> areas = areaService.getAreasByCity(SystemConst.ROOTAREAID);
 		  modelMap.addAttribute("areas", areas);
+	}
+	
+	@SuppressWarnings("unused")
+	private void initBankInfo(HttpServletRequest request,ModelMap modelMap){
+		 List<BankInfo> banks = staticService.listBanks();
+		  modelMap.addAttribute("banks", banks);
 	}
 	
 	@SuppressWarnings("unused")
