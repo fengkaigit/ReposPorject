@@ -14,8 +14,9 @@ $(document).ready(function(){
 		},
 		submitAfterAjaxPrompt : '有数据正在异步验证，请稍等...'
 	});
-  
+	<c:if test="${sysMan.id==null}">
 	$("#managerName").formValidator({onShow:"请输入登录名",onFocus:"登录名至少2个字符,最多20个字符",onCorrect:"该登录名可以注册"}).inputValidator({min:2,max:20,onError:"登录名非法,请确认"});
+	</c:if>
 	$("#managerRealname").formValidator({onShow:"请输入真实姓名",onFocus:"用户名至少2个字符,最多20个字符",onCorrect:"输入合法"}).inputValidator({min:2,max:20,onError:"真实姓名非法,请确认"});
 	$("#EMail").formValidator({empty:true,onShow:"请输入邮箱，可以为空哦",onFocus:"邮箱6-100个字符,请确认",onCorrect:"输入合法"}).inputValidator({min:6,max:100,onError:"你输入的邮箱长度非法,请确认"}).regexValidator({regExp:"^([\\w-.]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([\\w-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$",onError:"你输入的邮箱格式不正确"});
 	$("#mobilePhone").formValidator({empty:true,onShow:"请输入你的手机号码，可以为空哦",onFocus:"请输入11位手机号码",onCorrect:"输入合法",onEmpty:"你真的不想留手机号码啊？"}).inputValidator({min:11,max:11,onError:"手机号码必须是11位的,请确认"}).regexValidator({regExp:"^[1][0-9]{10}$",onError:"你输入的手机格式不正确"});
@@ -71,13 +72,13 @@ function loginChk(){
         <div class="fm-item1">
             <table width="88%" border="0" align="center" cellspacing="0" cellpadding="0">
                 <tbody>
-                    <tr>
+                    <tr <c:if test="${sysMan.id!=null}">display:none;</c:if> >
                         <td height="40" width="100" align="right">登录名：</td>
                         <td align="left">
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td><input type="hidden" id="hiddenManagerName"/><input type="text" maxlength="40" name="managerName" class="on-show" autocomplete="off" id="managerName" value="${sysMan.managerName}" onblur="loginChk()"/><span></span></td>
+                                        <td><input type="hidden" id="hiddenManagerName"/><input type="text" maxlength="40" name="managerName" class="on-show" autocomplete="off" id="managerName" onblur="loginChk()"/><span></span></td>
                                     </tr>
                                 </tbody>
                             </table>
