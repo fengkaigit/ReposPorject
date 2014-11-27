@@ -14,7 +14,7 @@ import com.ey.dao.entity.ServiceChargeBill;
 import com.ey.dao.entity.TempPaymentBill;
 import com.ey.dao.entity.TransferRecords;
 
-@Repository("ProfitCalculateDAO") 
+@Repository("profitDao") 
 public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalculateDAO{
 
 	@Override

@@ -13,25 +13,30 @@
 <%@include file="/pages/template/jsp/common/sysheader.jsp"%>
 <div class="ui-container clearfix" id="container">  
   <div class="jfzh-title"><span class="icon1"></span>
- 劳务费划款单查询
+ 缴费单查询
   </div>
 <div class="jfzh-con">
 
 	
     <div class="jfzh-bottom clearfix">    
-	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;划款单信息</span>
+	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;缴费单信息</span>
 	</div>
   
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
   <tr class="add">
     <td>序号</td>
-    <td>划款单单号</td>
-    <td>金额</td>
-    <td>生成时间</td>
-    <td>划款时间</td>
-    <td>状态</td>
+    <td>缴费单单号</td>
+    <td>缴费时间</td>
+    <td>应缴金额</td>
+    <td>实缴金额</td>
+    <td>缴费地区</td>
+    <td>缴费用户</td>
+    <td>收费单位</td>
+    <td>代理商</td>
+    <td>劳务费</td>
+    <td>缴费类型</td>
   </tr>
-  <c:forEach var="item" items="${servicelist}" varStatus="status">
+  <c:forEach var="item" items="${paymentlist}" varStatus="status">
    <tr <c:choose>
        <c:when test="${(status.index+1) % 2 == 0}">
          class="add"
@@ -41,12 +46,16 @@
        </c:otherwise>
      </c:choose> >
     <td>&nbsp;${status.index+1}</td>
-    <td>&nbsp;<a title="查看对应缴费单" class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/bill/showPayment/${item.id}.do">${item.id}</a></td>
-    <td>&nbsp;${item.profitMoney}</td>
-    <td>&nbsp;${item.createDate}</td>
-    <td>&nbsp;${item.confirmDate}</td>    
-    <td>&nbsp;${item.strStatus}</td>
-
+    <td>&nbsp;${item.id}</td>
+    <td>&nbsp;${item.createTime}</td>
+    <td>&nbsp;${item.payMoney}</td>
+    <td>&nbsp;${item.paidMoney}</td>    
+    <td>&nbsp;${item.areaName}</td>
+	<td>&nbsp;${item.userName}</td>
+	<td>&nbsp;${item.entName}</td>
+	<td>&nbsp;${item.agentName}</td>
+	<td>&nbsp;${item.poundage}</td>
+	<td>&nbsp;${item.paymentTypeName}</td>
   </tr>
  </c:forEach>
    
