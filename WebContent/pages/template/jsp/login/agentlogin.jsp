@@ -15,6 +15,16 @@ function SearchFocus(obj){
 		
 	}
 }
+$(document).ready(function(){
+	var cookieLoginName = getCookie("agentLoginName");
+	var cookieLoginPwd = getCookie("agentLoginPwd");
+	if(cookieLoginName!=""){
+	   document.getElementById("loginCode").value=cookieLoginName;
+	}
+	if(cookieLoginPwd!=""){
+	   document.getElementById("password").value=cookieLoginPwd;
+	}
+});
 </script> 
 </head>
 <body>

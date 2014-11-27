@@ -29,7 +29,7 @@ $(document).ready(function() {
                      <a rel="nofollow" style="color:#fc8936" href="<%=request.getContextPath() %>/reg.do">免费注册</a>
                      <a style="color:#a0db00" href="<%=request.getContextPath() %>/agent/login.do">立即登录</a>
                 	<%}else{ %>
-                	<a style="color:#a0db00" href="javascript:void(0)">欢迎你，<%=agent.getRegistRealName() %></a>
+                	<a style="color:#a0db00" href="<%=request.getContextPath() %>/agent/edit/<%=agent.getId() %>.do">欢迎你，<%=agent.getRegistRealName() %></a>
                 	 <a rel="nofollow" style="color:#fc8936" href="<%=request.getContextPath() %>/agent/logout.do">注销</a>
                 	<%} %>
         </div>
@@ -40,17 +40,18 @@ $(document).ready(function() {
         <div class="userbar">
 
 			<ul class="sf-menu" id="nav" >
-			<li class="current"><span><a href="index.html">我的e缴</a></span>
+			<li class="current"><span><a href="index.html">我的任务</a></span>
 				<ul>
 					<li class="current"><a href="jiaofei_zhsz.html">缴费账号设置</a></li>
-					<li><a href="jiaofei_jftx.html">账单代扣\提醒设置</a></li>
-					<li><a href="jiaofei_jlcx.html">记录查询</a></li>
-					<li><a href="jiaofei_tjfx.html">统计分析 </a></li>
+					
 			  </ul></li>
 			
-			  <li><span><a href="<%=request.getContextPath() %>/ej/security.do">安全保障</a></span></li>
-		   <li><span><a href="<%=request.getContextPath() %>/ej/ieda.do">意见反馈</a></span></li>
-		   <li><span><a href="<%=request.getContextPath() %>/ej/about.do">关于我们</a></span></li>
+			  <li><span><a href="###">个人设置</a></span>
+			  <ul>
+					<li class="current"><a href="<%=request.getContextPath() %>/agent/passwd.do">修改密码</a></li>
+					<li ><a href="###">修改手机</a></li>
+					
+			  </ul></li>
 	       </ul>
 		</div>
 		

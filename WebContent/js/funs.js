@@ -142,3 +142,11 @@ function checktel(id){
 	}
 	return true
 }
+function getCookie(c_name)
+{
+  var arr,reg = new RegExp("(^|)"+c_name+"=([^;]*)(;|$)");
+  if(arr=document.cookie.match(reg))
+     return unescape(arr[2]);
+  else
+     return "";
+}

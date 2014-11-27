@@ -29,7 +29,7 @@ $(document).ready(function() {
                      <a rel="nofollow" style="color:#fc8936" href="<%=request.getContextPath() %>/reg.do">免费注册</a>
                      <a style="color:#a0db00" href="<%=request.getContextPath() %>/sysman/login.do">立即登录</a>
                 	<%}else{ %>
-                	<a style="color:#a0db00" href="javascript:void(0)">欢迎你，<%=sysMan.getManagerRealname() %></a>
+                	<a style="color:#a0db00" href="<%=request.getContextPath() %>/sysman/edit/<%=sysMan.getId() %>.do">欢迎你，<%=sysMan.getManagerRealname() %></a>
                 	 <a rel="nofollow" style="color:#fc8936" href="<%=request.getContextPath() %>/sysman/logout.do">注销</a>
                 	<%} %>
         </div>
@@ -46,9 +46,9 @@ $(document).ready(function() {
 					<li><a href="<%=request.getContextPath() %>/agent/list.do">代理商维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/charge/list.do">收费单位维护</a></li>
 			  </ul></li>
-			  <li class="current"><span><a href="<%=request.getContextPath() %>/announce/list.do">系统公告</a></span>
+			  <li ><span><a href="<%=request.getContextPath() %>/announce/list.do">系统公告</a></span>
 				<ul>
-					<li class="current"><a href="<%=request.getContextPath() %>/announce/add.do">公告发布</a></li>
+					<li ><a href="<%=request.getContextPath() %>/announce/add.do">公告发布</a></li>
 					<li><a href="<%=request.getContextPath() %>/announce/list.do">公告管理</a></li>
 			  </ul></li>
 			<li class="current"><span><a href="<%=request.getContextPath() %>/bill/servicelist.do">单据查询</a></span>
@@ -59,7 +59,7 @@ $(document).ready(function() {
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/settlelist.do">结算划款单查询</a></li>
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/incomelist.do">最终盈利划款单查询</a></li>
 			  </ul></li>
-			  <li><span><a href="<%=request.getContextPath() %>/ej/security.do">安全保障</a></span></li>
+			  <li><span><a href="<%=request.getContextPath() %>/sysman/passwd.do">修改密码</a></span></li>
 	       </ul>
 		</div>
 		

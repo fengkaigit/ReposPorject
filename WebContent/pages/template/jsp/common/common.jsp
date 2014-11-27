@@ -23,6 +23,7 @@
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/validator.css"></link>
 <script src="<%=request.getContextPath() %>/js/formValidator-4.0.1.js" type="text/javascript" charset="UTF-8"></script>
 <script src="<%=request.getContextPath() %>/js/formValidatorRegex.js" type="text/javascript" charset="UTF-8"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.form.js"></script>
 <link href="<%=request.getContextPath() %>/css/apps.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
 <link href="<%=request.getContextPath() %>/css/jiaofei.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
 <link charset="utf-8" rel="stylesheet" href="<%=request.getContextPath() %>/css/appaside.css" media="all">
