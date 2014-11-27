@@ -16,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +29,7 @@ import com.ey.service.SysManService;
 import com.ey.util.MD5;
 import com.ey.util.RequestUtils;
 import com.ey.util.StringUtil;
+import com.ey.util.CookieManager;
 
 @Controller
 @RequestMapping(value="/sysman")
@@ -76,6 +78,12 @@ public class SysManController {
   		  mav.setViewName("redirect:/sysman/list.do");
   		  mav.addObject(SystemConst.USER,currentManager);
   		  request.getSession().setAttribute(SystemConst.USER, currentManager);
+  		/*       添加cookie信息                  */
+			if(request.getParameter("remember")!=null){
+				CookieManager.addCookie(response,"sysLoginName",loginCode,60*60*24*31);
+				CookieManager.addCookie(response,"sysLoginPwd",password,60*60*24*31);
+			}
+	   //end
   	  }
   	  return mav;
     }
@@ -142,9 +150,14 @@ public class SysManController {
 	  return "sysman/addsysman";
 	}
 	
+	@RequestMapping(value="/passwd")
+	public String showmodifyPass(SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
+	  return "sysman/modifypass";
+	}
+	
 	@RequestMapping(value="/modpass")
 	@ResponseBody
-	public Object modifyPass(String oldPass,String newPass,String confirePass,HttpServletRequest request,HttpServletResponse response){
+	public Object modifyPass(@RequestParam("oldpasswd") String oldPass,@RequestParam("passwd") String newPass,@RequestParam("confirmPassword") String confirePass,HttpServletRequest request,HttpServletResponse response){
 	  Map<String,Object> map = new HashMap<String,Object>();
 	  SystemManager sysManObj = (SystemManager)request.getSession().getAttribute(SystemConst.USER);
 	  if(sysManObj!=null){
@@ -161,6 +174,7 @@ public class SysManController {
 		  sysManService.updatePassById(sysManObj.getId(), MD5.getMD5Str(confirePass));
 		  map.put("result",true);
 		  map.put("message",RequestUtils.getMessage("modpass", request));
+		  sysManObj.setPasswd(MD5.getMD5Str(confirePass));
 		  return map;
 	  }
 	  map.put("result",false);

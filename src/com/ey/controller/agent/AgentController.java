@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,6 +31,7 @@ import com.ey.exception.BusinessException;
 import com.ey.service.AgentService;
 import com.ey.service.AreaService;
 import com.ey.service.StaticService;
+import com.ey.util.CookieManager;
 import com.ey.util.MD5;
 import com.ey.util.RequestUtils;
 import com.ey.util.StringUtil;
@@ -44,6 +46,7 @@ public class AgentController extends BaseController {
 	private static final String REDIRECT = "redirect:/agent/list.do";
 	private static final String ADD_PAGE = "agent/addagent";
 	private static final String INDEX_PAGE = "agent/index";
+	private static final String PASSWORD_PAGE = "agent/modifypass";
 	@Autowired
     private AgentService agentService;
 	
@@ -92,6 +95,10 @@ public class AgentController extends BaseController {
   		  mav.setViewName(INDEX_PAGE);
   		  mav.addObject(SystemConst.USER,agent);
   		  request.getSession().setAttribute(SystemConst.USER, agent);
+  		  if(request.getParameter("remember")!=null){
+			CookieManager.addCookie(response,"agentLoginName",loginCode,60*60*24*31);
+			CookieManager.addCookie(response,"agentLoginPwd",password,60*60*24*31);
+		  }
   	  }
   	  return mav;
     }
@@ -183,9 +190,14 @@ public class AgentController extends BaseController {
 	  return ADD_PAGE;
 	}
 	
+	@RequestMapping(value="/passwd")
+	public String showmodifyPass(SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
+	  return PASSWORD_PAGE;
+	}
+	
 	@RequestMapping(value="/modpass")
 	@ResponseBody
-	public Object modifyPass(String oldPass,String newPass,String confirePass,HttpServletRequest request,HttpServletResponse response){
+	public Object modifyPass(@RequestParam("oldpasswd") String oldPass,@RequestParam("passwd") String newPass,@RequestParam("confirmPassword") String confirePass,HttpServletRequest request,HttpServletResponse response){
 	  Map<String,Object> map = new HashMap<String,Object>();
 	  AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
 	  if(agent!=null){
