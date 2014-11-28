@@ -19,7 +19,7 @@ public class Feedback implements java.io.Serializable {
 
 	private Long id;
 	private Long userId;
-	private byte[] userIdea;
+	private String userIdea;
 	private Date viewTime;
 	private Date systemTime;
 	private String systemFeedback;
@@ -32,7 +32,7 @@ public class Feedback implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Feedback(Long id, Long userId, byte[] userIdea,
+	public Feedback(Long id, Long userId, String userIdea,
 			Date viewTime, String systemFeedback, Date systemTime, Integer backFlag) {
 		this.id = id;
 		this.userId = userId;
@@ -44,7 +44,7 @@ public class Feedback implements java.io.Serializable {
 	}
 	
 	/** minimal constructor */
-	public Feedback(Long id, Long userId, byte[] userIdea,
+	public Feedback(Long id, Long userId, String userIdea,
 			Date viewTime, Integer backFlag) {
 		this.id = id;
 		this.userId = userId;
@@ -74,11 +74,11 @@ public class Feedback implements java.io.Serializable {
 	}
 
 	@Column(name = "user_idea", nullable = false)
-	public byte[] getUserIdea() {
+	public String getUserIdea() {
 		return this.userIdea;
 	}
 
-	public void setUserIdea(byte[] userIdea) {
+	public void setUserIdea(String userIdea) {
 		this.userIdea = userIdea;
 	}
 
