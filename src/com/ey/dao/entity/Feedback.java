@@ -24,6 +24,8 @@ public class Feedback implements java.io.Serializable {
 	private Date systemTime;
 	private String systemFeedback;
 	private Integer backFlag;
+	private Integer backType;
+	private String eMail;
 
 	// Constructors
 
@@ -93,7 +95,7 @@ public class Feedback implements java.io.Serializable {
 	}
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "system_time", nullable = false, length = 10)
+	@Column(name = "system_time",length = 10)
 	public Date getSystemTime() {
 		return this.systemTime;
 	}
@@ -102,7 +104,7 @@ public class Feedback implements java.io.Serializable {
 		this.systemTime = systemTime;
 	}
 
-	@Column(name = "system_feedback", nullable = false, length=250)
+	@Column(name = "system_feedback",length=250)
 	public String getSystemFeedback() {
 		return this.systemFeedback;
 	}
@@ -111,13 +113,31 @@ public class Feedback implements java.io.Serializable {
 		this.systemFeedback = systemFeedback;
 	}
 
-	@Column(name = "back_flag", nullable = false)
+	@Column(name = "back_flag")
 	public Integer getBackFlag() {
 		return this.backFlag;
 	}
-
+	
 	public void setBackFlag(Integer backFlag) {
 		this.backFlag = backFlag;
 	}
+	@Column(name = "back_type")
+	public Integer getBackType() {
+		return backType;
+	}
+
+	public void setBackType(Integer backType) {
+		this.backType = backType;
+	}
+	@Column(name = "email")
+	public String geteMail() {
+		return eMail;
+	}
+
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
+	}
+	
+	
 
 }
