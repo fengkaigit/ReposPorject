@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ey.dao.base.BaseDAO;
+import com.ey.dao.entity.Feedback;
 import com.ey.dao.entity.SystemManager;
 
 
@@ -14,6 +15,8 @@ public interface SysManDAO extends BaseDAO {
 	 SystemManager findManagerByLoginName(String loginName,String password) throws RuntimeException;
      void updatePassById(Long id,String password) throws RuntimeException;
      Long findManagerByLoginName(String loginName) throws RuntimeException;
-
+     void updateReplyFeedById(Long id,String replyContent) throws RuntimeException;
+ 	List<Feedback> findFeedBacks(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+ 	void deleteFeedBackById(Long id)throws RuntimeException;
 
 }

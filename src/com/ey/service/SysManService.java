@@ -3,6 +3,7 @@ package com.ey.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ey.dao.entity.Feedback;
 import com.ey.dao.entity.SystemManager;
 
 public interface SysManService {
@@ -15,4 +16,9 @@ public interface SysManService {
 	Long findManagerByLoginName(String loginName) throws RuntimeException;
 	SystemManager getSySManager(Long id) throws RuntimeException;
 	void updatePassById(Long id,String password) throws RuntimeException;
+	void saveFeedBack(Feedback feedBack) throws RuntimeException;
+	void updateReplyFeedById(Long id,String replyContent) throws RuntimeException;
+	List<Feedback> findFeedBacks(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+	void deleteFeedBackByIds(String[] ids)throws RuntimeException;
+	Feedback getFeedBack(Long id) throws RuntimeException;
 }

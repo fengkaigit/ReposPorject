@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ey.dao.SysManDAO;
 import com.ey.dao.common.dbid.DbidGenerator;
+import com.ey.dao.entity.Feedback;
 import com.ey.dao.entity.SystemManager;
 import com.ey.service.SysManService;
 import com.ey.util.StringUtil;
@@ -74,6 +75,43 @@ public class SysManServiceImpl implements SysManService {
 	public void updateSysman(SystemManager sysMan) throws RuntimeException {
 		// TODO Auto-generated method stub
 		sysManDAO.update(sysMan);
+	}
+
+	@Override
+	public void saveFeedBack(Feedback feedBack) throws RuntimeException {
+		// TODO Auto-generated method stub
+		feedBack.setId(DbidGenerator.getDbidGenerator().getNextId());
+		sysManDAO.save(feedBack);
+	}
+
+	@Override
+	public void updateReplyFeedById(Long id, String replyContent)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		sysManDAO.updateReplyFeedById(id, replyContent);
+	}
+
+	@Override
+	public List<Feedback> findFeedBacks(Map<String, Object> Qparam,
+			Integer page, Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return sysManDAO.findFeedBacks(Qparam, page, rows);
+	}
+
+	@Override
+	public void deleteFeedBackByIds(String[] ids) throws RuntimeException {
+		// TODO Auto-generated method stub
+		for(String id:ids){
+        	if(StringUtil.isEmptyString(id))
+        		continue;
+        	sysManDAO.deleteFeedBackById(Long.valueOf(id.trim()));
+        }
+	}
+
+	@Override
+	public Feedback getFeedBack(Long id) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return (Feedback)sysManDAO.get(Feedback.class, id);
 	}
 
 }
