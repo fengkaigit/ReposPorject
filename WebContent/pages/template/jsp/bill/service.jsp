@@ -41,10 +41,10 @@
        </c:otherwise>
      </c:choose> >
     <td>&nbsp;${status.index+1}</td>
-    <td>&nbsp;<a title="查看对应缴费单" class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/bill/showPayment/${item.id}.do">${item.id}</a></td>
+    <td>&nbsp;<a title="查看对应缴费单" class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/bill/showPayment/${item.id}.do')">${item.id}</a></td>
     <td>&nbsp;${item.profitMoney}</td>
     <td>&nbsp;${item.createDate}</td>
-    <td>&nbsp;${item.confirmDate}</td>    
+    <td>&nbsp;${item.confirmDate}</td>
     <td>&nbsp;${item.strStatus}</td>
 
   </tr>

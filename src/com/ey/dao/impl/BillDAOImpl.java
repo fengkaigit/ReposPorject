@@ -28,7 +28,7 @@ public class BillDAOImpl extends BaseDAOImpl implements BillDAO {
 		String hql = "select new com.ey.bo.PaymentBillBo(a.id, a.accountBillId, a.userId,a.remainBalance, " +
 				"a.createTime, a.paidMoney,a.payMoney, a.balance, a.poundage, a.payType,a.entId, a.businessType, " +
 				"a.paymentStatus,a.paymentMode, a.uuid, a.divideStatus, a.areaId, a.areaName, a.agentId, " +
-				"a.agentName,a.orderNumber, a.remarks, a.payAddress,b.enterpriseName,c.realName,e.propChName) " +
+				"a.agentName,a.orderNumber, a.remarks, a.payAddress,b.enterpriseName,c.realName,d.propChName) " +
 				" from PaymentBill a,ChargeEnterprise b,UserBase c,BaseCustomValue d,ServicePaymentRelation e " +
 				" where d.id.customEngName='payment_type' and a.payType=d.id.dataValue and a.entId=b.id and a.userId=c.id" +
 				" and a.id=e.id.paymentBillId and e.id.serviceBillId=?";

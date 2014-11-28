@@ -13,13 +13,14 @@
 <%@include file="/pages/template/jsp/common/sysheader.jsp"%>
 <div class="ui-container clearfix" id="container">  
   <div class="jfzh-title"><span class="icon1"></span>
- 缴费单查询
+劳务费划款单查询
   </div>
 <div class="jfzh-con">
 
 	
     <div class="jfzh-bottom clearfix">    
 	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;缴费单信息</span>
+	<span class="fr cur" onClick="openWin('<%=request.getContextPath() %>/bill/servicelist.do')"><span class="fcr">返回</span></span>
 	</div>
   
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
