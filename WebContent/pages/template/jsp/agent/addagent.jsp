@@ -2,7 +2,7 @@
     pageEncoding="utf-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<title>会员注册</title>
+<title>e缴365</title>
 <head>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <script>
@@ -25,7 +25,7 @@ $(document).ready(function(){
 	$("#EMail").formValidator({empty:true,onShow:"请输入邮箱，可以为空哦",onFocus:"邮箱6-100个字符,请确认",onCorrect:"输入合法"}).inputValidator({min:6,max:100,onError:"你输入的邮箱长度非法,请确认"}).regexValidator({regExp:"^([\\w-.]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([\\w-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$",onError:"你输入的邮箱格式不正确"});
 	$("#bankId").formValidator({onShow:"请选择所属银行",onCorrect:"选择合法"}).inputValidator({min:1,onError: "银行未选择,请选择!"});
 	$("#bankDeposit").formValidator({onShow:"请输入开户行",onFocus:"开户行至少5个字符,最多200个字符",onCorrect:"输入合法"}).inputValidator({min:5,max:200,onError:"开户行非法,请确认"});
-	$("#cardNumber").formValidator({onShow:"请输入银行账号",onFocus:"银行账号至少16个字符,最多32个字符",onCorrect:"输入合法"}).inputValidator({min:16,max:32,empty:{leftEmpty:false,rightEmpty:false,emptyError:"账号两边不能有空符号"},onError:"银行账号非法,请确认"});
+	$("#cardNumber").formValidator({onShow:"请输入银行账号",onFocus:"银行账号至少16个字符,最多32个字符",onCorrect:"输入合法"}).inputValidator({min:16,max:32,empty:{leftEmpty:false,rightEmpty:false,emptyError:"账号两边不能有空符号"},onError:"银行账号非法,请确认"}).regexValidator({ regExp: "num", dataType: "enum", onError: "只能输入数字" });
 	$("#cardName").formValidator({onShow:"请输入户名",onFocus:"户名至少2个汉字,最多5个汉字",onCorrect:"输入合法"}).inputValidator({min:4,max:10,onError:"户名非法,请确认"});
 
 	//<c:if test="${agent.id==null}">

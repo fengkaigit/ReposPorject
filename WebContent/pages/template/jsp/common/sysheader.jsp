@@ -46,10 +46,11 @@ $(document).ready(function() {
 					<li><a href="<%=request.getContextPath() %>/agent/list.do">代理商维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/charge/list.do">收费单位维护</a></li>
 			  </ul></li>
-			  <li ><span><a href="<%=request.getContextPath() %>/announce/list.do">系统公告</a></span>
+			  <li ><span><a href="<%=request.getContextPath() %>/announce/list.do">系统信息</a></span>
 				<ul>
 					<li ><a href="<%=request.getContextPath() %>/announce/add.do">公告发布</a></li>
 					<li><a href="<%=request.getContextPath() %>/announce/list.do">公告管理</a></li>
+					<li><a href="<%=request.getContextPath() %>/ej/list.do">意见回复</a></li>
 			  </ul></li>
 			<li class="current"><span><a href="<%=request.getContextPath() %>/bill/servicelist.do">单据查询</a></span>
 				<ul>

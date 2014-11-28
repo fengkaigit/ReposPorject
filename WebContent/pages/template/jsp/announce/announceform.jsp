@@ -1,8 +1,9 @@
+
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<title>会员注册</title>
+<title>e缴365</title>
 <head>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/js/kindeditor-4.1/themes/default/default.css" />

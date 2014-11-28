@@ -5,8 +5,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="" name="description">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/dh.css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.min.js"></script> 
 <script src="<%=request.getContextPath() %>/js/common/formValidator.js" language="Javascript"></script>
@@ -28,7 +28,6 @@
 <link href="<%=request.getContextPath() %>/css/jiaofei.css" rel="stylesheet" charset="utf-8" media="screen" type="text/css">
 <link charset="utf-8" rel="stylesheet" href="<%=request.getContextPath() %>/css/appaside.css" media="all">
 <link charset="utf-8" rel="stylesheet" href="<%=request.getContextPath() %>/css/apps.css" media="all">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/loginin/billCenter.css">
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/loginin/loginin.css"></link>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.easing-sooper.js"></script>
@@ -36,3 +35,4 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/sooperfish.css" media="screen">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/sooperfish-theme-large.css" media="screen">
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/zhsz.css"></link>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">

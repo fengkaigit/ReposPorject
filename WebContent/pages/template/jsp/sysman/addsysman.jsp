@@ -2,7 +2,7 @@
     pageEncoding="utf-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<title>会员注册</title>
+<title>e缴365</title>
 <head>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <script>

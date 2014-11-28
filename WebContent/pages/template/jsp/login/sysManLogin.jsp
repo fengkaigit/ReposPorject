@@ -70,10 +70,10 @@ $(document).ready(function(){
 		</tr>
 		<tr>
 
-			<td colspan="2"><input type="text" value="输入验证码" tabindex="3"
-				class="code js-code fft-fl " maxlength="4" name="verify" id="verify"
-				onfocus="SearchFocus(this)"> <img src="<%=request.getContextPath() %>/getVerify.do"
-				style="width: 100px; height: 40px; "
+			<td colspan="2"><input type="text" data-placeholder="输入验证码" autocomplete="off" value="输入验证码" tabindex="3"
+				class="code js-code fft-fl " maxlength="4" name="verify" id="verify" onfocus="SearchFocus(this)"
+				> <img src="<%=request.getContextPath() %>/getVerify.do"
+				style="width: 100px; height: 40px;"
 				id="loginValidateImg"> <font class="orange">
 			<span class="alllink"><a href="javascript:changeVerifyFP('<%=request.getContextPath() %>/getVerify.do');">
 			看不清，换一张 </a></span> </font></td>

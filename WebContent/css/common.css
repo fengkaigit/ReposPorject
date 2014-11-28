@@ -200,6 +200,17 @@ p{line-height:24px;}
     width: 528px;
 	border:1px solid #ddd;
 }
+.textareafeedBox {
+    background-color: #fefefe;
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 20px;
+    max-width: 400px;
+    min-width: 400px;
+    padding: 7px;
+    width: 400px;
+	border:1px solid #ddd;
+}
 span.grey {
     color: #999;
     display: block;
