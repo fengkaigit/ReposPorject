@@ -26,6 +26,7 @@ public class Feedback implements java.io.Serializable {
 	private Integer backFlag;
 	private Integer backType;
 	private String eMail;
+	private String areaId;
 
 	// Constructors
 
@@ -136,6 +137,14 @@ public class Feedback implements java.io.Serializable {
 
 	public void seteMail(String eMail) {
 		this.eMail = eMail;
+	}
+	@Column(name = "area_id",length=20)
+	public String getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(String areaId) {
+		this.areaId = areaId;
 	}
 	
 	

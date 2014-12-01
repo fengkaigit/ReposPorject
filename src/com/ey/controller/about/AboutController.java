@@ -49,9 +49,16 @@ public class AboutController extends BaseController {
 	}
 	@RequestMapping(value = "/ieda")
 	public ModelAndView ieda(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) {		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("ieda/ieda");
+		UserBase user = (UserBase)request.getSession().getAttribute(SystemConst.USER);
+        if(user!=null){
+        	Map<String,Object> queryMap = new HashMap<String,Object>();
+    		queryMap.put("areaId", user.getAreaId());
+    		List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, 0, 0);
+    		mav.addObject("feedbacks", feedlist);
+        }
 		return mav;
 	}
 	
@@ -60,8 +67,10 @@ public class AboutController extends BaseController {
 	public Object saveFeed(Feedback feedBack,HttpServletRequest request,
 			HttpServletResponse response) {
 		UserBase user = (UserBase)request.getSession().getAttribute(SystemConst.USER);
-		if(user!=null)
-		feedBack.setUserId(user.getId());
+		if(user!=null){
+		  feedBack.setUserId(user.getId());
+		  feedBack.setAreaId(user.getAreaId());
+		}
 		feedBack.setBackFlag(0);
 		feedBack.setViewTime(new Date());
 		sysManService.saveFeedBack(feedBack);
@@ -74,6 +83,18 @@ public class AboutController extends BaseController {
 	public ModelAndView list(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();
 		List<Feedback> feedlist = sysManService.findFeedBacks(null, 0, 0);
+		mav.addObject("feedbacks", feedlist);
+		mav.setViewName(LIST_PAGE);
+		return mav;
+	}
+	
+	@RequestMapping(value="/areafeed")
+	public ModelAndView areafeed(HttpServletRequest request,HttpServletResponse response){
+		UserBase user = (UserBase)request.getSession().getAttribute(SystemConst.USER);
+		ModelAndView mav = new ModelAndView();
+		Map<String,Object> queryMap = new HashMap<String,Object>();
+		queryMap.put("areaId", user.getAreaId());
+		List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, 0, 0);
 		mav.addObject("feedbacks", feedlist);
 		mav.setViewName(LIST_PAGE);
 		return mav;

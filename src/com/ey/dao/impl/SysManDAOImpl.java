@@ -88,6 +88,7 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 		if(Qparam!=null&&Qparam.size()>0){
 			Long userId = (Long)Qparam.get("userId");
 			Integer backFlag = (Integer)Qparam.get("backFlag");
+			String areaId = (String)Qparam.get("areaId");
 			if(userId!=null){
 				query.append(" and userId = ?");
 				paramList.add(userId);
@@ -95,6 +96,10 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 			if(backFlag!=null){
 				query.append(" and backFlag = ?");
 				paramList.add(backFlag);
+			}
+			if(areaId!=null){
+				query.append(" and areaId = ?");
+				paramList.add(areaId);
 			}
 		}
 	}
