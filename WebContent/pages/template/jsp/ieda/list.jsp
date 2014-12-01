@@ -32,7 +32,7 @@ function getData(id){
 }
 function postHandle(){
 	  var valueObj = {id:$("#id").val(),replyContent:$("#replyContent").val()};
-	  jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/ej/reply.do",valueObj,"get","json",function(data){
+	  jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/ej/reply.do",valueObj,"post","json",function(data){
 		  if(data.result){
 		    alert("意见回复成功");
 		    turnoff('replyfeed');

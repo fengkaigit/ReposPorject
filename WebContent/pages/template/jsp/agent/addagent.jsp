@@ -20,8 +20,8 @@ $(document).ready(function(){
 	</c:if>
 	$("#registRealName").formValidator({onShow:"请输入名称",onFocus:"名称至少5个字符,最多200个字符",onCorrect:"输入合法"}).inputValidator({min:5,max:200,onError:"名称非法,请确认"});
 	$("#provinc").formValidator({onShow:"请选择省份",onFocus:"请选择省份",onCorrect:"选择合法"}).inputValidator({min:1,onError: "省份未选择,请选择!"});
-	$("#city").formValidator({onShow:"请选择城市",onCorrect:"选择合法"}).inputValidator({min:1,onError: "城市未选择,请选择!"});
-	$("#area").formValidator({empty:true,onShow:"请选择市区",onCorrect:"选择合法"}).inputValidator({min:1,onError: "市区未选择,请选择!"});
+	$("#city").formValidator({empty:true,onShow:"请选择城市",onCorrect:"选择合法"}).inputValidator({min:1,onError: "城市未选择,请选择!"});
+	//$("#area").formValidator({empty:true,onShow:"请选择市区",onCorrect:"选择合法"}).inputValidator({min:1,onError: "市区未选择,请选择!"});
 	$("#EMail").formValidator({empty:true,onShow:"请输入邮箱，可以为空哦",onFocus:"邮箱6-100个字符,请确认",onCorrect:"输入合法"}).inputValidator({min:6,max:100,onError:"你输入的邮箱长度非法,请确认"}).regexValidator({regExp:"^([\\w-.]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([\\w-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$",onError:"你输入的邮箱格式不正确"});
 	$("#bankId").formValidator({onShow:"请选择所属银行",onCorrect:"选择合法"}).inputValidator({min:1,onError: "银行未选择,请选择!"});
 	$("#bankDeposit").formValidator({onShow:"请输入开户行",onFocus:"开户行至少5个字符,最多200个字符",onCorrect:"输入合法"}).inputValidator({min:5,max:200,onError:"开户行非法,请确认"});
@@ -171,7 +171,7 @@ function initArea(){
                        <td><div id="cityTip" style="width:250px"></div></td>
                         
                     </tr>
-                    <tr>
+                    <tr style="display:none;">
                         <td height="40" align="right">所属市区：</td>
                         <td align="left"> 
                   <select class="zc_city"  style="width:190px;" id="area" name="area" onmousewheel="return false">

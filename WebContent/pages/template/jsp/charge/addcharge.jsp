@@ -17,8 +17,8 @@ $(document).ready(function(){
   
 	$("#enterpriseName").formValidator({onShow:"请输入收费单位名称",onFocus:"登录名至少5个字符,最多50个字符",onCorrect:"输入合法"}).inputValidator({min:5,max:50,onError:"名称非法,请确认"});
 	$("#provinc").formValidator({onShow:"请选择省份",onFocus:"省份必须选择",onCorrect:"选择合法"}).inputValidator({min:1,onError: "省份未选择,请选择!"});
-	$("#city").formValidator({onShow:"请选择城市",onFocus:"城市必须选择",onCorrect:"选择合法"}).inputValidator({min:1,onError: "城市未选择,请选择!"});
-	$("#area").formValidator({empty:true,onShow:"请选择市区",onFocus:"请选择市区",onCorrect:"选择合法"}).inputValidator({min:1,onError: "市区未选择,请选择!"});
+	$("#city").formValidator({empty:true,onShow:"请选择城市",onFocus:"城市必须选择",onCorrect:"选择合法"}).inputValidator({min:1,onError: "城市未选择,请选择!"});
+	//$("#area").formValidator({empty:true,onShow:"请选择市区",onFocus:"请选择市区",onCorrect:"选择合法"}).inputValidator({min:1,onError: "市区未选择,请选择!"});
 	$("#payType").formValidator({onShow:"请选择收费类型",onFocus:"收费类型必须选择",onCorrect:"选择合法"}).inputValidator({min:1,onError: "收费类型未选择,请选择!"});
 	$("#careNumber").formValidator({onShow:"请输入有效银行账户",onFocus:"名称至少16个字符,最多20个字符",onCorrect:"输入合法"}).inputValidator({min:16,max:20,onError:"有效银行账户非法,请确认"});
 	$("#bankId").formValidator({onShow:"请选择所属银行",onCorrect:"选择合法"}).inputValidator({min:1,onError: "银行未选择,请选择!"});
@@ -127,7 +127,7 @@ function initArea(){
                         </select></td>
                         <td><div id="cityTip" style="width:250px"></div></td>
                     </tr>
-                    <tr>
+                    <tr style="display:none;">
                         <td height="40" align="right">所属市区：</td>
                         <td align="left"> 
                   <select class="zc_city"  style="width:190px;" id="area" name="area">

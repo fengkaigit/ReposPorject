@@ -27,7 +27,7 @@ $(document).ready(function(){
 	//$("#provinc").formValidator({onShow:"请选择省份",onFocus:"请选择省份",onCorrect:"选择合法"}).inputValidator({min:1,onError: "省份未选择,请选择!"});
 	//$("#city").formValidator({onShow:"请选择城市",onFocus:"请选择城市",onCorrect:"选择合法"}).inputValidator({min:1,onError: "城市未选择,请选择!"});
 	//$("#status").formValidator({onShow:"请选择状态",onCorrect:"选择合法"}).inputValidator({min:1,onError: "城市未选择,请选择!"});	
-	$("#content").formValidator({onShow:"请输入内容",onFocus:"请输入内容",onCorrect:"输入合法"}).inputValidator({min:1,onError: "内容不能为空!"});
+	$("#content").formValidator({onShow:"请输入内容",onFocus:"请输入内容",onCorrect:"输入合法"}).inputValidator({min:1,empty:{leftEmpty:false,rightEmpty:false,emptyError:"内容两边不能有空字符"},onError: "内容不能为空!"});
 	//$("#passwd").formValidator({onShow:"请输入密码",onFocus:"至少4个长度,最多20个长度",onCorrect:"密码合法"}).inputValidator({min:4,max:20,empty:{leftEmpty:false,rightEmpty:false,emptyError:"密码两边不能有空符号"},onError:"密码不合法,请确认"});
 	//$("#confirmPassword").formValidator({onShow:"输再次输入密码",onFocus:"至少4个长度,最多20个长度",onCorrect:"密码一致"}).inputValidator({min:4,max:20,empty:{leftEmpty:false,rightEmpty:false,emptyError:"重复密码两边不能有空符号"},onError:"重复密码密码不合法,请确认"}).compareValidator({desID:"passwd",operateor:"=",onError:"两次密码不一致,请确认"});
 	<c:if test="${announce.id!=null}">
@@ -88,6 +88,11 @@ function getArea(id,elementId,initMessage,selectedValue){
 }
 function initArea(){
 	editor1.sync();
+	//var content = $("#content").val();
+	//if(content==''){
+		//alert('公告内容不能为空');
+		//return false;
+	//}
 	var pro = $("#provinc").val();
 	var city = $("#city").val();
 	var areaId = document.getElementById("areaId");
@@ -149,7 +154,7 @@ function showcity(value,selectValue){
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" name="title" class="on-show" autocomplete="off" id="title" value="${announce.title}" /><span></span></td>
+                                        <td><input type="text" name="title" style="width:290px;" class="on-show" autocomplete="off" id="title" value="${announce.title}" /><span></span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -158,7 +163,7 @@ function showcity(value,selectValue){
                     </tr>
                    <tr>
                         <td height="40" align="right">公告范围：</td>
-                        <td align="left"><select class="zc_city"  style="width:190px;" id="announcementScope" name="announcementScope" onchange="showcity(this.value)">
+                        <td align="left"><select class="zc_city"  style="width:300px;" id="announcementScope" name="announcementScope" onchange="showcity(this.value)">
                              <option value="0">全国</option>
                              <option value="1">省</option>
                              <option value="2">市</option>
@@ -169,7 +174,7 @@ function showcity(value,selectValue){
                     <tr>
                         <td height="40" align="right">公告分组：</td>
                         <td align="left"> 
-                        <select class="zc_city"  style="width:190px;" id="announcementGroup" name="announcementGroup">
+                        <select class="zc_city"  style="width:300px;" id="announcementGroup" name="announcementGroup">
                               <option value="0">代理商</option>
                               <option value="1">用户</option>
                         </select></td>
@@ -177,7 +182,7 @@ function showcity(value,selectValue){
                     </tr>
                     <tr id="annMong" style="display:none;">
                         <td height="40" align="right">省份：</td>
-                        <td align="left"> <input type="hidden" name="areaId" id="areaId" value="${announce.areaId}"/><select class="zc_city"  style="width:190px;" id="provinc" name="provinc" onchange="getArea(this.value,'city','请选择城市')">
+                        <td align="left"> <input type="hidden" name="areaId" id="areaId" value="${announce.areaId}"/><select class="zc_city"  style="width:300px;" id="provinc" name="provinc" onchange="getArea(this.value,'city','请选择城市')">
                              <option value="">请选择省份</option>
                             <c:forEach var="area" items="${areas}" varStatus="status"> 
                             <option value="${area.id}">${area.province}</option>
@@ -189,7 +194,7 @@ function showcity(value,selectValue){
                     <tr id="annCity" style="display:none;">
                         <td height="40" align="right">市：</td>
                         <td align="left"> 
-                  <select class="zc_city"  style="width:190px;" id="city" name="city">
+                  <select class="zc_city"  style="width:300px;" id="city" name="city">
                              <option value="">请选择市</option>
                         </select></td>
                         <td><div id="cityTip" style="width:250px"></div></td>
@@ -197,7 +202,7 @@ function showcity(value,selectValue){
                     <tr>
                         <td height="40" align="right">公告状态：</td>
                         <td align="left"> 
-                  <select class="zc_city"  style="width:190px;" id="status" name="status">
+                  <select class="zc_city"  style="width:300px;" id="status" name="status">
                              <c:forEach var="st" items="${status}" varStatus="status"> 
                               <option value="${st.id.dataValue}">${st.propChName}</option>
                              </c:forEach>
@@ -210,7 +215,7 @@ function showcity(value,selectValue){
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td><textarea style="width: 100%;height:280px;visibility:hidden;" id="content" name="content">${announce.content}</textarea><span class="word_count">0</span>字</td>
+                                        <td><textarea style="width: 295px;height:300px;visibility:hidden;" id="content" name="content">${announce.content}</textarea><span class="word_count">0</span>字</td>
                                     </tr>
                                 </tbody>
                             </table>
