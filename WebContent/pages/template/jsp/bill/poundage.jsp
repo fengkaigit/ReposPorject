@@ -13,7 +13,7 @@
 <%@include file="/pages/template/jsp/common/sysheader.jsp"%>
 <div class="ui-container clearfix" id="container">  
   <div class="jfzh-title"><span class="icon1"></span>
-最终盈利划款单查询
+手续费划款单查询
   </div>
 <div class="jfzh-con">
 
@@ -31,7 +31,7 @@
     <td>划款时间</td>
     <td>状态</td>
   </tr>
-  <c:forEach var="item" items="${incomelist}" varStatus="status">
+  <c:forEach var="item" items="${poundagelist}" varStatus="status">
    <tr <c:choose>
        <c:when test="${(status.index+1) % 2 == 0}">
          class="add"
@@ -41,7 +41,7 @@
        </c:otherwise>
      </c:choose> >
     <td>&nbsp;${status.index+1}</td>
-    <td>&nbsp;<a title="查看对应劳务费划款单" class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/bill/showServiceIncome/${item.id}.do')">${item.id}</a></td>
+    <td>&nbsp;<a title="查看对应劳务费划款单" class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/bill/showServicePoundage/${item.id}.do')">${item.id}</a></td>
     <td>&nbsp;${item.profitMoney}</td>
     <td>&nbsp;${item.createDate}</td>
     <td>&nbsp;${item.confirmDate}</td>

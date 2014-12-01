@@ -1,12 +1,15 @@
 package com.ey.dao.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.ey.bo.PaymentBillBo;
 import com.ey.bo.ServiceChargeBillBo;
+import com.ey.bo.SettleBillBo;
 import com.ey.dao.BillDAO;
 
 import com.ey.dao.base.impl.BaseDAOImpl;
@@ -15,10 +18,19 @@ import com.ey.dao.base.impl.BaseDAOImpl;
 public class BillDAOImpl extends BaseDAOImpl implements BillDAO {
 
 	@Override
-	public List<ServiceChargeBillBo> getServiceBillList()
+	public List<ServiceChargeBillBo> getServiceBillList(Date startDate, Date endDate)
 			throws RuntimeException {
 		String hql = "select new com.ey.bo.ServiceChargeBillBo(a.id,a.createDate,a.confirmDate,a.profitMoney,a.status,b.propChName) from ServiceChargeBill a,BaseCustomValue b where b.id.customEngName='transfer_bill_status' and a.status=b.id.dataValue ";
-		List<ServiceChargeBillBo> lst = this.find(hql);
+		List<Object> params = new ArrayList();
+		if (startDate!=null){
+			hql = hql + " and a.createDate>=?";
+			params.add(startDate);
+		}
+		if (endDate!=null){
+			hql = hql + " and a.createDate<=?";
+			params.add(endDate);
+		}
+		List<ServiceChargeBillBo> lst = this.find(hql,params.toArray());
 		return lst;
 	}
 
@@ -36,6 +48,44 @@ public class BillDAOImpl extends BaseDAOImpl implements BillDAO {
 		return lst;
 	}
 
+	@Override
+	public List<ServiceChargeBillBo> getPoundageBillList()
+			throws RuntimeException {
+		String hql = "select new com.ey.bo.ServiceChargeBillBo(a.id,a.createDate,a.confirmDate,a.profitMoney,a.status,b.propChName) from PoundageBill a,BaseCustomValue b where b.id.customEngName='transfer_bill_status' and a.status=b.id.dataValue ";
+		List<ServiceChargeBillBo> lst = this.find(hql);
+		return lst;
+	}
+
+	@Override
+	public List<ServiceChargeBillBo> getServiceBillList(
+			Long poundageBillId, String tableName, String relationName, String colName) throws RuntimeException {
+		String hql = "select new com.ey.bo.ServiceChargeBillBo(a.id,a.createDate,a.confirmDate,a.profitMoney,a.status,b.propChName) from "+tableName+" a,BaseCustomValue b,"+relationName+" c where b.id.customEngName='transfer_bill_status' and a.status=b.id.dataValue and a.id=c.id.serviceBillId and c.id."+colName+"=?";
+		List<ServiceChargeBillBo> lst = this.find(hql,new Object[]{poundageBillId});
+		return lst;
+	}
 	
+	@Override
+	public List<ServiceChargeBillBo> getProfitBillList()
+			throws RuntimeException {
+		String hql = "select new com.ey.bo.ServiceChargeBillBo(a.id,a.createDate,a.confirmDate,a.profitMoney,a.status,b.propChName) from ProfitBill a,BaseCustomValue b where b.id.customEngName='transfer_bill_status' and a.status=b.id.dataValue ";
+		List<ServiceChargeBillBo> lst = this.find(hql);
+		return lst;
+	}
+
+	@Override
+	public List<ServiceChargeBillBo> getIncomeBillList()
+			throws RuntimeException {
+		String hql = "select new com.ey.bo.ServiceChargeBillBo(a.id,a.createDate,a.confirmDate,a.profitMoney,a.status,b.propChName) from IncomeBill a,BaseCustomValue b where b.id.customEngName='transfer_bill_status' and a.status=b.id.dataValue ";
+		List<ServiceChargeBillBo> lst = this.find(hql);
+		return lst;
+	}
+
+	@Override
+	public java.util.List<SettleBillBo> getSettleBillList()
+			throws RuntimeException {
+		String hql = "select new com.ey.bo.SettleBillBo(a.id,a.createDate,a.confirmDate,a.profitMoney,a.status,a.agentId,c.registRealName,b.propChName) from SettleBill a,BaseCustomValue b, AgentInfo c where b.id.customEngName='transfer_bill_status' and a.status=b.id.dataValue and a.agentId=c.id";
+		List<SettleBillBo> lst = this.find(hql);
+		return lst;
+	}
 
 }

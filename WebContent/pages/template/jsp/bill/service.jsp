@@ -8,6 +8,7 @@
 <title>e缴365</title>
 <meta content="" name="description">
 <%@include file="/pages/template/jsp/common/common.jsp"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/allQuery.css">
 </head>
 <body>
 <%@include file="/pages/template/jsp/common/sysheader.jsp"%>
@@ -16,12 +17,20 @@
  劳务费划款单查询
   </div>
 <div class="jfzh-con">
-
-	
-    <div class="jfzh-bottom clearfix">    
+    <div class="jfzh-bottom clearfix">
 	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;划款单信息</span>
+<%-- 	<c:if test="${flag!=1}"><form id="queryForm" method="post" action="<%=request.getContextPath() %>/bill/servicelist.do">
+	<div class="jy_date">
+	<span class="fr cur" >
+		生成日期： 从&nbsp;
+	    <input type="text" onClick="WdatePicker()" size="10" class="Wdate" id="startDate" value="2014-07-31" name="startDate">&nbsp;&nbsp;到&nbsp;&nbsp;<input type="text" size="10" onClick="WdatePicker()" class="Wdate" id="endDate" value="2014-12-31" name="endDate">
+		&nbsp;
+		<input type="submit" class="jycx" value="查 询" id="btnSearch">
+	</span>
 	</div>
-  
+	</form>
+	</c:if> --%>
+	</div>
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
   <tr class="add">
     <td>序号</td>
