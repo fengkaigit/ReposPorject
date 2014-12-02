@@ -74,7 +74,12 @@
 															</li>
 															
 															
-															
+								<li class="myapp-item  fn-clear">
+								<a seed="myapp-item-1000000113" href="<%=request.getContextPath() %>/cnf/first.do">
+									<span data-id="10108" class="myapp-icon icon-apps24-10108">采暖费缴费</span>
+									<span class="myapp-item-name">采暖费缴费</span>
+																										</a>
+															</li>							
 													
 													</ul>
 					</div>
@@ -99,11 +104,10 @@
         <div class="clear"></div>
         <div style="margin-bottom: 0px; display: block; float: left;" id="icon_title_0000"><div style="float:left">支付结果<span class="icon_futitle">单笔账单快速支付</span></div>
           <span style="float:right; margin-top:15px; margin-right:40px;" class="lcyst03">
-		  <a class="ywjs" target="_blank" onClick="show('addbills')">缴费账号设置</a>
+		  <a class="ywjs"  onClick="quickSetting('<%=request.getContextPath() %>',0)">缴费账号设置</a>
 		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" style="color:#007abd;float:left;" onClick="show('zdtx')">账单提醒设置</a>
-		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" target="_blank" href="jiaofei_jlcx.html">缴费记录查询</a>
+		 
+		  <a class="ywjs00" target="_blank" href="<%=request.getContextPath() %>/jf/query.do">缴费记录查询</a>
 		  </span></div> 
         <div class="clear"></div>
       <div class="tx_step4">
@@ -122,7 +126,7 @@
   	<li><span>订单编号：</span>${WATER_BILL.billNo}</li>
    
     <li><span>订单日期：</span>${WATER_BILL.billDate}</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${WATER_BILL.billMoney+WATER_BILL.poundage}元（包含代缴服务费1元）</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${WATER_BILL.billMoney+WATER_BILL.poundage}元（包含代缴服务费${WATER_BILL.poundage}元）</li>
 
 	
    </ul>
@@ -171,7 +175,7 @@
     <td width="15%">&nbsp;分户账号</td>
     <td width="30%">&nbsp;${WATER_BILL.billNumber}</td>
     <td width="15%">&nbsp;缴费地址</td>
-    <td width="30%">&nbsp;呼和浩特新城区希望小区19#502</td>
+    <td width="30%">&nbsp;${WATER_BILL.payAddress}</td>
   </tr>
   <tr>
     <td>&nbsp;账期</td>
@@ -179,7 +183,12 @@
     <td>&nbsp;金额</td>
     <td>&nbsp;${WATER_BILL.billMoney}元</td>
   </tr>
- 
+ <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;代缴服务费</td>
+    <td>&nbsp;${WATER_BILL.poundage}元</td>
+  </tr>
 </table>
 <table width="90%" border="0" cellspacing="0" cellpadding="0" class="tab3 tab-style" style="border-top:0px;">
    <tr bgcolor="#e6edfb">

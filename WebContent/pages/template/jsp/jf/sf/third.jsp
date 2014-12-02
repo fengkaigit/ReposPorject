@@ -89,7 +89,12 @@ $(document).ready(function(){
 															
 															
 															
-													
+												<li class="myapp-item  fn-clear">
+								<a seed="myapp-item-1000000113" href="<%=request.getContextPath() %>/cnf/first.do">
+									<span data-id="10108" class="myapp-icon icon-apps24-10108">采暖费缴费</span>
+									<span class="myapp-item-name">采暖费缴费</span>
+																										</a>
+															</li>	
 													</ul>
 					</div>
 				</div>
@@ -114,11 +119,10 @@ $(document).ready(function(){
         <div class="clear"></div>
         <div style="margin-bottom: 0px; display: block; float: left;" id="icon_title_0000"><div style="float:left">线上缴费<span class="icon_futitle">单笔账单快速支付</span></div>
           <span style="float:right; margin-top:15px; margin-right:40px;" class="lcyst03">
-		  <a class="ywjs" target="_blank" onClick="show('addbills')">缴费账号设置</a>
+		  <a class="ywjs" onClick="quickSetting('<%=request.getContextPath() %>',0)">缴费账号设置</a>
 		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" target="_blank" href="jiaofei_jftx.html">账单提醒设置</a>
-		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" target="_blank" href="jiaofei_jlcx.html">缴费记录查询</a>
+		 
+		  <a class="ywjs00" target="_blank" href="<%=request.getContextPath() %>/jf/query.do">缴费记录查询</a>
 		  </span></div> 
         <div class="clear"></div>
       <div class="tx_step3">
@@ -135,7 +139,7 @@ $(document).ready(function(){
     <ul >
   	<li><span>订单编号：</span>${WATER_BILL.billNo}</li>
     <li><span>收费单位：</span>${WATER_BILL.endName}</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${WATER_BILL.billMoney+WATER_BILL.poundage}元（包含代缴服务费1元）</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${WATER_BILL.billMoney+WATER_BILL.poundage}元（包含代缴服务费${WATER_BILL.poundage}元）</li>
    </ul>
   </fieldset>
 

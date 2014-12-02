@@ -8,6 +8,29 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
+<script language="javascript">
+$(document).ready(function(){
+	refreshAreaId(document.getElementById("_parentAreaId"));
+	refreshCityId(document.getElementById("_areaId"));
+	$.formValidator.initConfig({formID:"form1",alertMessage:true,debug:false,submitOnce:true,
+		onError:function(msg,obj,errorlist){
+			alert(msg);
+		},
+		submitAfterAjaxPrompt : '有数据正在异步验证，请稍等...'
+	});
+	$("#areaId").formValidator().inputValidator({min:1,onError:"请选择城市"});
+	$("#carOwner").formValidator().inputValidator({min:1,max:30,onError:"请输入行驶证车主"});
+	$("#billNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入车牌号码"});
+	$("#payAddress").formValidator().inputValidator({min:1,max:100,onError:"请输入不多于100个字的缴费住址"});
+	$("#carframeNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入车架号码"});
+	$("#engineNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入发动机号"});
+	
+	$("#billMoney").formValidator().regexValidator({regExp:"decmal1",dataType:"enum",onError:"请输入合法缴费金额"});
+	$("#poundage").formValidator().regexValidator({regExp:"decmal1",dataType:"enum",onError:"代缴劳务费金额非法"});
+	registerBillNumber('<%=request.getContextPath()%>','${paymentType}');
+	
+});
+</script>
 </head>
 <body>
 <%@include file="/pages/template/jsp/common/header.jsp"%>
@@ -73,7 +96,12 @@
 															
 															
 															
-													
+													<li class="myapp-item  fn-clear">
+								<a seed="myapp-item-1000000113" href="<%=request.getContextPath() %>/cnf/first.do">
+									<span data-id="10108" class="myapp-icon icon-apps24-10108">采暖费缴费</span>
+									<span class="myapp-item-name">采暖费缴费</span>
+																										</a>
+															</li>
 													</ul>
 					</div>
 				</div>
@@ -93,24 +121,16 @@
       <div style="overflow: hidden;" class="znx_r">
 
     	<div class="tcxx_tt">
-    		<input type="hidden" value="0000" id="divId">
-    		<input type="hidden" value="" id="isCommunica">
-    		<input type="hidden" value="" id="fromCart">
-    		<input type="hidden" value="" id="catalogEntryId">
-
-        	<!--<span class="tcxx_tt_a">
-        	 <a href="/shanghai/shuifei">水费</a>
-        	  &gt; <span class="tcxx_tt_b">填写付费信息</span></span>-->
+    		
         	  
         </div>
         <div class="clear"></div>
         <div style="margin-bottom: 0px; display: block; float: left;" id="icon_title_0000"><div style="float:left">交通缴费<span class="icon_futitle">单笔账单快速支付</span></div>
           <span style="float:right; margin-top:15px; margin-right:40px;" class="lcyst03">
-		  <a class="ywjs" target="_blank" onClick="show('addbills')">交通缴费设置</a>
+		  <a class="ywjs" onClick="quickSetting('<%=request.getContextPath() %>',5)">交通缴费设置</a>
 		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" style="color:#007abd;float:left;" onClick="show('zdtx')">账单提醒设置</a>
-		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" target="_blank" href="jiaofei_jlcx.html">缴费记录查询</a>
+		  
+		  <a class="ywjs00" target="_blank" href="<%=request.getContextPath() %>/jf/query.do">缴费记录查询</a>
 		  </span></div> 
         <div class="clear"></div>
       <div class="tx_step">
@@ -126,29 +146,19 @@
         		<div style="border-bottom:1px solid #9D9D9D; margin:0px 0px 10px 0px; padding:10px 0px 10px 0px;"> 
 				  <div style="font-size:14px; width:85px; overflow:hidden; padding-left:8px; float:left;"><span style="display:block;padding-top:px;"> 违章地区：</span></div>
 				  <div style="float:left;">
-				  <select style="margin-left:0px;width:85px;" class="selectCss" default="内蒙古" onChange="jQuery.shfftBillCharge.billAreaChange(this,'billCity')" id="billArea" name="billAreaSel" onmousewheel="return false">
-				  <option id="内蒙古" value="内蒙古" statuscode="00" statusname="" limit="" paymentcart="">内蒙古</option>
-				  <option id="浙江" value="浙江" statuscode="00" statusname="" limit="" paymentcart="">浙江</option>
-				  <option id="云南" value="云南" statuscode="00" statusname="" limit="" paymentcart="">云南</option>
-				  <option id="江西" value="江西" statuscode="00" statusname="" limit="" paymentcart="">江西</option>
-				  <option id="河南" value="河南" statuscode="00" statusname="" limit="" paymentcart="">河南</option>
-				  <option id="北京" value="北京" statuscode="00" statusname="" limit="" paymentcart="">北京</option>
-				  <option id="辽宁" value="辽宁" statuscode="00" statusname="" limit="" paymentcart="">辽宁</option>
-				  <option id="江苏" value="江苏" statuscode="00" statusname="" limit="" paymentcart="">江苏</option>
-				  <option id="山东" value="山东" statuscode="00" statusname="" limit="" paymentcart="">山东</option>
-				  <option id="黑龙江" value="黑龙江" statuscode="00" statusname="" limit="" paymentcart="">黑龙江</option>
-				  <option id="安徽" value="安徽" statuscode="00" statusname="" limit="" paymentcart="">安徽</option>
-				  <option value="其他">其他</option></select>
+				 		  
+				  <select style="margin-left:24px;width:85px;" class="selectCss" onchange="refreshCity(this,'<%=request.getContextPath() %>','_areaId');refreshAreaId(this);" id="_parentAreaId" name="_parentAreaId" onmousewheel="return false">
+				  
+				  	<c:forEach var="item" items="${areaList}" varStatus="status">
+                      <option value="${item.id}" <c:if test="${item.id==parent}">selected="selected"</c:if>>${item.province}</option>
+                    </c:forEach>
+				 </select>
                   
-				  <select style="width:85px; margin-left:8px; " class="selectCss" default="内蒙古" onChange="jQuery.shfftBillCharge.billCityChange()" id="billCity" name="billCitySel" onmousewheel="return false">
-				  <option id="呼和浩特" value="呼和浩特" statuscode="00" statusname="" limit="" paymentcart="">呼和浩特</option>
-				  <option value="包头">包头</option>
-				  <option value="乌兰察布">乌兰察布</option>
-				  <option value="鄂热多斯">鄂热多斯</option>
-				  <option value="赤峰">赤峰</option>
-				  <option value="通辽">通辽</option>
-				  <option value="乌海">乌海</option>
-				  <option value="临河">临河</option></select>
+				  <select style="width:85px; margin-left:8px; " class="selectCss" id="_areaId" name="_areaId" onmousewheel="return false" onchange="refreshCityId(this);">
+				  	<c:forEach var="item" items="${cityList}" varStatus="status">
+                      <option value="${item.id}" <c:if test="${item.id==areaId}">selected="selected"</c:if>>${item.province}</option>
+                    </c:forEach>
+				  </select>
                   </div>
                   <div style="clear:both;height:1px; overflow:hidden;"></div>
 				</div>
@@ -161,38 +171,42 @@
                     	
 					<div>
 		<label style="font-size:14px; margin-right:8px;line-height:30px;">行驶证车主：</label>
-		<input type="hidden" value="1" id="singleBillType" name="billSubmitVo.billType">
-		   <input type="text"value="200206342" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
-		   &nbsp;&nbsp;
-           <input name="" type="checkbox" value=""> <span class="font2">备存账号信息</span>
+		
+		   <input type="text" value="${hoster}" class="on-show" id="carOwner" name="carOwner" maxlength="10">
+		   
 	</div>
 					 
 					 <div style="padding:20px 0px 0px 0px;">
 						<label style="font-size:14px;">&nbsp;&nbsp;&nbsp;车辆类型：</label>
-		                &nbsp;&nbsp;<select class="selectCss" default="" onchange="jQuery.shfftBillCharge.billOrgChange(this,'queryBillChargeMode')" id="billOrg" name="billOrgSel" onmousewheel="return false">
-						<option id="888883200942900" value="888883200942900" statuscode="00" statusname="" limit="" paymentcart="1">小型车</option>
-						<option id="888883200942900" value="888883200942900" statuscode="00" statusname="" limit="" paymentcart="0">大型车</option>
-						<option id="888883200942900" value="888883200942900" statuscode="00" statusname="" limit="" paymentcart="0">挂车</option>
-						<option id="888883200942900" value="888883200942900" statuscode="00" statusname="" limit="" paymentcart="0">摩托车</option></select>
+		                &nbsp;&nbsp;<select class="selectCss"  onchange="" id="carType" name="carType" onmousewheel="return false">
+						<option  value="0" >小型车</option>
+						<option  value="1" >大型车</option>
+						<option  value="2" >挂车</option>
+						<option  value="3">摩托车</option></select>
 					</div>
 					
 								<div>
-		<label style="font-size:14px; margin-right:8px;line-height:40px;">车牌号码：</label>
-		<input type="hidden" value="1" id="singleBillType" name="billSubmitVo.billType">
-		   <input type="text"value="蒙A99999" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
-		   
+		<label style="font-size:14px; margin-right:8px;line-height:60px;">车牌号码：</label>
+		
+		   <input type="text" class="on-show" id="billNumber" name="billNumber" maxlength="10"  value="${billNumber}">
+		   &nbsp;&nbsp;
+           <input name="bczh" type="checkbox"  checked="checked"> <span class="font2">备存账号信息</span>
 	</div>
-					
+			<div>
+		<label style="font-size:14px; margin-right:8px;line-height:60px;">缴费住址：</label>
+		   <input type="text" class="on-show" id="payAddress" name="payAddress" maxlength="100" value="${payAddress}">
+           
+	</div>			
                     			<div>
 		<label style="font-size:14px; margin-right:8px;line-height:60px;">车架号码：</label>
-		<input type="hidden" value="1" id="singleBillType" name="billSubmitVo.billType">
-		   <input type="text"value="LS9012902" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
+		
+		   <input type="text" value="" class="on-show" id="carframeNumber" name="carframeNumber" maxlength="10">
 		   
 	</div>
                     				<div>
 		<label style="font-size:14px; margin-right:8px;line-height:80px;">发动机号：</label>
-		<input type="hidden" value="1" id="singleBillType" name="billSubmitVo.billType">
-		   <input type="text" value="LS909090" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
+	
+		   <input type="text" value="" class="on-show" id="engineNumber" name="engineNumber" maxlength="10">
 		   
 	</div>
                     
@@ -221,31 +235,26 @@
         <!-- 缴费提示信息  原idchargeAttention  注释id：chargeAttention2来隐藏信息-->
         <div>
 		<label style="font-size:14px; margin-right:8px;line-height:30px;"> &nbsp;&nbsp;&nbsp;缴费金额：</label>
-		   <input type="text"value="100" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
+		   <input type="text" value="" class="on-show" id="billMoney" name="billMoney" maxlength="10">
 	&nbsp;&nbsp;元</div>
      
 	<div style="margin-top:10px;clear:both;">
 		<label style="font-size:14px; margin-right:8px;line-height:30px;">代缴劳务费：</label>
-		   <input type="text"value="20" class="on-show" id="billSubmitVoBillNo" name="billSubmitVo.billNo" maxlength="10">
+		   <input type="text" value="${poundage}" class="on-show" id="poundage" name="poundage" maxlength="10" readonly="readonly">
 	&nbsp;&nbsp;元</div>
     <div style="margin-left:78px;line-height:20px;height:20px;display:none;clear:both;" class="onShow" id="billSubmitVoBillNoTip">请输入查询编号</div>
 	
 
- <div style="margin-bottom: 0px; margin-top:5px;clear:both;">
-      <label style="font-size:14px; margin-right: 8px;line-height:40px;">
-      验证码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
-      <input type="text" style="width:86px;border:1px solid #d5d5d5;height:29px;line-height:29px;  padding:3px;margin-top:7px;color:#666" class="cxbh_s" name="billSubmitVo.verify" maxlength="4" onClick="jQuery.shfftBillCharge.getVerifyCode('validateImg');{value='';this.style.color='#333'}" onBlur="if(!value){value=defaultValue;this.style.color='#666'}" value="点此获取验证码">&nbsp;&nbsp;<img src="<%=request.getContextPath() %>/images/registerRandomImg.action.jpg" > 	
-       <!-- 图片验证码 -->
-        <a href="javascript:jQuery.shfftBillCharge.refreshVerifyCode('validateImg');">
-        <img onClick="javascript:jQuery.shfftBillCharge.refreshVerifyCode(this.id);" style="vertical-align: middle;margin-left:10px;display: none" title="点击验证码图片更换验证码!" id="validateImg">
-        </a>
-	
-  </div>
+
+
   <div style="font-family:'微软雅黑'; width:120px; margin:0px auto;">
+  <input type="hidden" id="parentAreaId" name="parentAreaId"/>
+<input type="hidden" id="areaId" name="areaId"/>
+<input type="hidden" id="paymentType" name="paymentType" value="${paymentType}"/>
 		<input  type="submit" class="jfxx_btn3" value="下一步" name="searchBill">
        </div>
   <span class="icon_futitle">
-  <p>  &nbsp;1、因暂未开通与交管局的系统对接，故暂采取人工跑腿代缴方式完成亲的缴费，故在正常水费基础上增加1元代缴者的劳务费，请亲谅解！</p>
+  <p>  &nbsp;1、因暂未开通与交管局的系统对接，故暂采取人工跑腿代缴方式完成亲的缴费，故在正常水费基础上增加${poundage}元代缴者的劳务费，请亲谅解！</p>
   <p>  &nbsp;2、有需要发票的亲，可自行到自来水公司网点柜台打印，或留下地址邮寄给您，但邮寄费需要您来承担。</p></span>
 
                 <div style="clear:both"></div>

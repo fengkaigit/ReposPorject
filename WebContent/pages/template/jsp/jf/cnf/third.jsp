@@ -3,12 +3,11 @@
     pageEncoding="utf-8"%>
 <html>
 <head>
-<title>电费缴费线上支付 - 生活助手</title>
+<title>采暖费缴费线上支付 - 生活助手</title>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
-
 <script language="javascript">
 $(document).ready(function(){
 	$.formValidator.initConfig({formID:"form1",alertMessage:true,debug:false,submitOnce:true,
@@ -39,16 +38,15 @@ $(document).ready(function(){
 					</div>
 					<div class="ui-box-container">
 						<ul>
-								<li class="myapp-item  fn-clear">
+								<li class="myapp-item   fn-clear">
 								<a seed="myapp-item-1000000016" href="<%=request.getContextPath() %>/sf/first.do">
 									<span data-id="10016" class="myapp-icon icon-apps24-10016">自来水缴费</span>
-									<span class="myapp-item-name">自来水缴费</span>															
-									                                   </a>
+									<span class="myapp-item-name">自来水缴费</span>	<span class="my-app-item-hot" title="热门应用">热门应用</span>																</a>
 								</li>
-								<li class="myapp-item  myapp-item-selected  fn-clear">
+								<li class="myapp-item   fn-clear">
 								<a seed="myapp-item-1000000048" href="<%=request.getContextPath() %>/df/first.do">
 									<span data-id="10048" class="myapp-icon icon-apps24-10048">电费缴费</span>
-									<span class="myapp-item-name">电费缴费</span><span class="my-app-item-hot" title="热门应用">热门应用</span>	
+									<span class="myapp-item-name">电费缴费</span>
 																		</a>
 															</li>
 															<li class="myapp-item  fn-clear">
@@ -89,13 +87,13 @@ $(document).ready(function(){
 															</li>
 															
 															
-															
-													<li class="myapp-item  fn-clear">
+								<li class="myapp-item myapp-item-selected fn-clear">
 								<a seed="myapp-item-1000000113" href="<%=request.getContextPath() %>/cnf/first.do">
 									<span data-id="10108" class="myapp-icon icon-apps24-10108">采暖费缴费</span>
 									<span class="myapp-item-name">采暖费缴费</span>
 																										</a>
-															</li>
+															</li>							
+													
 													</ul>
 					</div>
 				</div>
@@ -120,7 +118,7 @@ $(document).ready(function(){
         <div class="clear"></div>
         <div style="margin-bottom: 0px; display: block; float: left;" id="icon_title_0000"><div style="float:left">线上缴费<span class="icon_futitle">单笔账单快速支付</span></div>
           <span style="float:right; margin-top:15px; margin-right:40px;" class="lcyst03">
-		  <a class="ywjs" onClick="quickSetting('<%=request.getContextPath() %>',1)">缴费账号设置</a>
+		  <a class="ywjs" onClick="quickSetting('<%=request.getContextPath() %>',8)">缴费账号设置</a>
 		  <a style="color:#007abd;float:left;">|</a>
 		 
 		  <a class="ywjs00" target="_blank" href="<%=request.getContextPath() %>/jf/query.do">缴费记录查询</a>
@@ -137,10 +135,10 @@ $(document).ready(function(){
         <div class="xxqr" style="margin-top:0px; position:relative;" >
        <fieldset>
     <legend>缴费信息确认</legend>
-    <ul >
-  	<li><span>订单编号：</span>${ELEC_BILL.billNo}</li>
-    <li><span>收费单位：</span>${ELEC_BILL.endName}</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${ELEC_BILL.billMoney+ELEC_BILL.poundage}元（包含代缴服务费${ELEC_BILL.poundage}元）</li>
+   <ul >
+  	<li><span>订单编号：</span>${CNF_BILL.billNo}</li>
+    <li><span>收费单位：</span>${CNF_BILL.endName}</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${CNF_BILL.billMoney+CNF_BILL.poundage}元（包含代缴服务费${CNF_BILL.poundage}元）</li>
    </ul>
   </fieldset>
 
@@ -150,13 +148,13 @@ $(document).ready(function(){
   
   
   
-   <form method="post" id="form1" action="<%=request.getContextPath() %>/df/fourth.do">
+   <form method="post" id="form1" action="<%=request.getContextPath() %>/cnf/fourth.do">
   <div class="zffs">
       
    <fieldset>
     <legend>银行信息</legend>
     
-    	<div>
+    <div>
 		<label style=" margin-left:8px;line-height:30px;"> 支付卡号/支付卡别名：</label>
 		   <input type="text" value="" class="on-show" id="bankAccount" name="bankAccount" maxlength="30">
 	</div>

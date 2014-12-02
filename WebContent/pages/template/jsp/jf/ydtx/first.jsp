@@ -12,7 +12,7 @@
 <script type="text/javascript">
 var tabId=0;
 $(function(){
-	addsj(1000,'defaultTel');
+	
 
 	var x=10;
 var y=20;
@@ -30,7 +30,23 @@ $("#tooltip").css({"top": (e.pageY+y) + "px","left": (e.pageX+x) + "px"});
 })
 	
 });
-
+function checkform(){
+	var mobiles = document.getElementsByName("mobiles");
+	var reg =/^(((13[0-9]{1})|(15[0-9]{1}))+\d{8})$/;	
+	for(var i=0;i<mobiles.length;i++){
+		var mobile = mobiles[i];
+		if(mobile.value==""||mobile.value==null){
+			  alert('请输入手机号码');
+			  mobile.focus();
+			  return false;
+	    }else if (!mobile.value.match(reg)){
+				alert('手机格式不对，请重新输入');
+				mobile.focus();
+				return false;
+		}
+	}
+	return true;
+}
 </script>
 </head>
 <body>
@@ -96,7 +112,12 @@ $("#tooltip").css({"top": (e.pageY+y) + "px","left": (e.pageX+x) + "px"});
 															</li>
 															
 															
-															
+											<li class="myapp-item  fn-clear">
+								<a seed="myapp-item-1000000113" href="<%=request.getContextPath() %>/cnf/first.do">
+									<span data-id="10108" class="myapp-icon icon-apps24-10108">采暖费缴费</span>
+									<span class="myapp-item-name">采暖费缴费</span>
+																										</a>
+															</li>				
 													
 													</ul>
 					</div>
@@ -113,14 +134,9 @@ $("#tooltip").css({"top": (e.pageY+y) + "px","left": (e.pageX+x) + "px"});
 	</div><!-- #J_app_sider -->
     </div>      
           
-    <div coor="default-content" class=" ui-grid-20  ui-grid-right">
-      <div style="overflow: hidden;" class="znx_r">
-
+     <div coor="default-content" class=" ui-grid-20  ui-grid-right">
+      <div  class="znx_r">
     	<div class="tcxx_tt">
-    		<input type="hidden" value="0000" id="divId">
-    		<input type="hidden" value="" id="isCommunica">
-    		<input type="hidden" value="" id="fromCart">
-    		<input type="hidden" value="" id="catalogEntryId">
 
         	<!--<span class="tcxx_tt_a">
         	 <a href="/shanghai/shuifei">水费</a>
@@ -130,12 +146,11 @@ $("#tooltip").css({"top": (e.pageY+y) + "px","left": (e.pageX+x) + "px"});
         <div class="clear"></div>
         <div style="margin-bottom: 0px; display: block; float: left;" id="icon_title_0000"><div style="float:left">移动缴费<span class="icon_futitle">单笔账单快速支付</span></div>
           <span style="float:right; margin-top:15px; margin-right:40px;" class="lcyst03">
-		  <a class="ywjs" onClick="show('addbills')">缴费号码设置</a>
+		  <a class="ywjs" onClick="quickSetting('<%=request.getContextPath() %>',4)">缴费号码设置</a>
 		
 		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" target="_blank" href="jiaofei_jftx.html">账单提醒设置</a>
-		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" target="_blank" href="jiaofei_jlcx.html">缴费记录查询</a>
+		 
+		  <a class="ywjs00" target="_blank" href="<%=request.getContextPath() %>/jf/query.do">缴费记录查询</a>
 		  </span></div> 
         <div class="clear"></div>
       <div class="tx_step">
@@ -146,71 +161,33 @@ $("#tooltip").css({"top": (e.pageY+y) + "px","left": (e.pageX+x) + "px"});
             
         </div>
         <div class="clear"></div>
-        <div class="jf_txxx">
+        <div class="jf_txxx bby clearfix pb10">
         
-        	
-
         	<div class="jf_txxx_left">
-        	
-            	<form  method="post" id="form1" action="<%=request.getContextPath() %>/ydtx/second.do">
-
-					<input type="hidden" id="searchNumber" value="" name="searchNumber">
-					
-					<input type="hidden" id="paymentcart" value="0" name="paymentcart">
-					
-					<input type="hidden" value="" id="webId">
-					
-					
-	                <div style="height:250px;" id="queryBillDiv">
-	    	
-	    		
-				<div id="queryBillChargeDiv">
-
-
-						<input type="hidden" id="qdid" value="" name="qdid">
-
-						<input type="hidden" id="billSubmitVoOrgCode" value="888883200942900" name="billSubmitVo.orgCode">
-
-						<input type="hidden" id="payProvince" value="%E4%BA%91%E5%8D%97" name="payProvince">
-
-						<input type="hidden" id="payCity" value="%E6%98%86%E6%98%8E" name="payCity">
-
-						<input type="hidden" id="catalogEntryId" value="" name="catalogEntryId">
+            	<form  method="post" id="form1" onsubmit="return checkform();" action="<%=request.getContextPath() %>/ydtx/second.do">				
+	                <div style="height:auto;" id="queryBillDiv">
+	    					<div id="queryBillChargeDiv" class="clearfix">
 
 <!--新缴费流程代码-->
-
 	<div id="defaultTel" style="height:auto;"></div>
     <div id="items" style="height:auto;"></div>
     
     	<div style="margin-top:10px;clear:both;" id="add-btn-wrap">
 		<a class="add"  href="javascript:void(0)" onClick="addsj(tabId,'items')">添加号码<span class="add-icon"></span></a>
-		   <input name="" type="checkbox" value=""> <span class="font2 pl4">备存账号信息</span>
+		   <input id="bczh" name="bczh" type="checkbox" checked="checked"> <span class="font2 pl4">备存账号信息</span>
 	</div>			  
-     <div id="yzm">
-          <label class="label"style="  margin-top:10px;"  > 验证码：</label> 
-          <input type="text"  class="cxbh_s"  style="  margin-top:15px;" name="billSubmitVo.verify" maxlength="4" value="点此获取验证码">&nbsp;&nbsp;<img  height="30" src="<%=request.getContextPath() %>/images/registerRandomImg.action.jpg" > 
-    </div>
-
-	  <div style="border-bottom:1px solid #9D9D9D; width:770px; margin:0px 0px 20px 0px; padding:0px 0px 10px 0px;"> 
-	</div>
-<div class="jfxx_btns"><input  type="submit" class="jfxx_btn3" value="下一步" name="searchBill"></div>
-
-
+    
+     <input type="hidden" id="poundage" name="poundage" value="${poundage}"/>
+     <input type="hidden" id="paymentType" name="paymentType" value="${paymentType}"/>   
+    <input  type="submit" class="jfxx_btn3" style=" margin-left:100px; margin-top:20px;" value="下一步" name="searchBill">
 </div>
 	                </div>
 					
 	              	<!--查询元素块-->
-
+					
               	</form>
-              	
+             
             </div>
-            <input type="hidden" value="" id="defaultBillNo">
-            <input type="hidden" value="" id="defaultSTYear">
-          	<input type="hidden" value="" id="defaultSTMonth">
-          	<input type="hidden" value="" id="defaultEDYear">
-          	<input type="hidden" value="" id="defaultEDMonth">
-          	<input type="hidden" value="" id="defaultOPBillIs">
-          	<input type="hidden" value="" id="defaultInFlag">
           
             <!-- 缴费账单样张 -->
             <div style="margin-top:0px; position:relative;" class="jf_txxx_right">
@@ -223,7 +200,7 @@ $("#tooltip").css({"top": (e.pageY+y) + "px","left": (e.pageX+x) + "px"});
 		            <div style="position:relative;" class="check_styles">
 					
 		            
-		                   <div id="chargeOrgBill" class="check_picture"><a href="#"><img src="<%=request.getContextPath() %>/images/no_billImage.jpg" id="billChargeImg"></a></div>
+		                   <div id="chargeOrgBill" class="check_picture"><a href="javascript:void(0);"><img src="<%=request.getContextPath() %>/images/no_billImage.jpg" id="billChargeImg"></a></div>
 		                   
 		                   <div style="color:#666;" class="check_pics01"><ul>
 						   <li id="limitInfo" style="margin:0px 0px -10px 0px;"></li></ul><div class="clear"></div></div>
@@ -231,19 +208,11 @@ $("#tooltip").css({"top": (e.pageY+y) + "px","left": (e.pageX+x) + "px"});
 		           	</div>
                 </div>
             </div>
-            <!-- 缴费账单样张 -->
-            
-           <div style="clear:both;"></div>
 
         </div>
-        <div style="clear:both;"></div>
-        
-        <!-- 缴费提示信息  原idchargeAttention  注释id：chargeAttention2来隐藏信息-->
-        <div id="chargeAttention2" style="display:none; padding-top:20px; clear:both;" class="jf_txxx_ts"></div>
-		<!-- 缴费提示信息 -->
   </div>
   <span class="icon_futitle">
-  <p>  &nbsp;1、因暂未开通与移动通信公司的系统对接，故暂采取人工跑腿代缴方式完成亲的缴费，故在正常水费基础上增加1元代缴者的劳务费，请亲谅解！</p>
+  <p>  &nbsp;1、因暂未开通与移动通信公司的系统对接，故暂采取人工跑腿代缴方式完成亲的缴费，故在正常水费基础上增加${poundage}元代缴者的劳务费，请亲谅解！</p>
   <p>  &nbsp;2、有需要发票的亲，可自行到自来水公司网点柜台打印，或留下地址邮寄给您，但邮寄费需要您来承担。</p></span>
 
                 <div style="clear:both"></div>
@@ -263,5 +232,14 @@ $("#tooltip").css({"top": (e.pageY+y) + "px","left": (e.pageX+x) + "px"});
  <%@include file="/pages/template/jsp/common/footer.jsp"%>
 <%@include file="/pages/template/jsp/common/links.jsp"%>
 <script src="<%=request.getContextPath() %>/js/funs.js" type="text/javascript"></script>
-
+<script src="js/funs.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+	addsj(1000,'defaultTel');
+	try{
+		document.getElementById("telnum_1000").value="${billNumber}";
+	}catch(err){}
+	registerMobilePhone('<%=request.getContextPath()%>','${paymentType}');
+});
+</script>
 </body></html>

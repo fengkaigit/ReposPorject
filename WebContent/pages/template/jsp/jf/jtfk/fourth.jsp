@@ -72,7 +72,12 @@
 															</li>
 															
 															
-															
+													<li class="myapp-item  fn-clear">
+								<a seed="myapp-item-1000000113" href="<%=request.getContextPath() %>/cnf/first.do">
+									<span data-id="10108" class="myapp-icon icon-apps24-10108">采暖费缴费</span>
+									<span class="myapp-item-name">采暖费缴费</span>
+																										</a>
+															</li>		
 													
 													</ul>
 					</div>
@@ -92,24 +97,16 @@
     <div coor="default-content" class=" ui-grid-20">
       <div style="overflow: hidden;" class="znx_r clear">
     	<div class="tcxx_tt">
-    		<input type="hidden" value="0000" id="divId">
-    		<input type="hidden" value="" id="isCommunica">
-    		<input type="hidden" value="" id="fromCart">
-    		<input type="hidden" value="" id="catalogEntryId">
-
-        	<!--<span class="tcxx_tt_a">
-        	 <a href="/shanghai/shuifei">水费</a>
-        	  &gt; <span class="tcxx_tt_b">填写付费信息</span></span>-->
+    		
         	  
         </div>
         <div class="clear"></div>
         <div style="margin-bottom: 0px; display: block; float: left;" id="icon_title_0000"><div style="float:left">支付结果<span class="icon_futitle">单笔账单快速支付</span></div>
           <span style="float:right; margin-top:15px; margin-right:40px;" class="lcyst03">
-		  <a class="ywjs" target="_blank" onClick="show('addbills')">缴费账号设置</a>
+		  <a class="ywjs" onClick="quickSetting('<%=request.getContextPath() %>',5)">缴费账号设置</a>
 		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" style="color:#007abd;float:left;" onClick="show('zdtx')">账单提醒设置</a>
-		  <a style="color:#007abd;float:left;">|</a>
-		  <a class="ywjs00" target="_blank" href="jiaofei_jlcx.html">缴费记录查询</a>
+		  
+		  <a class="ywjs00" target="_blank" href="<%=request.getContextPath() %>/jf/query.do">缴费记录查询</a>
 		  </span></div> 
         <div class="clear"></div>
       <div class="tx_step4">
@@ -125,10 +122,10 @@
     <legend>支付结果</legend>
     <ul >
 	 	<li><span>支付结果：</span><span class="bigfont">成功支付</span></li>
-  	<li><span>车牌号码：</span>蒙A99999</li>
+  	<li><span>车牌号码：</span>${JTFKF_BILL.billNumber}</li>
    
-    <li><span>订单日期：</span>2014年8月25日</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>120元</li>
+    <li><span>订单日期：</span>${JTFKF_BILL.billDate}</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${JTFKF_BILL.billMoney+JTFKF_BILL.poundage}元（包含代缴服务费${JTFKF_BILL.poundage}元）</li>
 
 	
    </ul>
@@ -148,14 +145,14 @@
   <div class="zfcg clear" id="zfpz" style="display:none;">
   <table class="tab1"  cellpadding="0" cellspacing="0">
   <tr>
-  <td>订单号：2014082201005000000001
+  <td>订单号：${JTFKF_BILL.billNo}
   </td>
   <td>流水号：15104710036
   </td>
   </tr>
   </table>
    <div class="div1">
-   本次：交通罚款&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账单总金额：120元
+   本次：交通罚款&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账单总金额：${JTFKF_BILL.billMoney+JTFKF_BILL.poundage}元
    </div>
    <table width="90%" border="0"  cellspacing="0" style="jfzh-top clearfix" cellpadding="0" class="tab2 tab-style ">
   <tr bgcolor="#e6edfb">
@@ -171,19 +168,19 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;
-	呼和浩特交通管理局</td>
+	${JTFKF_BILL.endName}</td>
     </tr>
   <tr>
     <td width="15%">&nbsp;车牌号码</td>
-    <td width="30%">&nbsp;蒙A99999</td>
+    <td width="30%">&nbsp;${JTFKF_BILL.billNumber}</td>
     <td width="15%">&nbsp;罚款地点及原因</td>
     <td width="30%">&nbsp;呼和浩特海西路不按指示标志行车</td>
   </tr>
   <tr>
     <td>&nbsp;交通罚款</td>
-    <td>&nbsp;100元</td>
+    <td>&nbsp;${JTFKF_BILL.billMoney}元</td>
     <td>&nbsp;代缴费</td>
-    <td>&nbsp;20</td>
+    <td>&nbsp;${JTFKF_BILL.poundage}</td>
 	
   </tr>
 
@@ -199,7 +196,7 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计：</td>
-    <td>&nbsp;120元</td>
+    <td>&nbsp;${JTFKF_BILL.billMoney+JTFKF_BILL.poundage}元</td>
   </tr>
   <tr>
     <td>&nbsp;
@@ -211,21 +208,21 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大写金额：</td>
-    <td>&nbsp;壹佰贰拾元整</td>
+    <td>&nbsp;${JTFKF_BILL.moneycn}</td>
   </tr>
 </table>
 
 <table width="90%" border="0" cellspacing="0" cellpadding="0" class="tab-style tab2">
    <tr bgcolor="#e6edfb">
-    <td colspan="6">&nbsp;支付信息（累计支付1张账单，支付总金额：120元）</td>
+    <td colspan="6">&nbsp;支付信息（累计支付1张账单，支付总金额：${JTFKF_BILL.billMoney+JTFKF_BILL.poundage}元）</td>
   </tr>
    <tr>
     <td>&nbsp;支付机构</td>
-    <td>&nbsp;中国银行</td>
+    <td>&nbsp;${JTFKF_BILL.bankName}</td>
     <td>&nbsp;卡号/账号</td>
-    <td>&nbsp;6222 4023 1234 8923</td>
+    <td>&nbsp;${JTFKF_BILL.bankAccount}</td>
     <td>&nbsp;支付金额</td>
-    <td>&nbsp;120元</td>
+    <td>&nbsp;${JTFKF_BILL.billMoney+JTFKF_BILL.poundage}元</td>
   </tr>
 </table>
 <div class="note"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;感谢您使用E缴365生活缴费支付服务，使用中的任何疑问，可拨打客户专线

@@ -3,7 +3,7 @@
     pageEncoding="utf-8"%>
 <html>
 <head>
-<title>交通罚款缴费确认 - 生活助手</title>
+<title>采暖费缴费确认 - 生活助手</title>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
@@ -69,7 +69,7 @@ function checkSubmit(){
 									<span class="myapp-item-name">固话宽带</span>
 																										</a>
 															</li>
-																<li class="myapp-item myapp-item-selected  fn-clear">
+																<li class="myapp-item  fn-clear">
 								<a seed="myapp-item-1000000086" href="<%=request.getContextPath() %>/jtfk/first.do">
 									<span data-id="10073" class="myapp-icon icon-apps24-10073">交通罚款</span>
 									<span class="myapp-item-name">交通罚款</span>
@@ -89,13 +89,13 @@ function checkSubmit(){
 															</li>
 															
 															
-															
-													<li class="myapp-item  fn-clear">
+								<li class="myapp-item myapp-item-selected  fn-clear">
 								<a seed="myapp-item-1000000113" href="<%=request.getContextPath() %>/cnf/first.do">
 									<span data-id="10108" class="myapp-icon icon-apps24-10108">采暖费缴费</span>
 									<span class="myapp-item-name">采暖费缴费</span>
 																										</a>
-															</li>
+															</li>							
+													
 													</ul>
 					</div>
 				</div>
@@ -120,9 +120,9 @@ function checkSubmit(){
         <div class="clear"></div>
         <div style="margin-bottom: 0px; display: block; float: left;" id="icon_title_0000"><div style="float:left">缴费确认<span class="icon_futitle">单笔账单快速支付</span></div>
           <span style="float:right; margin-top:15px; margin-right:40px;" class="lcyst03">
-		  <a class="ywjs" onClick="quickSetting('<%=request.getContextPath() %>',5)">缴费账号设置</a>
+		  <a class="ywjs" onClick="quickSetting('<%=request.getContextPath() %>',8)">缴费账号设置</a>
 		  <a style="color:#007abd;float:left;">|</a>
-	
+		 
 		  <a class="ywjs00" target="_blank" href="<%=request.getContextPath() %>/jf/query.do">缴费记录查询</a>
 		  </span></div> 
         <div class="clear"></div>
@@ -137,21 +137,25 @@ function checkSubmit(){
         <div class="xxqr" style="margin-top:0px; position:relative;" >
        <fieldset>
     <legend>缴费信息确认</legend>
-    <ul >
-  	<li><span>订单编号：</span>${JTFKF_BILL.billNo}</li>
-    <li><span>收费单位：</span>${JTFKF_BILL.endName}</li>
-     <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${JTFKF_BILL.billMoney+JTFKF_BILL.poundage}元（包含代缴服务费20元）</li>
-    <li><span>车牌号码：</span>${JTFKF_BILL.billNumber}</li>
-  </ul>
+   <ul >
+  	<li><span>订单编号：</span>${CNF_BILL.billNo}</li>
+    <li><span>收费单位：</span>${CNF_BILL.endName}</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帐期：</span>${CNF_BILL.year}年${CNF_BILL.month}月</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${CNF_BILL.billMoney+CNF_BILL.poundage}元（包含代缴服务费${CNF_BILL.poundage}元）</li>
+    <li><span>缴费户号：</span>${CNF_BILL.billNumber}</li>
+	  <li><span>缴费住址：</span>${CNF_BILL.payAddress}</li>
+   </ul>
   </fieldset>
 
 
   </div>
- <form method="post" id="form1" onsubmit="return checkSubmit();" action="<%=request.getContextPath() %>/jtfk/third.do">
+ <form method="post" id="form1" onsubmit="return checkSubmit();"  action="<%=request.getContextPath() %>/cnf/third.do">
   <div class="zffs">
+   
        <fieldset>
     <legend>支付方式</legend>
-    <ul class="list-bank">
+    
+   <ul class="list-bank">
     				    					    						<li onClick="bankSelect(this)" clstag="payment|keycount|bank|c-icbc">
 								<input type="radio" name="bankCode" value="01020000" class="jdradio" id="bank_ICBC">
 								<label>
@@ -244,10 +248,12 @@ function checkSubmit(){
 								</label>
 															</li>
     					    				                </ul>
+    					    				                
   </fieldset>
 
-<div style="margin-top:10px; padding:0px 80px;"><input   type="button" class="jfxx_btn3" value="上一步"  onClick="goback()" name="searchBill" >&nbsp;&nbsp;
-                                                <input  type="submit"class="jfxx_btn3"  value="下一步" name="searchBill"  ></div>
+<div style="margin-top:10px; padding:0px 80px;"><input type="button" class="jfxx_btn3" value="上一步"  onClick="goback()" name="searchBill" >&nbsp;&nbsp;
+                                                <input  type="submit" class="jfxx_btn3"  value="下一步" name="searchBill"  ></div>
+                                               
   </div>
    </form>
   </div>

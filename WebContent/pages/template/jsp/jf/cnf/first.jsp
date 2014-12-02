@@ -3,7 +3,7 @@
     pageEncoding="utf-8"%>
 <html>
 <head>
-<title>电费缴费 - 生活助手</title>
+<title>采暖费缴费 - 生活助手</title>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
@@ -24,6 +24,7 @@ $(document).ready(function(){
 	$("#payAddress").formValidator().inputValidator({min:1,max:100,onError:"请输入不多于100个字的缴费住址"});
 	$("#billMoney").formValidator().regexValidator({regExp:"decmal1",dataType:"enum",onError:"请输入合法缴费金额"});
 	$("#poundage").formValidator().regexValidator({regExp:"decmal1",dataType:"enum",onError:"代缴劳务费金额非法"});
+
 	registerBillNumber('<%=request.getContextPath()%>','${paymentType}');
 });
 </script>
@@ -42,16 +43,15 @@ $(document).ready(function(){
 					</div>
 					<div class="ui-box-container">
 						<ul>
-								<li class="myapp-item  fn-clear">
+								<li class="myapp-item   fn-clear">
 								<a seed="myapp-item-1000000016" href="<%=request.getContextPath() %>/sf/first.do">
 									<span data-id="10016" class="myapp-icon icon-apps24-10016">自来水缴费</span>
-									<span class="myapp-item-name">自来水缴费</span>															
-									                                   </a>
+									<span class="myapp-item-name">自来水缴费</span>	<span class="my-app-item-hot" title="热门应用">热门应用</span>																</a>
 								</li>
-								<li class="myapp-item  myapp-item-selected  fn-clear">
+								<li class="myapp-item   fn-clear">
 								<a seed="myapp-item-1000000048" href="<%=request.getContextPath() %>/df/first.do">
 									<span data-id="10048" class="myapp-icon icon-apps24-10048">电费缴费</span>
-									<span class="myapp-item-name">电费缴费</span><span class="my-app-item-hot" title="热门应用">热门应用</span>	
+									<span class="myapp-item-name">电费缴费</span>
 																		</a>
 															</li>
 															<li class="myapp-item  fn-clear">
@@ -91,13 +91,13 @@ $(document).ready(function(){
 																										</a>
 															</li>
 															
-								<li class="myapp-item  fn-clear">
+															
+													<li class="myapp-item myapp-item-selected fn-clear">
 								<a seed="myapp-item-1000000113" href="<%=request.getContextPath() %>/cnf/first.do">
 									<span data-id="10108" class="myapp-icon icon-apps24-10108">采暖费缴费</span>
 									<span class="myapp-item-name">采暖费缴费</span>
 																										</a>
-															</li>							
-															
+															</li>		
 													
 													</ul>
 					</div>
@@ -118,10 +118,7 @@ $(document).ready(function(){
       <div style="overflow: hidden;" class="znx_r">
 
     	<div class="tcxx_tt">
-    		<input type="hidden" value="0000" id="divId">
-    		<input type="hidden" value="" id="isCommunica">
-    		<input type="hidden" value="" id="fromCart">
-    		<input type="hidden" value="" id="catalogEntryId">
+    		
 
         	<!--<span class="tcxx_tt_a">
         	 <a href="/shanghai/shuifei">水费</a>
@@ -129,9 +126,9 @@ $(document).ready(function(){
         	  
         </div>
         <div class="clear"></div>
-        <div style="margin-bottom: 0px; display: block; float: left;" id="icon_title_0000"><div style="float:left">电费缴费<span class="icon_futitle">单笔账单快速支付</span></div>
+        <div style="margin-bottom: 0px; display: block; float: left;" id="icon_title_0000"><div style="float:left">采暖缴费<span class="icon_futitle">单笔账单快速支付</span></div>
           <span style="float:right; margin-top:15px; margin-right:40px;" class="lcyst03">
-		  <a class="ywjs"  onClick="quickSetting('<%=request.getContextPath() %>',1)">电费缴费设置</a>
+		  <a class="ywjs" onClick="quickSetting('<%=request.getContextPath() %>',8)">采暖缴费设置</a>
 		  <a style="color:#007abd;float:left;">|</a>
 		  
 		  <a class="ywjs00" target="_blank" href="<%=request.getContextPath() %>/jf/query.do">缴费记录查询</a>
@@ -171,7 +168,7 @@ $(document).ready(function(){
 
         	<div class="jf_txxx_left">
         	
-            	 <form method="post" id="form1" action="<%=request.getContextPath() %>/df/second.do">
+            	 <form method="post" id="form1" action="<%=request.getContextPath() %>/cnf/second.do">
             	 <div style="padding:0px 0px 10px 0px;">
 						<label>公用事业单位：</label>
 						
@@ -197,7 +194,7 @@ $(document).ready(function(){
            <input id="bczh" name="bczh" type="checkbox" checked="checked"> <span class="font2">备存账号信息</span>
            
 	</div>
-  <div>
+  	<div>
 		<label style=" margin-right:8px;line-height:30px;">缴费住址：</label>
 		   <input type="text" class="on-show" id="payAddress" name="payAddress" maxlength="100" value="${payAddress}">
            
@@ -233,7 +230,6 @@ $(document).ready(function(){
 		<label style=" margin-right:8px;line-height:30px;">代缴劳务费：</label>
 		   <input type="text" value="${poundage}" class="on-show" id="poundage" name="poundage" maxlength="10" readonly="readonly">&nbsp;&nbsp;元
 	</div>
-	
 <div class="jfxx_btns">
 <input type="hidden" id="parentAreaId" name="parentAreaId"/>
 <input type="hidden" id="areaId" name="areaId"/>
@@ -275,8 +271,8 @@ $(document).ready(function(){
 		<!-- 缴费提示信息 -->
   </div>
   <span class="icon_futitle">
-  <p>  &nbsp;1、因暂未开通与供电局的系统对接，故暂采取人工跑腿代缴方式完成亲的缴费，故在正常水费基础上增加${poundage}元代缴者的劳务费，请亲谅解！</p>
-  <p>  &nbsp;2、有需要发票的亲，可自行到自来水公司网点柜台打印，或留下地址邮寄给您，但邮寄费需要您来承担。</p></span>
+  <p>  &nbsp;1、因暂未开通与供热公司的系统对接，故暂采取人工跑腿代缴方式完成亲的缴费，故在正常供热费基础上增加${poundage}元代缴者的劳务费，请亲谅解！</p>
+  <p>  &nbsp;2、有需要发票的亲，可自行到供热公司网点柜台打印，或留下地址邮寄给您，但邮寄费需要您来承担。</p></span>
 
                 <div style="clear:both"></div>
          
