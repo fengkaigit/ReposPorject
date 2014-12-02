@@ -40,6 +40,8 @@ public class PaymentBill implements java.io.Serializable {
 	private String orderNumber;
 	private String remarks;
 	private String payAddress;
+	private Integer year;
+	private Integer month;
 
 	// Constructors
 
@@ -76,7 +78,7 @@ public class PaymentBill implements java.io.Serializable {
 			Long entId, Integer businessType, Integer paymentStatus,
 			Integer paymentMode, String uuid, Integer divideStatus, 
 			String areaId, String areaName, Long agentId, String agentName,
-			String orderNumber, String remarks, String payAddress) {
+			String orderNumber, String remarks, String payAddress,Integer year,Integer month) {
 		this.id = id;
 		this.accountBillId = accountBillId;
 		this.userId = userId;
@@ -100,6 +102,8 @@ public class PaymentBill implements java.io.Serializable {
 		this.orderNumber = orderNumber;
 		this.remarks = remarks;
 		this.payAddress = payAddress;
+		this.year = year;
+		this.month = month;
 	}
 
 	// Property accessors
@@ -267,7 +271,7 @@ public class PaymentBill implements java.io.Serializable {
 		this.areaName = areaName;
 	}
 	
-	@Column(name = "agent_id", nullable = false)
+	@Column(name = "agent_id")
 	public Long getAgentId() {
 		return agentId;
 	}
@@ -310,6 +314,22 @@ public class PaymentBill implements java.io.Serializable {
 
 	public void setPayAddress(String payAddress) {
 		this.payAddress = payAddress;
+	}
+	@Column(name = "year")
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+	@Column(name = "month")
+	public Integer getMonth() {
+		return month;
+	}
+
+	public void setMonth(Integer month) {
+		this.month = month;
 	}
 
 }
