@@ -2,7 +2,6 @@ package com.ey.dao;
 
 import java.util.List;
 
-import com.ey.bo.PaymentBillBO;
 import com.ey.dao.base.BaseDAO;
 import com.ey.dao.entity.PayAccountBill;
 import com.ey.dao.entity.PaymentBill;

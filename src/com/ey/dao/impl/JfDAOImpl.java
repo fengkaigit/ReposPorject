@@ -2,7 +2,6 @@ package com.ey.dao.impl;
 
 import org.springframework.stereotype.Repository;
 
-import com.ey.bo.PaymentBillBO;
 import com.ey.dao.JfDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.PayAccountBill;

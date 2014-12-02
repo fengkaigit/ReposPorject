@@ -3,7 +3,6 @@ package com.ey.service.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ey.bo.PaymentBillBO;
+import com.ey.bo.QueryBillBO;
 import com.ey.dao.JfDAO;
 import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BaseCustomValue;
@@ -112,7 +111,7 @@ public class JfServiceImpl implements JfService {
 	}
 
 	@Override
-	public List<PaymentBillBO> getTotalRecords(Long userId, Integer year,
+	public List<QueryBillBO> getTotalRecords(Long userId, Integer year,
 			String startMonth, String endMonth) throws RuntimeException {
 		// TODO Auto-generated method stub
 		List<Object[]> records = jfDAO.getTotalRecords(userId, year,
@@ -121,7 +120,7 @@ public class JfServiceImpl implements JfService {
 		Map<Integer, Map<Integer, Double>> moneyMap = new HashMap();// 存放每月缴费钱数，成功多少、失败多少
 		Map<Integer, String> itemMap = new HashMap();// 存放每月缴费内容
 		List<Integer> monthList = new ArrayList();
-		List<PaymentBillBO> pbList = new ArrayList();
+		List<QueryBillBO> pbList = new ArrayList();
 		List<BaseCustomValue> paymentTypes = staticService
 				.listValues("payment_type");
 		// sum(payMoney+poundage),payType,paymentStatus,year,month
@@ -143,7 +142,7 @@ public class JfServiceImpl implements JfService {
 			Map<Integer, Integer> _statusMap = statusMap.get(mst);
 			Map<Integer, Double> _moneyMap = moneyMap.get(mst);
 			String _item = itemMap.get(mst);
-			PaymentBillBO pb = new PaymentBillBO(_moneyMap.get(2), null, null,
+			QueryBillBO pb = new QueryBillBO(_moneyMap.get(2), null, null,
 					year, mst, _item, _moneyMap.get(1), _moneyMap.get(0),
 					_statusMap.get(2), _statusMap.get(1), _statusMap.get(0));
 			pbList.add(pb);
@@ -251,7 +250,7 @@ public class JfServiceImpl implements JfService {
 	}
 
 	@Override
-	public List<PaymentBillBO> getDetails(Long userId, Integer year,
+	public List<QueryBillBO> getDetails(Long userId, Integer year,
 			Integer month) {
 		// TODO Auto-generated method stub
 		List<PaymentBill> bills = jfDAO.getDetails(userId, year, month);
@@ -263,9 +262,9 @@ public class JfServiceImpl implements JfService {
 				.listValues("payment_mode");
 		List<BaseCustomValue> payStatus = staticService
 				.listValues("payment_status");
-		List<PaymentBillBO> list = new ArrayList();
+		List<QueryBillBO> list = new ArrayList();
 		for (PaymentBill bill : bills) {
-			PaymentBillBO pb = new PaymentBillBO(bill.getPayType(), bill
+			QueryBillBO pb = new QueryBillBO(bill.getPayType(), bill
 					.getPaymentStatus(), bill.getYear(), bill.getMonth(), bill
 					.getPayMoney(), bill.getPoundage(), bill.getBusinessType(),
 					bill.getPaymentMode(), bill.getCreateTime());

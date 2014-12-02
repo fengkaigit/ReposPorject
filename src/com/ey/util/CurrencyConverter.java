@@ -11,7 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.ey.bo.PaymentBillBO;
+import com.ey.bo.QueryBillBO;
 
 public class CurrencyConverter implements Converter {
 	protected final Log log = LogFactory.getLog(CurrencyConverter.class);
@@ -87,9 +87,9 @@ public class CurrencyConverter implements Converter {
 	 * @param doubleValue
 	 * @return
 	 */
-	public static Double getMax(List<PaymentBillBO> records) {
+	public static Double getMax(List<QueryBillBO> records) {
 		Double maxValue = new Double(0.00);
-		for (PaymentBillBO record : records) {
+		for (QueryBillBO record : records) {
 			Double temp = record.getMoney();
 			if (maxValue.compareTo(temp) < 0) {
 				maxValue = temp;

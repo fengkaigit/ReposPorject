@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ey.bo.PaymentBillBO;
+import com.ey.bo.QueryBillBO;
 import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.PaymentBill;
@@ -48,7 +48,7 @@ public class QueryController extends BaseController {
 	public ModelAndView query(HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		List<PaymentBillBO> records = queryBills(mav, request, response);
+		List<QueryBillBO> records = queryBills(mav, request, response);
 		request.getSession().setAttribute("querybarchartdata", records);
 		Double money = 0d;// 金额
 		Double sucessMoney = 0d;
@@ -56,7 +56,7 @@ public class QueryController extends BaseController {
 		Integer totalNum = 0;
 		Integer sucessNum = 0;
 		Integer faultNum = 0;
-		for (PaymentBillBO record : records) {
+		for (QueryBillBO record : records) {
 			money = money + record.getMoney();
 			sucessMoney = sucessMoney + record.getSucessMoney();
 			faultMoney = faultMoney + record.getFaultMoney();
@@ -90,7 +90,7 @@ public class QueryController extends BaseController {
 		String month = request.getParameter("month");
 		UserBase currentUser = (UserBase) request.getSession().getAttribute(
 				SystemConst.USER);
-		List<PaymentBillBO> details = jfService.getDetails(currentUser.getId(),
+		List<QueryBillBO> details = jfService.getDetails(currentUser.getId(),
 				new Integer(year), new Integer(month));
 		request.getSession().setAttribute("queryareachartdata", details);
 		mav.addObject("details", details);
@@ -102,7 +102,7 @@ public class QueryController extends BaseController {
 	public ModelAndView queryBarchart(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 
-		List<PaymentBillBO> records = (List<PaymentBillBO>) request
+		List<QueryBillBO> records = (List<QueryBillBO>) request
 				.getSession().getAttribute("querybarchartdata");
 		if (records == null) {
 			records = queryBills(null, request, response);
@@ -117,7 +117,7 @@ public class QueryController extends BaseController {
 		XAxis x = new XAxis();
 		Double maxValue = new Double(0.00);
 		Double minValue = new Double(0.00);
-		for (PaymentBillBO record : records) {
+		for (QueryBillBO record : records) {
 			x.addLabels(record.getMonth() + "月");
 			Bar bar = new Bar(record.getMoney(), "元 ");
 			bar.setColour("#46b4c5");
@@ -176,10 +176,10 @@ public class QueryController extends BaseController {
 	@RequestMapping(value = "/queryAreachart")
 	public ModelAndView queryAreachart(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		List<PaymentBillBO> records = (List<PaymentBillBO>) request.getSession()
+		List<QueryBillBO> records = (List<QueryBillBO>) request.getSession()
 				.getAttribute("queryareachartdata");
 		PieChart chart = new PieChart();
-		for (PaymentBillBO record : records) {
+		for (QueryBillBO record : records) {
 			Slice s = new Slice(record.getMoney() + record.getSucessMoney(),
 					record.getPayTypeStr() + "");
 			// s.setTip(record.getPayType()+":#val#/#total#（ #percent#）");
@@ -208,7 +208,7 @@ public class QueryController extends BaseController {
 
 	}
 
-	private List<PaymentBillBO> queryBills(ModelAndView mav,
+	private List<QueryBillBO> queryBills(ModelAndView mav,
 			HttpServletRequest request, HttpServletResponse response) {
 		UserBase currentUser = (UserBase) request.getSession().getAttribute(
 				SystemConst.USER);
@@ -227,7 +227,7 @@ public class QueryController extends BaseController {
 		if (StringUtil.isEmptyString(endMonth)) {
 			endMonth = curMonth + "";
 		}
-		List<PaymentBillBO> records = jfService.getTotalRecords(currentUser
+		List<QueryBillBO> records = jfService.getTotalRecords(currentUser
 				.getId(), new Integer(year), startMonth, endMonth);
 		if (mav != null) {
 			mav.addObject("year", curYear);

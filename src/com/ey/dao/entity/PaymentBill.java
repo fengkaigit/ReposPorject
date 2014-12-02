@@ -70,7 +70,37 @@ public class PaymentBill implements java.io.Serializable {
 		this.agentId = agentId;
 		this.orderNumber = orderNumber;
 	}
-
+	public PaymentBill(Long id, Long accountBillId, Long userId,
+			double remainBalance, Date createTime, double paidMoney,
+			double payMoney, double balance, double poundage, Integer payType,
+			Long entId, Integer businessType, Integer paymentStatus,
+			Integer paymentMode, String uuid, Integer divideStatus, 
+			String areaId, String areaName, Long agentId, String agentName,
+			String orderNumber, String remarks, String payAddress) {
+		this.id = id;
+		this.accountBillId = accountBillId;
+		this.userId = userId;
+		this.remainBalance = remainBalance;
+		this.createTime = createTime;
+		this.paidMoney = paidMoney;
+		this.payMoney = payMoney;
+		this.balance = balance;
+		this.poundage = poundage;
+		this.payType = payType;
+		this.entId = entId;
+		this.businessType = businessType;
+		this.paymentStatus = paymentStatus;
+		this.paymentMode = paymentMode;
+		this.uuid = uuid;
+		this.divideStatus = divideStatus;
+		this.areaId = areaId;
+		this.areaName = areaName;
+		this.agentId =agentId;
+		this.agentName = agentName;
+		this.orderNumber = orderNumber;
+		this.remarks = remarks;
+		this.payAddress = payAddress;
+	}
 	/** full constructor */
 	public PaymentBill(Long id, Long accountBillId, Long userId,
 			double remainBalance, Date createTime, double paidMoney,
