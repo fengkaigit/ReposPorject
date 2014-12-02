@@ -36,3 +36,5 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/sooperfish-theme-large.css" media="screen">
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/zhsz.css"></link>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.autocomplete.js"></script>
+<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/jquery.autocomplete.css"></link>
