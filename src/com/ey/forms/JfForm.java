@@ -37,6 +37,17 @@ public class JfForm implements Serializable {
 	private String mobileVerify;
 	private String mobile;
 	private String moneycn;
+	private String areaName;
+	private Long agentId;
+	private String agentName;
+	private String payAddress;
+	private String[] mobiles;
+	private String carOwner;
+	private Integer carType;
+	private String carframeNumber;
+	private String engineNumber;
+	private double[] billMoneys;
+	private String userName;
 	public Long getId() {
 		return id;
 	}
@@ -188,9 +199,7 @@ public class JfForm implements Serializable {
 		this.bankName = bankName;
 	}
 	public String getBillNo() {
-		if(billNo==null){
-			billNo = billId.toString();
-		}
+		
 		return billNo;
 	}
 	public void setBillNo(String billNo) {
@@ -219,6 +228,72 @@ public class JfForm implements Serializable {
 	}
 	public void setMoneycn(String moneycn) {
 		this.moneycn = moneycn;
+	}
+	public String getAreaName() {
+		return areaName;
+	}
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+	public Long getAgentId() {
+		return agentId;
+	}
+	public void setAgentId(Long agentId) {
+		this.agentId = agentId;
+	}
+	public String getAgentName() {
+		return agentName;
+	}
+	public void setAgentName(String agentName) {
+		this.agentName = agentName;
+	}
+	public String getPayAddress() {
+		return payAddress;
+	}
+	public void setPayAddress(String payAddress) {
+		this.payAddress = payAddress;
+	}
+	public String[] getMobiles() {
+		return mobiles;
+	}
+	public void setMobiles(String[] mobiles) {
+		this.mobiles = mobiles;
+	}
+	public String getCarOwner() {
+		return carOwner;
+	}
+	public void setCarOwner(String carOwner) {
+		this.carOwner = carOwner;
+	}
+	public Integer getCarType() {
+		return carType;
+	}
+	public void setCarType(Integer carType) {
+		this.carType = carType;
+	}
+	public String getCarframeNumber() {
+		return carframeNumber;
+	}
+	public void setCarframeNumber(String carframeNumber) {
+		this.carframeNumber = carframeNumber;
+	}
+	public String getEngineNumber() {
+		return engineNumber;
+	}
+	public void setEngineNumber(String engineNumber) {
+		this.engineNumber = engineNumber;
+	}
+	public double[] getBillMoneys() {
+		return billMoneys;
+	}
+	public void setBillMoneys(double[] billMoneys) {
+		this.billMoneys = billMoneys;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 }
