@@ -50,4 +50,12 @@ public class SystemConst {
 	public static final String AREA = "AREA";
 	public static final String PERSON_ACCOUNT_TYPE = "PERSON_ACCOUNT_TYPE";
 	public static final String WATER_BILL = "WATER_BILL";
+	public static final String ELEC_BILL = "ELEC_BILL";
+	public static final String GHF_BILL = "GHF_BILL";
+	public static final String RQF_BILL = "RQF_BILL";
+	public static final String WYF_BILL = "WYF_BILL";
+	public static final String YXDSF_BILL = "YXDSF_BILL";
+	public static final String YDTXF_BILL = "YDTXF_BILL";
+	public static final String JTFKF_BILL = "JTFKF_BILL";
+	public static final String CNF_BILL = "CNF_BILL";
 }
