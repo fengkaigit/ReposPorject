@@ -69,6 +69,7 @@ public class AboutController extends BaseController {
 		UserBase user = (UserBase)request.getSession().getAttribute(SystemConst.USER);
 		if(user!=null){
 		  feedBack.setUserId(user.getId());
+		  feedBack.setUserName(user.getRealName());
 		  feedBack.setAreaId(user.getAreaId());
 		}
 		feedBack.setBackFlag(0);

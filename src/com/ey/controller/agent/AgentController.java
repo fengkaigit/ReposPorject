@@ -42,6 +42,7 @@ import com.ey.util.StringUtil;
 public class AgentController extends BaseController {
    
 	private static final String LOGIN_PAGE="login/agentlogin";
+	private static final String IFRAME_PAGE="agent/iframe";
 	private static final String LIST_PAGE = "agent/list";
 	private static final String REDIRECT = "redirect:/agent/list.do";
 	private static final String ADD_PAGE = "agent/addagent";
@@ -106,6 +107,11 @@ public class AgentController extends BaseController {
 	@RequestMapping(value="/login")
     public String login(HttpServletRequest request,HttpServletResponse response){
   	  return LOGIN_PAGE;
+    }
+	
+	@RequestMapping(value="/iframe")
+    public String index(ModelMap modelMap,HttpServletRequest request,HttpServletResponse response){
+  	  return IFRAME_PAGE;
     }
 	
 	@RequestMapping(value="/logout")

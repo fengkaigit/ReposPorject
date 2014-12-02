@@ -54,6 +54,15 @@ public class AnnounceController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/listgroup")
+	@ResponseBody
+	public Object listgroup(Integer group,HttpServletRequest request,HttpServletResponse response){
+    	Map<String,Object> queryMap = new HashMap<String,Object>();
+    	queryMap.put("group", group);
+		List<SysAnnouncement> announces = announceService.getAnnouncesByQueryParam(null, 0, 0);
+		return announces;
+	}
+	
 	
 	@RequestMapping(value="/edit/{id}")
 	public ModelAndView edit(@PathVariable("id") Long id,HttpServletRequest request,HttpServletResponse response){

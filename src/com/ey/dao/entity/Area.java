@@ -19,6 +19,7 @@ public class Area implements java.io.Serializable {
 	private String province;
 	private String encodePath;
 	private String namePath;
+	private Integer areaType;
 
 	// Constructors
 
@@ -89,5 +90,15 @@ public class Area implements java.io.Serializable {
 	public void setNamePath(String namePath) {
 		this.namePath = namePath;
 	}
+	@Column(name = "area_type")
+	public Integer getAreaType() {
+		return areaType;
+	}
+
+	public void setAreaType(Integer areaType) {
+		this.areaType = areaType;
+	}
+	
+	
 
 }
