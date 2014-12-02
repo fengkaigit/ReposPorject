@@ -95,6 +95,9 @@
     height: 40px;
     line-height: 40px;
 }
+.jf_txxx_left_div_height{
+	height: 40px;
+}
 .jf_txxx .jf_txxx_left form div label {
     float: left;
     font-size: 14px;
