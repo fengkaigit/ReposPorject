@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -270,5 +270,16 @@ public class StringUtil {
 			return true;
 		}
 		return false;
+	}
+	//生成规则：年（4位）+月（2位）+日（2位）+时（2位）+分（2位）+秒（2位）+8位流水号
+	public static String getBillNo(Date date,Long dbId){
+		String timeStr = DateUtil.getDateTime("yyyyMMddHHmmss", date);
+		String flowNo = dbId.toString();
+		int leng = flowNo.length();
+		int size = 8;
+		for(int i=0;i<(size-leng);i++){
+			flowNo = "0"+flowNo;
+		}
+		return timeStr+flowNo;
 	}
 }
