@@ -8,8 +8,8 @@
 <title>意见反馈</title>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/aboutUs.css">
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/base.css">
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/outer.css">
+<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/feedback/base.css">
+<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/feedback/outer.css">
 <script>
 var keywordtitle="请填写邮件地址便于与我们互动";
 function SearchFocus(obj){
@@ -119,7 +119,7 @@ function postHandle(){
             <input type="radio"  id="bug" value="3" name="backType"><span  style="cursor:pointer" class="leftSpace">&nbsp;BUG提交&nbsp;&nbsp;</span>
         </div>
         
-        <div class="wantItem"style="margin-top:30px;clear:both;">
+        <div class="wantItem" style="margin-top:30px;clear:both;">
             <div class="titleItem" id="titleItem" >改进建议：</div>
             <div class="perDataItem" >
                 <textarea style="height: 126px; border-color: rgb(214, 214, 214);" onpropertychange="if(value.length&gt;10000)value=value.substring(0,10000)" name="userIdea" class="inputBox text text-empty" id="userIdea" data-default=""></textarea>
@@ -128,13 +128,13 @@ function postHandle(){
             <div class="clear"></div>
         </div>
       
-    <div style="display: block;" id="bl_email_div" class="wantItem">
+        <div  id="bl_email_div" class="wantItem">
             <div class="titleItem"><span class="red">*</span>邮箱地址：</div>
-            <div class="perDataItem"><input type="text" name="eMail" id="eMail" class="inputBox text-empty text" value="请填写邮件地址便于与我们互动" data-default="请填写邮件地址便于与我们互动" onfocus="SearchFocus(this)" onblur="SearchBlur(this)"></div>
+            <div class="perDataItem"><input type="text" name="eMail" id="eMail" class="inputBox text-empty text" style="width:300px;" value="请填写邮件地址便于与我们互动" data-default="请填写邮件地址便于与我们互动" onfocus="SearchFocus(this)" onblur="SearchBlur(this)"></div>
             <div class="clear"></div>
         </div>
         <div class="jfxx_btns"><input  type="button" class="jfxx_btn3" onClick="postHandle()" value="提交反馈" name="searchBill"></div>
-</div>
+   </div>
 
         </div>
         </form>

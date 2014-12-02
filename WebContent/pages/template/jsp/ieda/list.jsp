@@ -36,6 +36,7 @@ function postHandle(){
 		  if(data.result){
 		    alert("意见回复成功");
 		    turnoff('replyfeed');
+		    window.location.href = "<%=request.getContextPath() %>/ej/list.do";
 		  }
 		   
 	  });
@@ -59,7 +60,8 @@ function postHandle(){
   <tr class="add">
     <td>序号</td>
     <td>类型</td>
-    <td>内容</td>
+    <td width="50%">内容</td>
+    <td>是否回复</td>
     <td>时间</td>
     <td>操作</td>
   </tr>
@@ -85,6 +87,7 @@ function postHandle(){
        </c:otherwise>
      </c:choose></td>
     <td>&nbsp;${item.userIdea}</td>
+    <td>&nbsp;<c:if test="${item.backFlag==0}">未回复</c:if><c:if test="${item.backFlag==1}">已回复</c:if></td>
     <td>&nbsp;<fmt:formatDate value="${item.viewTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
     <td>
 	<a class="cur" style="color:#007abd;"  onClick="getData(${item.id});">回复</a>&nbsp;
