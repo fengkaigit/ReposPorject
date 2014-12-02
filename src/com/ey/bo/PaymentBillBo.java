@@ -1,63 +1,230 @@
 package com.ey.bo;
 
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import com.ey.dao.entity.PaymentBill;
+/**
+ * PaymentBill entity. @author MyEclipse Persistence Tools
+ */
 
-public class PaymentBillBo extends PaymentBill {
-
-	private String entName;
+public class PaymentBillBO implements java.io.Serializable {
+	private Double money;// 金额
+	private Integer payType;// 缴费类型
+	private Integer payStatus;// 状态
+	private Integer year;// 年
+	private Integer month;// 月
+	private String item;
+	private Double sucessMoney;
+	private Double faultMoney;
+	private Integer totalNum;
+	private Integer sucessNum;
+	private Integer faultNum;
 	
-	private String userName;
+	private String payTime;
 	
-	private String paymentTypeName;
+	private String payStatuStr;
+	private String payTypeStr;
+	private Date createTime;
+	private Integer businessId;
+	private String business;
+	private Integer payModeId;
+	private String payMode;
+
+	public PaymentBillBO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public PaymentBillBO(Double money, Integer payType, Integer payStatus,
+			Integer year, Integer month, String item, Double sucessMoney,
+			Double faultMoney, Integer totalNum, Integer sucessNum,
+			Integer faultNum) {
+		super();
+		this.money = money;
+		this.payType = payType;
+		this.payStatus = payStatus;
+		this.year = year;
+		this.month = month;
+		this.item = item;
+		this.sucessMoney = sucessMoney;
+		this.faultMoney = faultMoney;
+		this.totalNum = totalNum;
+		this.sucessNum = sucessNum;
+		this.faultNum = faultNum;
+	}
+
+	public PaymentBillBO(Integer payType, Integer payStatus,
+			Integer year, Integer month,Double money, Double sucessMoney,
+			Integer businessId, Integer payModeId,Date createTime) {
+		super();
+		this.money = money;
+		this.payType = payType;
+		this.payStatus = payStatus;
+		this.year = year;
+		this.month = month;
+		this.sucessMoney = sucessMoney;
+		this.businessId = businessId;
+		this.payModeId = payModeId;
+		this.createTime = createTime;
+	}
+
+	public Double getMoney() {
+		return money;
+	}
+
+	public void setMoney(Double money) {
+		this.money = money;
+	}
+
+	public Integer getPayType() {
+		return payType;
+	}
+
+	public void setPayType(Integer payType) {
+		this.payType = payType;
+	}
+
+	public Integer getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(Integer payStatus) {
+		this.payStatus = payStatus;
+	}
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+
+	public Integer getMonth() {
+		return month;
+	}
+
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
+
+	public String getItem() {
+		return item;
+	}
+
+	public void setItem(String item) {
+		this.item = item;
+	}
+
+	public Double getSucessMoney() {
+		return sucessMoney;
+	}
+
+	public void setSucessMoney(Double sucessMoney) {
+		this.sucessMoney = sucessMoney;
+	}
+
+	public Double getFaultMoney() {
+		return faultMoney;
+	}
+
+	public void setFaultMoney(Double faultMoney) {
+		this.faultMoney = faultMoney;
+	}
+
+	public Integer getTotalNum() {
+		return totalNum;
+	}
+
+	public void setTotalNum(Integer totalNum) {
+		this.totalNum = totalNum;
+	}
+
+	public Integer getSucessNum() {
+		return sucessNum;
+	}
+
+	public void setSucessNum(Integer sucessNum) {
+		this.sucessNum = sucessNum;
+	}
+
+	public Integer getFaultNum() {
+		return faultNum;
+	}
+
+	public void setFaultNum(Integer faultNum) {
+		this.faultNum = faultNum;
+	}
+
+	public String getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(String payTime) {
+		this.payTime = payTime;
+	}
+
 	
-	public PaymentBillBo(){
-		
-	}
-	
-	public PaymentBillBo(Long id, Long accountBillId, Long userId,
-			double remainBalance, Date createTime, double paidMoney,
-			double payMoney, double balance, double poundage, Integer payType,
-			Long entId, Integer businessType, Integer paymentStatus,
-			Integer paymentMode, String uuid, Integer divideStatus, 
-			String areaId, String areaName, Long agentId, String agentName,
-			String orderNumber, String remarks, String payAddress, 
-			String entName, String userName, String paymentTypeName) {
-		super(id, accountBillId, userId,remainBalance, createTime, paidMoney,
-				payMoney, balance, poundage, payType,
-				entId, businessType, paymentStatus,
-				paymentMode, uuid, divideStatus, 
-				areaId, areaName, agentId, agentName,
-				orderNumber, remarks, payAddress);
-		this.entName = entName;
-		this.userName = userName;
-		this.paymentTypeName = paymentTypeName;
+
+	public String getPayStatuStr() {
+		return payStatuStr;
 	}
 
-	public String getEntName() {
-		return entName;
+	public void setPayStatuStr(String payStatuStr) {
+		this.payStatuStr = payStatuStr;
 	}
 
-	public void setEntName(String entName) {
-		this.entName = entName;
+	public String getPayTypeStr() {
+		return payTypeStr;
 	}
 
-	public String getUserName() {
-		return userName;
+	public void setPayTypeStr(String payTypeStr) {
+		this.payTypeStr = payTypeStr;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public String getPaymentTypeName() {
-		return paymentTypeName;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
-	public void setPaymentTypeName(String paymentTypeName) {
-		this.paymentTypeName = paymentTypeName;
+	public Integer getBusinessId() {
+		return businessId;
 	}
-	
-	
+
+	public void setBusinessId(Integer businessId) {
+		this.businessId = businessId;
+	}
+
+	public String getBusiness() {
+		return business;
+	}
+
+	public void setBusiness(String business) {
+		this.business = business;
+	}
+
+	public Integer getPayModeId() {
+		return payModeId;
+	}
+
+	public void setPayModeId(Integer payModeId) {
+		this.payModeId = payModeId;
+	}
+
+	public String getPayMode() {
+		return payMode;
+	}
+
+	public void setPayMode(String payMode) {
+		this.payMode = payMode;
+	}
+
 }
