@@ -11,18 +11,18 @@ import com.ey.dao.JfDAO;
 import com.ey.dao.entity.BaseCustomValue;
 import com.ey.dao.entity.PayAccountBill;
 import com.ey.dao.entity.PaymentBill;
+import com.ey.dao.entity.PaymentMobile;
 import com.ey.dao.entity.PaymentSetting;
-import com.ey.dao.entity.PaymentWater;
 import com.ey.forms.JfForm;
 import com.ey.service.SettingService;
-import com.ey.service.SfService;
 import com.ey.service.StaticService;
+import com.ey.service.YdtxfService;
 import com.ey.util.DateUtil;
 import com.ey.util.StringUtil;
 import com.ey.util.UUIdUtil;
 
-@Service("sfService")
-public class SfServiceImpl implements SfService {
+@Service("ydtxfService")
+public class YdtxfServiceImpl implements YdtxfService {
 	@Autowired
 	private JfDAO jfDAO;
 	@Autowired
@@ -34,7 +34,7 @@ public class SfServiceImpl implements SfService {
 		Long billId = form.getBillId();
 		PayAccountBill payAccountBill = null;
 		PaymentBill paymentBill = null;
-		PaymentWater paymentWater = null;
+		PaymentMobile paymentMobile = null;
 		if (!StringUtil.isNullObject(billId)) {
 			payAccountBill = (PayAccountBill) jfDAO.get(PayAccountBill.class,
 					billId);
@@ -54,16 +54,10 @@ public class SfServiceImpl implements SfService {
 							.getPoundage(), form.getPayType(), form.getEntId(),
 					form.getBusinessType(), form.getPaymentStatus(), form
 							.getPaymentMode(), UUIdUtil.getUUId(), form.getDivideStatus(),form.getAreaId(),form.getAreaName(),form.getAgentId(),form.getAgentName(),form.getBillNo(),form.getRemark(),form.getPayAddress(),form.getYear(),new Integer(form.getMonth()));
-			String begin = form.getYear() + "-" + form.getMonth()
-					+ "-01 00:00:01";
-			String end = form.getYear() + "-" + form.getMonth() + "-"+DateUtil.getLastDayOfMonth(form.getYear(), new Integer(form.getMonth()))+" 23:59:59";
-			paymentWater = new PaymentWater(null, form.getUserId(), 0l,
-					DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss", begin),
-					DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss", end),
-					form.getPeriodFrequency(), form.getBillMoney(), form
+			paymentMobile = new PaymentMobile(null, form.getUserId(), 0l, form.getBillMoney(), form
 							.getPoundage(), date, form.getBillNumber());
 			saveSetting(form, date);
-			jfDAO.saveBill(payAccountBill,paymentBill,paymentWater);
+			jfDAO.saveBill(payAccountBill,paymentBill,paymentMobile);
 			form.setBillId(payAccountBill.getId());
 			form.setBillNo(paymentBill.getOrderNumber());
 			form.setId(paymentBill.getId());
@@ -87,13 +81,14 @@ public class SfServiceImpl implements SfService {
 		PaymentSetting setting = null;
 		if (form.getBczh() != null && form.getBczh()
 				&& (!StringUtil.isEmptyString(form.getBillNumber()))) {
-			Long count = settingService.getSettingsByBillNumber(form
-					.getBillNumber(),form.getPayType(),form.getUserId());
+			String billNumbers = form.getBillNumber();
+			String billNumber = billNumbers.split(",")[0];
+			Long count = settingService.getSettingsByBillNumber(billNumber,form.getPayType(),form.getUserId());
 			if (count.longValue() == 0) {
 				setting = new PaymentSetting(null, form.getUserId(), 0, "自家",
 						form.getAreaId(), form.getAreaName(),
 						form.getPayType(), null, form.getEntId(), form
-								.getEndName(), form.getBillNumber(), form
+								.getEndName(), billNumber, form
 								.getPayAddress(), date, 0, form.getUserName());
 				List<BaseCustomValue> paymentTypes = staticService
 						.listValues("payment_type");

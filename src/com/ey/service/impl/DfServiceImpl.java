@@ -11,18 +11,18 @@ import com.ey.dao.JfDAO;
 import com.ey.dao.entity.BaseCustomValue;
 import com.ey.dao.entity.PayAccountBill;
 import com.ey.dao.entity.PaymentBill;
+import com.ey.dao.entity.PaymentElectic;
 import com.ey.dao.entity.PaymentSetting;
-import com.ey.dao.entity.PaymentWater;
 import com.ey.forms.JfForm;
+import com.ey.service.DfService;
 import com.ey.service.SettingService;
-import com.ey.service.SfService;
 import com.ey.service.StaticService;
 import com.ey.util.DateUtil;
 import com.ey.util.StringUtil;
 import com.ey.util.UUIdUtil;
 
-@Service("sfService")
-public class SfServiceImpl implements SfService {
+@Service("dfService")
+public class DfServiceImpl implements DfService {
 	@Autowired
 	private JfDAO jfDAO;
 	@Autowired
@@ -30,11 +30,11 @@ public class SfServiceImpl implements SfService {
 	@Autowired
 	private StaticService staticService;
 	@Override
-	public void saveBill(JfForm form) throws RuntimeException {
+	public void saveBill(JfForm form)  throws RuntimeException{
 		Long billId = form.getBillId();
 		PayAccountBill payAccountBill = null;
 		PaymentBill paymentBill = null;
-		PaymentWater paymentWater = null;
+		PaymentElectic paymentElectic = null;
 		if (!StringUtil.isNullObject(billId)) {
 			payAccountBill = (PayAccountBill) jfDAO.get(PayAccountBill.class,
 					billId);
@@ -57,13 +57,14 @@ public class SfServiceImpl implements SfService {
 			String begin = form.getYear() + "-" + form.getMonth()
 					+ "-01 00:00:01";
 			String end = form.getYear() + "-" + form.getMonth() + "-"+DateUtil.getLastDayOfMonth(form.getYear(), new Integer(form.getMonth()))+" 23:59:59";
-			paymentWater = new PaymentWater(null, form.getUserId(), 0l,
+
+			paymentElectic = new PaymentElectic(null, form.getUserId(), 0l,
 					DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss", begin),
 					DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss", end),
 					form.getPeriodFrequency(), form.getBillMoney(), form
 							.getPoundage(), date, form.getBillNumber());
 			saveSetting(form, date);
-			jfDAO.saveBill(payAccountBill,paymentBill,paymentWater);
+			jfDAO.saveBill(payAccountBill,paymentBill,paymentElectic);
 			form.setBillId(payAccountBill.getId());
 			form.setBillNo(paymentBill.getOrderNumber());
 			form.setId(paymentBill.getId());
@@ -79,7 +80,7 @@ public class SfServiceImpl implements SfService {
 	}
 
 	@Override
-	public Object getObjectById(Class c,Serializable id) throws RuntimeException {
+	public Object getObjectById(Class c,Serializable id)  throws RuntimeException{
 		// TODO Auto-generated method stub
 		return jfDAO.get(c, id);
 	}

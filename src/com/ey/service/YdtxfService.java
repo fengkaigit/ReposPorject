@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.ey.forms.JfForm;
 
-public interface SfService {
+public interface YdtxfService {
 
 	void saveBill(JfForm form) throws RuntimeException;
 
