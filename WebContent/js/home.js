@@ -124,7 +124,14 @@ function refreshCity(obj,site,targetObjId){
 		        			var option = new Option(_opts[1],_opts[0]);
 			        		document.getElementById(targetObjId).options.add(option);
 		        		}
-		        		
+		        		try{
+		        			refreshCityId(document.getElementById(targetObjId));
+		        		}catch(err){
+		        		}
+		        		try{
+		        			refreshEntByCity(document.getElementById(targetObjId),site,'paymentType','entId');
+		        		}catch(err){
+		        		}
 		        	}
 		         }
 		     });
@@ -152,4 +159,156 @@ function refreshCityId(obj){
 	if(obj&&city){
 		city.value=obj.value;
 	}
+}
+function refreshEntByPayType(obj,site,cityId,targetObjId){
+	if(obj&&obj.value){
+		if(obj.value!=""){
+			
+			document.getElementById(targetObjId).options.length = 0;
+			$.ajax({
+		         type: "post",
+		         url: chgUrl(site+"/setting/refreshEnt.do"),
+		         dataType: "html",
+		         data: {
+					paymentType: obj.value,
+					areaId:document.getElementById(cityId).value
+		         },
+		         success: function(data, textStatus) {
+		        	 //alert(data);
+		        	if(data){
+		        		var ent = data.split(";");
+		        		for(var i=0;i<ent.length;i++){
+		        			var _opt = ent[i];
+		        			var _opts = _opt.split(",");
+		        			var option = new Option(_opts[1],_opts[0]);
+			        		document.getElementById(targetObjId).options.add(option);
+		        		}
+		        		
+		        	}
+		         }
+		     });
+		}
+	}
+}
+function refreshEntByCity(obj,site,payTypeId,targetObjId){
+	if(obj&&obj.value){
+		if(obj.value!=""){
+			
+			document.getElementById(targetObjId).options.length = 0;
+			$.ajax({
+		         type: "post",
+		         url: chgUrl(site+"/setting/refreshEnt.do"),
+		         dataType: "html",
+		         data: {
+					paymentType: document.getElementById(payTypeId).value,
+					areaId:obj.value
+		         },
+		         success: function(data, textStatus) {
+		        	 //alert(data);
+		        	if(data){
+		        		var ent = data.split(";");
+		        		for(var i=0;i<ent.length;i++){
+		        			var _opt = ent[i];
+		        			var _opts = _opt.split(",");
+		        			var option = new Option(_opts[1],_opts[0]);
+			        		document.getElementById(targetObjId).options.add(option);
+		        		}
+		        		
+		        	}
+		         }
+		     });
+		}
+	}
+}
+function quickSetting(site,paymentType){
+	var iWidth =480;    
+    var iHeight = 432;  
+    var iTop = (window.screen.height-iHeight)/2;
+    var iLeft = (window.screen.width-iWidth)/2;
+	window.showModalDialog(site+"/setting/editframe.do?paymentType="+paymentType,"","dialogLeft="+iLeft+"px;dialogTop="+iTop+"px;dialogHeight="+iHeight+"px;dialogWidth="+iWidth+"px;status=no;scroll=no;resizable=no;help=no");
+}
+function registerAutoComplete(inp, div,site,payType) {
+		//var billNumber = document.getElementById(inp).value;
+	  //alert(instanceId);
+		var myServer = site+"/jf/autoComplete.do";
+		myDataSource = new YAHOO.widget.DS_XHR(myServer, ["\n", "\t"]);
+		myDataSource.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
+		myDataSource.scriptQueryAppend="paymentType="+payType;
+		myDataSource.maxCacheEntries = 0;
+		myDataSource.queryMatchCase = false;
+		//alert("1");
+		myAutoComp = new YAHOO.widget.AutoComplete(inp,div, myDataSource); 
+		myAutoComp.animVert = false;
+		//myAutoComp.delimChar = [";",";"];
+		myAutoComp.animHoriz = false;
+		myAutoComp.animSpeed = 0;
+		myAutoComp.maxResultsDisplayed = 100;
+		myAutoComp.queryDelay = 0.1;
+		myAutoComp.minQueryLength = 1;
+		myAutoComp.useIFrame = true;
+		myAutoComp.typeAhead = false;
+
+		myAutoComp.allowBrowserAutocomplete = false;
+		//alert("2");
+		//myAutoComp.itemSelectEvent.subscribe(fnCallback);
+		myAutoComp.formatResult = function(aResultItem, sQuery) { 
+		    var sResult = aResultItem[0]; 
+		    //var sex = aResultItem[1]; 
+		    //alert(aResultItem[0]);
+		    if(sResult) {
+		        return  sResult;
+		    } else {
+		        return "";
+		    }
+		};
+	}
+function fnCallback(e,args){
+	//alert(args[2]);
+	try{
+		document.getElementById("billNumber").value=args[2].split("户主：")[0];
+	}catch(err){
+	}
+}
+function registerBillNumber(site,paymentType){
+	$("#billNumber").autocomplete(site+'/jf/jqautoComplete.do', {
+		width: 350,
+		dataType:"json",
+		minChars: 1,
+		extraParams: {'paymentType':paymentType}, 
+		parse: function(data) {
+			return $.map(data, function(row) {
+ 				return {
+ 					data: row,
+ 					value: row.billNumber,
+ 					result: row.billNumber };
+ 			});
+		},
+		formatItem: function(row, i, max) {
+            return  row.billNumber+" (<strong>户主: " + row.hoster + "</strong>)"+" (<strong>住址: " + row.payAddress + "</strong>)";
+       }
+	}).result(function(event, row) {
+		$('#billNumber').val(row.billNumber);
+		$('#payAddress').val(row.payAddress);
+	});
+}
+function registerMobilePhone(site,paymentType){
+	$("#telnum_1000").autocomplete(site+'/jf/jqautoComplete.do', {
+		width: 350,
+		dataType:"json",
+		minChars: 1,
+		extraParams: {'paymentType':paymentType}, 
+		parse: function(data) {
+			return $.map(data, function(row) {
+ 				return {
+ 					data: row,
+ 					value: row.billNumber,
+ 					result: row.billNumber };
+ 			});
+		},
+		formatItem: function(row, i, max) {
+            return  row.billNumber+" (<strong>机主: " + row.hoster + "</strong>)"+" (<strong>住址: " + row.payAddress + "</strong>)";
+       }
+	}).result(function(event, row) {
+		$('#telnum_1000').val(row.billNumber);
+	});
 }
