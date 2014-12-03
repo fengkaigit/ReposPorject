@@ -28,20 +28,22 @@ public class Area implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Area(String id, String province, String encodePath) {
+	public Area(String id, String province, String encodePath, Integer areaType) {
 		this.id = id;
 		this.province = province;
 		this.encodePath = encodePath;
+		this.areaType = areaType;
 	}
 
 	/** full constructor */
 	public Area(String id, String city, String province, String encodePath,
-			String namePath) {
+			String namePath, Integer areaType) {
 		this.id = id;
 		this.city = city;
 		this.province = province;
 		this.encodePath = encodePath;
 		this.namePath = namePath;
+		this.areaType = areaType;
 	}
 
 	// Property accessors
@@ -90,7 +92,7 @@ public class Area implements java.io.Serializable {
 	public void setNamePath(String namePath) {
 		this.namePath = namePath;
 	}
-	@Column(name = "area_type")
+	@Column(name = "area_type", nullable = false )
 	public Integer getAreaType() {
 		return areaType;
 	}

@@ -3,6 +3,7 @@ package com.ey.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ey.bo.AreaBo;
 import com.ey.dao.entity.Area;
 
 
@@ -17,4 +18,7 @@ public interface AreaService {
     Area getArea(String id) throws RuntimeException;  
     
     List<Area> getAreasByCity(String cityId) throws RuntimeException;
+    
+    List<Area> getAreaList(String areaType) throws RuntimeException;
+    
 }

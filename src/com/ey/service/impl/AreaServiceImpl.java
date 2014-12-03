@@ -1,11 +1,13 @@
 package com.ey.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ey.bo.AreaBo;
 import com.ey.dao.AreaDAO;
 import com.ey.dao.entity.Area;
 import com.ey.service.AreaService;
@@ -52,4 +54,11 @@ public class AreaServiceImpl implements AreaService {
 		// TODO Auto-generated method stub
 		return areaDAO.getAreasByCity(cityId);
 	}
+
+	@Override
+	public List<Area> getAreaList(String areaType) throws RuntimeException {
+		
+		return areaDAO.getAreaList(areaType);
+	}
+
 }
