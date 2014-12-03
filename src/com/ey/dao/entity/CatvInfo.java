@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * NoticeInfo entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "feedback")
+@Table(name = "catv_info")
 public class CatvInfo implements java.io.Serializable {
 
 	// Fields
