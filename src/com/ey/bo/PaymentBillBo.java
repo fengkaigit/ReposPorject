@@ -5,7 +5,7 @@ import com.ey.dao.entity.PaymentBill;
 
 public class PaymentBillBo extends PaymentBill {
 
-	private String entName;
+	private String entName; 
 	
 	private String userName;
 	
