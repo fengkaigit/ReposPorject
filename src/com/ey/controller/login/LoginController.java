@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -199,6 +200,7 @@ public class LoginController extends BaseController {
 			mav.setViewName("login/reg");
 		}else{
 			try{
+				user.setRegTime(new Date());
 				loginService.saveUser(user);
 				mav.setViewName("redirect:/main.do");
 				mav.addObject(SystemConst.USER, user);
