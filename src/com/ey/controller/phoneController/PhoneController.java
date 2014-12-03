@@ -30,10 +30,9 @@ public class PhoneController {
 	@Autowired
     private AreaService areaService;
 	
-	@RequestMapping(value="{areaType}", method = RequestMethod.GET) 
-	public @ResponseBody List<AreaBo> getAreaInJSON(@PathVariable("areaType") String areaType,HttpServletRequest request,
+	@RequestMapping(value="/areaJson") 
+	public @ResponseBody List<AreaBo> getAreaInJSON(String areaType,HttpServletRequest request,
 			HttpServletResponse response){
-		areaType="110";
 		List<AreaBo> areaLst = new ArrayList();
 		List<Area> dataList = areaService.getAreaList(areaType);
 		// 节点列表（散列表，用于临时存储节点对象）  
