@@ -59,7 +59,7 @@ public class JtfkfServiceImpl implements JtfkfService {
 					form.getCarOwner(), form.getCarType(), form
 							.getCarframeNumber(), form.getEngineNumber(), form
 							.getBillMoney(), form.getPoundage(), date, form
-							.getBillNumber());
+							.getBillNumber(), form.getVehicleNumber());
 			saveSetting(form, date);
 			jfDAO.saveBill(payAccountBill, paymentBill, paymentTraffic);
 			form.setBillId(payAccountBill.getId());

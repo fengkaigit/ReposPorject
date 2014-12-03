@@ -46,6 +46,7 @@ public class JfForm implements Serializable {
 	private Integer carType;
 	private String carframeNumber;
 	private String engineNumber;
+	private String vehicleNumber;
 	private double[] billMoneys;
 	private String userName;
 	public Long getId() {
@@ -294,6 +295,12 @@ public class JfForm implements Serializable {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public String getVehicleNumber() {
+		return vehicleNumber;
+	}
+	public void setVehicleNumber(String vehicleNumber) {
+		this.vehicleNumber = vehicleNumber;
 	}
 	
 }

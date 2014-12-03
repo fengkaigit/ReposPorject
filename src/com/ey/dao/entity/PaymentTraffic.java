@@ -28,6 +28,7 @@ public class PaymentTraffic implements java.io.Serializable {
 	private double poundage;
 	private Date paymentTime;
 	private String billNumber;
+	private String vehicleNumber;
 
 	// Constructors
 
@@ -49,7 +50,7 @@ public class PaymentTraffic implements java.io.Serializable {
 	public PaymentTraffic(Long id, Long userId, Long modelId, String carOwner,
 			Integer carType, String carframeNumber, String engineNumber,
 			double billMoney, double poundage, Date paymentTime,
-			String billNumber) {
+			String billNumber, String vehicleNumber) {
 		this.id = id;
 		this.userId = userId;
 		this.modelId = modelId;
@@ -61,6 +62,7 @@ public class PaymentTraffic implements java.io.Serializable {
 		this.poundage = poundage;
 		this.paymentTime = paymentTime;
 		this.billNumber = billNumber;
+		this.vehicleNumber = vehicleNumber;
 	}
 
 	// Property accessors
@@ -163,6 +165,15 @@ public class PaymentTraffic implements java.io.Serializable {
 
 	public void setBillNumber(String billNumber) {
 		this.billNumber = billNumber;
+	}
+	
+	@Column(name = "vehicle_number")
+	public String getVehicleNumber() {
+		return vehicleNumber;
+	}
+
+	public void setVehicleNumber(String vehicleNumber) {
+		this.vehicleNumber = vehicleNumber;
 	}
 
 }

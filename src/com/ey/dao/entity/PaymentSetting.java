@@ -28,6 +28,9 @@ public class PaymentSetting implements java.io.Serializable {
 	private Date createTime;
 	private Integer delFlag;
 	private String hoster;
+	private String vehicleNumber;
+	private String carframeNumber;
+	private String engineNumber;
 
 	public PaymentSetting() {
 		super();
@@ -55,6 +58,33 @@ public class PaymentSetting implements java.io.Serializable {
 		this.createTime = createTime;
 		this.delFlag = delFlag;
 		this.hoster = hoster;
+	}
+	
+	public PaymentSetting(Long id, Long userId, Integer groupId,
+			String groupName, String areaId, String areaName,
+			Integer paymentType, String paymentTypeName, Long entId,
+			String entName, String billNumber, String payAddress,
+			Date createTime, Integer delFlag, String hoster, 
+			String vehicleNumber, String carframeNumber, String engineNumber) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.groupId = groupId;
+		this.groupName = groupName;
+		this.areaId = areaId;
+		this.areaName = areaName;
+		this.paymentType = paymentType;
+		this.paymentTypeName = paymentTypeName;
+		this.entId = entId;
+		this.entName = entName;
+		this.billNumber = billNumber;
+		this.payAddress = payAddress;
+		this.createTime = createTime;
+		this.delFlag = delFlag;
+		this.hoster = hoster;
+		this.vehicleNumber = vehicleNumber;
+		this.carframeNumber = carframeNumber;
+		this.engineNumber = engineNumber;
 	}
 
 	@Column(name = "hoster")
@@ -183,6 +213,33 @@ public class PaymentSetting implements java.io.Serializable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	@Column(name = "vehicle_number")
+	public String getVehicleNumber() {
+		return vehicleNumber;
+	}
+
+	public void setVehicleNumber(String vehicleNumber) {
+		this.vehicleNumber = vehicleNumber;
+	}
+
+	@Column(name = "carframe_number")
+	public String getCarframeNumber() {
+		return carframeNumber;
+	}
+
+	public void setCarframeNumber(String carframeNumber) {
+		this.carframeNumber = carframeNumber;
+	}
+
+	@Column(name = "engine_number")
+	public String getEngineNumber() {
+		return engineNumber;
+	}
+
+	public void setEngineNumber(String engineNumber) {
+		this.engineNumber = engineNumber;
 	}
 
 	@Column(name = "del_flag")
