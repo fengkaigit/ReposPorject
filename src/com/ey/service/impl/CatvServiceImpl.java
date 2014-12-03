@@ -19,7 +19,7 @@ public class CatvServiceImpl implements CatvService {
 	public List<CatvInfo> getCatvInfo(String areaId, int stationType)
 			throws RuntimeException {
 
-		return null;
+		return catvDAO.getCatvInfo(areaId, stationType);
 	}
 
 }
