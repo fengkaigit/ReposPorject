@@ -1,9 +1,13 @@
 package com.ey.dao.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -24,6 +28,7 @@ public class UserBase implements java.io.Serializable {
 	private String EMail;
 	private String mobilePhone;
 	private double accountScore;
+	private Date regTime;
 
 	// Constructors
 
@@ -141,5 +146,14 @@ public class UserBase implements java.io.Serializable {
 	public void setAccountScore(double accountScore) {
 		this.accountScore = accountScore;
 	}
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "reg_time",length = 10)
+	public Date getRegTime() {
+		return regTime;
+	}
 
+	public void setRegTime(Date regTime) {
+		this.regTime = regTime;
+	}
+    
 }
