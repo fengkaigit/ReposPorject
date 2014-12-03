@@ -183,12 +183,11 @@ public class AutoDivideJob implements Job{
 				if (rule.contains("1")){
 					String[] strRule = rule.split(":");
 					className=strRule[1];
-					funName=strRule[2].substring(0,strRule[2].indexOf("("));
 				}
 			}
 			//定义反射类
 			Class<?> calculate = Class.forName(className);
-			Method func=calculate.getDeclaredMethod(funName, Double.class, Double.class);
+			Method func=calculate.getDeclaredMethod("calculateAgentRebackDot", Double.class, Double.class);
 			Double settleMoney = (Double)func.invoke(calculate.newInstance(), agentInfo.getServiceFee(), agent.getRebackDot());
 			//生成代理商结算划款单（单号生成规则：代理商ID+生成日期,返回结算单号）
 			Long settleBillId=calculateService.saveSettleBill(agentInfo.getId(),settleMoney);

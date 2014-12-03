@@ -182,7 +182,26 @@ public class PhoneController {
 		return json;
 	}
 	
-	
+	@RequestMapping(value="/savePaymentSetting")
+	public @ResponseBody ResultBo savePaySetting(String areaId,int televisionType,HttpServletRequest request,
+			HttpServletResponse response){
+		try{
+			List<CatvInfo> lst = catvService.getCatvInfo(areaId, televisionType);
+			List<CatvInfoBo> boLst = new ArrayList();
+			for (CatvInfo catv:lst){
+				CatvInfoBo bo = new CatvInfoBo(catv.getId(),catv.getTelevisionName(),catv.getTelevisionMoney());
+				boLst.add(bo);
+			}
+			json = new ResultBo();
+			json.setSuccess(true);
+			json.setData("设置用户缴费账号信息成功！");
+		}catch (Exception e) {
+			json = new ResultBo();
+			json.setSuccess(false);
+			json.setData("设置用户缴费账号信息失败！");
+		}
+		return json;
+	}
 }
 
 

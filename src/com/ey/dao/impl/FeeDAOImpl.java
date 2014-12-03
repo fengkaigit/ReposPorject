@@ -13,8 +13,8 @@ public class FeeDAOImpl extends BaseDAOImpl implements FeeDAO {
 
 	@Override
 	public FeeRule getFeeRule(int payType, Date date) throws RuntimeException{
-		String hql = "from FeeRule where paymentType=? and beginTime<=? and endTime>=? order by id desc";
-		List<FeeRule> list = this.find(hql,new Object[]{payType,date,date});
+		String hql = "from FeeRule where paymentType=? and beginTime<=? order by id desc";
+		List<FeeRule> list = this.find(hql,new Object[]{payType,date});
 		if(list!=null&&list.size()>0){
 			return list.get(0);
 		}
