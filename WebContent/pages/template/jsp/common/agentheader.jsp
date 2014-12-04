@@ -40,16 +40,17 @@ $(document).ready(function() {
         <div class="userbar">
 
 			<ul class="sf-menu" id="nav" >
-			<li class="current"><span><a href="index.html">我的任务</a></span>
-				<ul>
-					<li class="current"><a href="jiaofei_zhsz.html">缴费账号设置</a></li>
+			<li class="current"><span><a href="<%=request.getContextPath() %>/agent/index.do">首页</a></span>
+				</li>
+			  <li><span><a href="###">我的工作</a></span>
+			  <ul>
+					<li class="current"><a href="<%=request.getContextPath() %>/agent/passwd.do">待办任务</a></li>
 					
 			  </ul></li>
-			
 			  <li><span><a href="###">个人设置</a></span>
 			  <ul>
 					<li class="current"><a href="<%=request.getContextPath() %>/agent/passwd.do">修改密码</a></li>
-					<li ><a href="###">修改手机</a></li>
+					
 					
 			  </ul></li>
 	       </ul>

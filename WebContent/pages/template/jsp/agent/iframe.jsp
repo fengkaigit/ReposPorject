@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
 <title>代理商首页</title>
@@ -32,6 +33,38 @@ table.gridtable td {
 	line-height:27px;
 }
 </style>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.min.js"></script> 
+<script src="<%=request.getContextPath() %>/js/common/shfftAjax.js" language="Javascript"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/js/ofc/swfobject.js"></script>
+<script>
+$(document).ready(function(){
+	//获取公告
+	 jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/announce/agentgglist.do",{group:0,page:1,rows:5},"get","json",function(data){
+		   if(data.length>0){
+			   var ggHtml = [];
+			   var gglist = document.getElementById("ggList");
+			   for(var i=0;i<data.length;i++){
+				   var obj = data[i];
+				   ggHtml.push('<div class="list">');
+				   ggHtml.push('<div class="listName">');
+				   ggHtml.push('<a href="#" title="'+obj.title+'">'+obj.title+'</a>');
+				   ggHtml.push('</div>');
+				   ggHtml.push('<div class="desktopTime">'+obj.createTime+'</div>');
+				   ggHtml.push('</div>');
+				 }
+			   gglist.innerHTML = ggHtml.join("");
+		   }
+	 });
+	
+	
+	
+	
+	 swfobject.embedSWF("<%=request.getContextPath() %>/js/ofc/open-flash-chart.swf", "bt2", "300", "200", "9.0.0", 
+				"expressInstall.swf",
+				{"data-file":"<%=request.getContextPath() %>/agent/queryUserChart.do"});
+	
+});
+</script>
 </head>
 <body >
 	<ul id="desktopBox">
@@ -42,23 +75,7 @@ table.gridtable td {
 						<div class="desktopTitleName">通知公告</div>
 					</div>
 					<div id="ggList">
-						<div class="list">
-							<div class="listName">
-								<a href="#" title="本月4号系统升级，请周知">本月4号系统升级，请周知</a>
-								</div>
-							<div class="desktopTime">
-								2014-07-01
-							</div>
-						</div>
-
-						<div class="list">
-							<div class="listName">
-								<a href="#" title="本月全国新增用户数10万户">本月全国新增用户数10万户</a>
-								</div>
-							<div class="desktopTime">
-								2014-06-30
-							</div>
-						</div>
+						
 					</div>
 				</li>
 				<li id="dbwork" class="box" style="width: 645px;">
@@ -113,8 +130,7 @@ table.gridtable td {
 									<div class="title">
 										<div class="desktopTitleName">当月新增用户</div>
 									</div>
-									<div class="" id="bt1">
-										<img src="<%=request.getContextPath() %>/images/bt2.jpg" align="right" height="200px">
+									<div class="" id="bt2">
 									</div>
 								</li>
 							</td>
@@ -247,7 +263,7 @@ table.gridtable td {
 									<div class="title">
 										<div class="desktopTitleName">用户投诉</div>
 									</div>
-									<div class="" id="bt1">
+									<div class="" id="bt3">
 										<img src="<%=request.getContextPath() %>/images/bt3.jpg" align="right" height="200px">
 									</div>
 								</li>
@@ -257,7 +273,7 @@ table.gridtable td {
 									<div class="title">
 										<div class="desktopTitleName">当月决算</div>
 									</div>
-									<div class="" id="bt1">
+									<div class="" id="bt4">
 										<img src="<%=request.getContextPath() %>/images/bt4.jpg" align="right" height="200px">
 									</div>
 								</li>

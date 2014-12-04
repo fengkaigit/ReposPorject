@@ -21,6 +21,23 @@ jQuery(document).ready(
 				document.getElementById("loginmain").style.display="none";
 			<%}%>
 			
+			
+			//获取公告
+			 jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/announce/gglist.do",{group:1,page:1,rows:4},"get","json",function(data){
+				   if(data.length>0){
+					   var ggHtml = [];
+					   var gglist = document.getElementById("ggul");
+					   for(var i=0;i<data.length;i++){
+						   var obj = data[i];
+						   ggHtml.push('<li class="clearfix"><b></b>');
+						   ggHtml.push('<a target="_blank" href="#">');
+						   ggHtml.push('<span title="'+obj.title+'" class="fcg2">'+obj.title+'...</span><span class="fcg fr">['+obj.createTime +']</span></a>');
+						   ggHtml.push('</li>');
+						 }
+					   gglist.innerHTML = ggHtml.join("");
+				   }
+			 });
+			
 		});
 
 </script> 
@@ -112,19 +129,7 @@ jQuery(document).ready(
                    <div class="title-items">
                     <h2>公告栏</h2>
                     <a class="more" href="javascript:void(0)">更多&gt;</a></div>
-                <ul>  <li class="clearfix"><b></b>
-                      <a target="_blank" href="#">
-                      <span title="缴费一点通全年365天" class="fcg2 ">缴费一点通全年365天...</span><span class="fcg fr">[08-12]</span></a>
-                    </li>  <li class="clearfix"><b></b>
-                      <a target="_blank" href="#">
-                      <span title="缴费一点通全年365天" class="fcg2 ">缴费一点通全年365天...</span><span class="fcg fr">[08-12]</span></a>
-                    </li>  <li class="clearfix"><b></b>
-                      <a target="_blank" href="#">
-                      <span title="缴费一点通全年365天" class="fcg2 ">缴费一点通全年365天...</span><span class="fcg fr">[08-12]</span></a>
-                    </li>  <li class="clearfix"><b></b>
-                      <a target="_blank" href="#">
-                      <span title="缴费一点通全年365天" class="fcg2 ">缴费一点通全年365天...</span><span class="fcg fr">[08-12]</span></a>
-                    </li> 
+                <ul id="ggul">  
           
                     
                         
