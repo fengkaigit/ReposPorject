@@ -35,7 +35,11 @@ import com.ey.dao.entity.UserBase;
 import com.ey.service.AreaService;
 import com.ey.service.CatvService;
 import com.ey.service.ChargeEntService;
+import com.ey.service.LoginService;
 import com.ey.service.SettingService;
+import com.ey.util.MD5;
+import com.ey.util.RequestUtils;
+import com.ey.util.StringUtil;
 
 @Controller
 @RequestMapping(value="/phone")
@@ -52,6 +56,9 @@ public class PhoneController {
 	
 	@Autowired
     private CatvService catvService;
+	
+	@Autowired
+	private LoginService loginService;
 	
 	private ResultBo json;
 	
@@ -199,6 +206,38 @@ public class PhoneController {
 			json = new ResultBo();
 			json.setSuccess(false);
 			json.setData("设置用户缴费账号信息失败！");
+		}
+		return json;
+	}
+	
+	@RequestMapping(value="/login")
+	public @ResponseBody ResultBo login(String userId,String passwd, HttpServletRequest request,
+			HttpServletResponse response){
+		try{
+			if (StringUtil.isEmptyString(userId)) {
+				json.setSuccess(false);
+				json.setData(RequestUtils.getMessage("nologin",request));
+			}
+			if (StringUtil.isEmptyString(passwd)) {
+				json.setSuccess(false);
+				json.setData(RequestUtils.getMessage("nopassword",request));
+			}
+
+			UserBase currentUser = loginService.findUserByLoginCode(userId, MD5.getMD5Str(passwd));
+
+			if (currentUser == null) {
+				json.setSuccess(false);
+				json.setData(RequestUtils.getMessage("login", request));
+			} else {
+				json = new ResultBo();
+				json.setSuccess(true);
+				json.setData(request.getSession());
+				request.getSession().setAttribute(SystemConst.USER,currentUser);
+			}
+		}catch (Exception e) {
+			json = new ResultBo();
+			json.setSuccess(false);
+			json.setData("获取有线电视设置信息失败！");
 		}
 		return json;
 	}
