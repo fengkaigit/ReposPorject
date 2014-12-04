@@ -210,8 +210,8 @@ public class PhoneController {
 		return json;
 	}
 	
-	@RequestMapping(value="/login")
-	public @ResponseBody ResultBo login(String userId,String passwd, HttpServletRequest request,
+	@RequestMapping(value="/phoneLogin")
+	public @ResponseBody ResultBo phoneLogin(String userId,String passwd, HttpServletRequest request,
 			HttpServletResponse response){
 		try{
 			if (StringUtil.isEmptyString(userId)) {
@@ -229,15 +229,15 @@ public class PhoneController {
 				json.setSuccess(false);
 				json.setData(RequestUtils.getMessage("login", request));
 			} else {
+				request.getSession().setAttribute(SystemConst.USER,currentUser);
 				json = new ResultBo();
 				json.setSuccess(true);
-				json.setData(request.getSession());
-				request.getSession().setAttribute(SystemConst.USER,currentUser);
+				json.setData(request.getSession().getId());				
 			}
 		}catch (Exception e) {
 			json = new ResultBo();
 			json.setSuccess(false);
-			json.setData("获取有线电视设置信息失败！");
+			json.setData("用户登录失败！");
 		}
 		return json;
 	}
