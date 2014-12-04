@@ -31,5 +31,8 @@ public interface AgentService {
   	  void updatePassById(Long id,String password) throws RuntimeException;
   	  
   	  BankAccount getBankAccount(Long id) throws RuntimeException;
+  	  
+  	  List findUserByAreaId(String areaId) throws RuntimeException;
+
 
 }

@@ -6,6 +6,7 @@ public class AgentBo extends AgentInfo {
 	private String areaName;
 	private String areaPathName;
     private String areaPath;
+    private String parentAreaId;
     
     private String rule;//返点规则
     private Long agentAccount;//银行账户
@@ -23,6 +24,18 @@ public class AgentBo extends AgentInfo {
 		this.areaName = areaName;
 		this.areaPathName = areaPathName.substring(9);
 		this.areaPath = areaPath.substring(8);
+	}
+	
+	public AgentBo(Long id, String registAccount, String passwd, String EMail,
+			String mobile, double rebackDot, String registRealName,
+			String areaId, String areaName,String areaPathName,
+			String areaPath,String parentAraeId) {
+		super(id, registAccount, passwd, EMail, mobile, areaId, rebackDot,
+				registRealName);
+		this.areaName = areaName;
+		this.areaPathName = areaPathName.substring(9);
+		this.areaPath = areaPath.substring(8);
+		this.parentAreaId = parentAraeId;
 	}
 	
 	public AgentBo(Long id, String registAccount, String passwd, String EMail,
@@ -78,6 +91,14 @@ public class AgentBo extends AgentInfo {
 		this.agentAccount = agentAccount;
 	}
 
+	public String getParentAreaId() {
+		return parentAreaId;
+	}
+
+	public void setParentAreaId(String parentAreaId) {
+		this.parentAreaId = parentAreaId;
+	}
+    
 	
     
 }

@@ -17,6 +17,8 @@ public class DateUtil {
 	private static String timePattern = "yyyy-MM-dd HH:mm:ss";
 
 	private static String timePatternString = "yyyyMMddHHmmss";
+	
+	private static String timePatternMonth = "yyyy-MM";
 
 	private static String timePatternEnd = "yyyy-MM-dd 23:59:59";
 
@@ -73,6 +75,10 @@ public class DateUtil {
 
 	public static String getTimeNowString(Date theTime) {
 		return getDateTime(timePatternString, theTime);
+	}
+	
+	public static String getYearMonthNowString(Date theTime) {
+		return getDateTime(timePatternMonth, theTime);
 	}
 
 	public static Calendar getToday() throws ParseException {

@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ey.bo.AgentBo;
 import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BaseCustomValue;
 import com.ey.dao.entity.SysAnnouncement;
 import com.ey.dao.entity.SystemManager;
+import com.ey.dao.entity.UserBase;
 import com.ey.service.AnnounceService;
 import com.ey.service.AreaService;
 import com.ey.service.StaticService;
@@ -54,15 +56,40 @@ public class AnnounceController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/listgroup")
+	@RequestMapping(value="/agentgglist")
 	@ResponseBody
-	public Object listgroup(Integer group,HttpServletRequest request,HttpServletResponse response){
+	public Object agentgglist(Integer group,Integer page,Integer rows,HttpServletRequest request,HttpServletResponse response){
+		AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
     	Map<String,Object> queryMap = new HashMap<String,Object>();
+    	queryMap.put("home", true);
     	queryMap.put("group", group);
-		List<SysAnnouncement> announces = announceService.getAnnouncesByQueryParam(null, 0, 0);
+    	queryMap.put("status", 0);
+    	queryMap.put("homeparea", agent.getParentAreaId());
+    	queryMap.put("homearea", agent.getAreaId());
+		List<SysAnnouncement> announces = announceService.getAnnouncesByQueryParam(queryMap, page, rows);
 		return announces;
 	}
 	
+	@RequestMapping(value="/gglist")
+	@ResponseBody
+	public Object gglist(Integer group,Integer page,Integer rows,HttpServletRequest request,HttpServletResponse response){
+		UserBase user = (UserBase)request.getSession().getAttribute(SystemConst.USER);
+    	Map<String,Object> queryMap = new HashMap<String,Object>();
+		if(user!=null){
+		  Area area = areaService.getArea(user.getAreaId());
+    	  queryMap.put("home", true);
+    	  queryMap.put("group", group);
+    	  queryMap.put("status", 0);
+    	  queryMap.put("homeparea", area.getCity());
+    	  queryMap.put("homearea", user.getAreaId());
+		}else{
+			queryMap.put("group", group);
+	    	queryMap.put("scope",0);
+	    	queryMap.put("status",0);
+		}
+		List<SysAnnouncement> announces = announceService.getAnnouncesByQueryParam(queryMap, page,rows);
+		return announces;
+	}
 	
 	@RequestMapping(value="/edit/{id}")
 	public ModelAndView edit(@PathVariable("id") Long id,HttpServletRequest request,HttpServletResponse response){

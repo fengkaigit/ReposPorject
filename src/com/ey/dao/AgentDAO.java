@@ -23,6 +23,8 @@ public interface AgentDAO extends BaseDAO {
 	void updatePassById(Long id,String password) throws RuntimeException;
 	
 	BankAccount getBankAccount(Long id) throws RuntimeException;
+	
+	List<Object> findUserByAreaId(String areaId) throws RuntimeException;
 
 
 }

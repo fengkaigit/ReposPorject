@@ -33,6 +33,7 @@ public class AnnounceDAOImpl extends BaseDAOImpl implements AnnounceDAO {
 			Integer group = (Integer)Qparam.get("group");
 			String areaId = (String)Qparam.get("areaId");
 			Integer status = (Integer)Qparam.get("status");
+			Boolean home = (Boolean)Qparam.get("home");
 			if(!StringUtil.isEmptyString(title)){
 				query.append(" and title like ?");
 				paramList.add("%"+ title +"%");
@@ -52,6 +53,16 @@ public class AnnounceDAOImpl extends BaseDAOImpl implements AnnounceDAO {
 			if(!StringUtil.isEmptyString(areaId)){
 				query.append(" and areaId = ?");
 				paramList.add(areaId);
+			}
+			if(home!=null&&home){
+				String hpareaid = (String)Qparam.get("homeparea");
+				String hareaid = (String)Qparam.get("homearea");
+				query.append(" and (announcementScope = ? or (announcementScope = ? and areaId = ?) or (announcementScope = ? and areaId = ?))");
+				paramList.add(0);
+				paramList.add(1);
+				paramList.add(hpareaid);
+				paramList.add(2);
+				paramList.add(hareaid);
 			}
 		}
 	}

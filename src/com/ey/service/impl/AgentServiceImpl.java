@@ -1,6 +1,7 @@
 package com.ey.service.impl;
 
 import java.util.List;
+
 import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
@@ -16,7 +17,9 @@ import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.BankInfo;
 import com.ey.service.AgentService;
+import com.ey.util.DateUtil;
 import com.ey.util.StringUtil;
+import java.util.Date;
 
 @Service("agentService")
 public class AgentServiceImpl implements AgentService {
@@ -106,6 +109,14 @@ public class AgentServiceImpl implements AgentService {
 	public BankAccount getBankAccount(Long id) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return agentDAO.getBankAccount(id);
+	}
+
+	@Override
+	public List findUserByAreaId(String areaId)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		List userlist = agentDAO.findUserByAreaId(areaId);
+		return userlist;
 	}
 
 }

@@ -1,12 +1,18 @@
 package com.ey.controller.agent;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import jofc2.model.Chart;
+import jofc2.model.elements.PieChart;
+import jofc2.model.elements.PieChart.Slice;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.bo.AgentBo;
+import com.ey.bo.QueryBillBO;
 import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.AgentInfo;
@@ -32,6 +39,7 @@ import com.ey.service.AgentService;
 import com.ey.service.AreaService;
 import com.ey.service.StaticService;
 import com.ey.util.CookieManager;
+import com.ey.util.DateUtil;
 import com.ey.util.MD5;
 import com.ey.util.RequestUtils;
 import com.ey.util.StringUtil;
@@ -110,8 +118,13 @@ public class AgentController extends BaseController {
     }
 	
 	@RequestMapping(value="/iframe")
-    public String index(ModelMap modelMap,HttpServletRequest request,HttpServletResponse response){
+    public String iframe(ModelMap modelMap,HttpServletRequest request,HttpServletResponse response){
   	  return IFRAME_PAGE;
+    }
+	
+	@RequestMapping(value="/index")
+    public String index(ModelMap modelMap,HttpServletRequest request,HttpServletResponse response){
+  	  return INDEX_PAGE;
     }
 	
 	@RequestMapping(value="/logout")
@@ -266,5 +279,60 @@ public class AgentController extends BaseController {
 		System.out.println(str.length());
 	   
 		return null;
+	}
+	
+	@RequestMapping(value = "/queryUserChart")
+	public ModelAndView queryUserChart(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+		List userlist = agentService.findUserByAreaId(agent.getAreaId());
+		Long monthNum = 0L;
+		Long totalNum = 0L;
+		if(userlist!=null&&userlist.size()>0){
+			 String currentYearMonth = DateUtil.getYearMonthNowString(new Date());
+             String dataYearMonth = null;
+			for(Object o:userlist){
+				dataYearMonth = DateUtil.getYearMonthNowString((Date)o);
+				if(dataYearMonth.equals(currentYearMonth)){
+					monthNum++;
+				}	
+			}
+			totalNum = Long.valueOf(userlist.size());
+		}
+		PieChart chart = new PieChart();
+		Slice s1 = new Slice(monthNum,RequestUtils.getMessage("addusernumber", request));
+	    chart.addSlices(s1);
+	    Slice s2 = new Slice(totalNum,RequestUtils.getMessage("addusertotal", request));
+	    chart.addSlices(s2);
+		
+		chart.setColours(new String[] { "#E5CE0E","#DC69AA"});
+		chart.setTooltip("#label#：#val#");
+
+		 chart.setRadius(90);
+		// chart.setStartAngle(100);
+		chart.setAnimate(true);
+		chart.setAlpha(0.8f);
+		Chart flashChart = new Chart();
+		String bgColor = "#ffffff";
+		flashChart.setBackgroundColour(bgColor);
+		flashChart.addElements(chart);
+		response.setHeader("Expires", "-1");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-control", "no-cache");
+		response.setHeader("Content-Type", "text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(flashChart.toString());
+		return null;
+
+	}
+	@RequestMapping(value = "/report")
+	@ResponseBody
+	public Object report(String year,HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+		List userlist = agentService.findUserByAreaId(agent.getAreaId());
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		return map;
 	}
 }

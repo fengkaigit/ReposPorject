@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * SysAnnouncement entity. @author MyEclipse Persistence Tools
@@ -70,6 +71,7 @@ public class SysAnnouncement implements java.io.Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_time", nullable = false, length = 10)
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	public Date getCreateTime() {
 		return this.createTime;
 	}
