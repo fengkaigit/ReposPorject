@@ -111,7 +111,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	public List findPaymentBillByAgentId(Long id, String year)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql = "select createTime,paidMoney from PaymentBill where agentId = ? and date_format(createTime,'%Y') = ? and paymentStatus not in(0,2)";
+		String hql = "select createTime,paidMoney from PaymentBill where agentId = ? and date_format(createTime,'%Y') = ? and paymentStatus not in(0,2,3,4)";
 		return this.find(hql, new Object[]{id,year});
 	}
 
@@ -119,7 +119,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	public List findBillNumByMonth(Long id, String month)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql = "select paymentStatus from PaymentBill where agentId = ? and date_format(createTime,'%Y'-'%m') = ? and paymentStatus not in(0,2)";
+		String hql = "select paymentStatus from PaymentBill where agentId = ? and date_format(createTime,'%Y'-'%m') = ?";
 		return this.find(hql, new Object[]{id,month});
 	}
 
@@ -128,7 +128,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		List billSettlist = new ArrayList();
-		String hql = "select coalesce(sum(paidMoney),0),'billmoney' from PaymentBill where agentId = ? and date_format(createTime,'%Y'-'%m') = ? and paymentStatus not in(0,2)";
+		String hql = "select coalesce(sum(paidMoney),0),'billmoney' from PaymentBill where agentId = ? and date_format(createTime,'%Y'-'%m') = ? and paymentStatus not in(0,2,3,4)";
 		List billlist = this.find(hql, new Object[]{id,month});
 		hql = "select coalesce(sum(profitMoney),0),'settlemoney' from SettleBill where agentId = ? and date_format(createDate,'%Y'-'%m') = ?";
 		List settlelist = this.find(hql, new Object[]{id,month});

@@ -29,14 +29,15 @@ public class AgentBacthJob implements Job {
 		JobDataMap data = arg0.getJobDetail().getJobDataMap();
 		AgentService agentService = (AgentService) data.get("agentService");
 		if(agentService!=null){
-			String currentDay = DateUtil.getDate(new Date());
+			Date date = new Date();
+			String currentDay = DateUtil.getDate(date);
 			Map<Integer,String> map = getPayTypeName(data);
 			List<Object[]> billlist = agentService.findBillByCurrentDay(currentDay);
 			List<BatchPaymentRelation> batchpaylist = new ArrayList<BatchPaymentRelation>();
 			if (billlist != null && billlist.size() > 0) {
 				for (Object[] o : billlist) {
 					AgentPaymentBatch paymentBatch = new AgentPaymentBatch(
-							(Double) o[3], new Date(), 0, (Long) o[1],
+							(Double) o[3], date, 0, (Long) o[1],
 							(Integer) o[0], (Long) o[4],map.get((Integer)o[0]));
 					agentService.savePaymentBatch(paymentBatch);
 					String[] billIds = ((String) o[2])
