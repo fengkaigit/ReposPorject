@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.ey.consts.SystemConst;
+
 public class StringUtil {
 
 	public static final String ID_SEPARATOR = ",";
@@ -281,5 +283,37 @@ public class StringUtil {
 			flowNo = "0"+flowNo;
 		}
 		return timeStr+flowNo;
+	}
+	
+	public static String getSessionKey(int type){
+		String sessionKey = null;
+		if(type==0){
+			sessionKey = SystemConst.WATER_BILL;
+		}
+		if(type==1){
+			sessionKey = SystemConst.ELEC_BILL;
+		}
+		if(type==2){
+			sessionKey = SystemConst.RQF_BILL;
+		}
+		if(type==3){
+			sessionKey = SystemConst.GHF_BILL;
+		}
+		if(type==4){
+			sessionKey = SystemConst.YDTXF_BILL;
+		}
+		if(type==5){
+			sessionKey = SystemConst.JTFKF_BILL;
+		}
+		if(type==6){
+			sessionKey = SystemConst.WYF_BILL;
+		}
+		if(type==7){
+			sessionKey = SystemConst.YXDSF_BILL;
+		}
+		if(type==8){
+			sessionKey = SystemConst.CNF_BILL;
+		}
+		return sessionKey;
 	}
 }

@@ -84,7 +84,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 		if(Qparam!=null&&Qparam.size()>0){
 			String areaId = (String)Qparam.get("areaId");
 			if(!StringUtil.isEmptyString(areaId)){
-				query.append(" and areaId = ?");
+				query.append(" and a.areaId = ?");
 				paramList.add(areaId);
 			}
 			
@@ -107,7 +107,6 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 		}
 		return this.find(hql.toString(),paramList.toArray());
 	}
-
 	@Override
 	public List findPaymentBillByAgentId(Long id, String year)
 			throws RuntimeException {

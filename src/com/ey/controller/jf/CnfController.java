@@ -17,7 +17,6 @@ import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BankInfo;
-import com.ey.dao.entity.ChargeEnterprise;
 import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.UserBase;
 import com.ey.forms.JfForm;
@@ -150,7 +149,7 @@ public class CnfController extends BaseController {
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
 		cnfService.saveBill(form);
-		request.getSession().removeAttribute(SystemConst.CNF_BILL);
+		//request.getSession().removeAttribute(SystemConst.CNF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.CNF_BILL,form);
 		mav.setViewName("jf/cnf/fourth");

@@ -15,11 +15,13 @@ import com.ey.bo.QueryBillBO;
 import com.ey.dao.JfDAO;
 import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.CatvInfo;
 import com.ey.dao.entity.ChargeEnterprise;
 import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.PaymentSetting;
 import com.ey.dao.entity.UserBase;
 import com.ey.service.AreaService;
+import com.ey.service.CatvService;
 import com.ey.service.ChargeEntService;
 import com.ey.service.JfService;
 import com.ey.service.StaticService;
@@ -36,7 +38,8 @@ public class JfServiceImpl implements JfService {
 	private StaticService staticService;
 	@Autowired
 	private JfDAO jfDAO;
-
+	@Autowired
+	private CatvService catvService;
 	public Object getObjectById(Class c, Serializable id)
 			throws RuntimeException {
 		return jfDAO.get(c, id);
@@ -59,13 +62,21 @@ public class JfServiceImpl implements JfService {
 			mav.addObject("billNumber", setting.getBillNumber());
 			mav.addObject("payAddress", setting.getPayAddress());
 			mav.addObject("hoster", setting.getHoster());
+			mav.addObject("vehicleNumber", setting.getVehicleNumber());
+			mav.addObject("carframeNumber", setting.getCarframeNumber());
+			mav.addObject("engineNumber", setting.getEngineNumber());
+			
+			
+			
 		}
+		
 		if (!loadArea) {
 			return;
 		}
 		List<Area> areaList = areaService.getAreasByCity("0");
 		List<Area> cityList = null;
 		List<ChargeEnterprise> charges = null;
+		List<CatvInfo> tvList = null;
 		if (setting == null) {
 			if (StringUtil.isEmptyString(currentUser.getAreaId())) {
 				if (areaList != null && areaList.size() > 0) {
@@ -75,7 +86,9 @@ public class JfServiceImpl implements JfService {
 						charges = chargeEntService.getChargesByArea(cityList
 								.get(0).getId(), type);
 					}
-
+					if(type.intValue()==7){
+						tvList = catvService.getCatvInfo(cityList.get(0).getId(), 0);
+					}
 				}
 			} else {
 				Area city = areaService.getArea(currentUser.getAreaId());
@@ -84,6 +97,9 @@ public class JfServiceImpl implements JfService {
 						.getAreaId(), type);
 				mav.addObject("parent", city.getCity());
 				mav.addObject("areaId", currentUser.getAreaId());
+				if(type.intValue()==7){
+					tvList = catvService.getCatvInfo(currentUser.getAreaId(), 0);
+				}
 			}
 		} else {
 			Area city = areaService.getArea(setting.getAreaId());
@@ -92,7 +108,9 @@ public class JfServiceImpl implements JfService {
 					type);
 			mav.addObject("parent", city.getCity());
 			mav.addObject("areaId", setting.getAreaId());
-
+			if(type.intValue()==7){
+				tvList = catvService.getCatvInfo(setting.getAreaId(), 0);
+			}
 		}
 
 		if (areaList == null) {
@@ -104,9 +122,13 @@ public class JfServiceImpl implements JfService {
 		if (charges == null) {
 			charges = new ArrayList();
 		}
+		if (tvList == null) {
+			tvList = new ArrayList();
+		}
 		mav.addObject("areaList", areaList);
 		mav.addObject("cityList", cityList);
 		mav.addObject("charges", charges);
+		mav.addObject("tvList", tvList);
 
 	}
 
@@ -130,7 +152,8 @@ public class JfServiceImpl implements JfService {
 			Integer payStatus = (Integer) objs[2];// 状态
 			Integer _year = (Integer) objs[3];// 年
 			Integer _month = (Integer) objs[4];// 月
-			buildStatusMap(statusMap, payStatus, _month);
+			Long _sum = (Long) objs[5];// 笔数
+			buildStatusMap(statusMap, payStatus, _month,_sum);
 			buildMoneyMap(moneyMap, payStatus, _month, money);
 			buildItemMap(itemMap, payType, _month, paymentTypes);
 			if (!monthList.contains(_month)) {
@@ -219,7 +242,10 @@ public class JfServiceImpl implements JfService {
 	}
 
 	void buildStatusMap(Map<Integer, Map<Integer, Integer>> statusMap,
-			Integer payStatus, Integer _month) {
+			Integer payStatus, Integer _month,Long _sum) {
+		if(_sum==null){
+			_sum = 1l;
+		}
 		Map<Integer, Integer> _statusMap = statusMap.get(_month);
 		if (_statusMap == null) {
 			_statusMap = new HashMap();
@@ -238,10 +264,10 @@ public class JfServiceImpl implements JfService {
 			ts = 0;
 		}
 		if (payStatus.intValue() == 1) {
-			ss = ss + 1;
+			ss = ss + _sum.intValue();
 		}
 		if (payStatus.intValue() == 2) {
-			ds = ds + 1;
+			ds = ds + _sum.intValue();
 		}
 		ts = ss + ds;
 		_statusMap.put(0, ds);
@@ -268,10 +294,10 @@ public class JfServiceImpl implements JfService {
 					.getPaymentStatus(), bill.getYear(), bill.getMonth(), bill
 					.getPayMoney(), bill.getPoundage(), bill.getBusinessType(),
 					bill.getPaymentMode(), bill.getCreateTime());
-			pb.setPayTypeStr(getLabel(paymentTypes, bill.getPayType()));
-			pb.setPayStatuStr(getLabel(payStatus, bill.getPaymentStatus()));
-			pb.setBusiness(getLabel(businessTypes, bill.getBusinessType()));
-			pb.setPayMode(getLabel(payModes, bill.getPaymentMode()));
+			pb.setPayTypeStr(staticService.getLabel(paymentTypes, bill.getPayType()));
+			pb.setPayStatuStr(staticService.getLabel(payStatus, bill.getPaymentStatus()));
+			pb.setBusiness(staticService.getLabel(businessTypes, bill.getBusinessType()));
+			pb.setPayMode(staticService.getLabel(payModes, bill.getPaymentMode()));
 			pb.setPayTime(DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss", bill
 					.getCreateTime()));
 			list.add(pb);
@@ -279,15 +305,6 @@ public class JfServiceImpl implements JfService {
 		return list;
 	}
 
-	String getLabel(List<BaseCustomValue> list, Integer id) {
-		String label = null;
-		for (BaseCustomValue st : list) {
-			if (st.getId().getDataValue().intValue() == id.intValue()) {
-				label = st.getPropChName();
-				break;
-			}
-		}
-		return label;
-	}
+	
 
 }

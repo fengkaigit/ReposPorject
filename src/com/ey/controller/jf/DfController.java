@@ -103,8 +103,7 @@ public class DfController extends BaseController {
 			ChargeEntBo ceb = chargeEntService.getChargeEnt(form.getEntId());
 			if(ceb!=null){
 				form.setEndName(ceb.getEnterpriseName());
-			}
-			
+			}	
 		}
 		if(form.getAreaId()!=null){
 			Area area = this.areaService.getArea(form.getAreaId());
@@ -150,7 +149,7 @@ public class DfController extends BaseController {
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
 		dfService.saveBill(form);
-		request.getSession().removeAttribute(SystemConst.ELEC_BILL);
+		//request.getSession().removeAttribute(SystemConst.ELEC_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.ELEC_BILL,form);
 		mav.setViewName("jf/df/fourth");

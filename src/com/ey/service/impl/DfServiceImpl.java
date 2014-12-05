@@ -2,11 +2,14 @@ package com.ey.service.impl;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ey.bo.AgentBo;
 import com.ey.dao.JfDAO;
 import com.ey.dao.entity.BaseCustomValue;
 import com.ey.dao.entity.PayAccountBill;
@@ -14,9 +17,12 @@ import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.PaymentElectic;
 import com.ey.dao.entity.PaymentSetting;
 import com.ey.forms.JfForm;
+import com.ey.service.AgentService;
+import com.ey.service.BankAccountService;
 import com.ey.service.DfService;
 import com.ey.service.SettingService;
 import com.ey.service.StaticService;
+import com.ey.service.TransferService;
 import com.ey.util.DateUtil;
 import com.ey.util.StringUtil;
 import com.ey.util.UUIdUtil;
@@ -29,6 +35,12 @@ public class DfServiceImpl implements DfService {
 	SettingService settingService;
 	@Autowired
 	private StaticService staticService;
+	@Autowired
+	private AgentService agentService;
+	@Autowired
+	private TransferService transferService;
+	@Autowired
+	BankAccountService bankAccountService;
 	@Override
 	public void saveBill(JfForm form)  throws RuntimeException{
 		Long billId = form.getBillId();
@@ -43,6 +55,13 @@ public class DfServiceImpl implements DfService {
 		}
 		if (payAccountBill == null) {
 			Date date = new Date();
+			Map<String,Object> param = new HashMap();
+			param.put("areaId", form.getAreaId());
+			List<AgentBo> agents = agentService.getAllAgent(param, 0, 0);
+			if(agents!=null&&agents.size()>0){
+				form.setAgentId(agents.get(0).getId());
+				form.setAgentName(agents.get(0).getRegistRealName());
+			}
 			payAccountBill = new PayAccountBill(null, form.getUserId(), date,
 					0l, form.getBillMoney(), form.getPoundage(), form
 							.getPayType(), form.getBillType(), form.getEntId(),
@@ -53,7 +72,7 @@ public class DfServiceImpl implements DfService {
 					date, form.getBillMoney(), form.getBillMoney(), 0, form
 							.getPoundage(), form.getPayType(), form.getEntId(),
 					form.getBusinessType(), form.getPaymentStatus(), form
-							.getPaymentMode(), UUIdUtil.getUUId(), form.getDivideStatus(),form.getAreaId(),form.getAreaName(),form.getAgentId(),form.getAgentName(),form.getBillNo(),form.getRemark(),form.getPayAddress(),form.getYear(),new Integer(form.getMonth()));
+							.getPaymentMode(), null, form.getDivideStatus(),form.getAreaId(),form.getAreaName(),form.getAgentId(),form.getAgentName(),form.getBillNo(),form.getRemark(),form.getPayAddress(),form.getYear(),new Integer(form.getMonth()));
 			String begin = form.getYear() + "-" + form.getMonth()
 					+ "-01 00:00:01";
 			String end = form.getYear() + "-" + form.getMonth() + "-"+DateUtil.getLastDayOfMonth(form.getYear(), new Integer(form.getMonth()))+" 23:59:59";
@@ -75,6 +94,8 @@ public class DfServiceImpl implements DfService {
 			paymentBill.setRemarks(form.getRemark());
 			paymentBill.setPayAddress(form.getPayAddress());
 			jfDAO.saveOrUpdate(paymentBill);
+			transferService.saveTransferRecord(form);
+			bankAccountService.saveBankAccount(form);
 		}
 
 	}

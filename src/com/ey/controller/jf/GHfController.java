@@ -149,7 +149,7 @@ public class GHfController extends BaseController {
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
 		ghfService.saveBill(form);
-		request.getSession().removeAttribute(SystemConst.GHF_BILL);
+		//request.getSession().removeAttribute(SystemConst.GHF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.GHF_BILL,form);
 		mav.setViewName("jf/ghf/fourth");

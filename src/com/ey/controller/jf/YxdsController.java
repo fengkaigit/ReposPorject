@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.bo.ChargeEntBo;
@@ -17,11 +18,12 @@ import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BankInfo;
-import com.ey.dao.entity.ChargeEnterprise;
+import com.ey.dao.entity.CatvInfo;
 import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.UserBase;
 import com.ey.forms.JfForm;
 import com.ey.service.AreaService;
+import com.ey.service.CatvService;
 import com.ey.service.ChargeEntService;
 import com.ey.service.FeeService;
 import com.ey.service.JfService;
@@ -44,6 +46,8 @@ public class YxdsController extends BaseController {
 	private FeeService feeService;
 	@Autowired
 	private JfService jfService;
+	@Autowired
+	private CatvService catvService;
 	public final static Integer TYPE = 7;
 	@RequestMapping(value = "/first")
 	public ModelAndView first(HttpServletRequest request,
@@ -150,10 +154,19 @@ public class YxdsController extends BaseController {
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
 		yxfService.saveBill(form);
-		request.getSession().removeAttribute(SystemConst.YXDSF_BILL);
+		//request.getSession().removeAttribute(SystemConst.YXDSF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.YXDSF_BILL,form);
 		mav.setViewName("jf/yxds/fourth");
 		return mav;
+	}
+	@RequestMapping(value = "/gettvs")
+	@ResponseBody
+	public Object gettvs(HttpServletRequest request,
+			HttpServletResponse response){
+		String areaId = request.getParameter("areaId");
+		String type = request.getParameter("type");
+		List<CatvInfo> tvlist = catvService.getCatvInfo(areaId, new Integer(type));
+		return tvlist;
 	}
 }

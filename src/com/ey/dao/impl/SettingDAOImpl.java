@@ -38,7 +38,6 @@ public class SettingDAOImpl extends BaseDAOImpl implements SettingDAO {
 
 	@Override
 	public void delSetting(Long id) {
-		// TODO Auto-generated method stub
 		String hql = "update PaymentSetting set delFlag=1 where id=?";
 		this.executeHql(hql, new Object[] { id });
 	}
@@ -59,9 +58,9 @@ public class SettingDAOImpl extends BaseDAOImpl implements SettingDAO {
 	@Override
 	public List<PaymentSetting> getSettingByBillNumber(String name,
 			Integer paymentType, Long userId) {
-		String hql = "from PaymentSetting where billNumber like ? and paymentType=? and userId=?";
+		String hql = "from PaymentSetting where (billNumber like ? or hoster like ?) and paymentType=? and userId=?";
 
-		return find(hql, new Object[] { "%" + name + "%", paymentType, userId });
+		return find(hql, new Object[] { "%" + name + "%","%" + name + "%", paymentType, userId });
 	}
 
 }

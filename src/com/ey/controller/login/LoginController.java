@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.consts.SystemConst;
@@ -41,17 +44,17 @@ public class LoginController extends BaseController {
 	private StaticService staticService;
 	@Autowired
 	private AreaService areaService;
-	
+
 	@RequestMapping(value = "/dologin")
 	public ModelAndView login(HttpServletRequest request,
-			HttpServletResponse response,UserForm form) {
-		if(!StringUtil.isEmptyString(form.getForwardUrl())){
-			 request.setAttribute("forwardUrl", form.getForwardUrl());
-		} 
+			HttpServletResponse response, UserForm form) {
+		if (!StringUtil.isEmptyString(form.getForwardUrl())) {
+			request.setAttribute("forwardUrl", form.getForwardUrl());
+		}
 		ModelAndView mav = new ModelAndView();
 		if (StringUtil.isEmptyString(form.getLoginCode())) {
-			mav.addObject("message", RequestUtils.getMessage("nologin",
-					request));
+			mav.addObject("message", RequestUtils
+					.getMessage("nologin", request));
 			mav.setViewName("login/login");
 			return mav;
 		}
@@ -77,27 +80,29 @@ public class LoginController extends BaseController {
 				return mav;
 			}
 		}
-		UserBase currentUser = loginService.findUserByLoginCode(form.getLoginCode(), MD5
-				.getMD5Str(form.getPassword()));
+		UserBase currentUser = loginService.findUserByLoginCode(form
+				.getLoginCode(), form.getPassword());
 
 		if (currentUser == null) {
 			mav.addObject("message", RequestUtils.getMessage("login", request));
 			mav.setViewName("login/login");
 		} else {
-			if(StringUtil.isEmptyString(form.getForwardUrl())){
+			if (StringUtil.isEmptyString(form.getForwardUrl())) {
 				mav.setViewName("redirect:/main.do");
-			}else{
+			} else {
 				String contextPath = request.getContextPath();
-				if(contextPath!=null&&contextPath.length()>1){
-					mav.setViewName("redirect:"+form.getForwardUrl().replaceFirst(contextPath, ""));
-				}else{
-					mav.setViewName("redirect:"+form.getForwardUrl());
+				if (contextPath != null && contextPath.length() > 1) {
+					mav.setViewName("redirect:"
+							+ form.getForwardUrl()
+									.replaceFirst(contextPath, ""));
+				} else {
+					mav.setViewName("redirect:" + form.getForwardUrl());
 				}
-				
+
 			}
-			
+
 			mav.addObject(SystemConst.USER, currentUser);
-			request.getSession().setAttribute(SystemConst.USER,currentUser);
+			request.getSession().setAttribute(SystemConst.USER, currentUser);
 		}
 		return mav;
 	}
@@ -124,16 +129,17 @@ public class LoginController extends BaseController {
 	public ModelAndView reg(HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		List<BaseCustomValue> values = staticService.listValues("person_account_type");
+		List<BaseCustomValue> values = staticService
+				.listValues("person_account_type");
 		List<Area> areas = areaService.getAreasByCity("0");
 		List<Area> cityList = null;
-		if(areas!=null&&areas.size()>0){
+		if (areas != null && areas.size() > 0) {
 			cityList = areaService.getAreasByCity(areas.get(0).getId());
 		}
-		if(areas==null){
+		if (areas == null) {
 			areas = new ArrayList();
 		}
-		if(cityList==null){
+		if (cityList == null) {
 			cityList = new ArrayList();
 		}
 		mav.addObject("cityList", cityList);
@@ -150,26 +156,26 @@ public class LoginController extends BaseController {
 		mav.setViewName("login/login");
 		return mav;
 	}
+
 	@RequestMapping(value = "/doreg")
 	public ModelAndView doreg(HttpServletRequest request,
-			HttpServletResponse response,UserBase user) {
+			HttpServletResponse response, UserBase user) {
 		String verify = request.getParameter("verify");
-		
+
 		ModelAndView mav = new ModelAndView();
 		if (StringUtil.isEmptyString(user.getAccountNumber())) {
-			mav.addObject("message", RequestUtils.getMessage("nologin",
-					request));
+			mav.addObject("message", RequestUtils
+					.getMessage("nologin", request));
 			mav.setViewName("login/reg");
 			return mav;
 		}
 		user.setRealName(user.getAccountNumber());
 		user.setMobilePhone(user.getAccountNumber());
-		/*if (StringUtil.isEmptyString(user.getRealName())) {
-			mav.addObject("message", RequestUtils.getMessage("norealname",
-					request));
-			mav.setViewName("login/reg");
-			return mav;
-		}*/
+		/*
+		 * if (StringUtil.isEmptyString(user.getRealName())) {
+		 * mav.addObject("message", RequestUtils.getMessage("norealname",
+		 * request)); mav.setViewName("login/reg"); return mav; }
+		 */
 		if (StringUtil.isEmptyString(user.getPasswd())) {
 			mav.addObject("message", RequestUtils.getMessage("nopassword",
 					request));
@@ -192,27 +198,30 @@ public class LoginController extends BaseController {
 				return mav;
 			}
 		}
-		user.setPasswd(MD5
-				.getMD5Str(user.getPasswd()));
-		UserBase currentUser = loginService.findUserByLoginCode(user.getAccountNumber());
-		if(currentUser!=null){
-			mav.addObject("message", RequestUtils.getMessage("duplicateuser", request));
+		// user.setPasswd(user.getPasswd());
+		UserBase currentUser = loginService.findUserByLoginCode(user
+				.getAccountNumber());
+		if (currentUser != null) {
+			mav.addObject("message", RequestUtils.getMessage("duplicateuser",
+					request));
 			mav.setViewName("login/reg");
-		}else{
-			try{
+		} else {
+			try {
 				user.setRegTime(new Date());
 				loginService.saveUser(user);
 				mav.setViewName("redirect:/main.do");
 				mav.addObject(SystemConst.USER, user);
-				request.getSession().setAttribute(SystemConst.USER,user);
-			}catch(Exception ex){
-				mav.addObject("message", RequestUtils.getMessage("registererror", request));
+				request.getSession().setAttribute(SystemConst.USER, user);
+			} catch (Exception ex) {
+				mav.addObject("message", RequestUtils.getMessage(
+						"registererror", request));
 				mav.setViewName("login/reg");
 				return mav;
 			}
 		}
 		return mav;
 	}
+
 	@RequestMapping(value = "/logout")
 	public ModelAndView logout(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -222,13 +231,14 @@ public class LoginController extends BaseController {
 		mav.setViewName("redirect:/main.do");
 		return mav;
 	}
+
 	@RequestMapping(value = "/checkreg")
 	public ModelAndView checkreg(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		String accountNumber = request.getParameter("accountNumber");
 		UserBase user = loginService.findUserByLoginCode(accountNumber);
 		String message = "此登录名可以注册!";
-		if(user!=null){
+		if (user != null) {
 			message = "此登录名已存在,请填写其它用户名!";
 		}
 		response.setHeader("Pragma", "no-cache");
@@ -240,17 +250,18 @@ public class LoginController extends BaseController {
 		out.close();
 		return null;
 	}
+
 	@RequestMapping(value = "/refeshCity")
 	public ModelAndView refeshCity(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		String areaId = request.getParameter("areaId");
 		List<Area> citys = areaService.getAreasByCity(areaId);
 		StringBuffer buffer = new StringBuffer("");
-		for(Area city:citys){
-			if(buffer.length()>0){
+		for (Area city : citys) {
+			if (buffer.length() > 0) {
 				buffer.append(";");
 			}
-			buffer.append(city.getId()+","+city.getProvince());
+			buffer.append(city.getId() + "," + city.getProvince());
 		}
 		response.setHeader("Pragma", "no-cache");
 		response.setHeader("Cache-Control", "no-cache");
@@ -261,5 +272,76 @@ public class LoginController extends BaseController {
 		out.close();
 		return null;
 	}
-	
+
+	@RequestMapping(value = "/resetMobile")
+	@ResponseBody
+	public Object resetMobile(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String,String> map = new HashMap();
+		String mobile = request.getParameter("newmobile");
+		String result = null;
+		if (StringUtil.isEmptyString(mobile)) {
+			result = "请输入手机号码";
+		} else {
+			try {
+				UserBase ub = (UserBase) request.getSession().getAttribute(
+						SystemConst.USER);
+				UserBase ubd = loginService.findUserByLoginCode(ub
+						.getAccountNumber());
+				ubd.setMobilePhone(mobile);
+				loginService.saveUser(ubd);
+				request.getSession().setAttribute(SystemConst.USER, ubd);
+				result = "手机号码重设成功";
+			} catch (Exception ex) {
+				result = "手机号码重设失败";
+			}
+		}
+		map.put("result", result);
+		return map;
+	}
+
+	@RequestMapping(value = "/resetPassword")
+	@ResponseBody
+	public Object resetPassword(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String,String> map = new HashMap();
+		String oldpass = request.getParameter("oldpass");
+		String newepass1 = request.getParameter("newepass1");
+		String newepass2 = request.getParameter("newepass2");
+		String result = null;
+		UserBase ub = (UserBase) request.getSession().getAttribute(
+				SystemConst.USER);
+		if (StringUtil.isEmptyString(oldpass)) {
+			result = "请输入原密码";
+		}
+		if (StringUtil.isEmptyString(newepass1)) {
+			result = "请输入新密码";
+		}
+		if (StringUtil.isEmptyString(newepass2)) {
+			result = "请输入确认密码";
+		}
+		if (!newepass1.equals(newepass2)) {
+			result = "两次密码不一致,请确认";
+		}
+		if (!oldpass.equals(ub.getPasswd())) {
+			result = "原密码错误";
+		}
+		if (!StringUtil.isEmptyString(result)) {
+			map.put("result", result);
+			return map;
+		}
+		try {
+
+			UserBase ubd = loginService.findUserByLoginCode(ub
+					.getAccountNumber());
+			ubd.setPasswd(newepass1);
+			loginService.saveUser(ubd);
+			request.getSession().setAttribute(SystemConst.USER, ubd);
+			result = "ok";
+		} catch (Exception ex) {
+			result = "密码未能修改";
+		}
+		map.put("result", result);
+		return map;
+	}
 }

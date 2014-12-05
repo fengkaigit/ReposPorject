@@ -64,5 +64,14 @@ public class StaticServiceImpl implements StaticService {
 		// TODO Auto-generated method stub
 		return staticDAO.save(obj);
 	}
-
+	public String getLabel(List<BaseCustomValue> list, Integer id) {
+		String label = null;
+		for (BaseCustomValue st : list) {
+			if (st.getId().getDataValue().intValue() == id.intValue()) {
+				label = st.getPropChName();
+				break;
+			}
+		}
+		return label;
+	}
 }

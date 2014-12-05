@@ -17,7 +17,6 @@ import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BankInfo;
-import com.ey.dao.entity.ChargeEnterprise;
 import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.UserBase;
 import com.ey.forms.JfForm;
@@ -150,7 +149,7 @@ public class WyfController extends BaseController {
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
 		wyfService.saveBill(form);
-		request.getSession().removeAttribute(SystemConst.WYF_BILL);
+		//request.getSession().removeAttribute(SystemConst.WYF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.WYF_BILL,form);
 		mav.setViewName("jf/wyf/fourth");

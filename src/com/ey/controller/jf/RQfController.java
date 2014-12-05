@@ -149,7 +149,7 @@ public class RQfController extends BaseController {
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
 		rqfService.saveBill(form);
-		request.getSession().removeAttribute(SystemConst.RQF_BILL);
+		//request.getSession().removeAttribute(SystemConst.RQF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.RQF_BILL,form);
 		mav.setViewName("jf/rqf/fourth");

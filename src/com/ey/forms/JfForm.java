@@ -49,6 +49,10 @@ public class JfForm implements Serializable {
 	private String vehicleNumber;
 	private double[] billMoneys;
 	private String userName;
+	private String othertvs;
+	private Integer jfmonth;
+	private String tvgroup;
+	
 	public Long getId() {
 		return id;
 	}
@@ -301,6 +305,24 @@ public class JfForm implements Serializable {
 	}
 	public void setVehicleNumber(String vehicleNumber) {
 		this.vehicleNumber = vehicleNumber;
+	}
+	public String getOthertvs() {
+		return othertvs;
+	}
+	public void setOthertvs(String othertvs) {
+		this.othertvs = othertvs;
+	}
+	public Integer getJfmonth() {
+		return jfmonth;
+	}
+	public void setJfmonth(Integer jfmonth) {
+		this.jfmonth = jfmonth;
+	}
+	public String getTvgroup() {
+		return tvgroup;
+	}
+	public void setTvgroup(String tvgroup) {
+		this.tvgroup = tvgroup;
 	}
 	
 }

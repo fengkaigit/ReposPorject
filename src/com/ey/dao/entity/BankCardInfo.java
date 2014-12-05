@@ -14,7 +14,7 @@ public class BankCardInfo implements java.io.Serializable {
 
 	// Fields
 
-	private Long bankId;
+	private String bankId;
 	private String cardNumber;
 	private Integer cardType;
 
@@ -25,7 +25,7 @@ public class BankCardInfo implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public BankCardInfo(Long bankId, String cardNumber, Integer cardType) {
+	public BankCardInfo(String bankId, String cardNumber, Integer cardType) {
 		this.bankId = bankId;
 		this.cardNumber = cardNumber;
 		this.cardType = cardType;
@@ -33,12 +33,12 @@ public class BankCardInfo implements java.io.Serializable {
 
 	// Property accessors
 	@Id
-	@Column(name = "bank_id", unique = true, nullable = false)
-	public Long getBankId() {
+	@Column(name = "bank_id", nullable = false)
+	public String getBankId() {
 		return this.bankId;
 	}
 
-	public void setBankId(Long bankId) {
+	public void setBankId(String bankId) {
 		this.bankId = bankId;
 	}
 

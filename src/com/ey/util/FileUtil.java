@@ -614,5 +614,36 @@ public class FileUtil {
 		outStream.flush();
 		return destFile;
 	}
+	public static void downLoadImg(File file,HttpServletResponse response,String fileName){
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+		OutputStream fos = null;
+		InputStream fis = null;
+		try {
+			response.setContentType("image/jpeg");
+			/*response.setHeader(
+					"Content-disposition",
+					"attachment;filename="
+							+ URLEncoder.encode(fileName,
+									"UTF-8"));*/
+			fis = new FileInputStream(file);
+			bis = new BufferedInputStream(fis);
+			fos = response.getOutputStream();
+			bos = new BufferedOutputStream(fos);
+
+			int bytesRead = 0;
+			byte[] buffer = new byte[4*1024];
+			while ((bytesRead = bis.read(buffer)) != -1) {
+				bos.write(buffer, 0, bytesRead);
+			}
+			fos.flush();
+			bos.close();
+			fos.close();
+			bis.close();
+			fis.close();
+	}catch(Exception ex){
+		ex.printStackTrace();
+	}
+	}
 
 }

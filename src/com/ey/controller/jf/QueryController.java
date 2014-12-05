@@ -1,10 +1,15 @@
 package com.ey.controller.jf;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,21 +25,25 @@ import jofc2.model.elements.PieChart.Slice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.bo.QueryBillBO;
 import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
-import com.ey.dao.entity.PaymentBill;
+import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.ChargeEnterprise;
 import com.ey.dao.entity.PaymentSetting;
 import com.ey.dao.entity.UserBase;
+import com.ey.forms.JfForm;
+import com.ey.service.ChargeEntService;
 import com.ey.service.JfService;
 import com.ey.service.SettingService;
-import com.ey.util.CurrencyConverter;
+import com.ey.service.StaticService;
 import com.ey.util.DateUtil;
+import com.ey.util.FileUtil;
 import com.ey.util.JacksonJsonUtil;
 import com.ey.util.StringUtil;
+import com.ey.util.WordReport;
 
 @Controller
 @RequestMapping(value = "/jf")
@@ -43,6 +52,10 @@ public class QueryController extends BaseController {
 	SettingService settingService;
 	@Autowired
 	JfService jfService;
+	@Autowired
+	private StaticService staticService;
+	@Autowired
+	private ChargeEntService chargeEntService;
 
 	@RequestMapping(value = "/query")
 	public ModelAndView query(HttpServletRequest request,
@@ -102,14 +115,14 @@ public class QueryController extends BaseController {
 	public ModelAndView queryBarchart(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 
-		List<QueryBillBO> records = (List<QueryBillBO>) request
-				.getSession().getAttribute("querybarchartdata");
+		List<QueryBillBO> records = (List<QueryBillBO>) request.getSession()
+				.getAttribute("querybarchartdata");
 		if (records == null) {
 			records = queryBills(null, request, response);
 			request.getSession().setAttribute("querybarchartdata", records);
 		}
 
-		BarChart chart = new BarChart(BarChart.Style.GLASS); 
+		BarChart chart = new BarChart(BarChart.Style.GLASS);
 		// FilledBarChart chart = new FilledBarChart("red","blue");
 		// String sMax = "10000" ;
 		chart.setColour("#ffffff");
@@ -139,7 +152,7 @@ public class QueryController extends BaseController {
 		flashChart.setBackgroundColour(bgColor);
 		flashChart.addElements(chart);
 
-		YAxis y = new YAxis(); 
+		YAxis y = new YAxis();
 		Integer yMax = new Integer(1);
 		Integer yStep = new Integer(1);
 		if (maxValue < 1) {
@@ -159,10 +172,10 @@ public class QueryController extends BaseController {
 
 		y.setMax(yMax);
 
-		y.setSteps(yStep); 
+		y.setSteps(yStep);
 
 		flashChart.setYAxis(y);
-		
+
 		flashChart.setXAxis(x);
 		response.setHeader("Expires", "-1");
 		response.setHeader("Pragma", "no-cache");
@@ -185,9 +198,9 @@ public class QueryController extends BaseController {
 			// s.setTip(record.getPayType()+":#val#/#total#（ #percent#）");
 			chart.addSlices(s);
 		}
-		chart.setColours(new String[] { "#77CC6D","#FF5973","#6D86CC", "#ED9A18",
-			    "#9018ED", "#00DDEE", "#4B5B6B", "#F5BBDD", "#686E08", "#C77248",
-			    "#3333CC", "#D90022", "#EEB644" });
+		chart.setColours(new String[] { "#77CC6D", "#FF5973", "#6D86CC",
+				"#ED9A18", "#9018ED", "#00DDEE", "#4B5B6B", "#F5BBDD",
+				"#686E08", "#C77248", "#3333CC", "#D90022", "#EEB644" });
 		chart.setTooltip("#label#：#val#/#total#（ #percent#）");
 
 		// chart.setRadius(20);
@@ -294,11 +307,123 @@ public class QueryController extends BaseController {
 		// System.out.println(key.getName() + "\t" + "N");
 		// }
 		String json = JacksonJsonUtil.beanToJson(settings);
-		System.out.println(json);
+		//System.out.println(json);
 		out.println(json);
 		out.flush();
 		out.close();
 		return null;
 	}
 
+	@RequestMapping(value = "/expWord")
+	public ModelAndView expWord(HttpServletRequest request,
+			HttpServletResponse response) {
+		String payType = request.getParameter("payType");
+		int type = new Integer(payType).intValue();
+		String sessionKey = StringUtil.getSessionKey(type);
+		if (sessionKey == null) {
+			return null;
+		}
+		JfForm form = (JfForm) request.getSession().getAttribute(sessionKey);
+		if (form == null) {
+			return null;
+		}
+		List<BaseCustomValue> paymentTypes = staticService
+				.listValues("payment_type");
+		String label = staticService.getLabel(paymentTypes, type);
+		if (label == null) {
+			return null;
+		}
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(
+				SystemConst.USER);
+		String path = System.getProperty("java.io.tmpdir");
+		String date = DateUtil.getDateTime("yyyyMMddHHmmss", new Date());
+		String fileName = date + currentUser.getId() + ".doc";
+		String fileNameDoc = path + "/" + fileName;
+		File file = new File(fileNameDoc);
+		if (file.exists()) {
+			try {
+				file.delete();
+			} catch (Exception ex) {
+
+			}
+		}
+		Map<String, Object> mainMap = new HashMap();
+		mainMap.put("billNo", form.getBillNo());
+		mainMap.put("flowNO", form.getBillId());
+		mainMap.put("money", (form.getBillMoney() + form.getPoundage()) + "");
+		mainMap.put("payType", label + "费");
+		mainMap.put("endName", form.getEndName());
+		mainMap.put("billNumber", form.getBillNumber());
+		mainMap.put("payAddress", form.getPayAddress());
+		mainMap.put("zq", form.getYear() + "年" + form.getMonth() + "月");
+		mainMap.put("billMoney", form.getBillMoney());
+		mainMap.put("poundage", form.getPoundage());
+		mainMap.put("moneycn", form.getMoneycn());
+		mainMap.put("bankName", form.getBankName());
+		mainMap.put("bankAccount", form.getBankAccount());
+		mainMap.put("payReason", "");
+		List<Map<String, Object>> detail = null;
+		List<List<Map<String, Object>>> details = null;
+		String moban = "/jf_model.xml";
+		if (type == 4) {
+			moban = "/sj_model.xml";
+			detail = new ArrayList();
+			details = new ArrayList();
+			String[] mobiles = form.getMobiles();
+			double[] bms = form.getBillMoneys();
+			for (int i = 0; i < mobiles.length; i++) {
+				Map<String, Object> dm = new HashMap();
+				dm.put("mobile", mobiles[i]);
+				dm.put("billMoney", bms[i]);
+				detail.add(dm);
+			}
+			details.add(detail);
+		}
+		if (type == 5) {
+			moban = "/jt_model.xml";
+		}
+		InputStream in = this.getClass().getResourceAsStream(moban);
+		try {
+			String content = WordReport.buildWordReport(in, mainMap, details);
+			FileUtil.makeFile(content, fileNameDoc, "utf-8");
+			in.close();
+
+			File fileDoc = new File(fileNameDoc);
+			if (fileDoc != null && fileDoc.exists()) {
+				FileUtil.downLoadFile(fileDoc, response, fileName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@RequestMapping(value = "/viewbillimg")
+	public ModelAndView viewbillimg(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, URISyntaxException {
+		String entId = request.getParameter("entId");
+		String payType = request.getParameter("payType");
+		String path = System.getProperty("java.io.tmpdir");
+		String fileName = "billimg_" + entId + "_" + payType + ".jpg";
+		String fileNameJpg = path + "/" + fileName;
+		File file = new File(fileNameJpg);
+		if (!file.exists()) {
+			ChargeEnterprise cet = chargeEntService
+					.getChargeEnterprise(new Long(entId));
+			if (cet != null) {
+				byte[] bytes = cet.getExPic();
+				if (bytes != null && bytes.length > 0) {
+					FileUtil.wirteStringToFile(bytes, file);
+				} else {
+					
+					//URI url = new URI("http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/images/no_billImage.jpg");
+					//file = new File(url);
+					response.sendRedirect(request.getContextPath()+"/images/no_billImage.jpg");
+					return null;
+				}
+			}
+		}
+		FileUtil.downLoadImg(file, response, fileName);
+		return null;
+	}
 }

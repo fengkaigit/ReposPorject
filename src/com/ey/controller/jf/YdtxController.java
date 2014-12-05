@@ -1,6 +1,7 @@
 package com.ey.controller.jf;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BankInfo;
+import com.ey.dao.entity.ChargeEnterprise;
 import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.UserBase;
 import com.ey.forms.JfForm;
@@ -78,8 +80,15 @@ public class YdtxController extends BaseController {
 		form.setPaymentMode(0);//0：银行缴费
 		form.setDivideStatus(0);//0：未生成劳务费划款单据
 		form.setPeriodFrequency("month");//month;
-		form.setAreaId(currentUser.getAreaId());
-		form.setEntId(7l);
+		String areaId = form.getAreaId();
+		if(StringUtil.isEmptyString(areaId)){
+			areaId = currentUser.getAreaId();
+			form.setAreaId(areaId);
+		}
+		List<ChargeEnterprise> charges = chargeEntService.getChargesByArea(areaId, TYPE);
+		if(charges!=null&&charges.size()>0){
+			form.setEntId(charges.get(0).getId());
+		}
 		if(form.getYear()==null){
 			Date date = new Date();
 			int curYear = DateUtil.getYear(date);
@@ -159,7 +168,7 @@ public class YdtxController extends BaseController {
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
 		ydtxfService.saveBill(form);
-		request.getSession().removeAttribute(SystemConst.YDTXF_BILL);
+		//request.getSession().removeAttribute(SystemConst.YDTXF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.YDTXF_BILL,form);
 		mav.setViewName("jf/ydtx/fourth");

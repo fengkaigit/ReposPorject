@@ -1,5 +1,4 @@
 package com.ey.util;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -48,12 +47,13 @@ public class WordReport {
 			String text = el.getTextTrim();
 			if (text != null && text.indexOf("@") > -1
 					&& text.indexOf("@@") == -1) {
-				Object obj = dataMap.get(text.substring(1));
+				/*Object obj = dataMap.get(text.substring(1));
 				if (obj != null) {
 					el.setText(obj + "");
 				} else {
 					el.setText("");
-				}
+				}*/
+				processValue(dataMap,el,text);
 			}
 
 		}
@@ -61,6 +61,22 @@ public class WordReport {
 			extendTable(details, doc);
 		}
 		return doc.asXML();
+	}
+	static void processValue(Map<String, Object> dataMap,Element el,String text){
+		Set<String> sets = dataMap.keySet();
+		for(String set:sets){
+			if(text.indexOf("@") == -1){
+				break;
+			}
+			Object obj = dataMap.get(set);
+			String val = "";
+			if(obj!=null){
+				val = obj + "";
+			}
+			
+			text = text.replaceAll("@"+set, val);
+			el.setText(text);
+		}
 	}
 	static void extendTable(List<List<Map<String, Object>>> details, Document doc){
 		List<Element> tableList=doc.selectNodes("//w:tbl");
@@ -70,7 +86,7 @@ public class WordReport {
 		int index = 0;
 		for(Element tableEle:tableList){
 			extendedTr(details,tableEle,index);
-			index++;
+			//index++;
 		}
 	}
 	static void extendedTr(List<List<Map<String, Object>>> details, Element tableEle,int index) {

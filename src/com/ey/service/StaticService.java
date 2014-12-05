@@ -11,4 +11,5 @@ public interface StaticService {
 	public List<BaseCustomValue> listValues(String typeCode) throws RuntimeException;
 	List<BankInfo> listBanks() throws RuntimeException;
 	Object saveObject(Object obj) throws RuntimeException;
+	public String getLabel(List<BaseCustomValue> list, Integer id) throws RuntimeException;
 }

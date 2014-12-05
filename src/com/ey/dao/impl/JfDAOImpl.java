@@ -257,15 +257,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		// SUM(pay_money+poundage),SUM(pay_money),SUM(poundage),pay_type,payment_status,YEAR,MONTH
 		// FROM payment_bill WHERE payment_status=1 OR payment_status=2 GROUP BY
 		// YEAR,MONTH,pay_type,payment_status ORDER BY YEAR,month
-		String hql = "select sum(payMoney+poundage),payType,paymentStatus,year,month from PaymentBill where userId=? and year=? and month>=? and month<=? and (paymentStatus=1 or paymentStatus=2) group by year,month,payType,paymentStatus order by year,month";
+		String hql = "select sum(payMoney+poundage),payType,paymentStatus,year,month,sum(1) from PaymentBill where userId=? and year=? and month>=? and month<=? and (paymentStatus=1 or paymentStatus=2) group by year,month,payType,paymentStatus order by year,month";
 		return this.find(hql, new Object[]{userId,year,sm,em});
 	}
-
 	@Override
 	public java.util.List<PaymentBill> getDetails(Long userId, Integer year,
 			Integer month) {
 		String hql = "from PaymentBill where year=? and month=? and userId=? and (paymentStatus=1 or paymentStatus=2) order by createTime";
 		return this.find(hql, new Object[]{year,month,userId});
 	}
-
 }

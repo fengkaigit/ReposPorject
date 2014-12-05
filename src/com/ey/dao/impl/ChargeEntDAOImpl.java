@@ -45,13 +45,13 @@ public class ChargeEntDAOImpl extends BaseDAOImpl implements ChargeEntDAO {
 
 	@Override
 	public List<ChargeEntBo> getChargesByArea(String areaId) {
-		String hql = "from ChargeEnterprise where areaId=? order by id";
+		String hql = "from ChargeEnterprise where areaId=? and delFlag = 0 order by id";
 		return this.find(hql, new Object[]{areaId});
 	}
 
 	@Override
 	public List<ChargeEnterprise> getChargesByArea(String areaId, int payType) {
-		String hql = "from ChargeEnterprise where areaId=? and payType=? order by id";
+		String hql = "from ChargeEnterprise where areaId=? and payType=? and delFlag = 0 order by id";
 		return this.find(hql, new Object[]{areaId,payType});
 	}
 
@@ -64,5 +64,4 @@ public class ChargeEntDAOImpl extends BaseDAOImpl implements ChargeEntDAO {
 			return list.get(0);
 		return null;
 	}
-
 }

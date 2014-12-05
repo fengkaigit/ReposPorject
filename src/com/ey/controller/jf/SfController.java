@@ -159,7 +159,7 @@ public class SfController extends BaseController {
 
 		form.setPaymentStatus(1);// 1：系统缴费成功；
 		sfService.saveBill(form);
-		request.getSession().removeAttribute(SystemConst.WATER_BILL);
+		//request.getSession().removeAttribute(SystemConst.WATER_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.WATER_BILL, form);
 		mav.setViewName("jf/sf/fourth");
