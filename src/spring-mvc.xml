@@ -126,6 +126,7 @@
                         <value>/ej/ieda.do</value>
                         <value>/ej/about.do</value>
                         <value>/refeshCity.do</value>
+                        <value>/announce/gglist.do</value>
                         <value>/phone/phoneLogin.do</value>
                    </list> 
          </property>
