@@ -8,6 +8,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * AgentPaymentBatch entity. @author MyEclipse Persistence Tools
  */
@@ -24,6 +26,9 @@ public class AgentPaymentBatch implements java.io.Serializable {
 	private Integer batchStatus;
 	private Long agentId;
 	private Long ruleId;
+	private Integer payType;
+	private Long billNum;
+	private String payTypeName;
 
 	// Constructors
 
@@ -52,6 +57,17 @@ public class AgentPaymentBatch implements java.io.Serializable {
 		this.agentId = agentId;
 		this.ruleId = ruleId;
 	}
+	
+	public AgentPaymentBatch(double batchMoney, Date createTime,
+			Integer batchStatus, Long agentId,Integer payType,Long billNum,String payTypeName) {
+		this.batchMoney = batchMoney;
+		this.createTime = createTime;
+		this.batchStatus = batchStatus;
+		this.agentId = agentId;
+		this.payType = payType;
+		this.billNum = billNum;
+		this.payTypeName = payTypeName;
+	}
 
 	// Property accessors
 	@Id
@@ -75,6 +91,7 @@ public class AgentPaymentBatch implements java.io.Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_time", nullable = false, length = 10)
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	public Date getCreateTime() {
 		return this.createTime;
 	}
@@ -111,7 +128,7 @@ public class AgentPaymentBatch implements java.io.Serializable {
 		this.agentId = agentId;
 	}
 
-	@Column(name = "rule_id", nullable = false)
+	@Column(name = "rule_id")
 	public Long getRuleId() {
 		return this.ruleId;
 	}
@@ -119,5 +136,32 @@ public class AgentPaymentBatch implements java.io.Serializable {
 	public void setRuleId(Long ruleId) {
 		this.ruleId = ruleId;
 	}
+	@Column(name = "pay_type", nullable = false)
+	public Integer getPayType() {
+		return payType;
+	}
+
+	public void setPayType(Integer payType) {
+		this.payType = payType;
+	}
+	@Column(name = "bill_num", nullable = false)
+	public Long getBillNum() {
+		return billNum;
+	}
+
+	public void setBillNum(Long billNum) {
+		this.billNum = billNum;
+	}
+	@Column(name = "pay_typename")
+	public String getPayTypeName() {
+		return payTypeName;
+	}
+
+	public void setPayTypeName(String payTypeName) {
+		this.payTypeName = payTypeName;
+	}
+	
+	
+	
 
 }

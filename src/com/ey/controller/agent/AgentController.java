@@ -2,8 +2,11 @@ package com.ey.controller.agent;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.bo.AgentBo;
+import com.ey.bo.CountReportBo;
 import com.ey.bo.QueryBillBO;
 import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
@@ -55,7 +59,9 @@ public class AgentController extends BaseController {
 	private static final String REDIRECT = "redirect:/agent/list.do";
 	private static final String ADD_PAGE = "agent/addagent";
 	private static final String INDEX_PAGE = "agent/index";
+	private static final String REDIRECTINDEX = "redirect:/agent/index.do";
 	private static final String PASSWORD_PAGE = "agent/modifypass";
+	private static final Integer COMPLATESTATUS=10;
 	@Autowired
     private AgentService agentService;
 	
@@ -119,6 +125,9 @@ public class AgentController extends BaseController {
 	
 	@RequestMapping(value="/iframe")
     public String iframe(ModelMap modelMap,HttpServletRequest request,HttpServletResponse response){
+	    AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+	    List<CountReportBo> reportlist = agentService.findReportByAgentId(agent.getId(), String.valueOf(DateUtil.getYear(new Date())), agent.getAreaId());
+        modelMap.addAttribute("reports", reportlist);
   	  return IFRAME_PAGE;
     }
 	
@@ -284,21 +293,13 @@ public class AgentController extends BaseController {
 	@RequestMapping(value = "/queryUserChart")
 	public ModelAndView queryUserChart(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
-		List userlist = agentService.findUserByAreaId(agent.getAreaId());
-		Long monthNum = 0L;
-		Long totalNum = 0L;
-		if(userlist!=null&&userlist.size()>0){
-			 String currentYearMonth = DateUtil.getYearMonthNowString(new Date());
-             String dataYearMonth = null;
-			for(Object o:userlist){
-				dataYearMonth = DateUtil.getYearMonthNowString((Date)o);
-				if(dataYearMonth.equals(currentYearMonth)){
-					monthNum++;
-				}	
-			}
-			totalNum = Long.valueOf(userlist.size());
-		}
+        AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+        Date date = new Date();
+	    String currentYearMonth = DateUtil.getYearMonthNowString(date);
+	    String year = String.valueOf(DateUtil.getYear(date));
+	    Map<String,Object> monthMap =  agentService.findUserByAreaId(year,agent.getAreaId());
+        Long monthNum = (Long)monthMap.get(currentYearMonth);
+        Long totalNum = (Long)monthMap.get("total");
 		PieChart chart = new PieChart();
 		Slice s1 = new Slice(monthNum,RequestUtils.getMessage("addusernumber", request));
 	    chart.addSlices(s1);
@@ -325,14 +326,107 @@ public class AgentController extends BaseController {
 		return null;
 
 	}
-	@RequestMapping(value = "/report")
-	@ResponseBody
-	public Object report(String year,HttpServletRequest request,
+	@RequestMapping(value = "/monthBillChart")
+	public ModelAndView monthBillChart(String year,HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
-		List userlist = agentService.findUserByAreaId(agent.getAreaId());
-		Map<String,Object> map = new HashMap<String,Object>();
+        Long complateNum = 100L;
+        Long noComplateNum = 30L;
+		String currentYearMonth = DateUtil.getYearMonthNowString(new Date());
+        AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+		List billlist = agentService.findBillNumByMonth(agent.getId(), currentYearMonth);
+		for(Object o:billlist){
+				Integer status = (Integer)o;
+				if(status==COMPLATESTATUS){
+					complateNum++;
+					continue;
+				}
+				noComplateNum++;
+		}	
+		PieChart chart = new PieChart();
+		Slice s1 = new Slice(noComplateNum,RequestUtils.getMessage("billnocomplate", request));
+	    chart.addSlices(s1);
+	    Slice s2 = new Slice(complateNum,RequestUtils.getMessage("billcomplate", request));
+	    chart.addSlices(s2);
 		
-		return map;
+		chart.setColours(new String[] { "#B6A2DF","#2DC7C9"});
+		chart.setTooltip("#label#：#val#");
+
+		 chart.setRadius(90);
+		// chart.setStartAngle(100);
+		chart.setAnimate(true);
+		chart.setAlpha(0.8f);
+		Chart flashChart = new Chart();
+		String bgColor = "#ffffff";
+		flashChart.setBackgroundColour(bgColor);
+		flashChart.addElements(chart);
+		response.setHeader("Expires", "-1");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-control", "no-cache");
+		response.setHeader("Content-Type", "text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(flashChart.toString());
+		return null;
+
+	}
+	@RequestMapping(value = "/monthSettleChart")
+	public ModelAndView monthSettleChart(String year,HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		String currentYearMonth = DateUtil.getYearMonthNowString(new Date());
+        AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+		List<Object[]> settlelist = agentService.findBillSettleByMonth(agent.getId(), currentYearMonth);
+		PieChart chart = new PieChart();
+		for(Object[] o:settlelist){
+			Slice slice = new Slice((Double)o[0],RequestUtils.getMessage((String)o[1], request));	
+			chart.addSlices(slice);
+		}	
+		chart.setColours(new String[] { "#B6A2DF","#2DC7C9"});
+		chart.setTooltip("#label#：#val#");
+
+		 chart.setRadius(90);
+		// chart.setStartAngle(100);
+		chart.setAnimate(true);
+		chart.setAlpha(0.8f);
+		Chart flashChart = new Chart();
+		String bgColor = "#ffffff";
+		flashChart.setBackgroundColour(bgColor);
+		flashChart.addElements(chart);
+		response.setHeader("Expires", "-1");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-control", "no-cache");
+		response.setHeader("Content-Type", "text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(flashChart.toString());
+		return null;
+
+	}
+	@RequestMapping(value = "/report")
+	public ModelAndView report(String year,HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+        AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+		List<CountReportBo> reportlist = agentService.findReportByAgentId(agent.getId(), year, agent.getAreaId());
+		ModelAndView mav = new ModelAndView("agent/report");
+		mav.addObject("reports", reportlist);
+		return mav;
+	   
+	}
+	
+	@RequestMapping(value = "/asyncReport")
+	@ResponseBody
+	public Object asyncReport(String year,HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+        AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+		List<CountReportBo> reportlist = agentService.findReportByAgentId(agent.getId(), year, agent.getAreaId());
+		return reportlist;
+	   
+	}
+	
+	@RequestMapping(value = "/self")
+	@ResponseBody
+	public Object doself(Integer page,Integer rows,HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+        AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+		List selflist = agentService.findAgentSelf(agent.getId(),page,rows);
+		return selflist;
+	   
 	}
 }

@@ -181,4 +181,6 @@ public interface BaseDAO {
 	     * @return 
 	     */ 
 	    Object getDbId(Object o);
+	    
+	    void batchSaveVO(final List objectList);
 }

@@ -149,6 +149,20 @@ public class CurrencyConverter implements Converter {
 		}
 		return percentValue;
 	}
+	
+	public static Object getPercent(Double doubleValue) {
+		DecimalFormat df = new DecimalFormat("####.00");
+		BigDecimal bd = new BigDecimal(df.format(doubleValue));
+		bd.setScale(2, BigDecimal.ROUND_HALF_DOWN);
+		return bd.toString();
+	}
+	
+	public static Object getMoney(Double doubleValue) {
+		DecimalFormat df = new DecimalFormat("###,###.00");
+		BigDecimal bd = new BigDecimal(df.format(doubleValue));
+		bd.setScale(2, BigDecimal.ROUND_HALF_DOWN);
+		return bd.toString();
+	}
 
 	/**
 	 * 最小值处理

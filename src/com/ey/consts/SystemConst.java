@@ -18,6 +18,8 @@ public class SystemConst {
 	static public String POINT_SPLITE = "[.]";
 	static public String ROOTAREAID = "0";
 	static public String INITPASSWORD = "8888";
+    static public final String[] MONTHS=new String[]{"01","02","03","04","05","06","07","08","09","10","11","12"};
+
 	/**
 	 * HTTP POST«Î«Û
 	 */

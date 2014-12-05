@@ -92,11 +92,72 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	}
 
 	@Override
-	public List<Object> findUserByAreaId(String areaId)
+	public List<Object> findUserByParam(String areaId,String year)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql = "select regTime from UserBase where areaId = ?";
-		return this.find(hql, new Object[]{areaId});
+		List paramList = new ArrayList();
+		StringBuffer hql = new StringBuffer("select regTime from UserBase where 1=1");
+		if(!StringUtil.isEmptyString(areaId)){
+			hql.append(" and areaId = ?");
+			paramList.add(areaId);
+		}
+		if(!StringUtil.isEmptyString(year)){
+			hql.append(" and date_format(regTime,'%Y') = ?");
+			paramList.add(year);
+		}
+		return this.find(hql.toString(),paramList.toArray());
+	}
+
+	@Override
+	public List findPaymentBillByAgentId(Long id, String year)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "select createTime,paidMoney from PaymentBill where agentId = ? and date_format(createTime,'%Y') = ? and paymentStatus not in(0,2)";
+		return this.find(hql, new Object[]{id,year});
+	}
+
+	@Override
+	public List findBillNumByMonth(Long id, String month)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "select paymentStatus from PaymentBill where agentId = ? and date_format(createTime,'%Y'-'%m') = ? and paymentStatus not in(0,2)";
+		return this.find(hql, new Object[]{id,month});
+	}
+
+	@Override
+	public List findBillSettleByMonth(Long id, String month)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		List billSettlist = new ArrayList();
+		String hql = "select coalesce(sum(paidMoney),0),'billmoney' from PaymentBill where agentId = ? and date_format(createTime,'%Y'-'%m') = ? and paymentStatus not in(0,2)";
+		List billlist = this.find(hql, new Object[]{id,month});
+		hql = "select coalesce(sum(profitMoney),0),'settlemoney' from SettleBill where agentId = ? and date_format(createDate,'%Y'-'%m') = ?";
+		List settlelist = this.find(hql, new Object[]{id,month});
+		billSettlist.addAll(billlist);
+		billSettlist.addAll(settlelist);
+		return billSettlist;
+	}
+
+	@Override
+	public List findBillByCurrentDay(String currentDay)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String sql = "select pay_type,agent_id,group_concat(Convert(id ,char)),sum(paid_money),count(id) from payment_bill where date_format(create_time,'%Y'-'%m'-'%d') = ? and payment_status = 1 group by pay_type,ent_id,agent_id";
+		return this.List(sql, new Object[]{currentDay});
+	}
+
+	@Override
+	public List findAgentSelf(Long id,Integer page,Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "from AgentPaymentBatch where agentId = ? and batchStatus = 0 order by createTime desc,payType";
+		return this.find(hql, new Object[]{id},page,rows);
+	}
+
+	@Override
+	public List findBillByBatchId(Long id,Integer page,Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "select b from BatchPaymentRelation a,PaymentBill b where a.id.paymentBillId = b.id and a.id.relationId = ? order by b.createTime desc,payType";
+		return this.find(hql, new Object[]{id},page,rows);
 	}
 
 }

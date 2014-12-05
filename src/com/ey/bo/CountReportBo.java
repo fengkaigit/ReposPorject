@@ -5,17 +5,17 @@ import java.io.Serializable;
 public class CountReportBo implements Serializable {
 	
 	private String month;
-	private Long userNum;
-	private Double userPercent;
-	private Double billMoney;
-	private Double billPercent;
+	private String userNum;
+	private String userPercent;
+	private String billMoney;
+	private String billPercent;
 	
     public CountReportBo(){
     	
     }
 
-	public CountReportBo(String month, Long userNum, Double userPercent,
-			Double billMoney, Double billPercent) {
+	public CountReportBo(String month, String userNum, String userPercent,
+			String billMoney, String billPercent) {
 		super();
 		this.month = month;
 		this.userNum = userNum;
@@ -32,35 +32,35 @@ public class CountReportBo implements Serializable {
 		this.month = month;
 	}
 
-	public Long getUserNum() {
+	public String getUserNum() {
 		return userNum;
 	}
 
-	public void setUserNum(Long userNum) {
+	public void setUserNum(String userNum) {
 		this.userNum = userNum;
 	}
 
-	public Double getUserPercent() {
+	public String getUserPercent() {
 		return userPercent;
 	}
 
-	public void setUserPercent(Double userPercent) {
+	public void setUserPercent(String userPercent) {
 		this.userPercent = userPercent;
 	}
 
-	public Double getBillMoney() {
+	public String getBillMoney() {
 		return billMoney;
 	}
 
-	public void setBillMoney(Double billMoney) {
+	public void setBillMoney(String billMoney) {
 		this.billMoney = billMoney;
 	}
 
-	public Double getBillPercent() {
+	public String getBillPercent() {
 		return billPercent;
 	}
 
-	public void setBillPercent(Double billPercent) {
+	public void setBillPercent(String billPercent) {
 		this.billPercent = billPercent;
 	}
     

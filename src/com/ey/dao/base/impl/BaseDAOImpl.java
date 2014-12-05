@@ -305,4 +305,18 @@ public class BaseDAOImpl implements BaseDAO{
 		}
 		return query.list();
 	}
+	public void batchSaveVO(final List objectList) {
+		int i = 0;
+		Session session = this.getCurrentSession();
+		for (Iterator it = objectList.iterator(); it.hasNext();) {
+			session.save(it.next());
+			if (i % 20 == 0) {
+				session.flush();
+				session.clear();
+			}
+			i++;
+		}
+		session.flush();
+		session.clear();
+	}
 }  

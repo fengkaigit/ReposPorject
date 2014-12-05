@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.ey.bo.AgentBo;
+import com.ey.bo.CountReportBo;
 import com.ey.dao.entity.AgentInfo;
+import com.ey.dao.entity.AgentPaymentBatch;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.SystemManager;
@@ -32,7 +34,24 @@ public interface AgentService {
   	  
   	  BankAccount getBankAccount(Long id) throws RuntimeException;
   	  
-  	  List findUserByAreaId(String areaId) throws RuntimeException;
+  	  Map<String,Object> findUserByAreaId(String year,String areaId) throws RuntimeException;
+  	  
+  	 List<CountReportBo> findReportByAgentId(Long id,String year,String areaId) throws RuntimeException;
+  	  
+  	 List findBillNumByMonth(Long id,String month) throws RuntimeException;
+  	 
+  	 List findBillSettleByMonth(Long id,String month) throws RuntimeException;
+  	 
+  	 List findBillByCurrentDay(String currentDay) throws RuntimeException;
 
-
+     void saveObject(Object o) throws RuntimeException;
+     
+     void batchSaveObject(List objlist) throws RuntimeException;
+     
+     void savePaymentBatch(AgentPaymentBatch paymentBatch) throws RuntimeException;
+     
+     List findAgentSelf(Long id,Integer page,Integer rows) throws RuntimeException;
+     
+     List findBillByBatchId(Long id,Integer page,Integer rows) throws RuntimeException;
+     
 }
