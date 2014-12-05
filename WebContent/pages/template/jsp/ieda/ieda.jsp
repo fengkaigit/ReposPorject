@@ -97,7 +97,7 @@ function postHandle(){
                 <div class="fn-clear">
                     <div class="outer-thumbnail outer-thumbnail-lg"><img src="<%=request.getContextPath() %>/images/default_head_img.jpg" alt=""></div>
                     <div class="outer-personal-info-row" style="line-height: 30px; color: #999;">
-                        <span style="margin-right:30px;">用户：13*******83</span>
+                        <span style="margin-right:30px;">用户：${item.userName}</span>
                         <span>发表于：<fmt:formatDate value="${item.viewTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
                     </div>
                     <div class="outer-personal-info-row" >

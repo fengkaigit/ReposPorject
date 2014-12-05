@@ -31,6 +31,11 @@ function getData(id){
     });
 }
 function postHandle(){
+	  if($("#replyContent").val()==''){
+		  alert("回复内容不能为空");
+		  $("#replyContent").focus();
+		  return false;
+	  }
 	  var valueObj = {id:$("#id").val(),replyContent:$("#replyContent").val()};
 	  jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/ej/reply.do",valueObj,"post","json",function(data){
 		  if(data.result){
