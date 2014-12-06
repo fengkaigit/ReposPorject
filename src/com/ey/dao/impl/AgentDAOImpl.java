@@ -90,7 +90,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 			
 		}
 	}
-
+ 
 	@Override
 	public List<Object> findUserByParam(String areaId,String year)
 			throws RuntimeException {
