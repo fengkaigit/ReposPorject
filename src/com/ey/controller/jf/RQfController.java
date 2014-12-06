@@ -131,7 +131,7 @@ public class RQfController extends BaseController {
 			}
 			form.setBankCode(bankCode);
 		}
-		form.setPaymentStatus(3);//3：核实确认；
+		form.setPaymentStatus(0);//3：核实确认；
 		rqfService.saveBill(form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.RQF_BILL,form);

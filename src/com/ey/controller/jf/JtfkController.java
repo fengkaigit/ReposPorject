@@ -150,7 +150,7 @@ public class JtfkController extends BaseController {
 			}
 			form.setBankCode(bankCode);
 		}
-		form.setPaymentStatus(3);//3：核实确认；
+		form.setPaymentStatus(0);//3：核实确认；
 		jtfkfService.saveBill(form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.JTFKF_BILL,form);

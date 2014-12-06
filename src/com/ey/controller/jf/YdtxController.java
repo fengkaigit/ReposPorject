@@ -150,7 +150,7 @@ public class YdtxController extends BaseController {
 			}
 			form.setBankCode(bankCode);
 		}
-		form.setPaymentStatus(3);//3：核实确认；
+		form.setPaymentStatus(0);//3：核实确认；
 		ydtxfService.saveBill(form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.YDTXF_BILL,form);

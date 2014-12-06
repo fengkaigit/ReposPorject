@@ -136,7 +136,7 @@ public class YxdsController extends BaseController {
 			}
 			form.setBankCode(bankCode);
 		}
-		form.setPaymentStatus(3);//3：核实确认；
+		form.setPaymentStatus(0);//3：核实确认；
 		yxfService.saveBill(form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.YXDSF_BILL,form);

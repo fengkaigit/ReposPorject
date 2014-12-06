@@ -131,7 +131,7 @@ public class CnfController extends BaseController {
 			}
 			form.setBankCode(bankCode);
 		}
-		form.setPaymentStatus(3);//3：核实确认；
+		form.setPaymentStatus(0);//3：核实确认；
 		cnfService.saveBill(form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.CNF_BILL,form);
