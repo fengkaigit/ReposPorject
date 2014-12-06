@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
 <title>采暖费缴费支付成功 - 生活助手</title>
@@ -146,14 +145,14 @@
   	<div style="float:left;width:100px;">
     	<span class="fc-blue mt5" style="cursor:pointer" onClick="show('zfpz')">查看支付凭证</span>
        </div>
-     <div class="jfxx_btns" style="float:right;padding-right:30px; display:inline-block; height:30px;"><input  type="button"class="jfxx_btn3" value="下载到本地" name="searchBill"></div>
+     <div class="jfxx_btns" style="float:right;padding-right:30px; display:inline-block; height:30px;"><input  type="button" class="jfxx_btn3" value="下载到本地" name="searchBill" onclick="expWord(8,${CNF_BILL.billId},'<%=request.getContextPath() %>');"></div>
   </div>
   <div class="zfcg clear" id="zfpz" style="display:none;">
   <table class="tab1"  cellpadding="0" cellspacing="0">
   <tr>
   <td>订单号：${CNF_BILL.billNo}
   </td>
-  <td>流水号：15104710036
+  <td>流水号：${CNF_BILL.billId}
   </td>
   </tr>
   </table>
@@ -253,6 +252,7 @@
 		</div><!-- .ui-content -->
 		
 	</div>
+<iframe id="downFrame" name="downFrame" src="" style="display:none"></iframe>
 <%@include file="/pages/template/jsp/common/about.jsp"%> 
  <%@include file="/pages/template/jsp/common/footer.jsp"%>
 <%@include file="/pages/template/jsp/common/links.jsp"%>

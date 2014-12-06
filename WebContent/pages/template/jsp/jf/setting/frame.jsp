@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
 <title>账号设置</title>
@@ -18,6 +17,6 @@ body {
 </script>
 </head>
 <body>
-<iframe id="frame1" name="frame1" src="<%=request.getContextPath() %>/setting/edit.do?id=${param.id}&paymentType=${param.paymentType}" width="480px" height="432px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" ></iframe>
+<iframe id="frame1" name="frame1" src="<%=request.getContextPath() %>/setting/edit.do?id=${param.id}&paymentType=${param.paymentType}" width="480px" height="550px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" ></iframe>
 </body>
 </html>

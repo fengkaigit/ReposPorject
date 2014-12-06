@@ -21,8 +21,8 @@
             <div class="card_title1">
                 <ul>
                 <li style="float:left;"><span>会员注册</span></li> 
-                <li style="float:right;"><span style="line-height: 30px;"><a  class="title_link" href="#">勤蜂易缴是什么?</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a   class="title_link" href="#">会员享有哪些服务？</a>&nbsp;&nbsp;&nbsp;&nbsp;<a  class="title_link" href="#">会员隐私与资金安全</a>&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
+                <li style="float:right;"><span style="line-height: 30px;"><a  class="title_link" href="<%=request.getContextPath() %>/ej/about.do">勤蜂易缴是什么?</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a  class="title_link" href="<%=request.getContextPath() %>/ej/security.do">会员隐私与资金安全</a>&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
                  </ul>
     
             </div>

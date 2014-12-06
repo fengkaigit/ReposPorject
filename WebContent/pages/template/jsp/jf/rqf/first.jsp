@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
 <title>燃气费缴费 - 生活助手</title>
@@ -8,6 +7,8 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
+ <link href="<%=request.getContextPath()%>/css/jquery.fancybox.css" rel="stylesheet" />
+ <script src="<%=request.getContextPath()%>/js/jquery.fancybox.js"></script>
 <script language="javascript">
 $(document).ready(function(){
 	refreshAreaId(document.getElementById("_parentAreaId"));
@@ -25,6 +26,8 @@ $(document).ready(function(){
 	$("#billMoney").formValidator().regexValidator({regExp:"decmal1",dataType:"enum",onError:"请输入合法缴费金额"});
 	$("#poundage").formValidator().regexValidator({regExp:"decmal1",dataType:"enum",onError:"代缴劳务费金额非法"});
 	registerBillNumber('<%=request.getContextPath()%>','${paymentType}');
+	$('.fancybox').fancybox();
+	chgBillImg('<%=request.getContextPath()%>','entId','${paymentType}');
 	
 });
 </script>
@@ -172,7 +175,7 @@ $(document).ready(function(){
             	 <div style="padding:0px 0px 10px 0px;">
 						<label>公用事业单位：</label>
 						
-		                <select class="selectCss"  id="entId" name="entId" onmousewheel="return false">
+		                <select class="selectCss"  id="entId" name="entId" onchange="chgBillImg('<%=request.getContextPath()%>','entId','${paymentType}')" onmousewheel="return false">
 		                <c:forEach var="item" items="${charges}" varStatus="status">
                       		<option value="${item.id}" >${item.enterpriseName}</option>
                     	</c:forEach>
@@ -189,7 +192,7 @@ $(document).ready(function(){
 
 	<div>
 		<label style=" margin-right:8px;line-height:30px;">用户编号：</label>
-		   <input type="text" class="on-show" id="billNumber" name="billNumber" maxlength="10" value="${billNumber}">
+		   <input type="text" class="on-show" id="billNumber" name="billNumber" maxlength="30" value="${billNumber}">
 		   &nbsp;&nbsp;
            <input id="bczh" name="bczh" type="checkbox" checked="checked"> <span class="font2">备存账号信息</span>
            
@@ -251,7 +254,9 @@ $(document).ready(function(){
 		            <div style="position:relative;" class="check_styles">
 					
 		            
-		                   <div id="chargeOrgBill" class="check_picture"><a href="#"><img src="<%=request.getContextPath() %>/images/no_billImage.jpg" id="billChargeImg"></a></div>
+		                   <div id="chargeOrgBill" class="check_picture"><a class="fancybox" id="billChargeImga" href="<%=request.getContextPath()%>/images/no_billImage.jpg" data-fancybox-group="gallery" title="缴费票示例图"><img
+	src="<%=request.getContextPath()%>/images/no_billImage.jpg"
+	id="billChargeImg"></a></div>
 		                   
 		                   <div style="color:#666;" class="check_pics01"><ul>
 						   <li id="limitInfo" style="margin:0px 0px -10px 0px;"></li></ul><div class="clear"></div></div>

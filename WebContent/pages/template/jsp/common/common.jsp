@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <meta http-equiv="x-ua-compatible" content="ie=8.5" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -8,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/dh.css">
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.min.js"></script> 
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.6.min.js"></script> 
 <script src="<%=request.getContextPath() %>/js/common/formValidator.js" language="Javascript"></script>
 <script src="<%=request.getContextPath() %>/js/common/regularExpression.js" language="Javascript"></script>
 <script src="<%=request.getContextPath() %>/js/common/shfftAjax.js" language="Javascript"></script>

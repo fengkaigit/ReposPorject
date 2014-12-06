@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
 <title>账号设置</title>
@@ -39,9 +38,21 @@ $(document).ready(function(){
 	$("#billNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入不多于30个字的缴费号"});
 	$("#hoster").formValidator().inputValidator({min:1,max:30,onError:"请输入不多于30个字的户主"});
 	$("#groupId").formValidator().inputValidator({min:0,onError:"请选择分组"});
-
+	processJtfk();
 	
 });
+function processJtfk(){
+	var pv = document.getElementById("paymentType").value;
+	if(pv=="5"){
+		document.getElementById("vehicleNumbertr").style.display="";
+		document.getElementById("carframeNumbertr").style.display="";
+		document.getElementById("engineNumbertr").style.display="";
+	}else{
+		document.getElementById("vehicleNumbertr").style.display="none";
+		document.getElementById("carframeNumbertr").style.display="none";
+		document.getElementById("engineNumbertr").style.display="none";
+	}
+}
 </script>
 </head>
 <body>
@@ -54,7 +65,7 @@ $(document).ready(function(){
             <tbody><tr>
                 <td width="28%" bgcolor="#f1f8ff" align="right">账单类型: </td>
                 <td bgcolor="#FFFFFF">
-					 <select class="selectCss"  id="paymentType" name="paymentType" onchange="refreshEntByPayType(this,'<%=request.getContextPath() %>','areaId','entId')" onmousewheel="return false">
+					 <select class="selectCss"  id="paymentType" name="paymentType" onchange="refreshEntByPayType(this,'<%=request.getContextPath() %>','areaId','entId');processJtfk();" onmousewheel="return false">
 				  	<c:forEach var="item" items="${paymentTypes}" varStatus="status">
                       <option value="${item.id.dataValue}" <c:if test="${item.id.dataValue==paymentSetting.paymentType}">selected="selected"</c:if>>${item.propChName}</option>
                     </c:forEach>
@@ -108,6 +119,24 @@ $(document).ready(function(){
                 <td bgcolor="#f1f8ff" align="right">户主：</td>
                 <td bgcolor="#FFFFFF">
                     <input type="text" class="billInput" id="hoster" name="hoster" maxlength="30" value="${paymentSetting.hoster}">
+                </td>
+            </tr>
+            <tr id="vehicleNumbertr" style="display: none">
+                <td bgcolor="#f1f8ff" align="right">行驶证号：</td>
+                <td bgcolor="#FFFFFF">
+                    <input type="text" class="billInput" id="vehicleNumber" name="vehicleNumber" maxlength="30" value="${paymentSetting.vehicleNumber}">
+                </td>
+            </tr>
+            <tr id="carframeNumbertr" style="display: none">
+                <td bgcolor="#f1f8ff" align="right">车驾号：</td>
+                <td bgcolor="#FFFFFF">
+                    <input type="text" class="billInput" id="carframeNumber" name="carframeNumber" maxlength="30" value="${paymentSetting.carframeNumber}">
+                </td>
+            </tr>
+            <tr id="engineNumbertr" style="display: none">
+                <td bgcolor="#f1f8ff" align="right">发动机号：</td>
+                <td bgcolor="#FFFFFF">
+                    <input type="text" class="billInput" id="engineNumber" name="engineNumber" maxlength="30" value="${paymentSetting.engineNumber}">
                 </td>
             </tr>
             <tr>	

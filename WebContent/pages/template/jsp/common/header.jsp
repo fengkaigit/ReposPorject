@@ -8,6 +8,16 @@ var url="";
     $(document).ready(function() {
       $('ul.sf-menu').sooperfish();
     });
+    function chgPass(){
+    	//show('passwordwin');
+    	showDivWin('passwordwin',380,260,'');
+    }
+    function chgMobile(){
+    	//show('chgmobilewin');
+    	//document.getElementById("newmobile").value="";
+    	showDivWin('chgmobilewin',380,260,'');
+    }
+   
 </script>
 </head>
 <body>
@@ -31,7 +41,8 @@ var url="";
                      <a rel="nofollow" style="color:#fc8936" href="<%=request.getContextPath() %>/reg.do">免费注册</a>
                      <a style="color:#a0db00" href="<%=request.getContextPath() %>/login.do">立即登录</a>
                 	<%}else{ %>
-                	<a style="color:#a0db00" href="javascript:void(0)">欢迎你，<%=user.getRealName() %></a>
+                	<a style="color:#a0db00" href="javascript:chgMobile()" title="点击重新绑定手机号">欢迎你，<%=user.getRealName() %></a>
+                	<a style="color:#a0db00" href="javascript:chgPass()">修改密码</a>
                 	 <a rel="nofollow" style="color:#fc8936" href="<%=request.getContextPath() %>/logout.do">注销</a>
                 	<%} %>
                      
@@ -62,4 +73,80 @@ var url="";
     </div>
     <div class="b"></div>
 </div>
+
+
+
+<div id="passwordwin" class="divWin">
+<div class="close cur" onClick="hiddenDiv('passwordwin')">关闭</div>
+    <h1 id="title"></h1>
+	<div class="jfzh-con" style="width:460px;height:350px;padding:10px;border:0px;">
+		<div class="jfzh-top clearfix">
+		<form id="chgpassform" onSubmit="return false;"> 
+		<table id="login-table" style=" border:0px;width:300px;" cellpadding="0" cellspacing="0">  
+        <tr> 
+<td width="60" style=" border:1px;text-align:right;">原密码：</td> 
+<td style=" border:0px;"> <input type="password" style="width:160px;" class="on-show" id="oldpass" name="oldpass" maxlength="32"/><span class="fcr">&nbsp;&nbsp;*</span>
+</td> 
+</tr>
+<tr> 
+<td width="60" style=" border:1px; text-align:right;">新密码：</td> 
+<td style=" border:0px;">
+<input type="password"  class="on-show"  style="width:160px;" id="newepass1" name="newepass1"  maxlength="32"/><span class="fcr">&nbsp;&nbsp;*</span>
+</td> 
+</tr> 
+<tr> 
+<td width="60" style=" border:1px;text-align:right;" >确认密码：
+</td> 
+<td style=" border:0px; ">
+<input type="password" style="width:160px;" class="on-show" id="newepass2" name="newepass2" maxlength="32"/>
+<span class="fcr">&nbsp;&nbsp;*</span></td> 
+
+</tr>  
+<tr> 
+<td width="300" style=" border:0px;" colspan="2" class="save">
+<input  type="button" class="jfxx_btn3"  onClick="resetPassword('<%=request.getContextPath() %>')" value="确认">
+</td> 
+</tr> 
+
+
+</table> 
+		</form> 
+
+        </div>
+    
+   
+    </div>
+	 
+    
+</div>
+<div id="chgmobilewin" class="divWin">
+<div class="close cur" onClick="hiddenDiv('chgmobilewin')">关闭</div>
+    <h1 id="title"></h1>
+	<div class="jfzh-con" style="width:460px;height:350px;padding:10px;border:0px;">
+		<div class="jfzh-top clearfix">
+		<form id="chgmobileform" onSubmit="return false;"> 
+		<table id="login-table" style=" border:0px;width:300px;" cellpadding="0" cellspacing="0">  
+        <tr> 
+<td width="60" style=" border:1px;text-align:right;">手机号：</td> 
+<td style=" border:0px;"> <input type="text" style="width:160px;" class="on-show" id="newmobile" name="newmobile" maxlength="11"/><span class="fcr">&nbsp;&nbsp;*</span>
+</td> 
+</tr>
+<tr> 
+<td width="300" style=" border:0px;" colspan="2" class="save">
+<input  type="button" class="jfxx_btn3"  onClick="resetMobile('<%=request.getContextPath() %>');" value="确认">
+</td> 
+</tr> 
+
+
+</table> 
+		</form> 
+
+        </div>
+    
+   
+    </div>
+	 
+    
+</div>
+<div id="bg"></div>
 </body></html>

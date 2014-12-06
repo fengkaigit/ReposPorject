@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
 <title>交通罚款缴费 - 生活助手</title>
@@ -19,11 +18,13 @@ $(document).ready(function(){
 		submitAfterAjaxPrompt : '有数据正在异步验证，请稍等...'
 	});
 	$("#areaId").formValidator().inputValidator({min:1,onError:"请选择城市"});
-	$("#carOwner").formValidator().inputValidator({min:1,max:30,onError:"请输入行驶证车主"});
-	$("#billNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入车牌号码"});
+	
+	$("#carOwner").formValidator().inputValidator({min:1,max:30,onError:"请输入不多于30个字的行驶证车主"});
+	$("#vehicleNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入不多于30个字的行驶证号"});
+	$("#billNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入不多于30个字的车牌号码"});
 	$("#payAddress").formValidator().inputValidator({min:1,max:100,onError:"请输入不多于100个字的缴费住址"});
-	$("#carframeNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入车架号码"});
-	$("#engineNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入发动机号"});
+	$("#carframeNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入不多于30个字的车架号码"});
+	$("#engineNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入不多于30个字的发动机号"});
 	
 	$("#billMoney").formValidator().regexValidator({regExp:"decmal1",dataType:"enum",onError:"请输入合法缴费金额"});
 	$("#poundage").formValidator().regexValidator({regExp:"decmal1",dataType:"enum",onError:"代缴劳务费金额非法"});
@@ -172,12 +173,18 @@ $(document).ready(function(){
 					<div>
 		<label style="font-size:14px; margin-right:8px;line-height:30px;">行驶证车主：</label>
 		
-		   <input type="text" value="${hoster}" class="on-show" id="carOwner" name="carOwner" maxlength="10">
+		   <input type="text" value="${hoster}" class="on-show" id="carOwner" name="carOwner" maxlength="30">
 		   
 	</div>
-					 
-					 <div style="padding:20px 0px 0px 0px;">
-						<label style="font-size:14px;">&nbsp;&nbsp;&nbsp;车辆类型：</label>
+				<div>
+		<label style="font-size:14px; margin-right:8px;line-height:30px;">行驶证号：</label>
+		
+		   <input type="text" class="on-show" id="vehicleNumber" name="vehicleNumber" maxlength="30"  value="${vehicleNumber}">
+		   &nbsp;&nbsp;
+           
+	</div>	 
+					 <div >
+						<label style="font-size:14px;">车辆类型：</label>
 		                &nbsp;&nbsp;<select class="selectCss"  onchange="" id="carType" name="carType" onmousewheel="return false">
 						<option  value="0" >小型车</option>
 						<option  value="1" >大型车</option>
@@ -188,7 +195,7 @@ $(document).ready(function(){
 								<div>
 		<label style="font-size:14px; margin-right:8px;line-height:60px;">车牌号码：</label>
 		
-		   <input type="text" class="on-show" id="billNumber" name="billNumber" maxlength="10"  value="${billNumber}">
+		   <input type="text" class="on-show" id="billNumber" name="billNumber" maxlength="30"  value="${billNumber}">
 		   &nbsp;&nbsp;
            <input name="bczh" type="checkbox"  checked="checked"> <span class="font2">备存账号信息</span>
 	</div>
@@ -200,13 +207,13 @@ $(document).ready(function(){
                     			<div>
 		<label style="font-size:14px; margin-right:8px;line-height:60px;">车架号码：</label>
 		
-		   <input type="text" value="" class="on-show" id="carframeNumber" name="carframeNumber" maxlength="10">
+		   <input type="text"  class="on-show" id="carframeNumber" name="carframeNumber" maxlength="30" value="${carframeNumber}">
 		   
 	</div>
                     				<div>
 		<label style="font-size:14px; margin-right:8px;line-height:80px;">发动机号：</label>
 	
-		   <input type="text" value="" class="on-show" id="engineNumber" name="engineNumber" maxlength="10">
+		   <input type="text"  class="on-show" id="engineNumber" name="engineNumber" maxlength="30" value="${engineNumber}">
 		   
 	</div>
                     
@@ -306,7 +313,7 @@ $(document).ready(function(){
                 <td bgcolor="#f1f8ff" align="right">车牌号码：</td>
                 <td bgcolor="#FFFFFF">
                   
-                     	<input type="text" name="billName"  class="billInput"  id="billName" maxlength="20">
+                     	<input type="text" name="billName"  class="billInput"  id="billName" maxlength="30">
 						<span id="billNoWhere"><a style="font-family:'宋体';color:#FF0000;font-size:12px;" href="#">缴费时信息核对使用！</a></span>
 					
                 </td>

@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
 <title>水费缴费 - 生活助手</title>
@@ -11,6 +10,8 @@
 	href="<%=request.getContextPath()%>/css/style.css">
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/css/common.css">
+ <link href="<%=request.getContextPath()%>/css/jquery.fancybox.css" rel="stylesheet" />
+ <script src="<%=request.getContextPath()%>/js/jquery.fancybox.js"></script>
 <script language="javascript">
 $(document).ready(function(){
 	refreshAreaId(document.getElementById("_parentAreaId"));
@@ -33,8 +34,8 @@ $(document).ready(function(){
 	// obj.id="autocomplete_div";
 	// document.getElementById("billNumber").parentNode.appendChild(obj);
 	registerBillNumber('<%=request.getContextPath()%>','${paymentType}');
-	
-
+	$('.fancybox').fancybox();
+	chgBillImg('<%=request.getContextPath()%>','entId','${paymentType}');
 });
 		
 </script>
@@ -159,7 +160,7 @@ $(document).ready(function(){
 <form method="post" id="form1"
 	action="<%=request.getContextPath()%>/sf/second.do">
 <div class="jf_txxx_left_div_height" style="padding: 0px 0px 10px 0px;">
-<label>公用事业单位：</label> <select class="selectCss" id="entId" name="entId"
+<label>公用事业单位：</label> <select class="selectCss" id="entId" name="entId" onchange="chgBillImg('<%=request.getContextPath()%>','entId','${paymentType}')"
 	onmousewheel="return false">
 	<c:forEach var="item" items="${charges}" varStatus="status">
 		<option value="${item.id}">${item.enterpriseName}</option>
@@ -243,7 +244,8 @@ $(document).ready(function(){
 <div style="position: relative;" class="check_styles">
 
 
-<div id="chargeOrgBill" class="check_picture"><a href="#"><img
+<div id="chargeOrgBill" class="check_picture">
+<a class="fancybox" id="billChargeImga" href="<%=request.getContextPath()%>/images/no_billImage.jpg" data-fancybox-group="gallery" title="缴费票示例图"><img
 	src="<%=request.getContextPath()%>/images/no_billImage.jpg"
 	id="billChargeImg"></a></div>
 

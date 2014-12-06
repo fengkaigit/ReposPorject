@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
 <title>有线电视缴费 - 生活助手</title>
@@ -8,6 +7,8 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
+ <link href="<%=request.getContextPath()%>/css/jquery.fancybox.css" rel="stylesheet" />
+ <script src="<%=request.getContextPath()%>/js/jquery.fancybox.js"></script>
 <script language="javascript">
 $(document).ready(function(){
 	refreshAreaId(document.getElementById("_parentAreaId"));
@@ -26,7 +27,118 @@ $(document).ready(function(){
 	$("#poundage").formValidator().regexValidator({regExp:"decmal1",dataType:"enum",onError:"代缴劳务费金额非法"});
 
 	registerBillNumber('<%=request.getContextPath()%>','${paymentType}');
+	$('.fancybox').fancybox();
+	chgBillImg('<%=request.getContextPath()%>','entId','${paymentType}');
+	
+	var tvgroups = document.getElementsByName("tvgroup");
+	if(tvgroups){
+	for(var i=0;i<tvgroups.length;i++){
+		if(tvgroups[i].checked==true){
+			document.getElementById("billMoney").value=tvgroups[i].value.split(",")[2];
+			break;
+		}
+	}
+	}
 });
+function viewMore(){
+	var areaId = document.getElementById("_areaId").value;
+	if(areaId==""){
+		alert("请选择城市");
+		return;
+	}
+	deleteRow();
+	$.ajax({
+        type: "post",
+        url: chgUrl("<%=request.getContextPath()%>/yxds/gettvs.do"),
+        dataType: "json",
+        data: {
+			type:1,
+			areaId:areaId
+        },
+        success: function(data, textStatus){
+       	 //alert(data);
+       	if(data){
+       		var tableObj = document.getElementById("tvtbl");
+       		
+       		for(var i=0;i<data.length;i++){
+       			var tr1=tableObj.insertRow();
+       			if(i%2==0){
+					tr1.className="add";
+           		}else{
+           			tr1.className="even";
+               	}
+       		    var td1=tr1.insertCell(0);
+       		    td1.style.textAlign='center';
+       		    var td2=tr1.insertCell(1);
+       		 	td2.style.textAlign='center';
+       		    td1.innerHTML=data[i].televisionName+"（"+data[i].televisionMoney+"元/月）";
+       		 	td2.innerHTML="<input type='checkbox' name='delkey' value='"+data[i].id+","+data[i].televisionName+","+data[i].televisionMoney+"'/>";
+           	}
+       		show('zdtx');
+       		
+       	}
+        }
+      
+    });
+}
+	function deleteRow(){
+		 
+		   var tableObj=document.getElementById("tvtbl");
+		   var rowNum=tableObj.rows.length;
+		   while(rowNum>0){
+		    tableObj.deleteRow(rowNum-1);
+		    rowNum--;
+		   }
+		   
+	}
+	function tzje(radioObj){
+		var othertvs = document.getElementById("othertvs");
+		var ogv=0;
+		if(othertvs.value!=""){
+			var othertvses = othertvs.value.split(";");
+			for(var i=0;i<othertvses.length;i++){
+				ogv = ogv + parseFloat(othertvses[i].split(",")[2]);
+			}
+		}
+		var jfmonth = document.getElementById("jfmonth").value;
+		document.getElementById("billMoney").value=(parseFloat(radioObj.value.split(",")[2])+ogv)*parseFloat(jfmonth);
+	}
+	function sureCheck(){
+		
+		var delkeys = document.getElementsByName("delkey");
+		if(delkeys){
+		var othertvs="";
+		var ogv=0;
+		for(var i=0;i<delkeys.length;i++){
+		if(delkeys[i].checked==true){
+			ogv = ogv+parseFloat(delkeys[i].value.split(",")[2]);
+			if(othertvs==""){
+				othertvs=delkeys[i].value;
+			}else{
+				othertvs=othertvs+";"+delkeys[i].value;
+			}
+		}
+		}
+		document.getElementById("othertvs").value=othertvs;
+		retzje();
+		}
+		turnoff('zdtx');
+	}
+	function retzje(){
+		var tvgroups = document.getElementsByName("tvgroup");
+		if(tvgroups){
+		var radioObj;
+		for(var i=0;i<tvgroups.length;i++){
+			if(tvgroups[i].checked==true){
+				radioObj=tvgroups[i];
+				break;
+			}
+		}
+		if(radioObj){
+			tzje(radioObj);
+		}
+		}
+	}
 </script>
 </head>
 <body>
@@ -154,7 +266,7 @@ $(document).ready(function(){
                     </c:forEach>
 				 </select>
                   
-				  <select style="width:85px; margin-left:8px; " class="selectCss" id="_areaId" name="_areaId" onmousewheel="return false" onchange="refreshCityId(this);refreshEntByCity(this,'<%=request.getContextPath() %>','paymentType','entId');">
+				  <select style="width:85px; margin-left:8px; " class="selectCss" id="_areaId" name="_areaId" onmousewheel="return false" onchange="refreshCityId(this);refreshEntByCity(this,'<%=request.getContextPath() %>','paymentType','entId');refreshtvs(this,'<%=request.getContextPath() %>');">
 				  	<c:forEach var="item" items="${cityList}" varStatus="status">
                       <option value="${item.id}" <c:if test="${item.id==areaId}">selected="selected"</c:if>>${item.province}</option>
                     </c:forEach>
@@ -172,7 +284,7 @@ $(document).ready(function(){
             	 <div style="padding:0px 0px 10px 0px;">
 						<label>公用事业单位：</label>
 						
-		                <select class="selectCss"  id="entId" name="entId" onmousewheel="return false">
+		                <select class="selectCss"  id="entId" name="entId" onchange="chgBillImg('<%=request.getContextPath()%>','entId','${paymentType}')" onmousewheel="return false">
 		                <c:forEach var="item" items="${charges}" varStatus="status">
                       		<option value="${item.id}" >${item.enterpriseName}</option>
                     	</c:forEach>
@@ -189,7 +301,7 @@ $(document).ready(function(){
 
 	<div>
 		<label style=" margin-right:8px;line-height:30px;">用户编号：</label>
-		   <input type="text" class="on-show" id="billNumber" name="billNumber" maxlength="10" value="${billNumber}">
+		   <input type="text" class="on-show" id="billNumber" name="billNumber" maxlength="30" value="${billNumber}">
 		   &nbsp;&nbsp;
            <input id="bczh" name="bczh" type="checkbox" checked="checked"> <span class="font2">备存账号信息</span>
            
@@ -199,6 +311,7 @@ $(document).ready(function(){
 		   <input type="text" class="on-show" id="payAddress" name="payAddress" maxlength="100" value="${payAddress}">
            
 	</div>
+
     <div style="border-bottom:1px solid #9D9D9D; width:770px; margin:0px 0px 20px 0px; padding:0px 0px 10px 0px;"> 
 				  <div style="font-size:14px; width:75px; overflow:hidden; padding-left:6px; float:left;">
 				  
@@ -218,19 +331,47 @@ $(document).ready(function(){
                   </div>
                   <div style="clear:both;height:1px; overflow:hidden;"></div>
 	</div>
- 
+  
  <!--star -->
- 
+	<div>
+		<label style="margin-right:8px;line-height:30px;"> 频道：</label>
+			<div id="tvgroups">
+		    <c:forEach var="item" items="${tvList}" varStatus="status">
+		    	${item.televisionName}（${item.televisionMoney}元/月）<input type="radio" id="tvgroup${item.id}"  name="tvgroup" value="${item.id},${item.televisionName},${item.televisionMoney}" <c:if test="${(status.index)== 0}"> checked="checked"</c:if> onfocus="tzje(this);"/>&nbsp;&nbsp;
+            </c:forEach><a href="javascript:viewMore();">更多</a>
+            </div>
+	</div>
+	<div>
+		<label style=" margin-right:8px;line-height:30px;"> 缴费月数：</label>
+
+		     <select id="jfmonth" name="jfmonth" class="selectCss" onchange="retzje();">
+		     	<option value="1">一个月</option>
+		     	<option value="2">两个月</option>
+		     	<option value="3">三个月</option>
+		     	<option value="4">四个月</option>
+		     	<option value="5">五个月</option>
+		     	<option value="6">六个月</option>
+		     	<option value="7">七个月</option>
+		     	<option value="8">八个月</option>
+		     	<option value="9">九个月</option>
+		     	<option value="10">十个月</option>
+		     	<option value="11">十一个月</option>
+		     	<option value="12">十二个月</option>
+		     </select>
+
+	</div>
  	<div>
 		<label style=" margin-right:8px;line-height:30px;"> 缴费金额：</label>
 		   <input type="text" value="" class="on-show" id="billMoney" name="billMoney" maxlength="10">&nbsp;&nbsp;元
 	</div>
      
-	<div style="margin-top:10px;clear:both;">
-		<label style=" margin-right:8px;line-height:30px;">代缴劳务费：</label>
+	<div style="margin-bottom: 0px; margin-top:5px;clear:both;">
+		<label style=" margin-right:8px;line-height:40px;">代缴劳务费：</label>
 		   <input type="text" value="${poundage}" class="on-show" id="poundage" name="poundage" maxlength="10" readonly="readonly">&nbsp;&nbsp;元
 	</div>
+
 <div class="jfxx_btns">
+<input type="hidden" id="othertvs" name="othertvs"/>
 <input type="hidden" id="parentAreaId" name="parentAreaId"/>
 <input type="hidden" id="areaId" name="areaId"/>
 <input type="hidden" id="paymentType" name="paymentType" value="${paymentType}"/>
@@ -251,7 +392,9 @@ $(document).ready(function(){
 		            <div style="position:relative;" class="check_styles">
 					
 		            
-		                   <div id="chargeOrgBill" class="check_picture"><a href="#"><img src="<%=request.getContextPath() %>/images/no_billImage.jpg" id="billChargeImg"></a></div>
+		                   <div id="chargeOrgBill" class="check_picture"><a class="fancybox" id="billChargeImga" href="<%=request.getContextPath()%>/images/no_billImage.jpg" data-fancybox-group="gallery" title="缴费票示例图"><img
+	src="<%=request.getContextPath()%>/images/no_billImage.jpg"
+	id="billChargeImg"></a></div>
 		                   
 		                   <div style="color:#666;" class="check_pics01"><ul>
 						   <li id="limitInfo" style="margin:0px 0px -10px 0px;"></li></ul><div class="clear"></div></div>
@@ -261,7 +404,7 @@ $(document).ready(function(){
             </div>
             <!-- 缴费账单样张 -->
             
-           <div style="clear:both;"></div>
+            <div style="clear:both;"></div>
 
         </div>
         <div style="clear:both;"></div>
@@ -290,5 +433,27 @@ $(document).ready(function(){
 <%@include file="/pages/template/jsp/common/about.jsp"%> 
  <%@include file="/pages/template/jsp/common/footer.jsp"%>
 <%@include file="/pages/template/jsp/common/links.jsp"%>
+<div id="zdtx" class="divWin"  style="width:480px;height:410px;">
+<div class="close cur"  onclick="javascript:turnoff('zdtx')">关闭</div>
+    <h1></h1>
+		
+            <div class="jfzh-con" style="width:460px;padding:10px;">
+	<div class="jfzh-top clearfix">
+    <div style="margin-top:5px;" class="items clearfix" >
+        <table id="tvtbl" width="100%" border="0" cellspacing="0" cellpadding="0" class="tab">
+        <thead>节目列表</thead>
+        <tbody>
+
+      
+      </tbody>
+    </table>
+    <div class="save"><input  type="button" style="clear:both;" class="jfxx_btn3" onClick="sureCheck();" value="确定" name="btnsure"></div>
+    </div>
+   
+    </div>
+	 
+    
+</div>
+</div>
 <script src="<%=request.getContextPath() %>/js/funs.js" type="text/javascript"></script>
 </body></html>

@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
 <title>账号设置</title>
@@ -28,7 +27,7 @@ $(document).ready(function(){
 });
 function addSetting(){
 	var iWidth =480;    
-    var iHeight = 432;  
+    var iHeight = 550;  
     var iTop = (window.screen.height-iHeight)/2;
     var iLeft = (window.screen.width-iWidth)/2;
 	window.showModalDialog("<%=request.getContextPath() %>/setting/editframe.do","","dialogLeft="+iLeft+"px;dialogTop="+iTop+"px;dialogHeight="+iHeight+"px;dialogWidth="+iWidth+"px;status=no;scroll=no;resizable=no;help=no");
@@ -36,7 +35,7 @@ function addSetting(){
 }
 function edit(id){
 	var iWidth =480;    
-    var iHeight = 432;  
+    var iHeight = 550;  
     var iTop = (window.screen.height-iHeight)/2;
     var iLeft = (window.screen.width-iWidth)/2;
 	window.showModalDialog("<%=request.getContextPath() %>/setting/editframe.do?id="+id,"","dialogLeft="+iLeft+"px;dialogTop="+iTop+"px;dialogHeight="+iHeight+"px;dialogWidth="+iWidth+"px;status=no;scroll=no;resizable=no;help=no");
