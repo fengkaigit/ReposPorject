@@ -80,6 +80,8 @@ public class JtfkfServiceImpl implements JtfkfService {
 							.getBillMoney(), form.getPoundage(), date, form
 							.getBillNumber(), form.getVehicleNumber());
 			saveSetting(form, date);
+			if (form.getOrderNum()!=null)
+				paymentBill.setOrderNumber(form.getOrderNum());
 			jfDAO.saveBill(payAccountBill, paymentBill, paymentTraffic);
 			form.setBillId(payAccountBill.getId());
 			form.setBillNo(paymentBill.getOrderNumber());
@@ -102,7 +104,7 @@ public class JtfkfServiceImpl implements JtfkfService {
 		// TODO Auto-generated method stub
 		return jfDAO.get(c, id);
 	}
-	private void saveSetting(JfForm form, Date date) {
+	public void saveSetting(JfForm form, Date date) throws RuntimeException {
 		PaymentSetting setting = null;
 		if (form.getBczh() != null && form.getBczh()
 				&& (!StringUtil.isEmptyString(form.getBillNumber()))) {
@@ -113,7 +115,8 @@ public class JtfkfServiceImpl implements JtfkfService {
 						form.getAreaId(), form.getAreaName(),
 						form.getPayType(), null, form.getEntId(), form
 								.getEndName(), form.getBillNumber(), form
-								.getPayAddress(), date, 0, form.getCarOwner());
+								.getPayAddress(), date, 0, form.getCarOwner(),
+								form.getVehicleNumber(),form.getCarframeNumber(),form.getEngineNumber());
 				List<BaseCustomValue> paymentTypes = staticService
 						.listValues("payment_type");
 				for (BaseCustomValue paymentType : paymentTypes) {

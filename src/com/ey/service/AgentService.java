@@ -43,6 +43,8 @@ public interface AgentService {
   	 List findBillSettleByMonth(Long id,String month) throws RuntimeException;
   	 
   	 List findBillByCurrentDay(String currentDay) throws RuntimeException;
+  	  
+  	  AgentInfo getAgentByArea(String areaId) throws RuntimeException;
 
      void saveObject(Object o) throws RuntimeException;
      

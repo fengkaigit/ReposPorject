@@ -3,6 +3,7 @@ package com.ey.dao;
 import java.util.List;
 
 import com.ey.dao.base.BaseDAO;
+import com.ey.dao.entity.NoticeInfo;
 import com.ey.dao.entity.UserBase;
 import com.ey.entity.User;
 
@@ -20,8 +21,10 @@ public interface UserDAO extends BaseDAO{
 	
 	public UserBase findUserByLoginCode(String loginCode,String password) throws RuntimeException;
 
-	public UserBase findUserByLoginCode(String loginCode);
+	public UserBase findUserByLoginCode(String loginCode) throws RuntimeException;
 
-	public void saveUser(UserBase user);
+	public void saveUser(UserBase user) throws RuntimeException;
+	
+	public List<NoticeInfo> findNoticeByUserId(Long userId) throws RuntimeException;
     
 }

@@ -124,6 +124,16 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	}
 
 	@Override
+	public AgentInfo getAgentByArea(String areaId) throws RuntimeException {
+		String hql = "from AgentInfo a where a.delFlag = 0 and areaId=?";
+		List<AgentInfo> lst = this.find(hql, new Object[]{areaId});
+		if (lst!=null && lst.size()>0)
+			return lst.get(0);
+		else
+			return null;
+	}
+
+	@Override
 	public List findBillSettleByMonth(Long id, String month)
 			throws RuntimeException {
 		// TODO Auto-generated method stub

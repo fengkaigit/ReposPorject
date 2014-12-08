@@ -131,6 +131,12 @@ public class AgentServiceImpl implements AgentService {
 	}
 
 	@Override
+	public AgentInfo getAgentByArea(String areaId) throws RuntimeException {
+		
+		return agentDAO.getAgentByArea(areaId);
+	}
+
+	@Override
 	public List findBillNumByMonth(Long id, String month)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
@@ -264,6 +270,5 @@ public class AgentServiceImpl implements AgentService {
 		// TODO Auto-generated method stub
 		return agentDAO.findBillByBatchId(id, page, rows);
 	}
-
 
 }

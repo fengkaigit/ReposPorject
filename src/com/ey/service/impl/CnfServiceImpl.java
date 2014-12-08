@@ -90,6 +90,8 @@ public class CnfServiceImpl implements CnfService {
 							.getPoundage(), date, form.getBillNumber(), form
 							.getPayAddress());
 			saveSetting(form, date);
+			if (form.getOrderNum()!=null)
+				paymentBill.setOrderNumber(form.getOrderNum());
 			jfDAO.saveBill(payAccountBill, paymentBill, paymentHeating);
 			form.setBillId(payAccountBill.getId());
 			form.setBillNo(paymentBill.getOrderNumber());
@@ -107,7 +109,7 @@ public class CnfServiceImpl implements CnfService {
 
 	}
 
-	private void saveSetting(JfForm form, Date date) {
+	public void saveSetting(JfForm form, Date date) throws RuntimeException {
 		PaymentSetting setting = null;
 		if (form.getBczh() != null && form.getBczh()
 				&& (!StringUtil.isEmptyString(form.getBillNumber()))) {

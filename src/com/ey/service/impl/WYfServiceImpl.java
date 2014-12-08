@@ -82,6 +82,8 @@ public class WYfServiceImpl implements WYfService {
 					form.getPeriodFrequency(), form.getBillMoney(), form
 							.getPoundage(), date, form.getBillNumber(),form.getPayAddress());
 			saveSetting(form, date);
+			if (form.getOrderNum()!=null)
+				paymentBill.setOrderNumber(form.getOrderNum());
 			jfDAO.saveBill(payAccountBill,paymentBill,paymentProperty);
 			form.setBillId(payAccountBill.getId());
 			form.setBillNo(paymentBill.getOrderNumber());
@@ -104,7 +106,7 @@ public class WYfServiceImpl implements WYfService {
 		// TODO Auto-generated method stub
 		return jfDAO.get(c, id);
 	}
-	private void saveSetting(JfForm form, Date date) {
+	public void saveSetting(JfForm form, Date date) throws RuntimeException {
 		PaymentSetting setting = null;
 		if (form.getBczh() != null && form.getBczh()
 				&& (!StringUtil.isEmptyString(form.getBillNumber()))) {

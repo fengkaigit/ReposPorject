@@ -1,6 +1,7 @@
 package com.ey.service;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.ey.forms.JfForm;
 
@@ -10,4 +11,5 @@ public interface YXfService {
 
 	Object getObjectById(Class c,Serializable id) throws RuntimeException;
 
+	public void saveSetting(JfForm form, Date date) throws RuntimeException;
 }

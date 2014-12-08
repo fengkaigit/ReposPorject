@@ -26,6 +26,8 @@ public interface AgentDAO extends BaseDAO {
 	
 	List<Object> findUserByParam(String areaId,String year) throws RuntimeException;
 
+	AgentInfo getAgentByArea(String areaId) throws RuntimeException;
+	
 	List findPaymentBillByAgentId(Long id,String year) throws RuntimeException;
 	
  	 List findBillNumByMonth(Long id,String month) throws RuntimeException;
@@ -37,7 +39,6 @@ public interface AgentDAO extends BaseDAO {
      List findAgentSelf(Long id,Integer page,Integer rows) throws RuntimeException;
      
      List findBillByBatchId(Long id,Integer page,Integer rows) throws RuntimeException;
-
 
 
 }

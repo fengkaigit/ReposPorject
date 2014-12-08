@@ -81,6 +81,8 @@ public class SfServiceImpl implements SfService {
 					form.getPeriodFrequency(), form.getBillMoney(), form
 							.getPoundage(), date, form.getBillNumber());
 			saveSetting(form, date);
+			if (form.getOrderNum()!=null)
+				paymentBill.setOrderNumber(form.getOrderNum());
 			jfDAO.saveBill(payAccountBill,paymentBill,paymentWater);
 			form.setBillId(payAccountBill.getId());
 			form.setBillNo(paymentBill.getOrderNumber());
@@ -103,7 +105,7 @@ public class SfServiceImpl implements SfService {
 		// TODO Auto-generated method stub
 		return jfDAO.get(c, id);
 	}
-	private void saveSetting(JfForm form, Date date) {
+	public void saveSetting(JfForm form, Date date) throws RuntimeException {
 		PaymentSetting setting = null;
 		if (form.getBczh() != null && form.getBczh()
 				&& (!StringUtil.isEmptyString(form.getBillNumber()))) {

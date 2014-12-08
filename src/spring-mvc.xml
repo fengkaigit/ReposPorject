@@ -128,6 +128,7 @@
                         <value>/refeshCity.do</value>
                         <value>/announce/gglist.do</value>
                         <value>/phone/phoneLogin.do</value>
+                        <value>/phone/phoneReg.do</value>
                    </list> 
          </property>
           

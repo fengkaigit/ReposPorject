@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ey.dao.UserDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
+import com.ey.dao.entity.NoticeInfo;
 import com.ey.dao.entity.UserBase;
 import com.ey.entity.User;
 
@@ -71,6 +72,13 @@ public class UserDAOImpl extends BaseDAOImpl implements UserDAO {
 			super.getDbId(user);
 		}
 		super.save(user);
+	}
+
+	@Override
+	public List<NoticeInfo> findNoticeByUserId(Long userId)
+			throws RuntimeException {
+		String hql = "from NoticeInfo where userId=? and sendStatus=0";
+		return this.find(hql, new Object[]{userId});
 	}
 
 }
