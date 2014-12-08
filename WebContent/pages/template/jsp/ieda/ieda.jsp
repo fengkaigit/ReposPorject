@@ -41,19 +41,17 @@ function postHandle(){
 		    }
 	 });
 }
-var page = <c:out value="${page}"/>;
-var rows = <c:out value="${rows}"/>;
-var total = <c:out value="${total}"/>;
+var gloabObj = {page:<c:out value="${page}"/>,rows:<c:out value="${rows}"/>,total:<c:out value="${total}"/>};
 $(document).ready(function(){
 	   $("#pageNav").pagination({
-	        items: total,
-	        itemsOnPage:rows,
-	        currentPage:page,
+	        items: gloabObj.total,
+	        itemsOnPage:gloabObj.rows,
+	        currentPage:gloabObj.page,
 	        cssStyle: 'light-theme',
 			prevText:'上一页',
 			nextText:'下一页',
 	        onPageClick:function(pageNumber, event){
-			    window.location.href = "<%=request.getContextPath() %>/ej/ieda.do?page="+pageNumber+"&rows="+rows;
+			    window.location.href = "<%=request.getContextPath() %>/ej/ieda.do?page="+pageNumber+"&rows="+gloabObj.rows;
 			}
 	  });
 });
