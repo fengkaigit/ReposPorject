@@ -9,15 +9,32 @@
 <meta content="" name="description">
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <script>
+var page = <c:out value="${page}"/>;
+var rows = <c:out value="${rows}"/>;
+var total = <c:out value="${total}"/>;
 function delAgent(id){
 	if(confirm("确实要删除该信息吗?")){
-	   
+		   if(total%rows==1&&page!=1)
+		    	page = page-1;
 	   jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/announce/del.do",{ids:id},"get","json",function(data){
 		    alert(data.message);
-		    window.location.href = "<%=request.getContextPath() %>/announce/list.do";
+		    window.location.href = "<%=request.getContextPath() %>/announce/list.do?page="+page+"&rows="+rows;
 	    });
 	}
 }
+$(document).ready(function(){
+	   $("#pageNav").pagination({
+	        items: total,
+	        itemsOnPage:rows,
+	        currentPage:page,
+	        cssStyle: 'light-theme',
+			prevText:'上一页',
+			nextText:'下一页',
+	        onPageClick:function(pageNumber, event){
+			    window.location.href = "<%=request.getContextPath() %>/announce/list.do?page="+pageNumber+"&rows="+rows;
+			}
+	  });
+});
 </script>
 </head>
 <body>
@@ -92,7 +109,8 @@ function delAgent(id){
 </table>
 
     </div>
-    
+  <div id="pageNav"></div>
+  <div class="clear"></div>
 </div>
 </div>
 <%@include file="/pages/template/jsp/common/footer.jsp"%>

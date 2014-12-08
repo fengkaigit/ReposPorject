@@ -37,3 +37,5 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.autocomplete.js"></script>
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/jquery.autocomplete.css"></link>
+<script src="<%=request.getContextPath() %>/js/pagination/jquery.simplePagination.js"></script>
+<link href="<%=request.getContextPath() %>/css/pagination/simplePagination.css" type="text/css" rel="stylesheet">

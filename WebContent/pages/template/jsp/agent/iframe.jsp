@@ -64,7 +64,7 @@ $(document).ready(function(){
 				   var obj = data[i];
 				   ggHtml.push('<div class="list">');
 				   ggHtml.push('<div class="listName">');
-				   ggHtml.push('<a href="#" title="'+obj.title+'">'+obj.title+'</a>');
+				   ggHtml.push('<a href="javascript:getgg('+obj.id+');" title="'+obj.title+'">'+obj.title+'</a>');
 				   ggHtml.push('</div>');
 				   ggHtml.push('<div class="desktopTime">'+obj.createTime+'</div>');
 				   ggHtml.push('</div>');
@@ -122,7 +122,11 @@ $(document).ready(function(){
 			  //alert(reportHTML.join(""));
 		   //}
 	// });
+      	
 });
+function getgg(id){
+	window.location.href = "<%=request.getContextPath() %>/announce/showgg.do?id="+id;
+}
 </script>
 </head>
 <body >

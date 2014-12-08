@@ -30,7 +30,7 @@ jQuery(document).ready(
 					   for(var i=0;i<data.length;i++){
 						   var obj = data[i];
 						   ggHtml.push('<li class="clearfix"><b></b>');
-						   ggHtml.push('<a target="_blank" href="#">');
+						   ggHtml.push('<a href="javascript:getgg('+obj.id+');">');
 						   ggHtml.push('<span title="'+obj.title+'" class="fcg2">'+obj.title+'...</span><span class="fcg fr">['+obj.createTime +']</span></a>');
 						   ggHtml.push('</li>');
 						 }
@@ -39,7 +39,9 @@ jQuery(document).ready(
 			 });
 			
 		});
-
+function getgg(id){
+	window.location.href = "<%=request.getContextPath() %>/announce/showgg.do?id="+id;
+}
 </script> 
 </head>
 <body>

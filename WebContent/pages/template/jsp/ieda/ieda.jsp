@@ -41,6 +41,22 @@ function postHandle(){
 		    }
 	 });
 }
+var page = <c:out value="${page}"/>;
+var rows = <c:out value="${rows}"/>;
+var total = <c:out value="${total}"/>;
+$(document).ready(function(){
+	   $("#pageNav").pagination({
+	        items: total,
+	        itemsOnPage:rows,
+	        currentPage:page,
+	        cssStyle: 'light-theme',
+			prevText:'上一页',
+			nextText:'下一页',
+	        onPageClick:function(pageNumber, event){
+			    window.location.href = "<%=request.getContextPath() %>/ej/ieda.do?page="+pageNumber+"&rows="+rows;
+			}
+	  });
+});
 </script>
 </head>
 <body class="index">
@@ -113,6 +129,8 @@ function postHandle(){
                                    </div></c:if>
     </div>
     </c:forEach>
+    <div id="pageNav" style="margin-right:55px;"></div>
+    <div class="clear"></div>
 <div class="tabBlBtn"style="margin-top:10px;clear:both;">
             <input type="radio"  id="propose" value="1" name="backType" checked="checked"><span  style="cursor:pointer" class="leftSpace">&nbsp;改进建议&nbsp;&nbsp;</span>
             <input type="radio"  id="recovery" value="2" name="backType"><span  style="cursor:pointer" class="leftSpace">&nbsp;内容纠错&nbsp;&nbsp;</span>
