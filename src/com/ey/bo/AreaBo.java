@@ -78,6 +78,18 @@ public class AreaBo {
 		}  
 	}
 	
+	// 拼接孩子节点的JSON字符串
+	public String toString() {  
+	  String result = "[";    
+	  for (Iterator it = children.iterator(); it.hasNext();) {  
+	   result += ((AreaBo) it.next()).toString();  
+	   result += ",";  
+	  }
+	  result = result.substring(0, result.length() - 1);  
+	  result += "]";  
+	  return result;  
+	}
+	
 }
 
 /** 

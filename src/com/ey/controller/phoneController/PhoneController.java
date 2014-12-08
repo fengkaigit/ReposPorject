@@ -1,5 +1,7 @@
 package com.ey.controller.phoneController;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,12 +14,16 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.bo.AreaBo;
 import com.ey.bo.CatvInfoBo;
@@ -120,13 +126,13 @@ public class PhoneController {
 	@Autowired
 	private UserService userService;
 	
-	private ResultBo json;
-	
 	@RequestMapping(value="/areaJson")
-	public @ResponseBody ResultBo getAreaInJSON(String areaType,HttpServletRequest request,
-			HttpServletResponse response){
+	public ModelAndView getAreaInJSON(String areaType,HttpServletRequest request,
+			HttpServletResponse response) throws IOException, JSONException{
+		List<AreaBo> areaLst = new ArrayList();
+		JSONObject obj = new JSONObject();
 		try{
-			List<AreaBo> areaLst = new ArrayList();
+			
 			List<Area> dataList = areaService.getAreaList(areaType);
 			// 节点列表（散列表，用于临时存储节点对象）  
 			HashMap nodeList = new HashMap();  
@@ -162,20 +168,32 @@ public class PhoneController {
 			}
 			// 输出有序的树形菜单的JSON字符串
 			Collections.sort(areaLst,new NodeIDComparator());
-			json = new ResultBo();
-			json.setSuccess(true);
-			json.setData(areaLst);
+			JSONArray jsonArr=JSONArray.fromObject(areaLst);
+			obj.put("success", true);
+			obj.put("data", jsonArr);
 		}catch (Exception e) {
-			json = new ResultBo();
-			json.setSuccess(false);
-			json.setData("获取缴费地区信息失败！");
+			obj.put("success", false);
+			obj.put("data", "获取缴费区域信息失败！");
 		}
-		return json;
+		
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
 	}
 	
 	@RequestMapping(value="/entJson")
-	public @ResponseBody ResultBo getEntInJSON(String areaId,int payType,HttpServletRequest request,
-			HttpServletResponse response){
+	public ModelAndView getEntInJSON(String areaId,int payType,HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
 		try{
 			List<ChargeEnterprise> lst = chargeEntService.getChargesByArea(areaId, payType);
 			List<StandardBo> boLst = new ArrayList();
@@ -183,20 +201,31 @@ public class PhoneController {
 				StandardBo bo = new StandardBo(ent.getId(),ent.getEnterpriseName());
 				boLst.add(bo);
 			}
-			json = new ResultBo();
-			json.setSuccess(true);
-			json.setData(boLst);
+			JSONArray jsonArr=JSONArray.fromObject(boLst);
+			obj.put("success", true);
+			obj.put("data", jsonArr);
 		}catch (Exception e) {
-			json = new ResultBo();
-			json.setSuccess(false);
-			json.setData("获取缴费单位信息失败！");
+			obj.put("success", false);
+			obj.put("data", "获取缴费单位信息失败！");
 		}
-		return json;
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
 	}
 	
 	@RequestMapping(value="/paymentSettingJson")
-	public @ResponseBody ResultBo getPaymentSettingInJSON(int payType,HttpServletRequest request,
-			HttpServletResponse response){
+	public ModelAndView getPaymentSettingInJSON(int payType,HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
@@ -217,20 +246,32 @@ public class PhoneController {
 					standardLst.add(bo);
 				}
 			}
-			json = new ResultBo();
-			json.setSuccess(true);
-			json.setData(standardLst);
+			JSONArray jsonArr=JSONArray.fromObject(standardLst);
+			obj.put("success", true);
+			obj.put("data", jsonArr);
 		}catch (Exception e) {
-			json = new ResultBo();
-			json.setSuccess(false);
-			json.setData("获取缴费账户设置信息失败！");
+			obj.put("success", false);
+			obj.put("data", "获取缴费账户设置信息失败！");
 		}
-		return json;
+
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
 	}
 	
 	@RequestMapping(value="/catvInfoJson")
-	public @ResponseBody ResultBo getCatvInJSON(String areaId,int televisionType,HttpServletRequest request,
-			HttpServletResponse response){
+	public ModelAndView getCatvInJSON(String areaId,int televisionType,HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
 		try{
 			List<CatvInfo> lst = catvService.getCatvInfo(areaId, televisionType);
 			List<CatvInfoBo> boLst = new ArrayList();
@@ -238,311 +279,369 @@ public class PhoneController {
 				CatvInfoBo bo = new CatvInfoBo(catv.getId(),catv.getTelevisionName(),catv.getTelevisionMoney());
 				boLst.add(bo);
 			}
-			json = new ResultBo();
-			json.setSuccess(true);
-			json.setData(boLst);
+			JSONArray jsonArr=JSONArray.fromObject(boLst);
+			obj.put("success", true);
+			obj.put("data", jsonArr);
 		}catch (Exception e) {
-			json = new ResultBo();
-			json.setSuccess(false);
-			json.setData("获取有线电视设置信息失败！");
+			obj.put("success", false);
+			obj.put("data", "获取有线电视设置信息失败！");
 		}
-		return json;
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
 	}
 	
 	@RequestMapping(value="/saveSetting")
-	public @ResponseBody ResultBo savePaySetting(String areaId,Long entId,
+	public ModelAndView savePaySetting(String areaId,Long entId,
 			int payType,String paymentCode,String payAddress,String vehicle, 
 			String carframe, String engine,HttpServletRequest request,
-			HttpServletResponse response){
+			HttpServletResponse response) throws JSONException, IOException{
 		//0：水费；1：电费；2：燃气；3：固话；4：移动；5：交通；6：物业；7：有线电视；8采暖
+		JSONObject obj = new JSONObject();
 		try{
 			if (StringUtil.isEmptyString(areaId)) {
-				json.setSuccess(false);
-				json.setData(RequestUtils.getMessage("noarea",request));
-				return json;
-			}
-
-			UserBase currentUser = (UserBase) request.getSession().getAttribute(
-					SystemConst.USER);
-			JfForm form = new JfForm();
-			Area area=areaService.getArea(areaId);
-			if (entId != null) {
-				ChargeEntBo ceb = chargeEntService.getChargeEnt(entId);
-				if (ceb != null) {
-					form.setEndName(ceb.getEnterpriseName());
+				obj.put("success", false);
+				obj.put("data",RequestUtils.getMessage("noarea",request));
+			}else{
+				UserBase currentUser = (UserBase) request.getSession().getAttribute(
+						SystemConst.USER);
+				JfForm form = new JfForm();
+				Area area=areaService.getArea(areaId);
+				if (entId != null) {
+					ChargeEntBo ceb = chargeEntService.getChargeEnt(entId);
+					if (ceb != null) {
+						form.setEndName(ceb.getEnterpriseName());
+					}
+	
 				}
-
+				form.setAreaId(areaId);
+				form.setAreaName(area.getProvince());
+				form.setEntId(entId);
+				form.setPayAddress(payAddress);
+				form.setCarframeNumber(carframe);
+				form.setVehicleNumber(vehicle);
+				form.setEngineNumber(engine);
+				form.setUserId(currentUser.getId());
+				form.setUserName(currentUser.getRealName());
+				form.setPayType(payType);
+				form.setBillNumber(paymentCode);
+				form.setBczh(true);
+				if (payType==0){
+					sfService.saveSetting(form, new Date());
+				}else if (payType==1){
+					dfService.saveSetting(form, new Date());
+				}else if (payType==2){
+					rqfService.saveSetting(form, new Date());
+				}else if (payType==3){
+					ghfService.saveSetting(form, new Date());
+				}else if (payType==4){
+					ydtxfService.saveSetting(form, new Date());
+				}else if (payType==5){
+					jtfkfService.saveSetting(form, new Date());
+				}else if (payType==6){
+					form.setBillNumber(currentUser.getRealName());
+					wyfService.saveSetting(form, new Date());
+				}else if (payType==7){
+					yxfService.saveSetting(form, new Date());
+				}else if (payType==8){
+					cnfService.saveSetting(form, new Date());
+				}
+				obj.put("success", true);
+				obj.put("data", "设置用户缴费账号信息成功！");
 			}
-			form.setAreaId(areaId);
-			form.setAreaName(area.getProvince());
-			form.setEntId(entId);
-			form.setPayAddress(payAddress);
-			form.setCarframeNumber(carframe);
-			form.setVehicleNumber(vehicle);
-			form.setEngineNumber(engine);
-			form.setUserId(currentUser.getId());
-			form.setUserName(currentUser.getRealName());
-			form.setPayType(payType);
-			form.setBillNumber(paymentCode);
-			form.setBczh(true);
-			if (payType==0){
-				sfService.saveSetting(form, new Date());
-			}else if (payType==1){
-				dfService.saveSetting(form, new Date());
-			}else if (payType==2){
-				rqfService.saveSetting(form, new Date());
-			}else if (payType==3){
-				ghfService.saveSetting(form, new Date());
-			}else if (payType==4){
-				ydtxfService.saveSetting(form, new Date());
-			}else if (payType==5){
-				jtfkfService.saveSetting(form, new Date());
-			}else if (payType==6){
-				form.setBillNumber(currentUser.getRealName());
-				wyfService.saveSetting(form, new Date());
-			}else if (payType==7){
-				yxfService.saveSetting(form, new Date());
-			}else if (payType==8){
-				cnfService.saveSetting(form, new Date());
-			}
-			json = new ResultBo();
-			json.setSuccess(true);
-			json.setData("设置用户缴费账号信息成功！");
 		}catch (Exception e) {
-			json = new ResultBo();
-			json.setSuccess(false);
-			json.setData("设置用户缴费账号信息失败！");
+			obj.put("success", false);
+			obj.put("data", "设置用户缴费账号信息失败！");
 		}
-		return json;
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
 	}
 	
 	@RequestMapping(value="/phoneLogin")
-	public @ResponseBody ResultBo phoneLogin(String userId,String passwd, HttpServletRequest request,
-			HttpServletResponse response){
+	public ModelAndView phoneLogin(String userId,String passwd, HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
+		UserBase currentUser = loginService.findUserByLoginCode(userId, MD5.getMD5Str(passwd));
 		try{
 			if (StringUtil.isEmptyString(userId)) {
-				json.setSuccess(false);
-				json.setData(RequestUtils.getMessage("nologin",request));
-				return json;
-			}
-			if (StringUtil.isEmptyString(passwd)) {
-				json.setSuccess(false);
-				json.setData(RequestUtils.getMessage("nopassword",request));
-				return json;
-			}
-
-			UserBase currentUser = loginService.findUserByLoginCode(userId, MD5.getMD5Str(passwd));
-
-			if (currentUser == null) {
-				json.setSuccess(false);
-				json.setData(RequestUtils.getMessage("login", request));
-				return json;
-			} else {
+				obj.put("success", false);
+				obj.put("data",RequestUtils.getMessage("nologin",request));
+			}else if (StringUtil.isEmptyString(passwd)) {
+				obj.put("success", false);
+				obj.put("data",RequestUtils.getMessage("nopassword",request));
+			}else if (currentUser == null) {
+				obj.put("success", false);
+				obj.put("data",RequestUtils.getMessage("login",request));
+			}else {
 				request.getSession().setAttribute(SystemConst.USER,currentUser);
-				json = new ResultBo();
-				json.setSuccess(true);
-				json.setData(request.getSession().getId());				
+				obj.put("success", true);
+				obj.put("data",request.getSession().getId());
 			}
 		}catch (Exception e) {
-			json = new ResultBo();
-			json.setSuccess(false);
-			json.setData("用户登录失败！");
+			obj.put("success", false);
+			obj.put("data","用户登录失败！");
 		}
-		return json;
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
 	}
 	
 	@RequestMapping(value="/phoneReg")
-	public @ResponseBody ResultBo phoneReg(String userId,String passwd, int regType, String areaId, String vcode, HttpServletRequest request,
-			HttpServletResponse response){
+	public ModelAndView phoneReg(String userId,String passwd, int regType, String areaId, String vcode, HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
 		try{
 			if (StringUtil.isEmptyString(userId)) {
-				json.setSuccess(false);
-				json.setData(RequestUtils.getMessage("nologin",request));
-				return json;
-			}
-			
-			UserBase user = new UserBase();
-			
-			user.setAccountNumber(userId);
-			user.setRealName(user.getAccountNumber());
-			user.setMobilePhone(user.getAccountNumber());
-
-			if (StringUtil.isEmptyString(passwd)) {
-				json.setSuccess(false);
-				json.setData(RequestUtils.getMessage("nopassword",request));
-				return json;
-			}
-
-			user.setPasswd(MD5
-					.getMD5Str(passwd));
-			UserBase currentUser = loginService.findUserByLoginCode(user.getAccountNumber());
-			if(currentUser!=null){
-				json.setSuccess(false);
-				json.setData(RequestUtils.getMessage("duplicateuser", request));
-				return json;
+				obj.put("success", false);
+				obj.put("data",RequestUtils.getMessage("nologin",request));
+			}else if (StringUtil.isEmptyString(passwd)) {
+				obj.put("success", false);
+				obj.put("data",RequestUtils.getMessage("nopassword",request));
 			}else{
-				user.setRegistType(regType);
-				user.setAreaId(areaId);
-				user.setRegTime(new Date());
-				loginService.saveUser(user);
-				request.getSession().setAttribute(SystemConst.USER,user);
-				json.setSuccess(true);
-				json.setData(request.getSession().getId());
+				UserBase user = new UserBase();
+				
+				user.setAccountNumber(userId);
+				user.setRealName(user.getAccountNumber());
+				user.setMobilePhone(user.getAccountNumber());
+
+				user.setPasswd(MD5
+						.getMD5Str(passwd));
+				UserBase currentUser = loginService.findUserByLoginCode(user.getAccountNumber());
+				if(currentUser!=null){
+					obj.put("success", false);
+					obj.put("data",RequestUtils.getMessage("duplicateuser",request));
+				}else{
+					user.setRegistType(regType);
+					user.setAreaId(areaId);
+					user.setRegTime(new Date());
+					loginService.saveUser(user);
+					request.getSession().setAttribute(SystemConst.USER,user);
+					obj.put("success", true);
+					obj.put("data",request.getSession().getId());
+				}
 			}
 		}catch (Exception e) {
-			json = new ResultBo();
-			json.setSuccess(false);
-			json.setData("用户注册失败！");
+			obj.put("success", false);
+			obj.put("data","用户注册失败！");
 		}
-		return json;
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
 	}
 
 	@RequestMapping(value="/confirmPayment")
-	public @ResponseBody ResultBo confirmPayment(String areaId,Long entId,
+	public ModelAndView confirmPayment(String areaId,Long entId,
 			int payType,String paymentCode,String payAddress,String vehicle, 
 			String carframe, String engine, Double payMoney,
 			String beginPeriod, String endPeriod,
-			HttpServletRequest request,HttpServletResponse response){
+			HttpServletRequest request,HttpServletResponse response) throws JSONException, IOException{
 		//0：水费；1：电费；2：燃气；3：固话；4：移动；5：交通；6：物业；7：有线电视；8采暖
 		ConfirmPaymentBo retnBo = new ConfirmPaymentBo();
+		JSONObject jsonObj = new JSONObject();
 		try{
 			if (StringUtil.isEmptyString(areaId)) {
-				json.setSuccess(false);
-				json.setData(RequestUtils.getMessage("noarea",request));
-				return json;
-			}
-
-			UserBase currentUser = (UserBase) request.getSession().getAttribute(
-					SystemConst.USER);
-			JfForm form = new JfForm();
-			Area area=areaService.getArea(areaId);
-			if (entId != null) {
-				ChargeEntBo ceb = chargeEntService.getChargeEnt(entId);
-				if (ceb != null) {
-					form.setEndName(ceb.getEnterpriseName());
+				jsonObj.put("success", false);
+				jsonObj.put("data",RequestUtils.getMessage("noarea",request));
+			}else{
+				UserBase currentUser = (UserBase) request.getSession().getAttribute(
+						SystemConst.USER);
+				JfForm form = new JfForm();
+				Area area=areaService.getArea(areaId);
+				if (entId != null) {
+					ChargeEntBo ceb = chargeEntService.getChargeEnt(entId);
+					if (ceb != null) {
+						form.setEndName(ceb.getEnterpriseName());
+					}
 				}
-			}
-			AgentInfo agent = agentService.getAgentByArea(areaId);
-			
-			form.setAgentId(agent.getId());
-			form.setAgentName(agent.getRegistRealName());
-			form.setAreaId(areaId);
-			form.setAreaName(area.getProvince());
-			form.setEntId(entId);
-			form.setPayAddress(payAddress);
-			form.setCarframeNumber(carframe);
-			form.setVehicleNumber(vehicle);
-			form.setEngineNumber(engine);
-			form.setUserId(currentUser.getId());
-			form.setUserName(currentUser.getRealName());
-			form.setPayType(payType);
-			form.setBillNumber(paymentCode);
-			
-			FeeRule feeRule = feeService.getFeeRule(payType, new Date());
-			if (feeRule != null) {
-				try {
-					Object obj = ClassUtil.loadClass(feeRule.getRule());
-					Double poundage = (Double) ClassUtil.invokeMothod(obj,
-							"getPoundage");
-					retnBo.setPoundage(poundage);
-				} catch (Exception ex) {
-					ex.printStackTrace();
+				AgentInfo agent = agentService.getAgentByArea(areaId);
+				
+				form.setAgentId(agent.getId());
+				form.setAgentName(agent.getRegistRealName());
+				form.setAreaId(areaId);
+				form.setAreaName(area.getProvince());
+				form.setEntId(entId);
+				form.setPayAddress(payAddress);
+				form.setCarframeNumber(carframe);
+				form.setVehicleNumber(vehicle);
+				form.setEngineNumber(engine);
+				form.setUserId(currentUser.getId());
+				form.setUserName(currentUser.getRealName());
+				form.setPayType(payType);
+				form.setBillNumber(paymentCode);
+				
+				FeeRule feeRule = feeService.getFeeRule(payType, new Date());
+				if (feeRule != null) {
+					try {
+						Object obj = ClassUtil.loadClass(feeRule.getRule());
+						Double poundage = (Double) ClassUtil.invokeMothod(obj,
+								"getPoundage");
+						retnBo.setPoundage(poundage);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 				}
+				form.setPoundage(retnBo.getPoundage());
+				form.setPaymentStatus(0);// 0：创建；
+				form.setBusinessType(0);//0：代缴；
+				form.setBillType(1);// 1：虚拟账单；
+				form.setUserId(currentUser.getId());// 登录用户
+				form.setUserName(currentUser.getRealName());
+				form.setPaymentMode(0);// 0：银行缴费
+				form.setDivideStatus(0);// 0：未生成劳务费划款单据
+				form.setPeriodFrequency("month");// month;
+				form.setMoneycn(MoneyUtil.toUpperCase(payMoney
+						+ form.getPoundage()));
+				form.setYear(Integer.valueOf(beginPeriod.substring(0,3)));
+				form.setMonth(beginPeriod.substring(5,6));
+	
+				Long dbId = DbidGenerator.getDbidGenerator().getNextId();
+				
+				String orderNum = StringUtil.getBillNo(new Date(), dbId);
+				form.setOrderNum(orderNum);
+				
+				if (payType==0){
+					sfService.saveBill(form);
+				}else if (payType==1){
+					dfService.saveBill(form);
+				}else if (payType==2){
+					rqfService.saveBill(form);
+				}else if (payType==3){
+					ghfService.saveBill(form);
+				}else if (payType==4){
+					ydtxfService.saveBill(form);
+				}else if (payType==5){
+					jtfkfService.saveBill(form);
+				}else if (payType==6){
+					form.setBillNumber(currentUser.getRealName());
+					wyfService.saveBill(form);
+				}else if (payType==7){
+					yxfService.saveBill(form);
+				}else if (payType==8){
+					cnfService.saveBill(form);
+				}
+				retnBo.setOrderNum(orderNum);
+				retnBo.setPayMoney(payMoney+retnBo.getPoundage());
+				retnBo.setBillNumber(paymentCode);
+				retnBo.setPayData(StringUtil.encodeString(paymentCode));
+				retnBo.setPayType(payType);
+				
+				jsonObj.put("success", true);
+				jsonObj.put("data",retnBo);
 			}
-			form.setPoundage(retnBo.getPoundage());
-			form.setPaymentStatus(0);// 0：创建；
-			form.setBusinessType(0);//0：代缴；
-			form.setBillType(1);// 1：虚拟账单；
-			form.setUserId(currentUser.getId());// 登录用户
-			form.setUserName(currentUser.getRealName());
-			form.setPaymentMode(0);// 0：银行缴费
-			form.setDivideStatus(0);// 0：未生成劳务费划款单据
-			form.setPeriodFrequency("month");// month;
-			form.setMoneycn(MoneyUtil.toUpperCase(payMoney
-					+ form.getPoundage()));
-			form.setYear(Integer.valueOf(beginPeriod.substring(0,3)));
-			form.setMonth(beginPeriod.substring(5,6));
-
-			Long dbId = DbidGenerator.getDbidGenerator().getNextId();
-			
-			String orderNum = StringUtil.getBillNo(new Date(), dbId);
-			form.setOrderNum(orderNum);
-			
-			if (payType==0){
-				sfService.saveBill(form);
-			}else if (payType==1){
-				dfService.saveBill(form);
-			}else if (payType==2){
-				rqfService.saveBill(form);
-			}else if (payType==3){
-				ghfService.saveBill(form);
-			}else if (payType==4){
-				ydtxfService.saveBill(form);
-			}else if (payType==5){
-				jtfkfService.saveBill(form);
-			}else if (payType==6){
-				form.setBillNumber(currentUser.getRealName());
-				wyfService.saveBill(form);
-			}else if (payType==7){
-				yxfService.saveBill(form);
-			}else if (payType==8){
-				cnfService.saveBill(form);
-			}
-			retnBo.setOrderNum(orderNum);
-			retnBo.setPayMoney(payMoney+retnBo.getPoundage());
-			retnBo.setBillNumber(paymentCode);
-			retnBo.setPayData(StringUtil.encodeString(paymentCode));
-			retnBo.setPayType(payType);
-			
-			json = new ResultBo();
-			json.setSuccess(true);
-			json.setData(retnBo);
 		}catch (Exception e) {
-			json = new ResultBo();
-			json.setSuccess(false);
-			json.setData("设置缴费确认失败！");
+			jsonObj.put("success", false);
+			jsonObj.put("data","设置缴费确认失败！");
 		}
-		return json;
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + jsonObj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
 	}
 	
 	@RequestMapping(value="/phoneLogout")
-	public @ResponseBody ResultBo phoneLogout(HttpServletRequest request,
-			HttpServletResponse response){
+	public ModelAndView phoneLogout(HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
 		try{
 			request.getSession().removeAttribute(SystemConst.USER);
 			request.getSession().invalidate();
-			json = new ResultBo();
-			json.setSuccess(true);
-			json.setData("用户注销成功！");
+			obj.put("success", true);
+			obj.put("data","用户注销成功");
 		}catch (Exception e) {
-			json = new ResultBo();
-			json.setSuccess(false);
-			json.setData("用户注销失败！");
+			obj.put("success", false);
+			obj.put("data","用户注销失败");
 		}
-		return json;
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
 	}
 	
 	@RequestMapping(value="/getMessage")
-	public @ResponseBody ResultBo getMessage(HttpServletRequest request,
-			HttpServletResponse response){
+	public ModelAndView getMessage(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, JSONException{
+		JSONObject obj = new JSONObject();
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
 			
-			json = new ResultBo();
-			json.setSuccess(true);
-			json.setData("");
+			obj.put("success", true);
+			obj.put("data","");
 		}catch (Exception e) {
-			json = new ResultBo();
-			json.setSuccess(false);
-			json.setData("查询用户消息信息失败！");
+			obj.put("success", true);
+			obj.put("data","查询用户消息信息失败");
 		}
-		return json;
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
 	}
 	
 	@RequestMapping(value="/getSystemMessage")
-	public @ResponseBody ResultBo getSystemMessage(HttpServletRequest request,
-			HttpServletResponse response){
+	public ModelAndView getSystemMessage(HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
@@ -552,15 +651,52 @@ public class PhoneController {
 				NoticeInfoBo bo = new NoticeInfoBo(notice.getId(),notice.getServerContent().toString(),notice.getCreateTime(),notice.getNoticeType());
 				retnLst.add(bo);
 			}
-			json = new ResultBo();
-			json.setSuccess(true);
-			json.setData(retnLst);
+			obj.put("success", true);
+			obj.put("data",retnLst);
 		}catch (Exception e) {
-			json = new ResultBo();
-			json.setSuccess(false);
-			json.setData("查询用户消息信息失败！");
+			obj.put("success", true);
+			obj.put("data","查询用户消息信息失败！");
 		}
-		return json;
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
+	
+	@RequestMapping(value="/getHisPayment")
+	public ModelAndView getHisPayment(HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
+		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			
+			obj.put("success", true);
+			obj.put("data",retnLst);
+		}catch (Exception e) {
+			obj.put("success", true);
+			obj.put("data","查询用户消息信息失败！");
+		}
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = "";
+		if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
 	}
 	
 }
