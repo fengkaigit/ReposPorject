@@ -55,4 +55,18 @@ public class AnnounceServiceImpl implements AnnounceService {
          }
 	}
 
+	@Override
+	public Long getAnnouncesTotalByQueryParam(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return announceDAO.getAnnouncesTotalByQueryParam(Qparam);
+	}
+
+	@Override
+	public void updateStatusById(Long id, Integer status)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		announceDAO.updateStatusById(id, status);
+	}
+
 }

@@ -21,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -327,12 +328,12 @@ public class AgentController extends BaseController {
 
 	}
 	@RequestMapping(value = "/monthBillChart")
-	public ModelAndView monthBillChart(String year,HttpServletRequest request,
+	public ModelAndView monthBillChart(@ModelAttribute("user") AgentBo agent,String year,HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-        Long complateNum = 100L;
-        Long noComplateNum = 30L;
+        Long complateNum = 0L;
+        Long noComplateNum = 0L;
 		String currentYearMonth = DateUtil.getYearMonthNowString(new Date());
-        AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+        //AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
 		List billlist = agentService.findBillNumByMonth(agent.getId(), currentYearMonth);
 		for(Object o:billlist){
 				Integer status = (Integer)o;

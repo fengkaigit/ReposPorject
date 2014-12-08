@@ -1,6 +1,7 @@
 package com.ey.quartz.job;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,12 +30,13 @@ public class AgentBacthJob implements Job {
 		JobDataMap data = arg0.getJobDetail().getJobDataMap();
 		AgentService agentService = (AgentService) data.get("agentService");
 		if(agentService!=null){
-			Date date = new Date();
-			String currentDay = DateUtil.getDate(date);
-			Map<Integer,String> map = getPayTypeName(data);
-			List<Object[]> billlist = agentService.findBillByCurrentDay(currentDay);
-			List<BatchPaymentRelation> batchpaylist = new ArrayList<BatchPaymentRelation>();
+			try{
+			List<Object[]> billlist = agentService.findBillByCurrentDay(null);
 			if (billlist != null && billlist.size() > 0) {
+				Date date = new Date();
+				Map<Integer,String> map = getPayTypeName(data);
+				List<BatchPaymentRelation> batchpaylist = new ArrayList<BatchPaymentRelation>();
+				List<String> billIdsList = new ArrayList<String>();
 				for (Object[] o : billlist) {
 					AgentPaymentBatch paymentBatch = new AgentPaymentBatch(
 							(Double) o[3], date, 0, (Long) o[1],
@@ -47,10 +49,16 @@ public class AgentBacthJob implements Job {
 								new BatchPaymentRelationId(Long.valueOf(billId
 										.trim()), paymentBatch.getId())));
 					}
+					billIdsList.addAll(Arrays.asList(billIds));
 				}
 				agentService.batchSaveObject(batchpaylist);
+				agentService.updateBillStatusByIds(billIdsList);
+			}
+			}catch(Exception e){
+				e.printStackTrace();
 			}
 		}
+		
 	}
 	private Map<Integer,String> getPayTypeName(JobDataMap jobDataMap){
 		Map<Integer,String> dataValueMap = new HashMap<Integer,String>();

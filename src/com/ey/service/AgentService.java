@@ -56,4 +56,6 @@ public interface AgentService {
      
      List findBillByBatchId(Long id,Integer page,Integer rows) throws RuntimeException;
      
+     void updateBillStatusByIds(List<String> list) throws RuntimeException;
+     
 }

@@ -14,7 +14,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.bo.AgentBo;
@@ -37,6 +39,7 @@ public class AnnounceController extends BaseController {
 	private static final String LIST_PAGE = "announce/list";
 	private static final String REDIRECT = "redirect:/announce/list.do";
 	private static final String ADD_PAGE = "announce/announceform";
+	private static final String SHOW_PAGE = "announce/showgg";
 	
 	@Autowired
     private AnnounceService announceService;
@@ -47,11 +50,14 @@ public class AnnounceController extends BaseController {
 	@Autowired
 	private StaticService staticService;
 	
+	
 	@RequestMapping(value="/list")
-	public ModelAndView list(HttpServletRequest request,HttpServletResponse response){
+	public ModelAndView list(@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();
-		List<SysAnnouncement> announces = announceService.getAnnouncesByQueryParam(null, 0, 0);
+		List<SysAnnouncement> announces = announceService.getAnnouncesByQueryParam(null, page,rows);
+		Long total = announceService.getAnnouncesTotalByQueryParam(null);
 		mav.addObject("announces", announces);
+		mav.addObject("total", total);
 		mav.setViewName(LIST_PAGE);
 		return mav;
 	}
@@ -121,6 +127,14 @@ public class AnnounceController extends BaseController {
 	  initAreas(request,modelMap);
 	  initAnnStatus(request,modelMap);
 	  return ADD_PAGE;
+	}
+	
+	@RequestMapping(value="/showgg")
+	public String showusergg(Long id,ModelMap modelMap,SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
+	  SysAnnouncement sysAnnounce = announceService.getSysAnnouncement(id);
+	  announceService.updateStatusById(id, 1);
+	  modelMap.addAttribute("announce", sysAnnounce);
+	  return SHOW_PAGE;
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)

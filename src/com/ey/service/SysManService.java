@@ -21,4 +21,5 @@ public interface SysManService {
 	List<Feedback> findFeedBacks(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
 	void deleteFeedBackByIds(String[] ids)throws RuntimeException;
 	Feedback getFeedBack(Long id) throws RuntimeException;
+	Long findTotalFeedBack(Map<String,Object> Qparam) throws RuntimeException;
 }

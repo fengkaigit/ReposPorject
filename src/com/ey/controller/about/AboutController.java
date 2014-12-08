@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,7 +49,7 @@ public class AboutController extends BaseController {
 		return mav;
 	}
 	@RequestMapping(value = "/ieda")
-	public ModelAndView ieda(HttpServletRequest request,
+	public ModelAndView ieda(@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request,
 			HttpServletResponse response) {		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("ieda/ieda");
@@ -56,8 +57,10 @@ public class AboutController extends BaseController {
         if(user!=null){
         	Map<String,Object> queryMap = new HashMap<String,Object>();
     		queryMap.put("areaId", user.getAreaId());
-    		List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, 0, 0);
+    		List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, page, rows);
+    		Long total = sysManService.findTotalFeedBack(queryMap);
     		mav.addObject("feedbacks", feedlist);
+    		mav.addObject("total", total);
         }
 		return mav;
 	}

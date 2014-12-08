@@ -11,4 +11,7 @@ public interface AnnounceService {
   	  void deleteAnnounceByIds(String[] ids) throws RuntimeException;
       SysAnnouncement getSysAnnouncement(Long id) throws RuntimeException;
       List<SysAnnouncement> getAnnouncesByQueryParam(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+      Long getAnnouncesTotalByQueryParam(Map<String,Object> Qparam) throws RuntimeException;
+      void updateStatusById(Long id ,Integer status) throws RuntimeException;
+
 }

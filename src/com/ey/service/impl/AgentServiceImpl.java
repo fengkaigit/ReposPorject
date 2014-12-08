@@ -271,4 +271,11 @@ public class AgentServiceImpl implements AgentService {
 		return agentDAO.findBillByBatchId(id, page, rows);
 	}
 
+	@Override
+	public void updateBillStatusByIds(List<String> list)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		agentDAO.updateBillStatusByIds(list);
+	}
+
 }

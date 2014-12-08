@@ -18,5 +18,6 @@ public interface SysManDAO extends BaseDAO {
      void updateReplyFeedById(Long id,String replyContent) throws RuntimeException;
  	List<Feedback> findFeedBacks(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
  	void deleteFeedBackById(Long id)throws RuntimeException;
+	Long findTotalFeedBack(Map<String,Object> Qparam) throws RuntimeException;
 
 }

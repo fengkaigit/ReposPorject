@@ -39,6 +39,9 @@ public interface AgentDAO extends BaseDAO {
      List findAgentSelf(Long id,Integer page,Integer rows) throws RuntimeException;
      
      List findBillByBatchId(Long id,Integer page,Integer rows) throws RuntimeException;
+     
+     void updateBillStatusByIds(List<String> list) throws RuntimeException;
+
 
 
 }

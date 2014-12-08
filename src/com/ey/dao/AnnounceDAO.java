@@ -11,6 +11,9 @@ public interface AnnounceDAO extends BaseDAO {
     List<SysAnnouncement> getAnnouncesByQueryParam(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
     
 	void deleteByAnnounceId(Long id) throws RuntimeException;
+	
+    Long getAnnouncesTotalByQueryParam(Map<String,Object> Qparam) throws RuntimeException;
 
+    void updateStatusById(Long id ,Integer status) throws RuntimeException;
 
 }

@@ -104,4 +104,18 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 		}
 	}
 
+	@Override
+	public Long findTotalFeedBack(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		StringBuffer hql = new StringBuffer("select count(id) from Feedback where 1=1");
+		createQueryParam(hql,Qparam,paramList);
+		List list = this.find(hql.toString(),paramList.toArray());
+		if(list!=null&&list.size()>0){
+			return Long.valueOf(list.get(0)+"");
+		}
+		return 0l;
+	}
+
 }

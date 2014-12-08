@@ -71,5 +71,25 @@ public class AnnounceDAOImpl extends BaseDAOImpl implements AnnounceDAO {
 		// TODO Auto-generated method stub
 		this.executeHql("delete from SysAnnouncement where id = ?", new Object[]{id});
 	}
+	@Override
+	public Long getAnnouncesTotalByQueryParam(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		StringBuffer hql = new StringBuffer("select count(id) from SysAnnouncement where 1=1");
+		createQueryParam(hql,Qparam,paramList);
+		List list  = this.find(hql.toString(),paramList.toArray());
+		if(list!=null&&list.size()>0){
+			return Long.valueOf(list.get(0)+"");
+		}
+		return 0L;
+	}
+	@Override
+	public void updateStatusById(Long id, Integer status)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "update SysAnnouncement set status = ? where id = ?";
+		this.executeHql(hql, new Object[]{status,id});
+	}
 
 }

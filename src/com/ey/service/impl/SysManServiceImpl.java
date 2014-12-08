@@ -114,4 +114,11 @@ public class SysManServiceImpl implements SysManService {
 		return (Feedback)sysManDAO.get(Feedback.class, id);
 	}
 
+	@Override
+	public Long findTotalFeedBack(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return sysManDAO.findTotalFeedBack(Qparam);
+	}
+
 }
