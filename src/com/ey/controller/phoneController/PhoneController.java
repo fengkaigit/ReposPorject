@@ -680,7 +680,7 @@ public class PhoneController {
 					SystemConst.USER);
 			
 			obj.put("success", true);
-			obj.put("data",retnLst);
+			obj.put("data","");
 		}catch (Exception e) {
 			obj.put("success", true);
 			obj.put("data","查询用户消息信息失败！");
