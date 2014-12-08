@@ -18,6 +18,8 @@ public interface ChargeEntService {
     
     List<ChargeEntBo> getAllChargeEnt(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
     
+    Long getTotalByParam(Map<String,Object> Qparam) throws RuntimeException;
+    
     ChargeEntBo getChargeEnt(Long id) throws RuntimeException;
                
     ChargeEnterprise getChargeEnterprise(Long id) throws RuntimeException;

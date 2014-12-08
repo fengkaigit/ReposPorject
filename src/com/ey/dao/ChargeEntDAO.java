@@ -21,5 +21,6 @@ public interface ChargeEntDAO extends BaseDAO{
 	List<ChargeEnterprise> getChargesByArea(String areaId, int payType);
 	
 	BankAccount getBankAccount(Long id) throws RuntimeException;
+    Long getTotalByParam(Map<String,Object> Qparam) throws RuntimeException;
 
 }

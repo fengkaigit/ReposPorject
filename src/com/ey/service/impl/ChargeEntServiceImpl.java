@@ -101,4 +101,11 @@ public class ChargeEntServiceImpl implements ChargeEntService {
 		return chargeEntDAO.getBankAccount(id);
 	}
 
+	@Override
+	public Long getTotalByParam(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return chargeEntDAO.getTotalByParam(Qparam);
+	}
+
 }

@@ -11,6 +11,7 @@ import com.ey.dao.ChargeEntDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.ChargeEnterprise;
+import com.ey.util.StringUtil;
 
 
 @Repository("chargeEntDAO")
@@ -28,7 +29,7 @@ public class ChargeEntDAOImpl extends BaseDAOImpl implements ChargeEntDAO {
 			Map<String, Object> Qparam, Integer page, Integer rows)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		//List paramList = new ArrayList();
+		List paramList = new ArrayList();
 		StringBuffer hql = new StringBuffer("select new com.ey.bo.ChargeEntBo(a.id,a.areaId,a.enterpriseName,a.careNumber,a.payType,a.exPic,b.province,b.namePath,b.encodePath,c.propChName) from ChargeEnterprise a,Area b,BaseCustomValue c where a.areaId = b.id and c.id.customEngName ='payment_type' and c.id.dataValue = a.payType and a.delFlag = 0");
 		return this.find(hql.toString(),page, rows);
 	}
@@ -63,5 +64,43 @@ public class ChargeEntDAOImpl extends BaseDAOImpl implements ChargeEntDAO {
 		if(list!=null&&list.size()>0)
 			return list.get(0);
 		return null;
+	}
+
+	@Override
+	public Long getTotalByParam(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		StringBuffer hql=new StringBuffer("select count(a.id) from ChargeEnterprise a where a.delFlag = 0");
+		createQueryParam(hql,Qparam,paramList);
+		List list = this.find(hql.toString(),paramList.toArray());
+		if(list!=null&&list.size()>0){
+			return Long.valueOf(list.get(0)+"");
+		}
+		return 0l;
+	}
+	private void createQueryParam(StringBuffer query,Map<String, Object> Qparam,List paramList){
+		if(Qparam!=null&&Qparam.size()>0){
+			String name = (String)Qparam.get("name");
+			Integer payType = (Integer)Qparam.get("payType");
+			String areaId = (String)Qparam.get("areaId");
+			String cardNumber = (String)Qparam.get("careNumber");
+			if(!StringUtil.isEmptyString(name)){
+				query.append(" and a.enterpriseName like ?");
+				paramList.add("%"+ name +"%");
+			}
+			if(payType!=null){
+				query.append(" and a.payType = ?");
+				paramList.add(payType);
+			}
+			if(!StringUtil.isEmptyString(areaId)){
+				query.append(" and a.areaId = ?");
+				paramList.add(areaId);
+			}
+			if(!StringUtil.isEmptyString(cardNumber)){
+				query.append(" and a.careNumber = ?");
+				paramList.add(cardNumber);
+			}
+		}
 	}
 }

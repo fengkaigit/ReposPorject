@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,10 +60,12 @@ public class ChargeEntController extends BaseController{
     private AreaService areaService;
 	
 	@RequestMapping(value="/list")
-	public ModelAndView list(HttpServletRequest request,HttpServletResponse response){
+	public ModelAndView list(@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();
-		List<ChargeEntBo> chargeList = chargeEntService.getAllChargeEnt(null, 0, 0);
+		List<ChargeEntBo> chargeList = chargeEntService.getAllChargeEnt(null, page,rows);
+		Long total = chargeEntService.getTotalByParam(null);
 		mav.addObject("charges", chargeList);
+		mav.addObject("total", total);
 		mav.setViewName(LIST_PAGE);
 		return mav;
 	}
