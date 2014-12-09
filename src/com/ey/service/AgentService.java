@@ -58,4 +58,6 @@ public interface AgentService {
      
      void updateBillStatusByIds(List<String> list) throws RuntimeException;
      
+     Long getTotalAgentByParam(Map<String,Object> Qparam) throws RuntimeException;
+     
 }

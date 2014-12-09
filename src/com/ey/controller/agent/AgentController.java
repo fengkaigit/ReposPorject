@@ -145,10 +145,12 @@ public class AgentController extends BaseController {
     }
 	
 	@RequestMapping(value="/list")
-	public ModelAndView list(HttpServletRequest request,HttpServletResponse response){
+	public ModelAndView list(@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();
-		List<AgentBo> agentList = agentService.getAllAgent(null, 0, 0);
+		List<AgentBo> agentList = agentService.getAllAgent(null, page, rows);
+		Long total = agentService.getTotalAgentByParam(null);
 		mav.addObject("agentList", agentList);
+		mav.addObject("total",total);
 		mav.setViewName(LIST_PAGE);
 		return mav;
 	}

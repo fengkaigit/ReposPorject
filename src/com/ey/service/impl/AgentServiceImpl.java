@@ -278,4 +278,11 @@ public class AgentServiceImpl implements AgentService {
 		agentDAO.updateBillStatusByIds(list);
 	}
 
+	@Override
+	public Long getTotalAgentByParam(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.getTotalAgentByParam(Qparam);
+	}
+
 }

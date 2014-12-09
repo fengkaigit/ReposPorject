@@ -41,7 +41,7 @@ public interface AgentDAO extends BaseDAO {
      List findBillByBatchId(Long id,Integer page,Integer rows) throws RuntimeException;
      
      void updateBillStatusByIds(List<String> list) throws RuntimeException;
-
-
+     
+     Long getTotalAgentByParam(Map<String,Object> Qparam) throws RuntimeException;
 
 }

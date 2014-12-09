@@ -185,4 +185,18 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 		}
 	}
 
+	@Override
+	public Long getTotalAgentByParam(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		StringBuffer hql = new StringBuffer("select count(id) from AgentInfo a where a.delFlag = 0");
+		createQueryParam(hql,Qparam,paramList);
+		List list= this.find(hql.toString(),paramList.toArray());
+		if(list!=null&&list.size()>0){
+			return Long.valueOf(list.get(0)+"");
+		}
+		return 0l;
+	}
+
 }
