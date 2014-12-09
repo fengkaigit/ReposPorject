@@ -132,8 +132,9 @@ public class AnnounceController extends BaseController {
 	@RequestMapping(value="/showgg")
 	public String showusergg(Long id,ModelMap modelMap,SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
 	  SysAnnouncement sysAnnounce = announceService.getSysAnnouncement(id);
-	  announceService.updateStatusById(id, 1);
+	  //announceService.updateStatusById(id, 1);
 	  modelMap.addAttribute("announce", sysAnnounce);
+	  //gglist(sysAnnounce.getAnnouncementGroup());
 	  return SHOW_PAGE;
 	}
 	
