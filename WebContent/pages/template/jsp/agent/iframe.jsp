@@ -125,7 +125,7 @@ $(document).ready(function(){
       	
 });
 function getgg(id){
-	window.location.href = "<%=request.getContextPath() %>/announce/showgg.do?id="+id;
+	window.parent.location.href = "<%=request.getContextPath() %>/announce/showgg.do?id="+id;
 }
 </script>
 </head>
