@@ -16,7 +16,7 @@ function delCharge(id){
 			   loabObj.page = loabObj.page-1;
 	   jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/charge/del.do",{ids:id},"get","json",function(data){
 		    alert(data.message);
-		    window.location.href = "<%=request.getContextPath() %>/charge/list.do";
+		    window.location.href = "<%=request.getContextPath() %>/charge/list.do?page="+loabObj.page+"&rows="+gloabObj.rows;
 	    });
 	}
 }
