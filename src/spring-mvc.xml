@@ -127,6 +127,7 @@
                         <value>/ej/about.do</value>
                         <value>/refeshCity.do</value>
                         <value>/announce/gglist.do</value>
+                        <value>/announce/showgg.do</value>
                         <value>/phone/phoneLogin.do</value>
                         <value>/phone/phoneReg.do</value>
                    </list> 
