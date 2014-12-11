@@ -85,13 +85,13 @@ public class AnnounceController extends BaseController {
 	
 	private List<SysAnnouncement> getAgentGgList(Map<String,Object> paramMap,Integer page,Integer rows,HttpServletRequest request){
 		AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
-    	Map<String,Object> queryMap = new HashMap<String,Object>();
-    	queryMap.put("home", true);
-    	queryMap.put("status", 0);
-    	queryMap.put("homeparea", agent.getParentAreaId());
-    	queryMap.put("homearea", agent.getAreaId());
-    	queryMap.putAll(paramMap);
-		List<SysAnnouncement> announces = announceService.getAnnouncesByQueryParam(queryMap, page, rows);
+        //Map<String,Object> queryMap = new HashMap<String,Object>();
+    	paramMap.put("home", true);
+    	paramMap.put("status", 0);
+    	paramMap.put("homeparea", agent.getParentAreaId());
+    	paramMap.put("homearea", agent.getAreaId());
+        //paramMap.putAll(queryMap);
+		List<SysAnnouncement> announces = announceService.getAnnouncesByQueryParam(paramMap, page, rows);
 		return announces;
 	}
 	private List<SysAnnouncement> getGgList(Map<String,Object> paramMap,Integer page,Integer rows,HttpServletRequest request){
@@ -99,16 +99,15 @@ public class AnnounceController extends BaseController {
     	Map<String,Object> queryMap = new HashMap<String,Object>();
 		if(user!=null){
 		  Area area = areaService.getArea(user.getAreaId());
-    	  queryMap.put("home", true);
-    	  queryMap.put("status", 0);
-    	  queryMap.put("homeparea", area.getCity());
-    	  queryMap.put("homearea", user.getAreaId());
+		  paramMap.put("home", true);
+		  paramMap.put("status", 0);
+		  paramMap.put("homeparea", area.getCity());
+		  paramMap.put("homearea", user.getAreaId());
 		}else{
-	    	queryMap.put("scope",0);
-	    	queryMap.put("status",0);
+			paramMap.put("scope",0);
+			paramMap.put("status",0);
 		}
-		queryMap.putAll(paramMap);
-		List<SysAnnouncement> announces = announceService.getAnnouncesByQueryParam(queryMap, page,rows);
+		List<SysAnnouncement> announces = announceService.getAnnouncesByQueryParam(paramMap, page,rows);
 		return announces;
 	}
 	
@@ -162,24 +161,28 @@ public class AnnounceController extends BaseController {
 		return SHOW_PAGE;
 	}
 	
-	@RequestMapping(value="/moregg")
-	public String moregg(Integer group,ModelMap modelMap,@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request,HttpServletResponse response){
+	@RequestMapping(value="/more")
+	public String more(Integer group,ModelMap modelMap,@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request,HttpServletResponse response){
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		List<SysAnnouncement> newlist = null;
 		List<SysAnnouncement> annAllList = null;
+		Long total = null;
 		paramMap.put("group", group);
 		if (group == 1){
 			annAllList = getGgList(paramMap, page,rows, request);
+		    total = announceService.getAnnouncesTotalByQueryParam(paramMap);
 			paramMap.put("createtime",DateUtil.getAfterDay(new Date(), SystemConst.AFTERDAY));
 			newlist = getGgList(paramMap, 0,0, request);
 		}
 		else{
 			annAllList = getAgentGgList(paramMap, page, rows, request);
+			total = announceService.getAnnouncesTotalByQueryParam(paramMap);
 			paramMap.put("createtime",DateUtil.getAfterDay(new Date(), SystemConst.AFTERDAY));
 			newlist = getAgentGgList(paramMap, 0,0, request);
 		}
 		modelMap.addAttribute("announces", newlist);
 		modelMap.addAttribute("announceall", annAllList);
+		modelMap.addAttribute("total", total);
 		return "announce/moregg";
 	}
 	
