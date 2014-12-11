@@ -655,7 +655,7 @@ public class PhoneController {
 			obj.put("data",retnLst);
 		}catch (Exception e) {
 			obj.put("success", true);
-			obj.put("data","查询用户消息信息失败！");
+			obj.put("data","查询系统信息失败！");
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
