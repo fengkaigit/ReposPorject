@@ -100,11 +100,27 @@ body {
 	OVERFLOW: hidden
 }
 </style>
+<script>
+var gloabObj = {page:<c:out value="${page}"/>,rows:<c:out value="${rows}"/>,total:<c:out value="${total}"/>};
+$(document).ready(function(){
+	   $("#pageNav").pagination({
+	        items: gloabObj.total,
+	        itemsOnPage:gloabObj.rows,
+	        currentPage:gloabObj.page,
+	        cssStyle: 'light-theme',
+			prevText:'上一页',
+			nextText:'下一页',
+	        onPageClick:function(pageNumber, event){
+			    window.location.href = "<%=request.getContextPath() %>/announce/more.do?page="+pageNumber+"&rows="+gloabObj.rows;
+			}
+	  });
+});
+</script>
 </head>
 <body>
-	<c:if test="${announce.announcementGroup==0}"><%@include
+	<c:if test="${param.group==0}"><%@include
 			file="/pages/template/jsp/common/agentheader.jsp"%></c:if>
-	<c:if test="${announce.announcementGroup==1}"><%@include
+	<c:if test="${param.group==1}"><%@include
 			file="/pages/template/jsp/common/header.jsp"%></c:if>
 	<div class="jf_main clearfix">
 		<!--左侧菜单导入-->
@@ -128,6 +144,13 @@ body {
 												<td height="33" class="line3" id="aboutUs" style="padding-top:4px;"><table
 														width="200" border="0" cellspacing="0" cellpadding="0">
 														<tbody>
+														
+														     <tr>
+																<td width="24" height="25" align="center" class="bg10">&nbsp;</td>
+																<td width="126" align="left"><a
+																	href="<%=request.getContextPath() %>/announce/more.do?group=${param.group}">系统公告</a></td>
+															</tr>
+															<c:if test="${param.group==1}">
 															<tr>
 																<td width="24" height="25" align="center" class="bg10">&nbsp;</td>
 																<td width="126" align="left"><a
@@ -138,6 +161,7 @@ body {
 																<td width="126" align="left"><a
 																	href="<%=request.getContextPath() %>/ej/about.do">关于我们</a></td>
 															</tr>
+															</c:if>
 														</tbody>
 													</table></td>
 											</tr>
@@ -198,8 +222,8 @@ body {
 
 			<div class="tcxx_tt">
 				<span class="tcxx_tt_a"><a
-					href="<%=request.getContextPath() %>/ej/about.do">关于e缴365</a> &gt;
-					<span class="tcxx_tt_b">公告内容</span> </span>
+					href="#">文章分类</a> &gt;
+					<span class="tcxx_tt_b">系统公告</span> </span>
 			</div>
 			<div class="pinl">
 				<h1 class="font20"></h1>
@@ -207,13 +231,16 @@ body {
                     <c:forEach var="item" items="${announceall}" varStatus="status">
 					<div class="list">
 							<div class="listName">
-								<a href="#" title="${item.title}">${item.title}</a>
+								<a href="<%=request.getContextPath() %>/announce/showgg.do?id=${item.id}" title="${item.title}">${item.title}</a>
 								</div>
 							<div class="desktopTime">
-								2014-07-01
+								<fmt:formatDate value="${item.createTime}"
+													pattern="yyyy-MM-dd" />
 							</div>
 				   </div>   
                    </c:forEach>
+                    <div id="pageNav" style="margin-right:55px;"></div>
+                    <div class="clear"></div>
 				</div>
 
 			</div>

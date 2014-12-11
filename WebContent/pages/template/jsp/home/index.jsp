@@ -43,7 +43,7 @@ function getgg(id){
 	window.location.href = "<%=request.getContextPath() %>/announce/showgg.do?id="+id;
 }
 function more(){
-	window.location.href = "<%=request.getContextPath() %>/announce/moregg.do";
+	window.location.href = "<%=request.getContextPath() %>/announce/more.do?group=1";
 }
 
 </script> 
@@ -134,7 +134,7 @@ function more(){
             <div class="bulletin">
                    <div class="title-items">
                     <h2>公告栏</h2>
-                    <a class="more" href="javascript:void(0)">更多&gt;</a></div>
+                    <a class="more" href="javascript:more()">更多&gt;</a></div>
                 <ul id="ggul">  
           
                     

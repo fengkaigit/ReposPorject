@@ -110,6 +110,7 @@ body {
 		<!--左侧菜单导入-->
 		<!--关于我们 左侧菜单-->
 		<div class="jf_lefts">
+		
 			<div class="jfztc_nav">
 				<div class="left_tt">
 					<a href="#"><span
@@ -128,6 +129,12 @@ body {
 												<td height="33" class="line3" id="aboutUs" style="padding-top:4px;"><table
 														width="200" border="0" cellspacing="0" cellpadding="0">
 														<tbody>
+														    <tr>
+																<td width="24" height="25" align="center" class="bg10">&nbsp;</td>
+																<td width="126" align="left"><a
+																	href="<%=request.getContextPath() %>/announce/more.do?group=${announce.announcementGroup}">系统公告</a></td>
+															</tr>
+															<c:if test="${announce.announcementGroup==1}">
 															<tr>
 																<td width="24" height="25" align="center" class="bg10">&nbsp;</td>
 																<td width="126" align="left"><a
@@ -138,6 +145,7 @@ body {
 																<td width="126" align="left"><a
 																	href="<%=request.getContextPath() %>/ej/about.do">关于我们</a></td>
 															</tr>
+					                                        </c:if>
 														</tbody>
 													</table></td>
 											</tr>
@@ -151,6 +159,7 @@ body {
                 	
 
 			</div>
+		
 			<div class="jfztc_nav" style="border-top:0px;border-right:1px solid #ddd;border-left:1px solid #ddd;border-bottom:1px solid #ddd">
 				<div class="left_tt">
 					<a href="#"><span
@@ -198,7 +207,7 @@ body {
 
 			<div class="tcxx_tt">
 				<span class="tcxx_tt_a"><a
-					href="<%=request.getContextPath() %>/ej/about.do">关于e缴365</a> &gt;
+					href="#">最新文章</a> &gt;
 					<span class="tcxx_tt_b">公告内容</span> </span>
 			</div>
 			<div class="pinl">
