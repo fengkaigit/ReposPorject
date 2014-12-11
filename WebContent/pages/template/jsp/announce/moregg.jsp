@@ -204,41 +204,16 @@ body {
 			<div class="pinl">
 				<h1 class="font20"></h1>
 				<div>
-
-					<table width="680" border="0" cellspacing="0" cellpadding="0">
-						<tbody>
-							<tr>
-								<td width="24" height="22" align="center"></td>
-								<td><div
-										style="MARGIN-BOTTOM: 10px; HEIGHT: auto; width: 100%; text-align: center;"
-										id=subject_tpc class=read_h2>${announce.title}</div></td>
-
-							</tr>
-							<tr>
-								<td></td>
-								<td class="font12">
-									<div class=readContent>
-										<!--content_read-->
-										<div class=tpc_content>
-											<div id=mag_tpc class="operTips tac f12 mb10 s6">
-												— 发布时间&nbsp;&nbsp;(
-												<fmt:formatDate value="${announce.createTime}"
-													pattern="yyyy-MM-dd" />
-												) —
-											</div>
-											<div id=p_tpc class=c></div>
-											<div style="WIDTH: 100%; WORD-WRAP: break-word; OVERFLOW: hidden; WORD-BREAK: break-all" id="read_tpc" class="f14 mb10">
-												<c:out value="${announce.content}" escapeXml="false" />
-											</div>
-										</div>
-										<!--content_read-->
-									</div>
-								</td>
-							</tr>
-
-						</tbody>
-					</table>
-
+                    <c:forEach var="item" items="${announceall}" varStatus="status">
+					<div class="list">
+							<div class="listName">
+								<a href="#" title="${item.title}">${item.title}</a>
+								</div>
+							<div class="desktopTime">
+								2014-07-01
+							</div>
+				   </div>   
+                   </c:forEach>
 				</div>
 
 			</div>

@@ -42,6 +42,10 @@ jQuery(document).ready(
 function getgg(id){
 	window.location.href = "<%=request.getContextPath() %>/announce/showgg.do?id="+id;
 }
+function more(){
+	window.location.href = "<%=request.getContextPath() %>/announce/moregg.do";
+}
+
 </script> 
 </head>
 <body>
