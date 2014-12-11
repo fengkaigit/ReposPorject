@@ -219,6 +219,17 @@ public class DateUtil {
 		return cal.getTime();
 
 	}
+	
+	public static Date getAfterDay(Date date, int seed) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(cal.DAY_OF_MONTH, seed);
+		// System.out.println(cal.getTime());
+		// String dateStr = FormatDateTime.date2String(cal.getTime(),
+		// "yyyy-MM-dd");
+		return cal.getTime();
+
+	}
 
 	public static Date getAfterMonth(Date date, int seed) {
 		Calendar cal = Calendar.getInstance();

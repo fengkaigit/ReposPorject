@@ -1,6 +1,7 @@
 package com.ey.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.ey.dao.AnnounceDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.SysAnnouncement;
+import com.ey.util.DateUtil;
 import com.ey.util.StringUtil;
 
 
@@ -33,6 +35,7 @@ public class AnnounceDAOImpl extends BaseDAOImpl implements AnnounceDAO {
 			Integer group = (Integer)Qparam.get("group");
 			String areaId = (String)Qparam.get("areaId");
 			Integer status = (Integer)Qparam.get("status");
+			Date createtime = (Date)Qparam.get("createtime");
 			Boolean home = (Boolean)Qparam.get("home");
 			if(!StringUtil.isEmptyString(title)){
 				query.append(" and title like ?");
@@ -53,6 +56,10 @@ public class AnnounceDAOImpl extends BaseDAOImpl implements AnnounceDAO {
 			if(!StringUtil.isEmptyString(areaId)){
 				query.append(" and areaId = ?");
 				paramList.add(areaId);
+			}
+			if(createtime!=null){
+				query.append(" and createTime >= ?");
+				paramList.add(DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss",DateUtil.getDate(createtime)+" 00:00:00"));
 			}
 			if(home!=null&&home){
 				String hpareaid = (String)Qparam.get("homeparea");
