@@ -158,6 +158,7 @@ public class AnnounceController extends BaseController {
 			annlist = getAgentGgList(paramMap, 0, 0, request);
 		modelMap.addAttribute("announce", sysAnnounce);
 		modelMap.addAttribute("announces", annlist);
+		modelMap.addAttribute("newSize", annlist.size());
 		return SHOW_PAGE;
 	}
 	

@@ -368,4 +368,11 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 		profitDao.save(relation);
 	}
 
+
+	@Override
+	public Long getNextId() throws RuntimeException {
+		// TODO Auto-generated method stub
+		return  DbidGenerator.getDbidGenerator().getNextId();
+	}
+
 }

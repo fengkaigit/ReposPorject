@@ -51,7 +51,7 @@ public class AutoDivideJob implements Job{
 	private Long calculateServiceBill(ProfitCalculateService calculateService) throws RuntimeException, IllegalAccessException, InvocationTargetException{
 		List<PaymentBill> billList=null;
 		//生成劳务费划款单单号
-		Long serviceBillId = DbidGenerator.getDbidGenerator().getNextId();
+		Long serviceBillId = calculateService.getNextId();
 		//修改缴费单明细状态（锁定缴费状态为办理成功，且未生成过劳务费划款单的缴费记录）
 		Integer intStatus= calculateService.changePaymentBillStatus();
 		if (intStatus>0){
@@ -69,7 +69,7 @@ public class AutoDivideJob implements Job{
 			//保存劳务费划款单与缴费单关系表
 			calculateService.saveServicePaymentRelation(serviceBillId,billList);
 			//生成劳务费账户转账单单号
-			Long transferBillId = DbidGenerator.getDbidGenerator().getNextId();
+			Long transferBillId = calculateService.getNextId();
 			
 			//获取系统大账户ID 获取转出账户Id
 			Long systemAccountId = calculateService.getSystemAccountId(0);
@@ -108,7 +108,7 @@ public class AutoDivideJob implements Job{
 		if (profitAccountId==null)
 			throw new RuntimeException("未设置系统手续账户");
 		//生成手续费划款单单号
-		Long poundageBillId = DbidGenerator.getDbidGenerator().getNextId();
+		Long poundageBillId = calculateService.getNextId();
 		//查询符合划款的所有缴费单明细对应转账记录的手续费合计金额
 		Double poundage=calculateService.findTransferRecordsPoundage(serviceBillId);
 		//生成系统手续费划款单
@@ -116,7 +116,7 @@ public class AutoDivideJob implements Job{
 		//保存手续费账户划款单与劳务费划款单关系表
 		calculateService.saveServicePoundageRelation(serviceBillId,poundageBillId);
 		//生成手续费账户转账单单号
-		Long transferBillId = DbidGenerator.getDbidGenerator().getNextId();
+		Long transferBillId = calculateService.getNextId();
 		//生成手续费账户转账单
 		calculateService.createTransferBill(transferBillId,poundage,systemAccountId,profitAccountId,10);
 		//保存手续费账户转账关系表
@@ -137,7 +137,7 @@ public class AutoDivideJob implements Job{
 			throw new RuntimeException("未设置系统收益账户");
 		
 		//生成收益划款单单号
-		Long profitBillId = DbidGenerator.getDbidGenerator().getNextId();
+		Long profitBillId = calculateService.getNextId();
 		//查询符合划款的所有缴费单明细对应转账记录的手续费合计金额
 		Double poundage=calculateService.findTransferRecordsPoundage(serviceBillId);
 		//查询劳务费划款单的金额
@@ -149,7 +149,7 @@ public class AutoDivideJob implements Job{
 		//保存收益账户划款单与劳务费划款单关系表
 		calculateService.saveServiceProfitRelation(serviceBillId,profitBillId);
 		//生成收益账户转账单单号
-		Long transferBillId = DbidGenerator.getDbidGenerator().getNextId();
+		Long transferBillId = calculateService.getNextId();
 		//生成收益账户转账单
 		calculateService.createTransferBill(transferBillId,profitMoney,systemAccountId,profitAccountId,6);
 		//保存收益账户转账关系表
@@ -214,7 +214,7 @@ public class AutoDivideJob implements Job{
 		if (profitAccountId==null)
 			throw new RuntimeException("未设置系统最终盈利账户");
 		//生成系统最终盈利账户划款单单号
-		Long incomeBillId = DbidGenerator.getDbidGenerator().getNextId();
+		Long incomeBillId =calculateService.getNextId();
 		//获取系统收益金额
 		Double profitMoney = calculateService.getSystemProfitMoney(serviceBillId);
 		//获取系统结算金额
@@ -225,7 +225,7 @@ public class AutoDivideJob implements Job{
 		calculateService.saveIncomeBill(incomeBillId, incomeMoney);
 		//保存最终盈利账户划款单与劳务费划款单关系
 		calculateService.saveServiceIncomeRelation(serviceBillId, incomeBillId);
-		Long transferBillId = DbidGenerator.getDbidGenerator().getNextId();
+		Long transferBillId = calculateService.getNextId();
 		//生成最终盈利账户转账记录
 		calculateService.createTransferBill(transferBillId,incomeMoney,systemAccountId,profitAccountId,8);
 		//保存转账关系

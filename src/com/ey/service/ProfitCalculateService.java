@@ -70,5 +70,7 @@ public interface ProfitCalculateService {
 	public void saveServiceIncomeRelation(Long serviceBillId, Long incomeBillId) throws RuntimeException;
 	
 	public void saveIncomeTransferRecords(Long incomeBillId, Long transferAccountId) throws RuntimeException;
+	
+	Long getNextId() throws RuntimeException;
 
 }
