@@ -36,6 +36,7 @@ import com.ey.bo.PaymentSettingStandardBo;
 import com.ey.bo.PaymentSettingTrafficBo;
 import com.ey.bo.ResultBo;
 import com.ey.bo.StandardBo;
+import com.ey.bo.SysAnnounceBo;
 import com.ey.consts.SystemConst;
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.AgentInfo;
@@ -45,6 +46,7 @@ import com.ey.dao.entity.ChargeEnterprise;
 import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.NoticeInfo;
 import com.ey.dao.entity.PaymentSetting;
+import com.ey.dao.entity.SysAnnouncement;
 import com.ey.dao.entity.UserBase;
 import com.ey.forms.JfForm;
 import com.ey.service.AgentService;
@@ -617,9 +619,14 @@ public class PhoneController {
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
-			
+			List<NoticeInfo> noticeLst = userService.findNoticeByUserId(currentUser.getId());
+			List<NoticeInfoBo> retnLst = new ArrayList();
+			for (NoticeInfo notice:noticeLst){
+				NoticeInfoBo bo = new NoticeInfoBo(notice.getId(),notice.getServerContent().toString(),notice.getCreateTime(),notice.getNoticeType());
+				retnLst.add(bo);
+			}
 			obj.put("success", true);
-			obj.put("data","");
+			obj.put("data",retnLst);
 		}catch (Exception e) {
 			obj.put("success", true);
 			obj.put("data","查询用户消息信息失败");
@@ -645,10 +652,10 @@ public class PhoneController {
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
-			List<NoticeInfo> noticeLst = userService.findNoticeByUserId(currentUser.getId());
-			List<NoticeInfoBo> retnLst = new ArrayList();
-			for (NoticeInfo notice:noticeLst){
-				NoticeInfoBo bo = new NoticeInfoBo(notice.getId(),notice.getServerContent().toString(),notice.getCreateTime(),notice.getNoticeType());
+			List<SysAnnouncement> noticeLst = userService.findSystemAnnounce(currentUser.getAreaId());
+			List<SysAnnounceBo> retnLst = new ArrayList();
+			for (SysAnnouncement notice:noticeLst){
+				SysAnnounceBo bo = new SysAnnounceBo(notice.getId(),notice.getCreateTime(),notice.getTitle(),notice.getContent());
 				retnLst.add(bo);
 			}
 			obj.put("success", true);

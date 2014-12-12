@@ -3,6 +3,7 @@ package com.ey.service;
 import java.util.List;
 
 import com.ey.dao.entity.NoticeInfo;
+import com.ey.dao.entity.SysAnnouncement;
 import com.ey.dao.entity.UserBase;
 import com.ey.entity.User;
 
@@ -21,5 +22,6 @@ public interface UserService {
 	public UserBase findUserByLoginCode(String loginCode,String password) throws RuntimeException;
 	
 	public List<NoticeInfo> findNoticeByUserId(Long userId) throws RuntimeException;
-	  
+	
+	public List<SysAnnouncement> findSystemAnnounce(String areaId) throws RuntimeException;
 }

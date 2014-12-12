@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ey.dao.UserDAO;
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.NoticeInfo;
+import com.ey.dao.entity.SysAnnouncement;
 import com.ey.dao.entity.UserBase;
 import com.ey.entity.User;
 import com.ey.entity.UserOrgan;
@@ -63,5 +64,12 @@ public class UserServiceImpl implements UserService {
 	public List<NoticeInfo> findNoticeByUserId(Long userId) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return userDAO.findNoticeByUserId(userId);
+	}
+
+	@Override
+	public List<SysAnnouncement> findSystemAnnounce(String areaId)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return userDAO.findSystemAnnounce(areaId);
 	}
 }

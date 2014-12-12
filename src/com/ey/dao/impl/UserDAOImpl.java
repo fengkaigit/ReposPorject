@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.ey.dao.UserDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.NoticeInfo;
+import com.ey.dao.entity.SysAnnouncement;
 import com.ey.dao.entity.UserBase;
 import com.ey.entity.User;
 
@@ -79,6 +80,13 @@ public class UserDAOImpl extends BaseDAOImpl implements UserDAO {
 			throws RuntimeException {
 		String hql = "from NoticeInfo where userId=? and sendStatus=0";
 		return this.find(hql, new Object[]{userId});
+	}
+
+	@Override
+	public java.util.List<SysAnnouncement> findSystemAnnounce(String areaId)
+			throws RuntimeException {
+		String hql = "from SysAnnouncement where status=0 and announcementGroup=1 and (announcementScope=0 or (announcementScope=1 and areaId=?))";
+		return this.find(hql, new Object[]{areaId});
 	}
 
 }
