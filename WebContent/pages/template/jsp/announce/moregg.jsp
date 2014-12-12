@@ -10,99 +10,55 @@
 <meta content="" name="description">
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath() %>/css/global.css">
+	href="<%=request.getContextPath()%>/css/global.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath() %>/css/style.css">
+	href="<%=request.getContextPath()%>/css/style.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath() %>/css/common.css">
+	href="<%=request.getContextPath()%>/css/common.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath() %>/css/aboutUs.css">
+	href="<%=request.getContextPath()%>/css/aboutUs.css">
 <style>
-html {
-	OVERFLOW-Y: scroll;
-	BACKGROUND-COLOR: #ffffff
+* {
+	font-family: '微软雅黑', 'weiruanyahei';
 }
-
-body {
-	LINE-HEIGHT: 1.5;
-	MIN-HEIGHT: 500px;
-	FONT-FAMILY: Arial;
-	BACKGROUND: #ffffff;
-	COLOR: #333;
-	FONT-SIZE: 12px
+.list {
+	float: left;
+	display: inline;
+	margin: 0 10px;
+	width: 100%;
+	height: 28px;
+	border-bottom: 1px dashed #ddd;
 }
-
-.read_h2 {
-	PADDING-BOTTOM: 0px;
-	LINE-HEIGHT: 24px;
-	MARGIN-TOP: 15px;
-	PADDING-LEFT: 15px;
-	PADDING-RIGHT: 15px;
-	FONT-FAMILY: simhei;
-	BACKGROUND: url(images/alipay/read/tph1.png) #53ba52 no-repeat 0px 0px;
-	FLOAT: left;
-	HEIGHT: 24px;
-	COLOR: #fff;
-	FONT-SIZE: 20px;
-	FONT-WEIGHT: 100;
-	PADDING-TOP: 0px
+.listName {
+	float: left;
+	display: inline;
+	padding: 0 10px;
+	width: 580px;
+	height: 28px;
+	line-height: 28px;
+	overflow: hidden;
+	color: #555555;
+	text-align: left;
+	white-space: nowrap;
 }
-
-.readContent {
-	WIDTH: 100%;
-	FLOAT: left;
-	OVERFLOW: hidden
+.desktopTime {
+	width: 70px;
+	height: 28px;
+	line-height: 28px;
+	color: #999999;
+	float: right;
+	display: inline;
+	margin: 0 2px;
+	text-align: right;
 }
-
-.readContent A {
-	COLOR: #014c90
-}
-
-.tpc_content {
-	PADDING-BOTTOM: 20px;
-	LINE-HEIGHT: 1.8em;
-	MARGIN: 0px;
-	PADDING-LEFT: 2px;
-	PADDING-RIGHT: 2px;
-	FONT-FAMILY: Arial;
-	PADDING-TOP: 0px
-}
-
-.f14 {
-	FONT-SIZE: 14px
-}
-
-.f12 {
-	FONT-SIZE: 12px
-}
-
-.mb10 {
-	MARGIN-BOTTOM: 10px
-}
-
-.operTips {
-	LINE-HEIGHT: 2;
-}
-
-.s6 {
-	COLOR: #666
-}
-
-.tac {
-	TEXT-ALIGN: center
-}
-
-.c {
-	WIDTH: 0px;
-	FONT: 0px/0px Arial;
-	HEIGHT: 0px;
-	CLEAR: both;
-	OVERFLOW: hidden
+.listName a:hover{
+	color: red!important;
 }
 </style>
 <script>
 var gloabObj = {page:<c:out value="${page}"/>,rows:<c:out value="${rows}"/>,total:<c:out value="${total}"/>};
 $(document).ready(function(){
+	if(gloabObj.total!=0){
 	   $("#pageNav").pagination({
 	        items: gloabObj.total,
 	        itemsOnPage:gloabObj.rows,
@@ -111,9 +67,10 @@ $(document).ready(function(){
 			prevText:'上一页',
 			nextText:'下一页',
 	        onPageClick:function(pageNumber, event){
-			    window.location.href = "<%=request.getContextPath() %>/announce/more.do?page="+pageNumber+"&rows="+gloabObj.rows;
+			    window.location.href = "<%=request.getContextPath()%>/announce/more.do?page="+pageNumber+"&rows="+gloabObj.rows;
 			}
 	  });
+	}
 });
 </script>
 </head>
@@ -154,12 +111,12 @@ $(document).ready(function(){
 															<tr>
 																<td width="24" height="25" align="center" class="bg10">&nbsp;</td>
 																<td width="126" align="left"><a
-																	href="<%=request.getContextPath() %>/ej/ieda.do">意见反馈</a></td>
+																	href="<%=request.getContextPath()%>/ej/ieda.do">意见反馈</a></td>
 															</tr>
 															<tr>
 																<td width="24" height="25" align="center" class="bg10">&nbsp;</td>
 																<td width="126" align="left"><a
-																	href="<%=request.getContextPath() %>/ej/about.do">关于我们</a></td>
+																	href="<%=request.getContextPath()%>/ej/about.do">关于我们</a></td>
 															</tr>
 															</c:if>
 														</tbody>
@@ -181,11 +138,12 @@ $(document).ready(function(){
 						style="line-height: 35px;">最新文章</span></a>
 				</div>
 				<div class="left_lists">
+				  
 					<table width="193" border="0" bgcolor="#D1E6ED" align="center"
 						cellspacing="0" cellpadding="0">
 						<tbody>
 							<tr>
-								<td valign="top" height="200" bgcolor="#FFFFFF"><table
+								<td valign="top" height="200" bgcolor="#FFFFFF"> <c:if test="${newSize>0}"><table
 										width="200" border="0" align="center" cellspacing="0"
 										cellpadding="0">
 										<tbody>
@@ -206,10 +164,11 @@ $(document).ready(function(){
 											</tr>
 
 										</tbody>
-									</table></td>
+									</table></c:if></td>
 							</tr>
 						</tbody>
 					</table>
+					
 				</div>
                 	
 
@@ -227,22 +186,28 @@ $(document).ready(function(){
 			</div>
 			<div class="pinl">
 				<h1 class="font20"></h1>
-				<div>
-                    <c:forEach var="item" items="${announceall}" varStatus="status">
-					<div class="list">
-							<div class="listName">
-								<a href="<%=request.getContextPath() %>/announce/showgg.do?id=${item.id}" title="${item.title}">${item.title}</a>
-								</div>
-							<div class="desktopTime">
-								<fmt:formatDate value="${item.createTime}"
-													pattern="yyyy-MM-dd" />
-							</div>
-				   </div>   
-                   </c:forEach>
-                    <div id="pageNav" style="margin-right:55px;"></div>
-                    <div class="clear"></div>
+				<div style="width:705px;">
+					
+							
+								<c:forEach var="item" items="${announceall}" varStatus="status">
+									<div class="list">
+										<div class="listName">
+											<a
+												href="<%=request.getContextPath() %>/announce/showgg.do?id=${item.id}"
+												title="${item.title}">${item.title}</a>
+										</div>
+										<div class="desktopTime">
+											<fmt:formatDate value="${item.createTime}"
+												pattern="yyyy-MM-dd" />
+										</div>
+									</div>
+								</c:forEach>
+							
+				
+					
 				</div>
-
+                <div id="pageNav"></div>
+                <div class="clear"></div>
 			</div>
 
 		</div>

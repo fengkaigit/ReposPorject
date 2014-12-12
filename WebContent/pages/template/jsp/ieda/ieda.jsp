@@ -43,6 +43,7 @@ function postHandle(){
 }
 var gloabObj = {page:<c:out value="${page}"/>,rows:<c:out value="${rows}"/>,total:<c:out value="${total}"/>};
 $(document).ready(function(){
+	if(gloabObj.total!=0){
 	   $("#pageNav").pagination({
 	        items: gloabObj.total,
 	        itemsOnPage:gloabObj.rows,
@@ -54,6 +55,7 @@ $(document).ready(function(){
 			    window.location.href = "<%=request.getContextPath() %>/ej/ieda.do?page="+pageNumber+"&rows="+gloabObj.rows;
 			}
 	  });
+    }
 });
 </script>
 </head>

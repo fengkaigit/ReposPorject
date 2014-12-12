@@ -18,6 +18,9 @@
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath() %>/css/aboutUs.css">
 <style>
+* {
+	font-family: '微软雅黑', 'weiruanyahei';
+}
 html {
 	OVERFLOW-Y: scroll;
 	BACKGROUND-COLOR: #ffffff

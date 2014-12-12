@@ -21,6 +21,7 @@ function delAgent(id){
 	}
 }
 $(document).ready(function(){
+	if(gloabObj.total!=0){
 	   $("#pageNav").pagination({
 	        items: gloabObj.total,
 	        itemsOnPage:gloabObj.rows,
@@ -32,6 +33,7 @@ $(document).ready(function(){
 			    window.location.href = "<%=request.getContextPath() %>/agent/list.do?page="+pageNumber+"&rows="+gloabObj.rows;
 			}
 	  });
+	}
 });
 </script>
 </head>

@@ -10,12 +10,14 @@
 <meta content="" name="description">
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <script>
+var gloabObj = {page:<c:out value="${page}"/>,rows:<c:out value="${rows}"/>,total:<c:out value="${total}"/>};
 function delIeda(id){
 	if(confirm("确实要删除该信息吗?")){
-	   
+		if(gloabObj.total%gloabObj.rows==1&&gloabObj.page!=1)
+			   loabObj.page = loabObj.page-1;
 	   jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/ej/del.do",{ids:id},"get","json",function(data){
 		    alert(data.message);
-		    window.location.href = "<%=request.getContextPath() %>/ej/list.do";
+		    window.location.href = "<%=request.getContextPath() %>/ej/list.do?page="+loabObj.page+"&rows="+gloabObj.rows;
 	    });
 	}
 }
@@ -46,6 +48,21 @@ function postHandle(){
 		   
 	  });
 }
+$(document).ready(function(){
+	if(gloabObj.total!=0){
+	   $("#pageNav").pagination({
+	        items: gloabObj.total,
+	        itemsOnPage:gloabObj.rows,
+	        currentPage:gloabObj.page,
+	        cssStyle: 'light-theme',
+			prevText:'上一页',
+			nextText:'下一页',
+	        onPageClick:function(pageNumber, event){
+			    window.location.href = "<%=request.getContextPath() %>/ej/list.do?page="+pageNumber+"&rows="+gloabObj.rows;
+			}
+	  });
+	}
+});
 </script>
 </head>
 <body>
@@ -104,7 +121,8 @@ function postHandle(){
 </table>
 
     </div>
-    
+  <div id="pageNav"></div>
+  <div class="clear"></div> 
 </div>
 </div>
 <form id="replyForm" action="<%=request.getContextPath() %>/ej/reply.do" method="post">
