@@ -53,15 +53,16 @@ public class AboutController extends BaseController {
 			HttpServletResponse response) {		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("ieda/ieda");
+		Long total = 0l;
 		UserBase user = (UserBase)request.getSession().getAttribute(SystemConst.USER);
         if(user!=null){
         	Map<String,Object> queryMap = new HashMap<String,Object>();
     		queryMap.put("areaId", user.getAreaId());
     		List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, page, rows);
-    		Long total = sysManService.findTotalFeedBack(queryMap);
+    	    total = sysManService.findTotalFeedBack(queryMap);
     		mav.addObject("feedbacks", feedlist);
-    		mav.addObject("total", total);
         }
+        mav.addObject("total", total);
 		return mav;
 	}
 	
@@ -84,10 +85,12 @@ public class AboutController extends BaseController {
 	}
 	
 	@RequestMapping(value="/list")
-	public ModelAndView list(HttpServletRequest request,HttpServletResponse response){
+	public ModelAndView list(@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();
-		List<Feedback> feedlist = sysManService.findFeedBacks(null, 0, 0);
+		List<Feedback> feedlist = sysManService.findFeedBacks(null, page, rows);
+	    Long total = sysManService.findTotalFeedBack(null);
 		mav.addObject("feedbacks", feedlist);
+		mav.addObject("total", total);
 		mav.setViewName(LIST_PAGE);
 		return mav;
 	}

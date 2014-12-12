@@ -183,6 +183,7 @@ public class AnnounceController extends BaseController {
 		modelMap.addAttribute("announces", newlist);
 		modelMap.addAttribute("announceall", annAllList);
 		modelMap.addAttribute("total", total);
+		modelMap.addAttribute("newSize", newlist!=null?newlist.size():0);
 		return "announce/moregg";
 	}
 	

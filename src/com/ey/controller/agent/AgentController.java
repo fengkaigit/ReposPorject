@@ -330,12 +330,12 @@ public class AgentController extends BaseController {
 
 	}
 	@RequestMapping(value = "/monthBillChart")
-	public ModelAndView monthBillChart(@ModelAttribute("user") AgentBo agent,String year,HttpServletRequest request,
+	public ModelAndView monthBillChart(String year,HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
         Long complateNum = 0L;
         Long noComplateNum = 0L;
 		String currentYearMonth = DateUtil.getYearMonthNowString(new Date());
-        //AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+        AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
 		List billlist = agentService.findBillNumByMonth(agent.getId(), currentYearMonth);
 		for(Object o:billlist){
 				Integer status = (Integer)o;
