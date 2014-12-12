@@ -59,7 +59,7 @@ var url="";
 			<ul class="sf-menu" id="nav" >
 			<li class="current"><a href="<%=request.getContextPath() %>/main.do">我的e缴</a>				<ul>
 					<li class="current"><a href="<%=request.getContextPath() %>/setting/list.do">缴费账号设置</a></li>
-					<li><a href="jiaofei_jftx.html">账单代扣\提醒设置</a></li>
+					<!--  <li><a href="jiaofei_jftx.html">账单代扣\提醒设置</a></li>-->
 					<li><a href="<%=request.getContextPath() %>/jf/query.do">记录查询</a></li>
 			  </ul></li>
 			
