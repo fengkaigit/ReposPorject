@@ -61,7 +61,6 @@ var url="";
 					<li class="current"><a href="<%=request.getContextPath() %>/setting/list.do">缴费账号设置</a></li>
 					<li><a href="jiaofei_jftx.html">账单代扣\提醒设置</a></li>
 					<li><a href="<%=request.getContextPath() %>/jf/query.do">记录查询</a></li>
-					<li><a href="jiaofei_tjfx.html">代理商 </a></li>
 			  </ul></li>
 			
 			  <li><span><a href="<%=request.getContextPath() %>/ej/security.do">安全保障</a></span></li>
