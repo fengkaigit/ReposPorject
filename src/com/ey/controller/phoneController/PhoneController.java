@@ -63,6 +63,7 @@ import com.ey.service.LoginService;
 import com.ey.service.RQfService;
 import com.ey.service.SettingService;
 import com.ey.service.SfService;
+import com.ey.service.StaticService;
 import com.ey.service.UserService;
 import com.ey.service.WYfService;
 import com.ey.service.YXfService;
@@ -124,6 +125,9 @@ public class PhoneController {
 	
 	@Autowired
 	private FeeService feeService;
+	
+	@Autowired
+	private StaticService staticService;
 	
 	@Autowired
 	private UserService userService;
@@ -382,7 +386,8 @@ public class PhoneController {
 	public ModelAndView phoneLogin(String userId,String passwd, HttpServletRequest request,
 			HttpServletResponse response) throws JSONException, IOException{
 		JSONObject obj = new JSONObject();
-		UserBase currentUser = loginService.findUserByLoginCode(userId, MD5.getMD5Str(passwd));
+		/*UserBase currentUser = loginService.findUserByLoginCode(userId, MD5.getMD5Str(passwd));*/
+		UserBase currentUser = loginService.findUserByLoginCode(userId, passwd);
 		try{
 			if (StringUtil.isEmptyString(userId)) {
 				obj.put("success", false);
@@ -434,8 +439,9 @@ public class PhoneController {
 				user.setRealName(user.getAccountNumber());
 				user.setMobilePhone(user.getAccountNumber());
 
-				user.setPasswd(MD5
-						.getMD5Str(passwd));
+				/*user.setPasswd(MD5
+						.getMD5Str(passwd));*/
+				user.setPasswd(passwd);
 				UserBase currentUser = loginService.findUserByLoginCode(user.getAccountNumber());
 				if(currentUser!=null){
 					obj.put("success", false);
@@ -679,13 +685,17 @@ public class PhoneController {
 	}
 	
 	@RequestMapping(value="/getHisPayment")
-	public ModelAndView getHisPayment(HttpServletRequest request,
+	public ModelAndView getHisPayment(String beginDate, String endDate, Integer showCount, Integer page, String payType, HttpServletRequest request,
 			HttpServletResponse response) throws JSONException, IOException{
 		JSONObject obj = new JSONObject();
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
-			
+			if (payType.equals("all")){
+				
+			}else{
+				
+			}
 			obj.put("success", true);
 			obj.put("data","");
 		}catch (Exception e) {
@@ -705,6 +715,8 @@ public class PhoneController {
 		out.close();
 		return null;
 	}
+	
+	
 	
 }
 
