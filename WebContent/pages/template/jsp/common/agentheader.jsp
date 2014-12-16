@@ -44,7 +44,9 @@ $(document).ready(function() {
 				</li>
 			  <li><span><a href="###">我的工作</a></span>
 			  <ul>
-					<li class="current"><a href="<%=request.getContextPath() %>/agent/passwd.do">待办任务</a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/agent/worklist.do?status=0">待办任务</a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/agent/worklist.do?status=1">已办任务</a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/agent/statuslist.do">修改办理状态</a></li>
 					
 			  </ul></li>
 			  <li><span><a href="###">个人设置</a></span>

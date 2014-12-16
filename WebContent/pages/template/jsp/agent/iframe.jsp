@@ -73,7 +73,7 @@ $(document).ready(function(){
 		   }
 	 });
 	//获取待办
-	 jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/agent/self.do",{page:1,rows:10},"get","json",function(data){
+	 jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/agent/self.do",{page:1,rows:10,status:0},"get","json",function(data){
 		   if(data.length>0){
 			   var dbHtml = [];
 			   var dblist = document.getElementById("dbList");
@@ -82,7 +82,7 @@ $(document).ready(function(){
 				   var title = obj.payTypeName+'订单'+obj.billNum+'笔，请各代理商落实';
 				   dbHtml.push('<div class="list">');
 				   dbHtml.push('<div class="listName">');
-				   dbHtml.push('<a href="#" title="'+title+'"><span class="error warn">'+title+'</span></a>');
+				   dbHtml.push('<a href="#" title="'+title+'" onclick="showbatch('+obj.id+')"><span class="error warn">'+title+'</span></a>');
 				   dbHtml.push('</div>');
 				   dbHtml.push('<div class="desktopTime">'+obj.createTime+'</div>');
 				   dbHtml.push('</div>');
@@ -126,6 +126,9 @@ $(document).ready(function(){
 });
 function getgg(id){
 	window.parent.location.href = "<%=request.getContextPath() %>/announce/showgg.do?id="+id;
+}
+function showbatch(id){
+	window.parent.location.href = "<%=request.getContextPath() %>/agent/billlist.do?id="+id;
 }
 </script>
 </head>

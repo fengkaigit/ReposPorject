@@ -173,7 +173,7 @@ body {
 						cellspacing="0" cellpadding="0">
 						<tbody>
 							<tr>
-								<td valign="top" height="200" bgcolor="#FFFFFF"><table
+								<td valign="top" height="200" bgcolor="#FFFFFF"><c:if test="${newSize>0}"><table
 										width="200" border="0" align="center" cellspacing="0"
 										cellpadding="0">
 										<tbody>
@@ -194,7 +194,7 @@ body {
 											</tr>
 
 										</tbody>
-									</table></td>
+									</table></c:if></td>
 							</tr>
 						</tbody>
 					</table>
