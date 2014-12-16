@@ -162,17 +162,31 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	}
 
 	@Override
-	public List findAgentSelf(Long id,Integer page,Integer rows) throws RuntimeException {
+	public List findAgentSelf(Long id,Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql = "from AgentPaymentBatch where agentId = ? and batchStatus = 0 order by createTime desc,payType";
-		return this.find(hql, new Object[]{id},page,rows);
+		List paramList = new ArrayList();
+		StringBuffer hql = new StringBuffer("from AgentPaymentBatch where agentId = ?");
+		paramList.add(id);
+		createQuerySelfParam(hql,Qparam,paramList);
+		hql.append(" order by createTime desc,payType");
+		return this.find(hql.toString(), paramList,page,rows);
 	}
 
 	@Override
-	public List findBillByBatchId(Long id,Integer page,Integer rows) throws RuntimeException {
+	public List findBillByBatchId(Long id,Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql = "select b from BatchPaymentRelation a,PaymentBill b where a.id.paymentBillId = b.id and a.id.relationId = ? order by b.createTime desc,payType";
-		return this.find(hql, new Object[]{id},page,rows);
+		List paramList = new ArrayList();
+		StringBuffer hql = new StringBuffer("select new com.ey.bo.PaymentBillBo(a.id, a.accountBillId, a.userId,a.remainBalance,");
+		hql.append("a.createTime, a.paidMoney,a.payMoney, a.balance, a.poundage, a.payType,a.entId, a.businessType,");
+		hql.append("a.paymentStatus,a.paymentMode, a.uuid, a.divideStatus, a.areaId, a.areaName, a.agentId,");
+		hql.append("a.agentName,a.orderNumber, a.remarks, a.payAddress,b.enterpriseName,c.realName,d.propChName,e.id.relationId) from PaymentBill a,ChargeEnterprise b,UserBase c,BaseCustomValue d,BatchPaymentRelation e where d.id.customEngName='payment_type' and a.payType=d.id.dataValue and a.entId=b.id and a.userId=c.id and e.id.paymentBillId = a.id");
+		Integer flag = (Integer)Qparam.get("statusFlag");
+		if(flag!=null)
+		   createQueryBillOrParam(hql,Qparam,paramList);
+		else
+		   createQueryBillParam(hql,Qparam,paramList);
+		hql.append(" order by a.createTime desc,a.payType");
+		return this.find(hql.toString(),paramList.toArray(),page,rows);
 	}
 
 	@Override
@@ -198,5 +212,77 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 		}
 		return 0l;
 	}
+	
+	private void createQueryBillParam(StringBuffer query,Map<String, Object> Qparam,List paramList){
+		if(Qparam!=null&&Qparam.size()>0){
+			Long batchId = (Long)Qparam.get("batchId");
+			if(batchId!=null){
+				query.append(" and e.id.relationId = ?");
+				paramList.add(batchId);
+			}
+			Long billId = (Long)Qparam.get("billId");
+			if(billId!=null){
+				query.append(" and e.id.paymentBillId = ?");
+				paramList.add(billId);
+			}
+		}
+	}
+	
+	private void createQueryBillOrParam(StringBuffer query,Map<String, Object> Qparam,List paramList){
+		if(Qparam!=null&&Qparam.size()>0){
+			Long batchId = (Long)Qparam.get("batchId");
+			query.append(" and (");
+			if(batchId!=null){
+				query.append(" e.id.relationId = ?");
+				paramList.add(batchId);
+			}
+			Long billId = (Long)Qparam.get("billId");
+			if(billId!=null){
+				query.append(" or e.id.paymentBillId = ?");
+				paramList.add(billId);
+			}
+			query.append(")");
+		}
+	}
+	
+	private void createQuerySelfParam(StringBuffer query,Map<String, Object> Qparam,List paramList){
+		if(Qparam!=null&&Qparam.size()>0){
+			Integer status = (Integer)Qparam.get("status");
+			if(status!=null){
+				query.append(" and batchStatus = ?");
+				paramList.add(status);
+			}
+		}
+	}
+
+	@Override
+	public Long findBillTotalBatchId(Long id, Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		StringBuffer hql = new StringBuffer("select count(e.id.paymentBillId) from BatchPaymentRelation e where 1=1");
+		createQueryBillParam(hql,Qparam,paramList);
+		List list = this.find(hql.toString(),paramList.toArray());
+		if(list!=null&&list.size()>0){
+			return Long.valueOf(list.get(0)+"");
+		}
+		return 0l;
+	}
+
+	@Override
+	public Long findAgentSelfTotal(Long id, Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		StringBuffer hql = new StringBuffer("select count(id) from AgentPaymentBatch where agentId = ?");
+		paramList.add(id);
+		createQuerySelfParam(hql,Qparam,paramList);
+		List list = this.find(hql.toString(), paramList.toArray());
+		if(list!=null&&list.size()>0){
+			return Long.valueOf(list.get(0)+"");
+		}
+		return 0l;
+	}
+ 
 
 }

@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ey.bo.AgentBo;
 import com.ey.bo.CountReportBo;
+import com.ey.bo.PaymentBillBo;
 import com.ey.bo.QueryBillBO;
 import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
@@ -38,6 +39,7 @@ import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.BankInfo;
+import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.SystemManager;
 import com.ey.exception.BusinessException;
 import com.ey.service.AgentService;
@@ -56,6 +58,10 @@ public class AgentController extends BaseController {
    
 	private static final String LOGIN_PAGE="login/agentlogin";
 	private static final String IFRAME_PAGE="agent/iframe";
+	private static final String BILLLIST_PAGE="agent/billlist";
+	private static final String SELFLIST_PAGE="agent/selflist";
+	private static final String STATUSLIST_PAGE="agent/statuslist";
+	private static final String NOWLIST_PAGE="agent/nowlist";
 	private static final String LIST_PAGE = "agent/list";
 	private static final String REDIRECT = "redirect:/agent/list.do";
 	private static final String ADD_PAGE = "agent/addagent";
@@ -130,6 +136,17 @@ public class AgentController extends BaseController {
 	    List<CountReportBo> reportlist = agentService.findReportByAgentId(agent.getId(), String.valueOf(DateUtil.getYear(new Date())), agent.getAreaId());
         modelMap.addAttribute("reports", reportlist);
   	  return IFRAME_PAGE;
+    }
+	
+	@RequestMapping(value="/billlist")
+    public String billlist(Long id,ModelMap modelMap,@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request,HttpServletResponse response){
+    	Map<String,Object> map = new HashMap<String,Object>();
+    	map.put("batchId", id);
+	    List<PaymentBillBo> billlist = agentService.findBillByBatchId(id,map, page, rows);
+	    Long total = agentService.findBillTotalBatchId(id, map);
+        modelMap.addAttribute("bills", billlist);
+        modelMap.addAttribute("total", total);
+  	  return BILLLIST_PAGE;
     }
 	
 	@RequestMapping(value="/index")
@@ -428,8 +445,46 @@ public class AgentController extends BaseController {
 	public Object doself(Integer page,Integer rows,HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
         AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
-		List selflist = agentService.findAgentSelf(agent.getId(),page,rows);
+    	Map<String,Object> map = new HashMap<String,Object>();
+        map.put("status", 0);
+		List selflist = agentService.findAgentSelf(agent.getId(),map,page,rows);
 		return selflist;
+	   
+	}
+	
+	@RequestMapping(value = "/worklist")
+	public String worklist(Integer status,@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,ModelMap modelMap,HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+        AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+    	Map<String,Object> map = new HashMap<String,Object>();
+        map.put("status",status);
+		List selflist = agentService.findAgentSelf(agent.getId(),map,page,rows);
+		Long total = agentService.findAgentSelfTotal(agent.getId(), map);
+		modelMap.addAttribute("works", selflist);
+		modelMap.addAttribute("total", total);
+		if(status!=null&&status==0)
+		   return SELFLIST_PAGE;
+		if(status!=null&&status==1)
+		   return NOWLIST_PAGE;
+		 return SELFLIST_PAGE;
+	   
+	}
+	
+	@RequestMapping(value = "/statuslist")
+	public String statuslist(Long id,ModelMap modelMap,HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+    	Map<String,Object> map = new HashMap<String,Object>();
+    	List<PaymentBillBo> billlist = null;
+        if(id!=null){
+           map.put("statusFlag", 1);
+           map.put("batchId",id);
+           map.put("billId",id);
+	       billlist = agentService.findBillByBatchId(id,map, 0, 0);
+        }
+		//Long total = agentService.findAgentSelfTotal(agent.getId(), map);
+		modelMap.addAttribute("bills", billlist);
+		//modelMap.addAttribute("total", total);
+		return STATUSLIST_PAGE;
 	   
 	}
 }

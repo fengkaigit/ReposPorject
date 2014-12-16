@@ -36,10 +36,14 @@ public interface AgentDAO extends BaseDAO {
  	 
   	 List findBillByCurrentDay(String currentDay) throws RuntimeException;
   	 
-     List findAgentSelf(Long id,Integer page,Integer rows) throws RuntimeException;
+     List findAgentSelf(Long id,Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
      
-     List findBillByBatchId(Long id,Integer page,Integer rows) throws RuntimeException;
+     Long findAgentSelfTotal(Long id,Map<String,Object> Qparam) throws RuntimeException;
      
+     List findBillByBatchId(Long id,Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+     
+     Long findBillTotalBatchId(Long id,Map<String,Object> Qparam) throws RuntimeException;
+
      void updateBillStatusByIds(List<String> list) throws RuntimeException;
      
      Long getTotalAgentByParam(Map<String,Object> Qparam) throws RuntimeException;

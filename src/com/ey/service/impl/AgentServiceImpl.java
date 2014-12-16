@@ -260,15 +260,15 @@ public class AgentServiceImpl implements AgentService {
 	}
 
 	@Override
-	public List findAgentSelf(Long id,Integer page,Integer rows) throws RuntimeException {
+	public List findAgentSelf(Long id,Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException {
 		// TODO Auto-generated method stub
-		return agentDAO.findAgentSelf(id, page, rows);
+		return agentDAO.findAgentSelf(id, Qparam,page, rows);
 	}
 
 	@Override
-	public List findBillByBatchId(Long id,Integer page,Integer rows) throws RuntimeException {
+	public List findBillByBatchId(Long id,Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException {
 		// TODO Auto-generated method stub
-		return agentDAO.findBillByBatchId(id, page, rows);
+		return agentDAO.findBillByBatchId(id,Qparam, page, rows);
 	}
 
 	@Override
@@ -283,6 +283,20 @@ public class AgentServiceImpl implements AgentService {
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return agentDAO.getTotalAgentByParam(Qparam);
+	}
+
+	@Override
+	public Long findBillTotalBatchId(Long id, Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.findBillTotalBatchId(id, Qparam);
+	}
+
+	@Override
+	public Long findAgentSelfTotal(Long id, Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.findAgentSelfTotal(id, Qparam);
 	}
 
 }
