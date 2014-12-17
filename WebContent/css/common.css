@@ -211,6 +211,17 @@ p{line-height:24px;}
     width: 400px;
 	border:1px solid #ddd;
 }
+.textareajfBox {
+    background-color: #fefefe;
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 20px;
+    max-width: 280px;
+    min-width: 280px;
+    padding: 7px;
+    width: 280px;
+	border:1px solid #ddd;
+}
 span.grey {
     color: #999;
     display: block;

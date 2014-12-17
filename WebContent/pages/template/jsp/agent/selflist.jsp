@@ -70,7 +70,7 @@ function downloadbill(id){
 	 <td>
 	<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/agent/billlist.do?id=${item.id}')" >查看缴费单</a>&nbsp;
 	<a class="cur" style="color:#007abd;" onclick="downloadbill('${item.id}');">导出缴费单</a>&nbsp;
-	<a class="cur" style="color:#007abd;" onclick="openWin('<%=request.getContextPath() %>/agent/statuslist.do?id=${item.id}')">修改状态</a></td>
+	<a class="cur" style="color:#007abd;" onclick="openWin('<%=request.getContextPath() %>/agent/statuslist.do?id=${item.id}')">修改办理状态</a></td>
   </tr>
  </c:forEach>
    

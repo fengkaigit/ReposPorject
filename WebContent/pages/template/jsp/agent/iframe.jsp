@@ -82,7 +82,7 @@ $(document).ready(function(){
 				   var title = obj.payTypeName+'订单'+obj.billNum+'笔，请各代理商落实';
 				   dbHtml.push('<div class="list">');
 				   dbHtml.push('<div class="listName">');
-				   dbHtml.push('<a href="#" title="'+title+'" onclick="showbatch('+obj.id+')"><span class="error warn">'+title+'</span></a>');
+				   dbHtml.push('<a href="javascript:showbatch('+obj.id+')" title="'+title+'"><span class="error warn">'+title+'</span></a>');
 				   dbHtml.push('</div>');
 				   dbHtml.push('<div class="desktopTime">'+obj.createTime+'</div>');
 				   dbHtml.push('</div>');
