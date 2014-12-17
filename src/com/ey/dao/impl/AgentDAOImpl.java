@@ -190,12 +190,12 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	}
 
 	@Override
-	public void updateBillStatusByIds(java.util.List<String> list)
+	public void updateBillStatusByIds(List<String> list,Integer status)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql = "update PaymentBill set paymentStatus = 3 where id = ?";
+		String hql = "update PaymentBill set paymentStatus = ? where id = ?";
 		for(String id:list){
-			this.executeHql(hql,new Object[]{Long.valueOf(id.trim())});
+			this.executeHql(hql,new Object[]{status,Long.valueOf(id.trim())});
 		}
 	}
 
@@ -230,6 +230,11 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	
 	private void createQueryBillOrParam(StringBuffer query,Map<String, Object> Qparam,List paramList){
 		if(Qparam!=null&&Qparam.size()>0){
+			Integer paymentStatus = (Integer)Qparam.get("paymentStatus");
+			if(paymentStatus!=null){
+				query.append(" and a.paymentStatus = ?");
+				paramList.add(paymentStatus);
+			}
 			Long batchId = (Long)Qparam.get("batchId");
 			query.append(" and (");
 			if(batchId!=null){
@@ -282,6 +287,14 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 			return Long.valueOf(list.get(0)+"");
 		}
 		return 0l;
+	}
+
+	@Override
+	public void updateStatusByBatchId(Long id, Integer status)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "update AgentPaymentBatch set batchStatus = ? where id = ?";
+		this.executeHql(hql, new Object[]{status,id});
 	}
  
 

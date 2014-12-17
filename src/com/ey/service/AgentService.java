@@ -9,6 +9,7 @@ import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.AgentPaymentBatch;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.BankInfo;
+import com.ey.dao.entity.NoticeInfo;
 import com.ey.dao.entity.SystemManager;
 
 public interface AgentService {
@@ -48,6 +49,8 @@ public interface AgentService {
 
      void saveObject(Object o) throws RuntimeException;
      
+     void saveNotice(NoticeInfo o) throws RuntimeException;
+     
      void batchSaveObject(List objlist) throws RuntimeException;
      
      void savePaymentBatch(AgentPaymentBatch paymentBatch) throws RuntimeException;
@@ -60,8 +63,10 @@ public interface AgentService {
      
      Long findBillTotalBatchId(Long id,Map<String,Object> Qparam) throws RuntimeException;
      
-     void updateBillStatusByIds(List<String> list) throws RuntimeException;
+     void updateBillStatusByIds(List<String> list,Integer status) throws RuntimeException;
      
      Long getTotalAgentByParam(Map<String,Object> Qparam) throws RuntimeException;
+     
+     void updateStatusByBatchId(Long id,Integer status) throws RuntimeException;
      
 }

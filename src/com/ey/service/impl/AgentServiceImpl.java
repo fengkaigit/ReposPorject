@@ -22,14 +22,13 @@ import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.AgentPaymentBatch;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.BankInfo;
+import com.ey.dao.entity.NoticeInfo;
 import com.ey.service.AgentService;
 import com.ey.util.CurrencyConverter;
 import com.ey.util.DateUtil;
 import com.ey.util.StringUtil;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Service("agentService")
 public class AgentServiceImpl implements AgentService {
@@ -272,10 +271,10 @@ public class AgentServiceImpl implements AgentService {
 	}
 
 	@Override
-	public void updateBillStatusByIds(List<String> list)
+	public void updateBillStatusByIds(List<String> list,Integer status)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		agentDAO.updateBillStatusByIds(list);
+		agentDAO.updateBillStatusByIds(list,status);
 	}
 
 	@Override
@@ -297,6 +296,20 @@ public class AgentServiceImpl implements AgentService {
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return agentDAO.findAgentSelfTotal(id, Qparam);
+	}
+
+	@Override
+	public void updateStatusByBatchId(Long id, Integer status)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		agentDAO.updateStatusByBatchId(id, status);
+	}
+
+	@Override
+	public void saveNotice(NoticeInfo o) throws RuntimeException {
+		// TODO Auto-generated method stub
+		o.setId(DbidGenerator.getDbidGenerator().getNextId());
+		agentDAO.save(o);
 	}
 
 }

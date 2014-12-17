@@ -81,7 +81,7 @@ public class LoginController extends BaseController {
 			}
 		}
 		UserBase currentUser = loginService.findUserByLoginCode(form
-				.getLoginCode(), form.getPassword());
+				.getLoginCode(), MD5.getMD5Str(form.getPassword()));
 
 		if (currentUser == null) {
 			mav.addObject("message", RequestUtils.getMessage("login", request));

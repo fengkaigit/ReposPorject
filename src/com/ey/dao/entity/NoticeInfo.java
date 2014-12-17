@@ -19,7 +19,7 @@ public class NoticeInfo implements java.io.Serializable {
 
 	private Long id;
 	private Long userId;
-	private byte[] serverContent;
+	private String serverContent;
 	private Date createTime;
 	private Integer sendStatus;
 	private Integer noticeType;
@@ -32,7 +32,7 @@ public class NoticeInfo implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public NoticeInfo(Long id, Long userId, byte[] serverContent,
+	public NoticeInfo(Long id, Long userId, String serverContent,
 			Date createTime, Integer sendStatus, Integer noticeType,
 			Integer noticeMode) {
 		this.id = id;
@@ -65,11 +65,11 @@ public class NoticeInfo implements java.io.Serializable {
 	}
 
 	@Column(name = "server_content", nullable = false)
-	public byte[] getServerContent() {
+	public String getServerContent() {
 		return this.serverContent;
 	}
 
-	public void setServerContent(byte[] serverContent) {
+	public void setServerContent(String serverContent) {
 		this.serverContent = serverContent;
 	}
 

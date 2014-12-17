@@ -52,7 +52,7 @@ public class AgentBacthJob implements Job {
 					billIdsList.addAll(Arrays.asList(billIds));
 				}
 				agentService.batchSaveObject(batchpaylist);
-				agentService.updateBillStatusByIds(billIdsList);
+				agentService.updateBillStatusByIds(billIdsList,3);
 			}
 			}catch(Exception e){
 				e.printStackTrace();
