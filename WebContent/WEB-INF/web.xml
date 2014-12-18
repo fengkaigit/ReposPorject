@@ -12,7 +12,7 @@
 	</context-param>
     <context-param>
        <param-name>attachDirectory</param-name>
-       <param-value>d:\attachDirectory</param-value>
+       <param-value>d:/attachDirectory</param-value>
     </context-param>
 
 	<!-- 上下文监听器 -->
