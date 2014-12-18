@@ -1,0 +1,652 @@
+
+* {
+	font-family: '微软雅黑', 'weiruanyahei';
+}
+
+body {
+	background-color: transparent;
+	overflow: hidden;
+	background-color: #fff;
+}
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,table,th,td,embed,object
+{
+	padding: 0;
+	margin: 0;
+	font-size: 12px;
+}
+html, body{
+	width: 100%;
+	height: 100%;
+}
+span{
+	
+}
+ul,ol,li {
+	list-style: none
+}
+
+table {
+	border: 0px;
+	cellspacing: 0px;
+	cellpadding: 0px;
+}
+table td{
+	height:100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+a {
+	cursor: pointer;
+	border: 0px;
+	color: #000;
+}
+
+a:link {
+	text-decoration: none;
+	color: #000;
+}
+
+a:visited {
+	text-decoration: none;
+	color: #000;
+}
+
+a:hover {
+	color: red;
+	text-decoration: underline;
+}
+
+a:active {
+	text-decoration: none;
+	color: #000;
+}
+
+img,a img {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.desktopTime {
+	width: 70px;
+	height: 28px;
+	line-height: 28px;
+	color: #999999;
+	float: right;
+	display: inline;
+	margin: 0 2px;
+	text-align: right;
+}
+
+.desktopMore {
+	width: 70px;
+	height: 28px;
+	line-height: 28px;
+	color: #006763;
+	float: right;
+	display: inline;
+	margin: 0 5px;
+	text-align: right;
+}
+
+.desktopTitleName {
+	width: 55%;
+	height: 28px;
+	line-height: 28px;
+	color: #006763;
+	float: left;
+	display: inline;
+	padding: 0 30px;
+	font-weight: bold;
+	background: url("topBG[1].png") -276px -204px no-repeat;
+	text-align: left;
+}
+.desktopTitleName1 {
+	width: 32%;
+	height: 28px;
+	line-height: 28px;
+	color: #006763;
+	float: right;
+	display: inline;
+	padding: 0 30px;
+	font-weight: bold;
+	background: url("topBG[1].png") -276px -204px no-repeat;
+	text-align: left;
+}
+
+ul.headerBox {
+	width: 100%;
+	height: 90px;
+	background: url("topBG[1].png") 0 -21px repeat-x;
+	overflow: hidden;
+	position: relative;
+}
+
+ul.headerBox li.logoBox {
+	width: 1000px;
+	height: 70px;
+	left: 20px;
+	top: 10px;
+	position: absolute;
+}
+
+ul.headerBox li.userTool {
+	float: right;
+	height: 24px;
+	overflow: hidden;
+}
+
+ul.headerBox li.userTool .userLeft {
+	float: left;
+	width: 24px;
+	height: 24px;
+	background: url("topBG[1].png") 0 -148px no-repeat;
+}
+
+ul.headerBox li.userTool .userRight {
+	float: left;
+	width: 24px;
+	height: 24px;
+	background: url("topBG[1].png") -278px -148px no-repeat;
+}
+
+ul.headerBox li.userTool .personIcon {
+	float: left;
+	width: 24px;
+	height: 24px;
+	background: url("topBG[1].png") -81px -148px no-repeat;
+}
+
+ul.headerBox li.userTool .downLoadIcon {
+	float: left;
+	width: 24px;
+	height: 24px;
+	background: url("topBG[1].png") -53px -148px no-repeat;
+}
+
+ul.headerBox li.userTool .exitIcon {
+	float: left;
+	width: 24px;
+	height: 24px;
+	background: url("topBG[1].png") -112px -148px no-repeat;
+}
+
+ul.headerBox li.userTool .topText {
+	float: left;
+	height: 24px;
+	line-height: 24px;
+	color: #fff;
+	padding-right: 10px;
+	background: url("topBG[1].png") 0px -175px repeat-x;
+	cursor: pointer;
+}
+
+ul.headerBox li.userTool .topText a {
+	float: left;
+	height: 24px;
+	line-height: 24px;
+	color: #fff;
+	padding-right: 10px;
+	background: url("topBG[1].png") 0px -175px repeat-x;
+	cursor: pointer;
+}
+
+.frameBox {
+	background: #fff;
+	width: 100%;
+	min-width: 100px;
+	overflow: hidden;
+	background: url("frameBG[1].png") right bottom no-repeat;
+	z-index: 1;
+}
+
+.thisLocationBox {
+	width: 100%;
+	height: 22px;
+	line-height: 22px;
+	border-bottom: 6px solid #006661;
+	font-family: '微软雅黑';
+	font-size: 14px;
+	color: #666;
+	overflow: hidden;
+}
+
+.tabBox {
+	width: 99%;
+	margin: 1px auto;
+	padding-top: 10px;
+	overflow: hidden;
+}
+
+.tabBox ul.tabTitleBox {
+	width: 99%;
+	margin:0 auto;
+	height: 28px;
+	background: url("tab_bg[1].gif") repeat-x scroll left -118px transparent; 
+}
+
+.tabBox ul.tabTitleBox li{
+	cursor: pointer;
+	display: inline;
+	float: left;
+	padding:0 0 0 13px;
+	margin-right:5px; 
+	text-align: center;
+}
+.tabBox ul.tabTitleBox li.titleTextStyle1 {
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	background: url("tab_bg[1].gif") no-repeat scroll left 4px transparent; 
+}
+.tabBox ul.tabTitleBox li.titleTextStyle1 span{
+display: block;
+float:left;
+line-height: 24px;
+height:24px;
+padding:2px 16px 0px 2px;
+font-size: 14px;
+background: url("tab_bg[1].gif") repeat-x scroll right -23px transparent; 
+}
+.tabBox ul.tabTitleBox li.titleTextStyle2 {
+	background: url("tab_bg[1].gif") no-repeat scroll left -52px transparent; 
+}
+.tabBox ul.tabTitleBox li.titleTextStyle2 span{
+display: block;
+float:left;
+line-height: 24px;
+height:24px;
+padding:2px 16px 0 2px;
+color: #4C8583;
+font-size: 14px;
+background: url("tab_bg[1].gif") repeat-x scroll right -79px transparent; 
+}
+.tabBox ,.tabBox .box_content_nb{
+	clear: both;
+	position:inherit;
+	width: 99%;
+	height: 90%;
+	overflow: auto;
+	overflow-x:hidden;
+}
+
+.tabBox .box_content_nb{
+	padding:10px 0 0 0;
+	border: 1px solid #BCCECD;
+}
+.tabBox .formBox {
+	position:inherit;
+	padding:16px 0px 8px 0px;
+	width: 99%;
+	min-height:50%;
+	overflow: auto;
+	overflow-x:hidden;
+	margin:0 auto;
+	border: 1px solid #BCCECD;
+	border-right: 1px solid #BCCECD;
+	background: url("tab_bg[1].gif") repeat-x scroll left -146px transparent;
+}
+
+.tabBox .formBox ul.inputBox {
+	float: left;
+	min-width: 280px;
+	height: 24px;
+	margin: 20px 0px 0px 20px;
+}
+
+.tabBox .formBox ul.inputBox li.inputTitle {
+	display: inline-block;
+	width: 110px;
+	height: 24px;
+	line-height: 24px;
+	margin-right: 5px;
+	text-align: left;
+}
+
+.tabBox .formBox ul.inputBox li.inputInfo {
+	display: inline-block;
+	width: 165px;
+	height:35px;
+	word-wrap:break-word;
+	
+}
+.tabBox .formBox ul.inputBox li.errorMessage {
+	display: inline-block;
+	min-width: 110px;
+	text-align: left;
+}
+
+.tabBox .formBox dl {
+	position: inherit;
+	float: left;
+	width: 98%;
+	margin-top: 20px;
+	margin-bottom: 3px;
+	padding: 10px;
+	overflow: auto;
+}
+
+.tabBox .formBox dl dt {
+	text-align: left;
+	height: 24px;
+}
+
+.tabBox .formBox dl dd {
+	margin-left: 20px;
+	width: 130px;
+	height: 24px;
+	line-height: 24px;
+	float: left;
+	text-align: left;
+}
+.tabBox .formBox table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.tabBox .formBox .formBoxTable{
+	width:100%;
+	margin:0px;
+}
+.tabBox .formBox .formBoxTable td{
+	border: 1px dotted #CFE4E3;
+	padding: 0px 2px;
+}
+.formBoxTable_title{
+	color: #4C8583;
+	padding:5px 0 5px 15px;
+	font-size: 14px;
+}
+.top_table_label{
+	color: #4C8583;
+	padding:5px 0 5px 15px;
+	font-size: 14px;
+}
+fieldset{
+	margin: 5px 10px;
+	padding-bottom:30px;
+}
+fieldset legend{
+	margin:3px 10px;
+}
+.tabbox  .formBox .formBottonBox {
+	clear: both;
+	width: 200px;
+	height: 30px;
+}
+
+ul#desktopBox {
+	width: 100%;
+	min-width: 960px;
+	height: 96%;
+	overflow: auto;
+	text-align: center;
+}
+
+ul#desktopBox li#deskLeft {
+	float: left;
+	height: 505px;
+	overflow: hidden;
+	background: #f00;
+}
+
+ul#desktopBox li#deskRight {
+	float: right;
+	width: 700px;
+	height: 505px;
+	overflow: hidden;
+}
+
+ul#desktopBox .centerDesktopBox {
+	margin: 0 auto;
+	width: 970px;
+	height: auto;
+}
+
+ul.workBox {
+	width: 970px;
+}
+
+ul.workBox li.box {
+	float: left;
+	display: inline;
+	height: 236px;
+	border: 1px solid #d0e0e0;
+	overflow: hidden;
+	margin:5px;
+}
+ul.workBox li.box .title {
+	float: left;
+	display: inline;
+	width: 100%;
+	height: 28px;
+	background: url("topBG[1].png") 0 -327px repeat-x;
+}
+.title1{
+	float: right;
+	display: inline;
+	width: 100%;
+	height: 28px;
+	background: url("topBG[1].png") 0 -327px repeat-x;
+}
+
+ul.workBox li.box .list {
+	float: left;
+	display: inline;
+	margin: 0 10px;
+	width: 288px;
+	height: 28px;
+	border-bottom: 1px dashed #ddd;
+}
+
+ul.workBox li.box .list .listName {
+	float: left;
+	display: inline;
+	padding: 0 10px;
+	width: 190px;
+	height: 28px;
+	line-height: 28px;
+	overflow: hidden;
+	color: #555555;
+	text-align: left;
+	white-space: nowrap;
+}
+
+ul.workBox li.rightWork {
+	float: right;
+	display: inline;
+	width: 638px;
+	height: 248px;
+	border: 1px solid #d0e0e0;
+	overflow: hidden;
+	text-align: left;
+}
+ul.workBox li.rightWork .workTitle {
+	float: left;
+	display: inline;
+	width: 638px;
+	height: 30px;
+	background: url("topBG[1].png") 0 -327px repeat-x;
+}
+ul.workBox li.box .info {
+		float: left;
+		display: inline;
+		display: block; 
+		position:relative;
+		background-image: url("wzshouye2[1].jpg");
+		background-position:center; 
+		background-repeat:no-repeat;
+		height:260px;
+		text-align: left;
+}
+ul.bottomLeftBox li.rightTable {
+	float: right;
+	display: inline;
+	width: 338px;
+	height: 520px;
+	border: 1px solid #d0e0e0;
+	overflow: hidden;
+	margin: 10px 0px 10px 0px;
+}
+
+ul.bottomLeftBox li.rightTable .rightTableTitle {
+	float: left;
+	display: inline;
+	width: 338px;
+	height: 28px;
+	background: url("topBG[1].png") 0 -327px repeat-x;
+}
+
+ul.bottomLeftBox li.rightTable .rightTableInfo {
+	float: left;
+	display: inline;
+	margin: 0 0px;
+	width: 338px;
+	height: 200px;
+}
+
+.h20 {
+	height: 20px;
+}
+
+.h25 {
+	height: 25px;
+}
+
+.h30 {
+	height: 30px;
+}
+
+.line-h25 {
+	line-height: 25px;
+}
+
+.line-h30 {
+	line-height: 30px;
+}
+
+.w300 {
+	width: 300px;
+}
+
+.w350 {
+	width: 350px;
+}
+
+.w380 {
+	width: 380px;
+}
+
+.w400 {
+	width: 400px;
+}
+
+.w420 {
+	width: 420px;
+}
+
+.w_l180 {
+	padding-left: 3px;
+	width: 180px;
+}
+
+.w_l240 {
+	width: 240px;
+	padding-left: 3px;
+}
+
+.w_l300 {
+	width: 300px;
+	padding-left: 3px;
+}
+
+.w_l100 {
+	width: 100px;
+	padding-left: 3px;
+}
+
+.w_l180,.w_l300,.w_l240,.w_l100,.w_lh25 {
+	height: 25px;
+	line-height: 25px;
+}
+.ml15{
+	margin-left: 15px;
+}
+.pl15{
+	padding-left:15px;
+}
+.mt10{
+	margin-top: 10px;
+}
+.pr10{
+	padding-right: 10px;
+}
+.text_left{
+	text-align: left;
+}
+.pd5{
+	padding: 5px;
+}
+.top_nav {
+	height: 30px;
+	line-height: 30px;
+	margin: 2px 2px;
+	width: 100%;
+	padding-left: 25px;
+	color: #999999;
+	background: url("blue_oa_main_right[1].png") no-repeat left;
+}
+iframe{
+	border:0px;
+	
+}
+
+main_left{
+	width:726px;
+	float: left;
+	margin:0 0 0 22px;
+	margin-left: 11px;
+	padding: 17px 0 70 0;
+	background: #FEFCF8;
+	min-height: 500px;
+	height: auto important;
+	height: 500px;
+}
+.article_tit{
+	text-align: center;
+	border-bottom: dotted 1px #CCC;
+	font-size: 35px;
+	margin: 0 40px;
+	padding: 10px 0 3px;
+	font-family: "宋体字";
+}
+.article_info{
+	text-align: center;
+	color: #999;
+}
+.article_content{
+	padding: 10px 10px;
+	width: 700px;
+	margin: auto;
+	line-height: 25px;
+	word-wrap:break-word;
+	overflow:hidden;
+}
+.article_content_w{
+	padding: 10px 10px;
+	width: 800px;
+	margin: auto;
+	line-height: 25px;
+}
+.article_content *{
+	font-size:14px;
+}
+.col_4C8583{
+	color: #4C8583;
+}
+
+
+.overDate{
+	color: red!important;
+}
