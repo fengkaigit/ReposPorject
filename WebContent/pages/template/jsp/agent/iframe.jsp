@@ -5,7 +5,7 @@
 <head>
 <title>代理商首页</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="<%=request.getContextPath() %>/css/agentiframe/base[2].css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/agentiframe/base.css" type="text/css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/agentiframe/base_table[1]_2.css" type="text/css" rel="stylesheet">
 <style type="text/css">
 table.gridtable{
