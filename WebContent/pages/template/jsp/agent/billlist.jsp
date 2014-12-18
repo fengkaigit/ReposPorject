@@ -4,8 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <title>e缴365</title>
 <meta content="" name="description">
 <%@include file="/pages/template/jsp/common/common.jsp"%>
@@ -73,7 +71,7 @@ function downloadbill(id){
     <td>&nbsp;${item.paidMoney}</td>    
 	<td>&nbsp;${item.userName}</td>
 	<td>&nbsp;${item.entName}</td>
-	<td>&nbsp;${item.paymentTypeName}</td>
+	<td>&nbsp;${item.paymentTypeName}费</td>
   </tr>
  </c:forEach>
    

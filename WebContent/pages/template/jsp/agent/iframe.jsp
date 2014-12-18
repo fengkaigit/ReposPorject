@@ -130,6 +130,12 @@ function getgg(id){
 function showbatch(id){
 	window.parent.location.href = "<%=request.getContextPath() %>/agent/billlist.do?id="+id;
 }
+function moregg(){
+	window.parent.location.href = "<%=request.getContextPath() %>/announce/more.do?group=0";
+}
+function moredb(){
+	window.parent.location.href = "<%=request.getContextPath() %>/agent/worklist.do?status=0";
+}
 </script>
 </head>
 <body >
@@ -139,6 +145,7 @@ function showbatch(id){
 				<li class="box" style="width: 300px;">
 					<div class="title">
 						<div class="desktopTitleName">通知公告</div>
+						<div class="desktopTitleName1"><a class="more" href="javascript:moregg()">更多&gt;</a></div>
 					</div>
 					<div id="ggList">
 						
@@ -147,6 +154,7 @@ function showbatch(id){
 				<li id="dbwork" class="box" style="width: 645px;">
 					<div class="title">
 						<div class="desktopTitleName">待办工作</div>
+						<div class="desktopTitleName1" style="width:15%"><a class="more" href="javascript:moredb()">更多&gt;</a></div>
 					</div>
 					<div id="dbList">
 					</div>

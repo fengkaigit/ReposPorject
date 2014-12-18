@@ -4,8 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <title>e缴365</title>
 <meta content="" name="description">
 <%@include file="/pages/template/jsp/common/common.jsp"%>
@@ -50,6 +48,7 @@ function downloadbill(id){
     <td>序号</td>
     <td>标题</td>
     <td>创建时间</td>
+    <td>确认时间</td>
     <td>金额</td>
     <td>缴费类型</td>
     <td>操作</td>
@@ -66,6 +65,7 @@ function downloadbill(id){
     <td>&nbsp;${status.index+1}</td>
     <td>&nbsp;${item.payTypeName}订单${item.billNum}笔，请各代理商落实</td>
     <td>&nbsp;<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+    <td>&nbsp;<fmt:formatDate value="${item.confirmTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 	<td>&nbsp;${item.batchMoney}</td>
 	<td>&nbsp;${item.payTypeName}费</td>
 	 <td>

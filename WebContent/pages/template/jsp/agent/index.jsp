@@ -9,8 +9,6 @@
 <html>
 <!--<![endif]-->
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <title>e缴365</title>
 <meta content="" name="description">
 <%@include file="/pages/template/jsp/common/common.jsp"%>

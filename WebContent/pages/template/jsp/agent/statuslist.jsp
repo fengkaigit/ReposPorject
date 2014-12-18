@@ -1,13 +1,11 @@
+<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <title>e缴365</title>
-<meta content="" name="description">
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <script>
 function complate(){
@@ -31,6 +29,12 @@ function complate(){
 	//document.getElementById("statusForm").submit();
 }
 function query(){
+	var id = $("#id");
+	if(id.val()==''){
+		alert("请输入批次单号或缴费单号");
+		id.focus();
+		return false;
+	}
 	var qForm = document.getElementById("queryForm");
 	qForm.action = "<%=request.getContextPath() %>/agent/statuslist.do";
 	qForm.submit();
@@ -75,15 +79,22 @@ function showReplyDiv(userId,id){
 <div class="ui-container clearfix" id="container">  
   <div class="jfzh-title"><span class="icon1"></span>
     修改办理状态
+   
   </div>
 <div class="jfzh-con">
 
 	
-    <div class="jfzh-bottom clearfix">    
+    <div class="jfzh-bottom clearfix">
+    <div class="name">
+     <form id="queryForm" method="post">
+       <span class="fr cur" style="margin-right:19px;"><input  type="button" class="jfxx_btn9" onClick="complate()" value="办理成功" name="complatehBtn"/></span>
+	   <span class="fr cur" style="margin-right:3px;"><input  type="button" class="jfxx_btn9" onClick="query()" value="查询" name="searchBtn"/></span>
+	   <span class="fr cur">&nbsp;&nbsp;&nbsp;</span>
+	   <span class="fr cur"><input class="on-show" autocomplete="off" type="text" name="id" id="id" title="请输入批次单号或缴费单号" placeholder="请输入批次单号或缴费单号"/></span>
+	</form>
+    </div>
+    <div class="jfzh-bottom clearfix">
 	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;缴费单信息</span>
-	<span class="fr cur" onClick="complate()"><span class="fcr">办理成功</span></span>
-	<span class="fr cur"><span class="fcr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
-	<form id="queryForm" method="post"><span class="fr cur"><input class="on-show" autocomplete="off" type="text" name="id" title="请输入批次单号或缴费单号" placeholder="请输入批次单号或缴费单号"/><input  type="button" class="jfxx_btn9" onClick="query()" value="查询" name="searchBtn"/></span></form>
 	</div>
     <form id="statusForm" action="<%=request.getContextPath() %>/agent/complate.do" method="post">
 	 <input type="hidden" id="batchId" name="batchId" value="${batchId}" />

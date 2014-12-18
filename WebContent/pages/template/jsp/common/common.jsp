@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<meta http-equiv="x-ua-compatible" content="ie=8.5" />
+<!--  <meta http-equiv="x-ua-compatible" content="ie=8.5" />-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="" name="description">
