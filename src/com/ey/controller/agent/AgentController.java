@@ -1,5 +1,9 @@
 package com.ey.controller.agent;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -49,10 +53,12 @@ import com.ey.service.AgentService;
 import com.ey.service.AreaService;
 import com.ey.service.StaticService;
 import com.ey.util.CookieManager;
+import com.ey.util.CurrencyConverter;
 import com.ey.util.DateUtil;
 import com.ey.util.MD5;
 import com.ey.util.RequestUtils;
 import com.ey.util.StringUtil;
+import com.ey.util.XLSReport;
 
 @Controller
 @RequestMapping(value = "/agent")
@@ -575,4 +581,59 @@ public class AgentController extends BaseController {
 		//redirectAttributes.addAttribute("id", billId);
 		return map;
 	}
+	
+	@RequestMapping("/downbatch")   
+    public ModelAndView exportExcel(Long id,HttpServletRequest request, HttpServletResponse response)   
+            throws Exception {  
+        String dirPath = RequestUtils.getContextDirectory(SystemConst.CONTEXT_ATTACHEDIR, request);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("batchId", id);
+		List<PaymentBillBo> billlist = agentService.findBillByBatchId(id, map,0, 0);
+		String[] title1 = new String[] { "缴费单号", "缴费时间", "应缴金额", "实缴金额","缴费用户", "收费单位", "缴费类型"};
+		List headers = new ArrayList();
+		headers.add(title1);
+		List datas = new ArrayList();
+		for (PaymentBillBo bill:billlist) {
+			String[] data = new String[] { bill.getId()+"",DateUtil.getDateTimeNow(bill.getCreateTime()),CurrencyConverter.getMoney(bill.getPayMoney())+"",CurrencyConverter.getMoney(bill.getPaidMoney())+"",
+					bill.getUserName(),bill.getEntName(), bill.getPaymentTypeName()+"费"};
+			datas.add(data);
+		}
+		Map<String, Integer> mergeColMap = new HashMap();
+		Map<String, Integer> mergeRowMap = new HashMap();
+		List<String> bottoms = new ArrayList();
+		bottoms.add("批次单号:"+id);
+		XLSReport report = new XLSReport();
+		String fileName = DateUtil.getTimeNowString(new Date())+"_bill";
+		File repFile = report.generating(datas, headers, mergeColMap,
+				mergeRowMap, dirPath+"/",fileName,new int[]{20,20,20,20,20,20,20,20,20,20,20,20,20},bottoms,20,20,true,true);
+        response.setContentType("text/html;charset=utf-8");   
+        request.setCharacterEncoding("UTF-8");   
+        BufferedInputStream bis = null;   
+        BufferedOutputStream bos = null;      
+        File file =   new File( dirPath + "/" + fileName+".xls");   
+        try {   
+            long fileLength = file.length();   
+            response.setContentType("application/x-msdownload;");   
+            response.setHeader("Content-disposition", "attachment; filename=" + java.net.URLEncoder.encode("缴费单信息.xls", "UTF-8"));   
+            response.setHeader("Content-Length", String.valueOf(fileLength));   
+            bis = new BufferedInputStream(new FileInputStream(file));   
+            bos = new BufferedOutputStream(response.getOutputStream());   
+            byte[] buff = new byte[bis.available()];   
+            int bytesRead;   
+            while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {   
+                bos.write(buff, 0, bytesRead);   
+            }   
+        } catch (Exception e) {   
+            e.printStackTrace();   
+        } finally {   
+            if (bis != null){ 
+                bis.close();   
+            }
+            if (bos != null){
+                bos.close();   
+            }
+        }   
+        file.delete();
+        return null;   
+    }  
 }

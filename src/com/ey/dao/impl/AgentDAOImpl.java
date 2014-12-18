@@ -1,6 +1,7 @@
 package com.ey.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.List;
 
@@ -293,8 +294,8 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	public void updateStatusByBatchId(Long id, Integer status)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql = "update AgentPaymentBatch set batchStatus = ? where id = ?";
-		this.executeHql(hql, new Object[]{status,id});
+		String hql = "update AgentPaymentBatch set confirmTime = ?,batchStatus = ? where id = ?";
+		this.executeHql(hql, new Object[]{new Date(),status,id});
 	}
  
 
