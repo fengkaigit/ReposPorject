@@ -25,9 +25,11 @@ $(document).ready(function(){
 	$("#EMail").formValidator({empty:true,onShow:"请输入邮箱，可以为空哦",onFocus:"邮箱6-100个字符,请确认",onCorrect:"输入合法"}).inputValidator({min:6,max:100,onError:"你输入的邮箱长度非法,请确认"}).regexValidator({regExp:"^([\\w-.]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([\\w-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$",onError:"你输入的邮箱格式不正确"});
 	$("#bankId").formValidator({onShow:"请选择所属银行",onCorrect:"选择合法"}).inputValidator({min:1,onError: "银行未选择,请选择!"});
 	$("#bankDeposit").formValidator({onShow:"请输入开户行",onFocus:"开户行至少5个字符,最多200个字符",onCorrect:"输入合法"}).inputValidator({min:5,max:200,onError:"开户行非法,请确认"});
-	$("#cardNumber").formValidator({onShow:"请输入银行账号",onFocus:"银行账号至少16个字符,最多32个字符",onCorrect:"输入合法"}).inputValidator({min:16,max:32,empty:{leftEmpty:false,rightEmpty:false,emptyError:"账号两边不能有空符号"},onError:"银行账号非法,请确认"}).regexValidator({ regExp: "num", dataType: "enum", onError: "只能输入数字" });
-	$("#cardName").formValidator({onShow:"请输入户名",onFocus:"户名至少2个汉字,最多5个汉字",onCorrect:"输入合法"}).inputValidator({min:4,max:10,onError:"户名非法,请确认"});
-
+	$("#cardNumber").formValidator({onShow:"请输入银行账号",onFocus:"银行账号至少16个字符,最多32个字符",onCorrect:"输入合法"}).inputValidator({min:16,max:32,empty:{leftEmpty:false,rightEmpty:false,emptyError:"账号两边不能有空符号"},onError:"银行账号非法,请确认"});//regexValidator({ regExp: "num", dataType: "enum", onError: "只能输入数字" });
+	//$("#cardName").formValidator({onShow:"请输入户名",onFocus:"户名至少2个汉字,最多5个汉字",onCorrect:"输入合法"}).inputValidator({min:4,max:10,onError:"户名非法,请确认"});
+    document.getElementById("cardNumber").onkeyup =function() {
+		cardNumFormat(this);
+	};
 	//<c:if test="${agent.id==null}">
 	//$("#passwd").formValidator({onShow:"请输入密码",onFocus:"至少4个长度,最多20个长度",onCorrect:"密码合法"}).inputValidator({min:4,max:20,empty:{leftEmpty:false,rightEmpty:false,emptyError:"密码两边不能有空符号"},onError:"密码不合法,请确认"});
 	//$("#confirmPassword").formValidator({onShow:"输再次输入密码",onFocus:"至少4个长度,最多20个长度",onCorrect:"密码一致"}).inputValidator({min:4,max:20,empty:{leftEmpty:false,rightEmpty:false,emptyError:"重复密码两边不能有空符号"},onError:"重复密码密码不合法,请确认"}).compareValidator({desID:"passwd",operateor:"=",onError:"两次密码不一致,请确认"});
@@ -41,6 +43,7 @@ $(document).ready(function(){
 	      if(codeStrs.length>=2)
 	      getArea(codeStrs[1],'area','请选择市区',codeStrs.length==3 ? codeStrs[2]:undefined);
 	</c:if>
+	cardNumFormat(document.getElementById("cardNumber"));
 });
 function loginChk(){
 	if($("#hiddenRegistAccount").val()!=$("#registAccount").val()){
@@ -92,6 +95,8 @@ function initArea(){
 	var city = $("#city").val();
 	var area = $("#area").val();
 	var areaId = document.getElementById("areaId");
+	var cardNum = document.getElementById("cardNumber");
+	cardNum.value = cardNum.value.replace(/\s/g,'');
 	if(area!=""){
 		areaId.value = area;
 		return true;
@@ -105,6 +110,9 @@ function initArea(){
 		return true;
 	}
 	return true;
+}
+function cardNumFormat(obj){
+    obj.value =obj.value.replace(/\s/g,'').replace(/(\d{4})(?=\d)/g,"$1 ");
 }
 </script>
 </head>
@@ -278,7 +286,7 @@ function initArea(){
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" name="cardName" class="on-show" autocomplete="off" maxlength="50" id="cardName" value="${bankAcc.cardName}"> <span></span></td>
+                                        <td><input type="text" name="cardName" class="on-show" autocomplete="off" id="cardName" value="${bankAcc.cardName}"> <span></span></td>
                                     </tr>
                                 </tbody>
                             </table>

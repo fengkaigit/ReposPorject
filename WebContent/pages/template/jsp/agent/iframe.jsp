@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8" import="com.ey.util.DateUtil"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8" import="com.ey.util.DateUtil" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
 <title>代理商首页</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="<%=request.getContextPath() %>/css/agentiframe/base.css" type="text/css" rel="stylesheet">
-<link href="<%=request.getContextPath() %>/css/agentiframe/base_table[1]_2.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/agentiframe/base.css" type="text/css" rel="stylesheet" />
+<link href="<%=request.getContextPath() %>/css/agentiframe/base_table[1]_2.css" type="text/css" rel="stylesheet" />
 <style type="text/css">
 table.gridtable{
 	width:98%;

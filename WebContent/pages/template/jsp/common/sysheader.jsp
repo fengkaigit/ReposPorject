@@ -24,7 +24,7 @@ $(document).ready(function() {
                 
                      <div class="for">
                      <%
-                     SystemManager sysMan = (SystemManager)session.getAttribute(SystemConst.USER);
+                     SystemManager sysMan = (SystemManager)session.getAttribute(SystemConst.MANAGER);
                      if(sysMan==null){ %>
                      <a rel="nofollow" style="color:#fc8936" href="<%=request.getContextPath() %>/reg.do">免费注册</a>
                      <a style="color:#a0db00" href="<%=request.getContextPath() %>/sysman/login.do">立即登录</a>

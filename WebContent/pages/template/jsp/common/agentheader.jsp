@@ -24,7 +24,7 @@ $(document).ready(function() {
                 
                      <div class="for">
                      <%
-                     AgentBo agent = (AgentBo)session.getAttribute(SystemConst.USER);
+                     AgentBo agent = (AgentBo)session.getAttribute(SystemConst.AGENT);
                      if(agent==null){ %>
                      <a rel="nofollow" style="color:#fc8936" href="<%=request.getContextPath() %>/reg.do">免费注册</a>
                      <a style="color:#a0db00" href="<%=request.getContextPath() %>/agent/login.do">立即登录</a>

@@ -2,14 +2,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-<title>意见反馈</title>
+<title>评论区</title>
 <%@include file="/pages/template/jsp/common/common.jsp"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/global.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/style.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/aboutUs.css">
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/feedback/base.css">
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/css/feedback/outer.css">
 <script>
 var keywordtitle="请填写邮件地址便于与我们互动";
 function SearchFocus(obj){
@@ -27,36 +27,20 @@ function SearchBlur(obj){
 function postHandle(){
 	var userId = '${sessionScope.USER.id}';
 	if(userId == ''){
-		alert('您还没有登录，请登录后再反馈');
+		alert('您还没有登录，请登录后再评论');
 		return false;
 	}
 	if($("#userIdea").val() ==''){
-		alert("请输入反馈内容");
+		alert("请输入评论内容");
 		return false;
 	}
 	 $('#ideaForm').ajaxSubmit(function(data){
 		    if(data.result){
-		    	alert('意见反馈成功！谢谢您的参与，我们会尽快给你回复。');
+		    	alert('评论成功！谢谢您的参与，我们会尽快给您回复。');
 		    	window.location.href = "<%=request.getContextPath() %>/ej/ieda.do";
 		    }
 	 });
 }
-var gloabObj = {page:<c:out value="${page}"/>,rows:<c:out value="${rows}"/>,total:<c:out value="${total}"/>};
-$(document).ready(function(){
-	if(gloabObj.total!=0){
-	   $("#pageNav").pagination({
-	        items: gloabObj.total,
-	        itemsOnPage:gloabObj.rows,
-	        currentPage:gloabObj.page,
-	        cssStyle: 'light-theme',
-			prevText:'上一页',
-			nextText:'下一页',
-	        onPageClick:function(pageNumber, event){
-			    window.location.href = "<%=request.getContextPath() %>/ej/ieda.do?page="+pageNumber+"&rows="+gloabObj.rows;
-			}
-	  });
-    }
-});
 </script>
 </head>
 <body class="index">
@@ -88,7 +72,7 @@ $(document).ready(function(){
                                 <td height="33" class="line3" id="aboutUs"><table width="200" border="0" cellspacing="0" cellpadding="0">
                                         <tbody><tr>
                                             <td width="24" height="22" align="center" class="bg10">&nbsp;</td>
-                                            <td width="126" height="22" align="left"><a href="<%=request.getContextPath() %>/ej/ieda.do">意见反馈</a></td>
+                                            <td width="126" height="22" align="left"><a href="<%=request.getContextPath() %>/ej/ieda.do">评论区</a></td>
                                         </tr>
                                     </tbody></table></td>
                             </tr>
@@ -105,32 +89,11 @@ $(document).ready(function(){
         <div class="znx_r">
             
 <div class="tcxx_tt">
-    <span class="tcxx_tt_a"><a href="<%=request.getContextPath() %>/ej/about.do">关于e缴365</a> &gt; <span class="tcxx_tt_b">意见反馈</span> </span>
+    <span class="tcxx_tt_a"><a href="<%=request.getContextPath() %>/ej/about.do">关于e缴365</a> &gt; <span class="tcxx_tt_b">评论区</span> </span>
 </div>
 <div class="pinl">
-<c:forEach var="item" items="${feedbacks}" varStatus="status">
- <div class="outer-personal-info">
-                <div class="fn-clear">
-                    <div class="outer-thumbnail outer-thumbnail-lg"><img src="<%=request.getContextPath() %>/images/default_head_img.jpg" alt=""></div>
-                    <div class="outer-personal-info-row" style="line-height: 30px; color: #999;">
-                        <span style="margin-right:30px;">用户：${item.userName}</span>
-                        <span>发表于：<fmt:formatDate value="${item.viewTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
-                    </div>
-                    <div class="outer-personal-info-row" >
-                        <span class="fn-right" style="width: 580px; color: #333;">${item.userIdea}</span>
-                  </div>
-                </div>
-                         <c:if test="${item.systemFeedback!=''&&item.systemFeedback!=null}" >
-                                <div class="outer-personal-atten" style="width:542px;">
-                                        <div class="outer-personal-info-row" style="color: #999; line-height: 100%; margin-bottom: 15px;"><span style="margin-right:30px;">系统回复</span><span>发表于：<fmt:formatDate value="${item.systemTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></div>
-                    <div class="outer-personal-info-row">
-                        <span style="width: 580px; color: #333;">${item.systemFeedback}</span>
-                    </div>
-                                   </div></c:if>
-    </div>
-    </c:forEach>
-    <div id="pageNav" style="margin-right:55px;"></div>
-    <div class="clear"></div>
+
+
 <div class="tabBlBtn"style="margin-top:10px;clear:both;">
             <input type="radio"  id="propose" value="1" name="backType" checked="checked"><span  style="cursor:pointer" class="leftSpace">&nbsp;改进建议&nbsp;&nbsp;</span>
             <input type="radio"  id="recovery" value="2" name="backType"><span  style="cursor:pointer" class="leftSpace">&nbsp;内容纠错&nbsp;&nbsp;</span>
@@ -152,6 +115,7 @@ $(document).ready(function(){
             <div class="clear"></div>
         </div>
         <div class="jfxx_btns"><input  type="button" class="jfxx_btn3" onClick="postHandle()" value="提交反馈" name="searchBill"></div>
+        
    </div>
 
         </div>

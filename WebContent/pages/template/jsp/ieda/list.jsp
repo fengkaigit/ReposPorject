@@ -12,10 +12,10 @@ var gloabObj = {page:<c:out value="${page}"/>,rows:<c:out value="${rows}"/>,tota
 function delIeda(id){
 	if(confirm("确实要删除该信息吗?")){
 		if(gloabObj.total%gloabObj.rows==1&&gloabObj.page!=1)
-			   loabObj.page = loabObj.page-1;
+			gloabObj.page = gloabObj.page-1;
 	   jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/ej/del.do",{ids:id},"get","json",function(data){
 		    alert(data.message);
-		    window.location.href = "<%=request.getContextPath() %>/ej/list.do?page="+loabObj.page+"&rows="+gloabObj.rows;
+		    window.location.href = "<%=request.getContextPath() %>/ej/list.do?page="+gloabObj.page+"&rows="+gloabObj.rows;
 	    });
 	}
 }
