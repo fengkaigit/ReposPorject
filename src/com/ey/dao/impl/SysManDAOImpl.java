@@ -73,7 +73,7 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 		List paramList = new ArrayList();
 		StringBuffer hql = new StringBuffer("from Feedback where 1=1");
 		createQueryParam(hql,Qparam,paramList);
-		hql.append(" order by viewTime desc");
+		hql.append(" order by viewTime desc,areaId");
 		return this.find(hql.toString(),paramList.toArray(), page, rows);
 	}
 

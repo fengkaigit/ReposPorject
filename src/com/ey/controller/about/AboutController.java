@@ -49,19 +49,25 @@ public class AboutController extends BaseController {
 		return mav;
 	}
 	@RequestMapping(value = "/ieda")
-	public ModelAndView ieda(@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request,
+	public ModelAndView ieda(HttpServletRequest request,
 			HttpServletResponse response) {		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("ieda/ieda");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/feedback")
+	public ModelAndView feedback(@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request,
+			HttpServletResponse response) {		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("ieda/iedahome");
 		Long total = 0l;
-		UserBase user = (UserBase)request.getSession().getAttribute(SystemConst.USER);
-        if(user!=null){
-        	Map<String,Object> queryMap = new HashMap<String,Object>();
-    		queryMap.put("areaId", user.getAreaId());
-    		List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, page, rows);
-    	    total = sysManService.findTotalFeedBack(queryMap);
-    		mav.addObject("feedbacks", feedlist);
-        }
+        Map<String,Object> queryMap = new HashMap<String,Object>();
+    	//queryMap.put("areaId", user.getAreaId());
+    	List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, page, rows);
+    	total = sysManService.findTotalFeedBack(queryMap);
+        mav.addObject("feedbacks", feedlist);
+        
         mav.addObject("total", total);
 		return mav;
 	}

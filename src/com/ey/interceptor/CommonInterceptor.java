@@ -9,7 +9,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ey.bo.AgentBo;
 import com.ey.consts.SystemConst;
+import com.ey.dao.entity.SystemManager;
+import com.ey.dao.entity.UserBase;
+import com.ey.entity.User;
 import com.ey.util.RequestUtils;
 
 public class CommonInterceptor implements  HandlerInterceptor {
@@ -45,11 +49,13 @@ public class CommonInterceptor implements  HandlerInterceptor {
 		// TODO Auto-generated method stub
 		 String requestUrl = request.getRequestURI();
 		 if(!contains(requestUrl)){
-			 HttpSession session =request.getSession();  
-		     if(session.getAttribute(SystemConst.USER)==null){  
+			 HttpSession session =request.getSession();
+			 UserBase user = (UserBase)session.getAttribute(SystemConst.USER);
+			 SystemManager sysManUser = (SystemManager)session.getAttribute(SystemConst.MANAGER);
+			 AgentBo agent = (AgentBo)session.getAttribute(SystemConst.AGENT);
+		     if(user==null&&sysManUser==null&&agent==null){  
 		    	    request.setAttribute("forwardUrl", requestUrl);
 		            request.getRequestDispatcher(loginUrl).forward(request, response);
-		           
 		            return false;   
 		      }    
 		 }

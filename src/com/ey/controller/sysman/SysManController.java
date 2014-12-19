@@ -77,7 +77,7 @@ public class SysManController {
   	  }else{
   		  mav.setViewName("redirect:/sysman/list.do");
   		  mav.addObject(SystemConst.USER,currentManager);
-  		  request.getSession().setAttribute(SystemConst.USER, currentManager);
+  		  request.getSession().setAttribute(SystemConst.MANAGER, currentManager);
   		/*       添加cookie信息                  */
 			if(request.getParameter("remember")!=null){
 				CookieManager.addCookie(response,"sysLoginName",loginCode,60*60*24*31);
@@ -94,7 +94,7 @@ public class SysManController {
 	
 	@RequestMapping(value="/logout")
     public String syslogout(HttpServletRequest request,HttpServletResponse response){
-		request.getSession().removeAttribute(SystemConst.USER);
+		request.getSession().removeAttribute(SystemConst.MANAGER);
 		request.getSession().invalidate();
 		return "login/sysManLogin";
     }
@@ -159,7 +159,7 @@ public class SysManController {
 	@ResponseBody
 	public Object modifyPass(@RequestParam("oldpasswd") String oldPass,@RequestParam("passwd") String newPass,@RequestParam("confirmPassword") String confirePass,HttpServletRequest request,HttpServletResponse response){
 	  Map<String,Object> map = new HashMap<String,Object>();
-	  SystemManager sysManObj = (SystemManager)request.getSession().getAttribute(SystemConst.USER);
+	  SystemManager sysManObj = (SystemManager)request.getSession().getAttribute(SystemConst.MANAGER);
 	  if(sysManObj!=null){
 		  if(!sysManObj.getPasswd().equalsIgnoreCase(MD5.getMD5Str(oldPass))){
 			  map.put("result",false);

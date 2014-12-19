@@ -127,7 +127,7 @@ public class AgentController extends BaseController {
 		} else {
 			mav.setViewName(INDEX_PAGE);
 			mav.addObject(SystemConst.USER, agent);
-			request.getSession().setAttribute(SystemConst.USER, agent);
+			request.getSession().setAttribute(SystemConst.AGENT, agent);
 			if (request.getParameter("remember") != null) {
 				CookieManager.addCookie(response, "agentLoginName", loginCode,
 						60 * 60 * 24 * 31);
@@ -144,15 +144,16 @@ public class AgentController extends BaseController {
 	}
 
 	@RequestMapping(value = "/iframe")
-	public String iframe(ModelMap modelMap, HttpServletRequest request,
+	public ModelAndView iframe(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
-				SystemConst.USER);
+				SystemConst.AGENT);
+		ModelAndView mav = new ModelAndView(IFRAME_PAGE);
 		List<CountReportBo> reportlist = agentService.findReportByAgentId(
 				agent.getId(), String.valueOf(DateUtil.getYear(new Date())),
 				agent.getAreaId());
-		modelMap.addAttribute("reports", reportlist);
-		return IFRAME_PAGE;
+		mav.addObject("reports", reportlist);
+		return mav;
 	}
 
 	@RequestMapping(value = "/billlist")
@@ -179,7 +180,7 @@ public class AgentController extends BaseController {
 	@RequestMapping(value = "/logout")
 	public String syslogout(HttpServletRequest request,
 			HttpServletResponse response) {
-		request.getSession().removeAttribute(SystemConst.USER);
+		request.getSession().removeAttribute(SystemConst.AGENT);
 		request.getSession().invalidate();
 		return LOGIN_PAGE;
 	}
@@ -280,7 +281,7 @@ public class AgentController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
-				SystemConst.USER);
+				SystemConst.AGENT);
 		if (agent != null) {
 			if (!agent.getPasswd().equalsIgnoreCase(MD5.getMD5Str(oldPass))) {
 				map.put("result", false);
@@ -352,7 +353,7 @@ public class AgentController extends BaseController {
 	public ModelAndView queryUserChart(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
-				SystemConst.USER);
+				SystemConst.AGENT);
 		Date date = new Date();
 		String currentYearMonth = DateUtil.getYearMonthNowString(date);
 		String year = String.valueOf(DateUtil.getYear(date));
@@ -396,7 +397,7 @@ public class AgentController extends BaseController {
 		Long noComplateNum = 0L;
 		String currentYearMonth = DateUtil.getYearMonthNowString(new Date());
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
-				SystemConst.USER);
+				SystemConst.AGENT);
 		List billlist = agentService.findBillNumByMonth(agent.getId(),
 				currentYearMonth);
 		for (Object o : billlist) {
@@ -442,7 +443,7 @@ public class AgentController extends BaseController {
 			throws IOException {
 		String currentYearMonth = DateUtil.getYearMonthNowString(new Date());
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
-				SystemConst.USER);
+				SystemConst.AGENT);
 		List<Object[]> settlelist = agentService.findBillSettleByMonth(
 				agent.getId(), currentYearMonth);
 		PieChart chart = new PieChart();
@@ -476,7 +477,7 @@ public class AgentController extends BaseController {
 	public ModelAndView report(String year, HttpServletRequest request,
 			HttpServletResponse response) {
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
-				SystemConst.USER);
+				SystemConst.AGENT);
 		List<CountReportBo> reportlist = agentService.findReportByAgentId(
 				agent.getId(), year, agent.getAreaId());
 		ModelAndView mav = new ModelAndView("agent/report");
@@ -490,7 +491,7 @@ public class AgentController extends BaseController {
 	public Object asyncReport(String year, HttpServletRequest request,
 			HttpServletResponse response){
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
-				SystemConst.USER);
+				SystemConst.AGENT);
 		List<CountReportBo> reportlist = agentService.findReportByAgentId(
 				agent.getId(), year, agent.getAreaId());
 		return reportlist;
@@ -502,7 +503,7 @@ public class AgentController extends BaseController {
 	public Object doself(Integer page, Integer rows,
 			HttpServletRequest request, HttpServletResponse response){
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
-				SystemConst.USER);
+				SystemConst.AGENT);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("status", 0);
 		List selflist = agentService.findAgentSelf(agent.getId(), map, page,
@@ -517,7 +518,7 @@ public class AgentController extends BaseController {
 			@ModelAttribute("rows") Integer rows, ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response){
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
-				SystemConst.USER);
+				SystemConst.AGENT);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("status", status);
 		List selflist = agentService.findAgentSelf(agent.getId(), map, page,

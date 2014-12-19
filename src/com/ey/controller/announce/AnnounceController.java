@@ -84,7 +84,7 @@ public class AnnounceController extends BaseController {
 	}
 	
 	private List<SysAnnouncement> getAgentGgList(Map<String,Object> paramMap,Integer page,Integer rows,HttpServletRequest request){
-		AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.USER);
+		AgentBo agent = (AgentBo)request.getSession().getAttribute(SystemConst.AGENT);
         //Map<String,Object> queryMap = new HashMap<String,Object>();
     	paramMap.put("home", true);
     	paramMap.put("status", 0);
