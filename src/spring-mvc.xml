@@ -132,6 +132,7 @@
                         <value>/announce/showgg.do</value>
                         <value>/phone/phoneReg.do</value>
                          <value>/announce/more.do</value>
+                         <value>/ej/feedback.do</value>
                    </list> 
          </property>
           
