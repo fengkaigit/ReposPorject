@@ -34,6 +34,7 @@ import com.ey.bo.PaymentSettingPhoneBo;
 import com.ey.bo.PaymentSettingPropertyBo;
 import com.ey.bo.PaymentSettingStandardBo;
 import com.ey.bo.PaymentSettingTrafficBo;
+import com.ey.bo.QueryBillBO;
 import com.ey.bo.ResultBo;
 import com.ey.bo.StandardBo;
 import com.ey.bo.SysAnnounceBo;
@@ -69,6 +70,7 @@ import com.ey.service.WYfService;
 import com.ey.service.YXfService;
 import com.ey.service.YdtxfService;
 import com.ey.util.ClassUtil;
+import com.ey.util.DateUtil;
 import com.ey.util.MD5;
 import com.ey.util.MoneyUtil;
 import com.ey.util.RequestUtils;
@@ -128,6 +130,9 @@ public class PhoneController {
 	
 	@Autowired
 	private StaticService staticService;
+	
+	@Autowired
+	private JfService jfService;
 	
 	@Autowired
 	private UserService userService;
@@ -278,6 +283,7 @@ public class PhoneController {
 	public ModelAndView getCatvInJSON(String areaId,int televisionType,HttpServletRequest request,
 			HttpServletResponse response) throws JSONException, IOException{
 		JSONObject obj = new JSONObject();
+		PrintWriter out = response.getWriter();
 		try{
 			List<CatvInfo> lst = catvService.getCatvInfo(areaId, televisionType);
 			List<CatvInfoBo> boLst = new ArrayList();
@@ -293,7 +299,7 @@ public class PhoneController {
 			obj.put("data", "获取有线电视设置信息失败！");
 		}
 		response.setContentType("application/json;charset=utf-8");
-		PrintWriter out = response.getWriter();
+		
 		String retnStr = "";
 		if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
@@ -310,9 +316,10 @@ public class PhoneController {
 	public ModelAndView savePaySetting(String areaId,Long entId,
 			int payType,String paymentCode,String payAddress,String vehicle, 
 			String carframe, String engine,HttpServletRequest request,
-			HttpServletResponse response) throws JSONException, IOException{
+			HttpServletResponse response) throws JSONException{
 		//0：水费；1：电费；2：燃气；3：固话；4：移动；5：交通；6：物业；7：有线电视；8采暖
 		JSONObject obj = new JSONObject();
+		PrintWriter out = null;
 		try{
 			if (StringUtil.isEmptyString(areaId)) {
 				obj.put("success", false);
@@ -364,12 +371,13 @@ public class PhoneController {
 				obj.put("success", true);
 				obj.put("data", "设置用户缴费账号信息成功！");
 			}
+			response.setContentType("application/json;charset=utf-8");
+			out = response.getWriter();
 		}catch (Exception e) {
 			obj.put("success", false);
 			obj.put("data", "设置用户缴费账号信息失败！");
 		}
-		response.setContentType("application/json;charset=utf-8");
-		PrintWriter out = response.getWriter();
+		
 		String retnStr = "";
 		if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
@@ -631,8 +639,9 @@ public class PhoneController {
 				NoticeInfoBo bo = new NoticeInfoBo(notice.getId(),notice.getServerContent().toString(),notice.getCreateTime(),notice.getNoticeType());
 				retnLst.add(bo);
 			}
+			JSONArray jsonArr=JSONArray.fromObject(retnLst);
 			obj.put("success", true);
-			obj.put("data",retnLst);
+			obj.put("data",jsonArr);
 		}catch (Exception e) {
 			obj.put("success", true);
 			obj.put("data","查询用户消息信息失败");
@@ -664,10 +673,11 @@ public class PhoneController {
 				SysAnnounceBo bo = new SysAnnounceBo(notice.getId(),notice.getCreateTime(),notice.getTitle(),notice.getContent());
 				retnLst.add(bo);
 			}
+			JSONArray jsonArr=JSONArray.fromObject(retnLst);
 			obj.put("success", true);
-			obj.put("data",retnLst);
+			obj.put("data",jsonArr);
 		}catch (Exception e) {
-			obj.put("success", true);
+			obj.put("success", false);
 			obj.put("data","查询系统信息失败！");
 		}
 		response.setContentType("application/json;charset=utf-8");
@@ -691,15 +701,33 @@ public class PhoneController {
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
+			Date date = new Date();
+			int curYear = DateUtil.getYear(date);
+			int curMonth = DateUtil.getMonth(date);
+			String year = beginDate.substring(0,4);
+			String startMonth = beginDate.substring(5,7);
+			String endMonth = endDate.substring(5,7);
+			if (StringUtil.isEmptyString(year)) {
+				year = curYear + "";
+			}
+			if (StringUtil.isEmptyString(startMonth)) {
+				startMonth = "1";
+			}
+			if (StringUtil.isEmptyString(endMonth)) {
+				endMonth = curMonth + "";
+			}
+			List<QueryBillBO> records = new ArrayList();
 			if (payType.equals("all")){
-				
+				records = jfService.getTotalRecords(currentUser
+						.getId(), new Integer(year), startMonth, endMonth);
 			}else{
 				
 			}
+			JSONArray jsonArr=JSONArray.fromObject(records);
 			obj.put("success", true);
-			obj.put("data","");
+			obj.put("data",jsonArr);
 		}catch (Exception e) {
-			obj.put("success", true);
+			obj.put("success", false);
 			obj.put("data","查询用户消息信息失败！");
 		}
 		response.setContentType("application/json;charset=utf-8");
