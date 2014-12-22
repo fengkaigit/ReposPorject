@@ -198,7 +198,7 @@ public class LoginController extends BaseController {
 				return mav;
 			}
 		}
-		// user.setPasswd(user.getPasswd());
+		 user.setPasswd(MD5.getMD5Str(user.getPasswd()));
 		UserBase currentUser = loginService.findUserByLoginCode(user
 				.getAccountNumber());
 		if (currentUser != null) {
