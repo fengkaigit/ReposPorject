@@ -8,11 +8,21 @@ public class PaymentSettingStandardBo {
 	
 	private String payAddress;
 	
+	private String areaId;
+	
+	private Long entId;
+	
+	private String entName;
+	
 	public PaymentSettingStandardBo(){
 		
 	}
 	
-	public PaymentSettingStandardBo(String billNumber,String hoster, String payAddress){
+	public PaymentSettingStandardBo(String areaId, Long entId, String entName,
+			String billNumber,String hoster, String payAddress){
+		this.areaId = areaId;
+		this.entId = entId;
+		this.entName = entName;
 		this.billNumber = billNumber;
 		this.hoster = hoster;
 		this.payAddress = payAddress;
@@ -40,6 +50,30 @@ public class PaymentSettingStandardBo {
 
 	public void setPayAddress(String payAddress) {
 		this.payAddress = payAddress;
+	}
+
+	public String getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(String areaId) {
+		this.areaId = areaId;
+	}
+
+	public Long getEntId() {
+		return entId;
+	}
+
+	public void setEntId(Long entId) {
+		this.entId = entId;
+	}
+
+	public String getEntName() {
+		return entName;
+	}
+
+	public void setEntName(String entName) {
+		this.entName = entName;
 	}
 	
 	

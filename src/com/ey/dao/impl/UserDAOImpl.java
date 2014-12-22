@@ -1,5 +1,6 @@
 package com.ey.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -76,17 +77,43 @@ public class UserDAOImpl extends BaseDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<NoticeInfo> findNoticeByUserId(Long userId)
+	public List<NoticeInfo> findNoticeByUserId(Long userId, Integer showCount, Integer page)
 			throws RuntimeException {
-		String hql = "from NoticeInfo where userId=? and sendStatus=0";
-		return this.find(hql, new Object[]{userId});
+		String hql = "from NoticeInfo where userId=? and sendStatus=?";
+		return this.find(hql, new Object[]{userId, 0}, page, showCount);
 	}
 
 	@Override
-	public java.util.List<SysAnnouncement> findSystemAnnounce(String areaId)
+	public java.util.List<SysAnnouncement> findSystemAnnounce(String areaId, Long id)
 			throws RuntimeException {
-		String hql = "from SysAnnouncement where status=0 and announcementGroup=1 and (announcementScope=0 or (announcementScope=1 and areaId=?))";
-		return this.find(hql, new Object[]{areaId});
+		String hql = "from SysAnnouncement where status=? and announcementGroup=?";
+		List paramList = new ArrayList();
+		paramList.add(0);
+		paramList.add(1);
+		if (areaId!=null){
+			hql = hql + " and (announcementScope=? or (announcementScope=? and areaId=?))";
+			paramList.add(0);
+			paramList.add(1);
+			paramList.add(areaId);
+		}
+		if (id!=null){
+			hql = hql + " and id=?";
+			paramList.add(id);
+		}
+		return this.find(hql, paramList.toArray());
+	}
+
+	@Override
+	public void modifyUserMessage(Integer status, Long userId, Long id)
+			throws RuntimeException {
+		String hql = "update from NoticeInfo sendStatus  = ? where userId=? and id = ?";
+        this.executeHql(hql, new Object[]{status, userId,id});
+	}
+
+	@Override
+	public void updatePasswd(UserBase user) throws RuntimeException {
+		String hql = " update from UserBase set passwd=? where id=?";
+		this.executeHql(hql, new Object[]{user.getPasswd(), user.getId()});
 	}
 
 }

@@ -26,8 +26,12 @@ public interface UserDAO extends BaseDAO{
 
 	public void saveUser(UserBase user) throws RuntimeException;
 	
-	public List<NoticeInfo> findNoticeByUserId(Long userId) throws RuntimeException;
+	public List<NoticeInfo> findNoticeByUserId(Long userId, Integer showCount, Integer page) throws RuntimeException;
 	
-	public List<SysAnnouncement> findSystemAnnounce(String areaId) throws RuntimeException;
+	public List<SysAnnouncement> findSystemAnnounce(String areaId, Long id) throws RuntimeException;
+	
+	public void modifyUserMessage(Integer status, Long userId, Long id) throws RuntimeException;
+	
+	public void updatePasswd(UserBase user) throws RuntimeException;
     
 }

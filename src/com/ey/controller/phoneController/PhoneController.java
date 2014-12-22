@@ -29,7 +29,9 @@ import com.ey.bo.AreaBo;
 import com.ey.bo.CatvInfoBo;
 import com.ey.bo.ChargeEntBo;
 import com.ey.bo.ConfirmPaymentBo;
+import com.ey.bo.FeedBackBo;
 import com.ey.bo.NoticeInfoBo;
+import com.ey.bo.PaymentSettingBo;
 import com.ey.bo.PaymentSettingPhoneBo;
 import com.ey.bo.PaymentSettingPropertyBo;
 import com.ey.bo.PaymentSettingStandardBo;
@@ -45,6 +47,7 @@ import com.ey.dao.entity.Area;
 import com.ey.dao.entity.CatvInfo;
 import com.ey.dao.entity.ChargeEnterprise;
 import com.ey.dao.entity.FeeRule;
+import com.ey.dao.entity.Feedback;
 import com.ey.dao.entity.NoticeInfo;
 import com.ey.dao.entity.PaymentSetting;
 import com.ey.dao.entity.SysAnnouncement;
@@ -65,6 +68,7 @@ import com.ey.service.RQfService;
 import com.ey.service.SettingService;
 import com.ey.service.SfService;
 import com.ey.service.StaticService;
+import com.ey.service.SysManService;
 import com.ey.service.UserService;
 import com.ey.service.WYfService;
 import com.ey.service.YXfService;
@@ -135,6 +139,9 @@ public class PhoneController {
 	private JfService jfService;
 	
 	@Autowired
+    private SysManService sysManService;
+	
+	@Autowired
 	private UserService userService;
 	
 	@RequestMapping(value="/areaJson")
@@ -189,12 +196,12 @@ public class PhoneController {
 		
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + obj.toString() + ")";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
@@ -221,12 +228,12 @@ public class PhoneController {
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + obj.toString() + ")";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
@@ -247,13 +254,13 @@ public class PhoneController {
 					PaymentSettingPhoneBo bo = new PaymentSettingPhoneBo(setting.getBillNumber(),setting.getHoster());
 					standardLst.add(bo);
 				}else if (payType==5){
-					PaymentSettingTrafficBo bo = new PaymentSettingTrafficBo(setting.getBillNumber(),setting.getHoster(),setting.getVehicleNumber(),setting.getCarframeNumber(),setting.getEngineNumber());
+					PaymentSettingTrafficBo bo = new PaymentSettingTrafficBo(setting.getAreaId(), setting.getEntId(), setting.getEntName(), setting.getBillNumber(),setting.getHoster(),setting.getVehicleNumber(),setting.getCarframeNumber(),setting.getEngineNumber());
 					standardLst.add(bo);
 				}else if (payType==6){
-					PaymentSettingPropertyBo bo = new PaymentSettingPropertyBo(setting.getHoster(),setting.getPayAddress());
+					PaymentSettingPropertyBo bo = new PaymentSettingPropertyBo(setting.getAreaId(), setting.getEntId(), setting.getEntName(),setting.getHoster(),setting.getPayAddress());
 					standardLst.add(bo);
 				}else{
-					PaymentSettingStandardBo bo = new PaymentSettingStandardBo(setting.getBillNumber(),setting.getHoster(),setting.getPayAddress());
+					PaymentSettingStandardBo bo = new PaymentSettingStandardBo(setting.getAreaId(), setting.getEntId(), setting.getEntName(),setting.getBillNumber(),setting.getHoster(),setting.getPayAddress());
 					standardLst.add(bo);
 				}
 			}
@@ -267,12 +274,12 @@ public class PhoneController {
 
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + obj.toString() + ")";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
@@ -300,12 +307,12 @@ public class PhoneController {
 		}
 		response.setContentType("application/json;charset=utf-8");
 		
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + obj.toString() + ")";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
@@ -378,12 +385,12 @@ public class PhoneController {
 			obj.put("data", "设置用户缴费账号信息失败！");
 		}
 		
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + obj.toString() + ")";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
@@ -394,8 +401,7 @@ public class PhoneController {
 	public ModelAndView phoneLogin(String userId,String passwd, HttpServletRequest request,
 			HttpServletResponse response) throws JSONException, IOException{
 		JSONObject obj = new JSONObject();
-		/*UserBase currentUser = loginService.findUserByLoginCode(userId, MD5.getMD5Str(passwd));*/
-		UserBase currentUser = loginService.findUserByLoginCode(userId, passwd);
+		UserBase currentUser = loginService.findUserByLoginCode(userId, MD5.getMD5Str(passwd));
 		try{
 			if (StringUtil.isEmptyString(userId)) {
 				obj.put("success", false);
@@ -417,12 +423,52 @@ public class PhoneController {
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + obj.toString() + ")";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
+	
+	@RequestMapping(value="/modifyPasswd")
+	public ModelAndView modifyPasswd(String oldPasswd,String newPasswd, HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(
+				SystemConst.USER);
+		try{
+			if (StringUtil.isEmptyString(oldPasswd)) {
+				obj.put("success", false);
+				obj.put("data",RequestUtils.getMessage("oldpasswdempty", request));
+			}else if (StringUtil.isEmptyString(newPasswd)) {
+				obj.put("success", false);
+				obj.put("data",RequestUtils.getMessage("newpasswdempty",request));
+			}else if (!MD5.getMD5Str(oldPasswd).equals(currentUser.getPasswd())) {
+				obj.put("success", false);
+				obj.put("data",RequestUtils.getMessage("oldpasserror",request));
+			}else {
+				currentUser.setPasswd(MD5.getMD5Str(newPasswd));
+				userService.updatePasswd(currentUser);
+				obj.put("success", true);
+				obj.put("data",request.getSession().getId());
+			}
+		}catch (Exception e) {
+			obj.put("success", false);
+			obj.put("data","用户登录失败！");
+		}
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
@@ -470,12 +516,12 @@ public class PhoneController {
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + obj.toString() + ")";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
@@ -587,12 +633,12 @@ public class PhoneController {
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = jsonObj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + jsonObj.toString() + ")";
+		retnStr = retnStr + "(" + jsonObj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
@@ -614,12 +660,12 @@ public class PhoneController {
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + obj.toString() + ")";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
@@ -627,13 +673,17 @@ public class PhoneController {
 	}
 	
 	@RequestMapping(value="/getMessage")
-	public ModelAndView getMessage(HttpServletRequest request,
+	public ModelAndView getMessage(Integer showCount, Integer page, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, JSONException{
 		JSONObject obj = new JSONObject();
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
-			List<NoticeInfo> noticeLst = userService.findNoticeByUserId(currentUser.getId());
+			if (page==null)
+				page=1;
+			if (showCount==null)
+				showCount=10;
+			List<NoticeInfo> noticeLst = userService.findNoticeByUserId(currentUser.getId(), showCount, page);
 			List<NoticeInfoBo> retnLst = new ArrayList();
 			for (NoticeInfo notice:noticeLst){
 				NoticeInfoBo bo = new NoticeInfoBo(notice.getId(),notice.getServerContent().toString(),notice.getCreateTime(),notice.getNoticeType());
@@ -643,17 +693,45 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data",jsonArr);
 		}catch (Exception e) {
-			obj.put("success", true);
+			obj.put("success", false);
 			obj.put("data","查询用户消息信息失败");
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + obj.toString() + ")";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
+	
+	@RequestMapping(value="/modifyMessage")
+	public ModelAndView modifyMessage(Long id, HttpServletRequest request,
+			HttpServletResponse response) throws IOException, JSONException{
+		JSONObject obj = new JSONObject();
+		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			userService.modifyUserMessage(1, currentUser.getId(),id);
+			obj.put("success", true);
+			obj.put("data","修改消息状态成功");
+		}catch (Exception e) {
+			obj.put("success", false);
+			obj.put("data","修改消息状态失败");
+		}
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
@@ -667,10 +745,10 @@ public class PhoneController {
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
-			List<SysAnnouncement> noticeLst = userService.findSystemAnnounce(currentUser.getAreaId());
+			List<SysAnnouncement> noticeLst = userService.findSystemAnnounce(currentUser.getAreaId(), null);
 			List<SysAnnounceBo> retnLst = new ArrayList();
 			for (SysAnnouncement notice:noticeLst){
-				SysAnnounceBo bo = new SysAnnounceBo(notice.getId(),notice.getCreateTime(),notice.getTitle(),notice.getContent());
+				SysAnnounceBo bo = new SysAnnounceBo(notice.getId(),notice.getCreateTime(),notice.getTitle(),"");
 				retnLst.add(bo);
 			}
 			JSONArray jsonArr=JSONArray.fromObject(retnLst);
@@ -678,16 +756,50 @@ public class PhoneController {
 			obj.put("data",jsonArr);
 		}catch (Exception e) {
 			obj.put("success", false);
-			obj.put("data","查询系统信息失败！");
+			obj.put("data","查询系统公告失败！");
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + obj.toString() + ")";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
+	
+	@RequestMapping(value="/getSystemMessageContent")
+	public ModelAndView getSystemMessageContent(Long id, HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
+		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			List<SysAnnouncement> noticeLst = userService.findSystemAnnounce(currentUser.getAreaId(),id);
+			List<SysAnnounceBo> retnLst = new ArrayList();
+			for (SysAnnouncement notice:noticeLst){
+				SysAnnounceBo bo = new SysAnnounceBo(notice.getId(),notice.getCreateTime(),notice.getTitle(),"");
+				retnLst.add(bo);
+			}
+			JSONArray jsonArr=JSONArray.fromObject(retnLst);
+			obj.put("success", true);
+			obj.put("data",jsonArr);
+		}catch (Exception e) {
+			obj.put("success", false);
+			obj.put("data","查询系统公告内容失败！");
+		}
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
@@ -732,19 +844,143 @@ public class PhoneController {
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String retnStr = "";
-		if (request.getParameter("callback")!=null)
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
 		else
 			retnStr = "callback";
-		retnStr = retnStr + "(" + obj.toString() + ")";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
 		out.println(retnStr);
 		out.flush();
 		out.close();
 		return null;
 	}
 	
+	@RequestMapping(value="/getPaymentSetting")
+	public ModelAndView getPaymentSetting(HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
+		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			List<PaymentSetting> list = settingService.list(currentUser.getId(),null);
+			List<PaymentSettingBo> retnLst = new ArrayList();
+			for (PaymentSetting paymentSet:list){
+				PaymentSettingBo bo = new PaymentSettingBo();
+				bo.setId(paymentSet.getId());
+				bo.setAreaId(paymentSet.getAreaId());
+				bo.setAreaName(paymentSet.getAreaName());
+				bo.setBillNumber(paymentSet.getBillNumber());
+				bo.setCarframeNumber(paymentSet.getCarframeNumber());
+				bo.setEngineNumber(paymentSet.getEngineNumber());
+				bo.setEntId(paymentSet.getEntId());
+				bo.setEntName(paymentSet.getEntName());
+				bo.setGroupId(paymentSet.getGroupId());
+				bo.setGroupName(paymentSet.getGroupName());
+				bo.setHoster(paymentSet.getHoster());
+				bo.setPayAddress(paymentSet.getPayAddress());
+				bo.setPaymentType(paymentSet.getPaymentType());
+				bo.setPaymentTypeName(paymentSet.getPaymentTypeName());
+				bo.setVehicleNumber(paymentSet.getVehicleNumber());
+				retnLst.add(bo);
+			}
+			JSONArray jsonArr=JSONArray.fromObject(retnLst);
+			obj.put("success", true);
+			obj.put("data",jsonArr);
+		}catch (Exception e) {
+			obj.put("success", false);
+			obj.put("data","查询当前登录用户设置账户信息失败！");
+		}
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
 	
+	@RequestMapping(value="/getFeedbackList")
+	public ModelAndView getFeedbackList(Integer showCount, Integer page, HttpServletRequest request,
+			HttpServletResponse response) throws IOException, JSONException{
+		JSONObject obj = new JSONObject();
+		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			Map<String,Object> queryMap = new HashMap<String,Object>();
+	    	//queryMap.put("areaId", user.getAreaId());
+	    	List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, page, showCount);
+	    	List<FeedBackBo> retnLst = new ArrayList();
+	    	for (Feedback feed:feedlist){
+				FeedBackBo bo = new FeedBackBo(feed.getId(),feed.getUserId(),feed.getUserIdea(),feed.getSystemFeedback(),
+						feed.getBackFlag(),feed.getBackType(),feed.geteMail(),feed.getAreaId(),feed.getAreaName(),feed.getUserName());
+				bo.setSystemTime(DateUtil.convertDateToString("yyyy-MM-dd HH:mm:ss",feed.getSystemTime()));
+				bo.setViewTime(DateUtil.convertDateToString("yyyy-MM-dd HH:mm:ss",feed.getViewTime()));
+				retnLst.add(bo);
+	    	}
+	    	JSONArray jsonArr=JSONArray.fromObject(retnLst);
+			obj.put("success", true);
+			obj.put("data",jsonArr);
+		}catch (Exception e) {
+			obj.put("success", false);
+			obj.put("data","查询意见反馈信息失败");
+		}
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
+	
+	@RequestMapping(value="/sendFeedback")
+	public ModelAndView commitFeedback(String userIdea, Integer backType, HttpServletRequest request,
+			HttpServletResponse response) throws IOException, JSONException{
+		JSONObject obj = new JSONObject();
+		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			Feedback feedBack = new Feedback();
+			if(currentUser!=null){
+			  feedBack.setUserId(currentUser.getId());
+			  feedBack.setUserName(currentUser.getRealName());
+			  feedBack.setAreaId(currentUser.getAreaId());
+			}
+			feedBack.setBackFlag(0);
+			feedBack.setBackType(backType);
+			feedBack.setViewTime(new Date());
+			feedBack.setUserIdea(userIdea);
+			sysManService.saveFeedBack(feedBack);
+			obj.put("success", true);
+			obj.put("data","意见反馈成功");
+		}catch (Exception e) {
+			obj.put("success", false);
+			obj.put("data","意见反馈失败");
+		}
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
 	
 }
 

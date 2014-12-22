@@ -61,15 +61,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<NoticeInfo> findNoticeByUserId(Long userId) throws RuntimeException {
+	public List<NoticeInfo> findNoticeByUserId(Long userId, Integer showCount, Integer page) throws RuntimeException {
 		// TODO Auto-generated method stub
-		return userDAO.findNoticeByUserId(userId);
+		return userDAO.findNoticeByUserId(userId, showCount, page);
 	}
 
 	@Override
-	public List<SysAnnouncement> findSystemAnnounce(String areaId)
+	public List<SysAnnouncement> findSystemAnnounce(String areaId, Long id)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		return userDAO.findSystemAnnounce(areaId);
+		return userDAO.findSystemAnnounce(areaId,id);
+	}
+
+	@Override
+	public void modifyUserMessage(Integer status, Long userId, Long id)
+			throws RuntimeException {
+		userDAO.modifyUserMessage(status, userId, id);
+	}
+
+	@Override
+	public void updatePasswd(UserBase user) throws RuntimeException {
+		userDAO.updatePasswd(user);
 	}
 }

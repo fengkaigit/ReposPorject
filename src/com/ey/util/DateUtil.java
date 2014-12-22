@@ -102,6 +102,10 @@ public class DateUtil {
 		return (returnValue);
 	}
 
+	public static final String convertDateToString(String pattern, Date aDate) {
+		return getDateTime(pattern, aDate);
+	}
+	
 	public static final String convertDateToString(Date aDate) {
 		return getDateTime(getDatePattern(), aDate);
 	}
