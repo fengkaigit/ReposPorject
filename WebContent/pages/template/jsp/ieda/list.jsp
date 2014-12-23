@@ -41,7 +41,7 @@ function postHandle(){
 		  if(data.result){
 		    alert("意见回复成功");
 		    turnoff('replyfeed');
-		    window.location.href = "<%=request.getContextPath() %>/ej/list.do";
+		    window.location.href = "<%=request.getContextPath() %>/ej/list.do?page="+gloabObj.page+"&rows="+gloabObj.rows;
 		  }
 		   
 	  });
@@ -56,11 +56,68 @@ $(document).ready(function(){
 			prevText:'上一页',
 			nextText:'下一页',
 	        onPageClick:function(pageNumber, event){
-			    window.location.href = "<%=request.getContextPath() %>/ej/list.do?page="+pageNumber+"&rows="+gloabObj.rows;
+				query(pageNumber);
 			}
 	  });
 	}
 });
+function query(page){
+	if(!page)
+		page = 1;
+    var qForm = document.getElementById("queryForm");
+    qForm.action = "<%=request.getContextPath() %>/ej/list.do?page="+page+"&rows="+gloabObj.rows;
+    qForm.submit();
+}
+function audicomplate(){
+	
+	var checked = false;
+	var childChks = document.getElementsByName("chkSel");
+	for(var i=0;i<childChks.length;i++){
+		if(childChks[i].checked)
+			checked = true;
+	}
+	if(!checked){
+		alert("请选择反馈信息!");
+		return false;
+	}
+	$('#replyForm').ajaxSubmit(function(data){
+        if(data.result){
+          alert("审核成功");
+    	  window.location.href = "<%=request.getContextPath() %>/ej/list.do?page="+gloabObj.page+"&rows="+gloabObj.rows;
+        }
+   });
+}
+function replycomplate(id){
+	  var valueObj = {chkSel:id};
+	 jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/ej/audi.do",valueObj,"post","json",function(data){
+		  if(data.result){
+		    alert("审核成功");
+		    window.location.href = "<%=request.getContextPath() %>/ej/list.do?page="+gloabObj.page+"&rows="+gloabObj.rows;
+		  }
+		   
+	  });
+	
+}
+function getArea(id,elementId,initMessage,selectedValue){
+	if(id!=""){
+		var obj = {id:id};
+		jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/agent/getarea.do",obj,"get","json",function(data){
+	    	if(data!=null&&data.length>0){
+	    		var eleObj = document.getElementById(elementId);
+	    		eleObj.options.length = 0;
+	    		eleObj.options.add(new Option(initMessage,""));
+	    		for(var i = 0 ; i < data.length ;i++){
+	    			var obj = data[i];
+	    			var option = new Option(obj.province,obj.id);
+	    			eleObj.options.add(option);
+	    		}
+	    		if(selectedValue){
+	    			eleObj.value = selectedValue;
+	    		}
+	    	}
+	     });
+	}
+}
 </script>
 </head>
 <body>
@@ -72,16 +129,44 @@ $(document).ready(function(){
 <div class="jfzh-con">
 
 	
-    <div class="jfzh-bottom clearfix">    
+    <div class="jfzh-bottom clearfix">   
+    <div class="name">
+     <form id="queryForm" method="post">
+       <span class="fr cur" style="margin-right:19px;"><input  type="button" class="jfxx_btn9" onClick="audicomplate()" value="审核通过" name="complatehBtn"/></span>
+	   <span class="fr cur" style="margin-right:3px;"><input  type="button" class="jfxx_btn9" onClick="query()" value="查询" name="searchBtn"/></span>
+	   <span class="fr cur">&nbsp;&nbsp;&nbsp;</span>
+	   <span class="fr cur"><label style="font-size: 15px;">状态：</label><select class="zc_city"  style="width:100px;height:28px;" id="status" name="status">
+                             <option value="">请选择状态</option>
+                             <option value="0" <c:if test="${status==0}">selected</c:if>>新增</option>
+                             <option value="1" <c:if test="${status==1}">selected</c:if>>已审核</option>
+                             <option value="2" <c:if test="${status==2}">selected</c:if>>已反馈</option>
+                        </select></span>
+	   <span class="fr cur" style="margin-right:5px;"><label style="font-size: 15px;">地区：</label><select class="zc_city"  style="width:100px;height:28px;" id="pareaId" name="pareaId" onchange="getArea(this.value,'areaId','请选择城市')">
+                             <option value="">请选择地区</option>
+                              <c:forEach var="area" items="${areas}" varStatus="status"> 
+                                <option value="${area.id}" <c:if test="${area.id==parentAreaId}">selected</c:if>>${area.province}</option>
+                             </c:forEach>
+                          
+                        </select>&nbsp;<select class="zc_city"  style="width:100px;height:28px;" id="areaId" name="areaId">
+                             <option value="">请选择地区</option>
+                              <c:forEach var="childarea" items="${childareas}" varStatus="status"> 
+                                <option value="${childarea.id}" <c:if test="${childarea.id==areaId}">selected</c:if>>${childarea.province}</option>
+                             </c:forEach>
+                        </select></span>
+	</form>
+    </div>
+    <div class="jfzh-bottom clearfix"> 
 	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;反馈信息</span>
 	</div>
+  <form id="replyForm" action="<%=request.getContextPath() %>/ej/audi.do" method="post">
   
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
   <tr class="add">
+     <td><input type="checkbox" id="chkall" onclick="selectall(this,'chkSel')"/></td>
     <td>序号</td>
     <td>类型</td>
     <td width="50%">内容</td>
-    <td>是否回复</td>
+    <td>状态</td>
     <td>时间</td>
     <td>操作</td>
   </tr>
@@ -94,6 +179,7 @@ $(document).ready(function(){
          class="even"
        </c:otherwise>
      </c:choose> >
+    <td><input type="checkbox" name="chkSel" value="${item.id}"/></td>
     <td>&nbsp;${status.index+1}</td>
     <td><c:choose>
        <c:when test="${item.backType == 1}">
@@ -107,9 +193,10 @@ $(document).ready(function(){
        </c:otherwise>
      </c:choose></td>
     <td>&nbsp;${item.userIdea}</td>
-    <td>&nbsp;<c:if test="${item.backFlag==0}">未回复</c:if><c:if test="${item.backFlag==1}">已回复</c:if></td>
+    <td>&nbsp;<c:if test="${item.backFlag==0}">新增</c:if><c:if test="${item.backFlag==1}">已审核</c:if><c:if test="${item.backFlag==2}">已反馈</c:if></td>
     <td>&nbsp;<fmt:formatDate value="${item.viewTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
     <td>
+    <c:if test="${item.backFlag==0}"><a class="cur" style="color:#007abd;"  onClick="replycomplate(${item.id});">审核通过</a>&nbsp;</c:if>
 	<a class="cur" style="color:#007abd;"  onClick="getData(${item.id});">回复</a>&nbsp;
 	<a class="cur" style="color:#007abd;" onclick="delIeda(${item.id})">删除</a></td>
 
@@ -117,13 +204,13 @@ $(document).ready(function(){
  </c:forEach>
    
 </table>
+        </form>
 
     </div>
   <div id="pageNav"></div>
   <div class="clear"></div> 
 </div>
 </div>
-<form id="replyForm" action="<%=request.getContextPath() %>/ej/reply.do" method="post">
 <div id="replyfeed" class="divWin" style="display:none;width:500px;">
 <div class="close cur"  onclick="javascript:turnoff('replyfeed')">关闭</div>
             <h1></h1>
@@ -150,7 +237,7 @@ $(document).ready(function(){
             </tr>
             </tbody></table>
         </div>
-        </form>
+  </div> 
 <%@include file="/pages/template/jsp/common/footer.jsp"%>
 <%@include file="/pages/template/jsp/common/links.jsp"%>
 <script src="js/funs.js" type="text/javascript"></script>

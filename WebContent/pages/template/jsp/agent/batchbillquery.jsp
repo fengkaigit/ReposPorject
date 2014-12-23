@@ -38,7 +38,26 @@ function downloadbill(id){
 <div class="jfzh-con">
 
 	
-    <div class="jfzh-bottom clearfix">    
+    <div class="jfzh-bottom clearfix">
+        <div class="name">
+     <form id="queryForm" method="post">
+	   <span class="fr cur" style="margin-right:3px;"><input  type="button" class="jfxx_btn9" onClick="query()" value="查询" name="searchBtn"/></span>
+	   <span class="fr cur">&nbsp;&nbsp;&nbsp;</span>
+	   <span class="fr cur"><label style="font-size: 15px;">状态：</label><select class="zc_city"  style="width:100px;height:28px;" id="status" name="status">
+                             <option value="">请选择状态</option>
+                             <option value="0" <c:if test="${status==0}">selected</c:if>>待处理</option>
+                             <option value="1" <c:if test="${status==1}">selected</c:if>>已处理</option>
+                        </select></span>
+	   <span class="fr cur" style="margin-right:5px;"><label style="font-size: 15px;">收费类型：</label><select class="zc_city"  style="width:100px;height:28px;" id="payType" name="payType">
+                             <option value="">请选择收费类型</option>
+                              <c:forEach var="area" items="${areas}" varStatus="status"> 
+                                <option value="${area.id}" <c:if test="${area.id==parentAreaId}">selected</c:if>>${area.province}</option>
+                             </c:forEach>
+                          
+                        </select></span>
+	</form>
+    </div>
+    <div class="jfzh-bottom clearfix"> 
 	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;待办任务</span>
 	</div>
   

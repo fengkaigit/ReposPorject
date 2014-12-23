@@ -7,6 +7,14 @@
 $(document).ready(function() {
     $('ul.sf-menu').sooperfish();
 });
+function createBatch(){
+	jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/agent/mcbatch.do",null,"get","json",function(data){
+	    if(confirm("批次单已生成，是否进行办理?")){
+	       window.location.href = "<%=request.getContextPath() %>/agent/worklist.do?status=0";
+	    }
+	    return false;
+    });
+}
 </script>
 </head>
 <body>
@@ -47,6 +55,7 @@ $(document).ready(function() {
 					<li class="current"><a href="<%=request.getContextPath() %>/agent/worklist.do?status=0">待办任务</a></li>
 					<li class="current"><a href="<%=request.getContextPath() %>/agent/worklist.do?status=1">已办任务</a></li>
 					<li class="current"><a href="<%=request.getContextPath() %>/agent/statuslist.do">修改办理状态</a></li>
+					<li class="current"><a href="javascript:createBatch()">生成批次单</a></li>
 					
 			  </ul></li>
 			  <li><span><a href="###">个人设置</a></span>

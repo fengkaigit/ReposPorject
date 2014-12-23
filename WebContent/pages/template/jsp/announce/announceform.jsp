@@ -33,6 +33,7 @@ $(document).ready(function(){
 	<c:if test="${announce.id!=null}">
 	      var scope = '${announce.announcementScope}';
 	      $("#announcementScope").val(scope);
+	      $("#retentionFlag").val('${announce.retentionFlag}');
           $("#announcementGroup").val('${announce.announcementGroup}');
           $("#status").val('${announce.status}');
           if(scope!='0'){
@@ -198,6 +199,29 @@ function showcity(value,selectValue){
                              <option value="">请选择市</option>
                         </select></td>
                         <td><div id="cityTip" style="width:250px"></div></td>
+                    </tr>
+                    <tr>
+                        <td height="40" align="right">保留时间：</td>
+                        <td align="left"> 
+                  <select class="zc_city"  style="width:300px;" id="retentionFlag" name="retentionFlag">
+                             <!--<c:forEach var="st" items="${status}" varStatus="status"> 
+                              <option value="${st.id.dataValue}">${st.propChName}</option>
+                             </c:forEach>-->
+                             <option value="1d">1 天</option>
+                             <option value="2d">2 天</option>
+                             <option value="3d">3 天</option>
+                             <option value="4d">4 天</option>
+                             <option value="5d">5 天</option>
+                             <option value="6d">6 天</option>
+                             <option value="1w">1 个星期</option>
+                             <option value="2w">2 个星期</option>
+                             <option value="3w">3 个星期</option>
+                             <option value="1m" selected="selected">1 个月</option>
+                             <option value="2m">2 个月</option>
+                             <option value="3m">3 个月</option>
+                             <option value="50y">永久保存</option>
+                        </select></td>
+                        <td><div id="statusTip" style="width:250px"></div></td>
                     </tr>
                     <tr>
                         <td height="40" align="right">公告状态：</td>

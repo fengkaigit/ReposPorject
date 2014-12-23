@@ -150,3 +150,15 @@ function getCookie(c_name)
   else
      return "";
 }
+function selectall(obj,destObj){
+	var check = false;
+	if(obj.checked){
+		check = true;
+	}else{
+		check = false;
+	}
+	var childChks = document.getElementsByName(destObj);
+	for(var i=0;i<childChks.length;i++){
+		childChks[i].checked = check;
+	}
+}

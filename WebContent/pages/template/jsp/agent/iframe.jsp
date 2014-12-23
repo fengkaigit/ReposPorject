@@ -79,7 +79,7 @@ $(document).ready(function(){
 			   var dblist = document.getElementById("dbList");
 			   for(var i=0;i<data.length;i++){
 				   var obj = data[i];
-				   var title = obj.payTypeName+'订单'+obj.billNum+'笔，请各代理商落实';
+				   var title = obj.createTime+obj.payTypeName+'费'+obj.billNum+'笔';
 				   dbHtml.push('<div class="list">');
 				   dbHtml.push('<div class="listName">');
 				   dbHtml.push('<a href="javascript:showbatch('+obj.id+')" title="'+title+'"><span class="error warn">'+title+'</span></a>');

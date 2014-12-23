@@ -39,18 +39,6 @@ function query(){
 	qForm.action = "<%=request.getContextPath() %>/agent/statuslist.do";
 	qForm.submit();
 }
-function selectall(obj){
-	var check = false;
-	if(obj.checked){
-		check = true;
-	}else{
-		check = false;
-	}
-	var childChks = document.getElementsByName("chkSel");
-	for(var i=0;i<childChks.length;i++){
-		childChks[i].checked = check;
-	}
-}
 function saveReply(){
 	  if($("#replyContent").val()==''){
 		  alert("内容不能为空");
@@ -100,7 +88,7 @@ function showReplyDiv(userId,id){
 	 <input type="hidden" id="batchId" name="batchId" value="${batchId}" />
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
   <tr class="add">
-     <td><input type="checkbox" id="chkall" onclick="selectall(this)"/></td>
+     <td><input type="checkbox" id="chkall" onclick="selectall(this,'chkSel')"/></td>
     <td>序号</td>
     <td>缴费单单号</td>
     <td>缴费时间</td>
