@@ -20,6 +20,7 @@ public interface SysManService {
 	void updateReplyFeedById(Long id,String replyContent) throws RuntimeException;
 	List<Feedback> findFeedBacks(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
 	void deleteFeedBackByIds(String[] ids)throws RuntimeException;
+	void updateStatusByIds(String[] ids,Integer status)throws RuntimeException;
 	Feedback getFeedBack(Long id) throws RuntimeException;
 	Long findTotalFeedBack(Map<String,Object> Qparam) throws RuntimeException;
 }

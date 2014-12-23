@@ -36,6 +36,7 @@ public class AnnounceDAOImpl extends BaseDAOImpl implements AnnounceDAO {
 			String areaId = (String)Qparam.get("areaId");
 			Integer status = (Integer)Qparam.get("status");
 			Date createtime = (Date)Qparam.get("createtime");
+			Date retentionTime = (Date)Qparam.get("retentionTime");
 			Boolean home = (Boolean)Qparam.get("home");
 			if(!StringUtil.isEmptyString(title)){
 				query.append(" and title like ?");
@@ -60,6 +61,10 @@ public class AnnounceDAOImpl extends BaseDAOImpl implements AnnounceDAO {
 			if(createtime!=null){
 				query.append(" and createTime >= ?");
 				paramList.add(DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss",DateUtil.getDate(createtime)+" 00:00:00"));
+			}
+			if(retentionTime!=null){
+				query.append(" and retentionTime >= ?");
+				paramList.add(retentionTime);
 			}
 			if(home!=null&&home){
 				String hpareaid = (String)Qparam.get("homeparea");

@@ -31,29 +31,8 @@ public class AgentBacthJob implements Job {
 		AgentService agentService = (AgentService) data.get("agentService");
 		if(agentService!=null){
 			try{
-			List<Object[]> billlist = agentService.findBillByCurrentDay(null);
-			if (billlist != null && billlist.size() > 0) {
-				Date date = new Date();
 				Map<Integer,String> map = getPayTypeName(data);
-				List<BatchPaymentRelation> batchpaylist = new ArrayList<BatchPaymentRelation>();
-				List<String> billIdsList = new ArrayList<String>();
-				for (Object[] o : billlist) {
-					AgentPaymentBatch paymentBatch = new AgentPaymentBatch(
-							(Double) o[3], date, 0, (Long) o[1],
-							(Integer) o[0], (Long) o[4],map.get((Integer)o[0]));
-					agentService.savePaymentBatch(paymentBatch);
-					String[] billIds = ((String) o[2])
-							.split(SystemConst.SPLITE_SIGN_COMMON);
-					for (String billId : billIds) {
-						batchpaylist.add(new BatchPaymentRelation(
-								new BatchPaymentRelationId(Long.valueOf(billId
-										.trim()), paymentBatch.getId())));
-					}
-					billIdsList.addAll(Arrays.asList(billIds));
-				}
-				agentService.batchSaveObject(batchpaylist);
-				agentService.updateBillStatusByIds(billIdsList,3);
-			}
+				agentService.createAgentBatch(map);
 			}catch(Exception e){
 				e.printStackTrace();
 			}

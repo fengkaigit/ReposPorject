@@ -121,4 +121,10 @@ public class SysManServiceImpl implements SysManService {
 		return sysManDAO.findTotalFeedBack(Qparam);
 	}
 
+	@Override
+	public void updateStatusByIds(String[] ids,Integer status) throws RuntimeException {
+		// TODO Auto-generated method stub
+		sysManDAO.updateStatusByIds(ids, status);
+	}
+
 }

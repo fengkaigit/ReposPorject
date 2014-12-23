@@ -29,6 +29,7 @@ public class Feedback implements java.io.Serializable {
 	private String areaId;
 	private String userName;
 	private String areaName;
+	private String parentAreaId;
 
 	// Constructors
 
@@ -163,6 +164,14 @@ public class Feedback implements java.io.Serializable {
 
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
+	}
+	@Column(name = "area_pid",length=24)
+	public String getParentAreaId() {
+		return parentAreaId;
+	}
+
+	public void setParentAreaId(String parentAreaId) {
+		this.parentAreaId = parentAreaId;
 	}
 	
 	

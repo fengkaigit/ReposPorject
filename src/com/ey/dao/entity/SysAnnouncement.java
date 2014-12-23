@@ -20,12 +20,14 @@ public class SysAnnouncement implements java.io.Serializable {
 
 	private Long id;
 	private Date createTime;
+	private Date retentionTime;
 	private String title;
 	private String content;
 	private Integer announcementScope;
 	private Integer announcementGroup;
 	private String areaId;
 	private Integer status;
+	private String retentionFlag;
 
 	// Constructors
 
@@ -133,5 +135,27 @@ public class SysAnnouncement implements java.io.Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+    
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "retention_time", nullable = false, length = 10)
+	public Date getRetentionTime() {
+		return retentionTime;
+	}
+
+	public void setRetentionTime(Date retentionTime) {
+		this.retentionTime = retentionTime;
+	}
+    
+	@Column(name = "retention_flag")
+	public String getRetentionFlag() {
+		return retentionFlag;
+	}
+
+	public void setRetentionFlag(String retentionFlag) {
+		this.retentionFlag = retentionFlag;
+	}
+	
+	
+	
 
 }

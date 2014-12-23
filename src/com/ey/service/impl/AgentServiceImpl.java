@@ -1,6 +1,7 @@
 package com.ey.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,6 +23,8 @@ import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.AgentPaymentBatch;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.BankInfo;
+import com.ey.dao.entity.BatchPaymentRelation;
+import com.ey.dao.entity.BatchPaymentRelationId;
 import com.ey.dao.entity.NoticeInfo;
 import com.ey.service.AgentService;
 import com.ey.util.CurrencyConverter;
@@ -310,6 +313,33 @@ public class AgentServiceImpl implements AgentService {
 		// TODO Auto-generated method stub
 		o.setId(DbidGenerator.getDbidGenerator().getNextId());
 		agentDAO.save(o);
+	}
+
+	@Override
+	public void createAgentBatch(Map<Integer,String> payTypesMap) throws RuntimeException {
+		// TODO Auto-generated method stub
+		List<Object[]> billlist = this.findBillByCurrentDay(null);
+		if (billlist != null && billlist.size() > 0) {
+			Date date = new Date();
+			List<BatchPaymentRelation> batchpaylist = new ArrayList<BatchPaymentRelation>();
+			List<String> billIdsList = new ArrayList<String>();
+			for (Object[] o : billlist) {
+				AgentPaymentBatch paymentBatch = new AgentPaymentBatch(
+						(Double) o[3], date, 0, (Long) o[1],
+						(Integer) o[0], (Long) o[4],payTypesMap.get((Integer)o[0]));
+				this.savePaymentBatch(paymentBatch);
+				String[] billIds = ((String) o[2])
+						.split(SystemConst.SPLITE_SIGN_COMMON);
+				for (String billId : billIds) {
+					batchpaylist.add(new BatchPaymentRelation(
+							new BatchPaymentRelationId(Long.valueOf(billId
+									.trim()), paymentBatch.getId())));
+				}
+				billIdsList.addAll(Arrays.asList(billIds));
+			}
+			this.batchSaveObject(batchpaylist);
+			this.updateBillStatusByIds(billIdsList,3);
+		}
 	}
 
 }

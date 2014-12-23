@@ -22,6 +22,7 @@ import jofc2.model.Chart;
 import jofc2.model.elements.PieChart;
 import jofc2.model.elements.PieChart.Slice;
 
+import org.quartz.JobDataMap;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,7 @@ import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.BankInfo;
+import com.ey.dao.entity.BaseCustomValue;
 import com.ey.dao.entity.NoticeInfo;
 import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.SystemManager;
@@ -69,6 +71,7 @@ public class AgentController extends BaseController {
 	private static final String BILLLIST_PAGE = "agent/billlist";
 	private static final String SELFLIST_PAGE = "agent/selflist";
 	private static final String STATUSLIST_PAGE = "agent/statuslist";
+	private static final String QUERYBATCHBILL_PAGE = "agent/batchbillquery";
 	private static final String NOWLIST_PAGE = "agent/nowlist";
 	private static final String LIST_PAGE = "agent/list";
 	private static final String REDIRECT = "redirect:/agent/list.do";
@@ -513,7 +516,7 @@ public class AgentController extends BaseController {
 	}
 
 	@RequestMapping(value = "/worklist")
-	public String worklist(Integer status,
+	public String worklist(String qFlag,String startDate,String endDate,Integer payType,Integer status,
 			@ModelAttribute("page") Integer page,
 			@ModelAttribute("rows") Integer rows, ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response){
@@ -521,11 +524,21 @@ public class AgentController extends BaseController {
 				SystemConst.AGENT);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("status", status);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		map.put("payType", payType);
 		List selflist = agentService.findAgentSelf(agent.getId(), map, page,
 				rows);
 		Long total = agentService.findAgentSelfTotal(agent.getId(), map);
 		modelMap.addAttribute("works", selflist);
 		modelMap.addAttribute("total", total);
+		modelMap.addAttribute("status", status);
+		modelMap.addAttribute("startDate", startDate);
+		modelMap.addAttribute("endDate", endDate);
+		modelMap.addAttribute("payType", payType);
+		if(!StringUtil.isEmptyString(qFlag)){
+			return QUERYBATCHBILL_PAGE;
+		}
 		if (status != null && status == 0)
 			return SELFLIST_PAGE;
 		if (status != null && status == 1)
@@ -637,4 +650,25 @@ public class AgentController extends BaseController {
         file.delete();
         return null;   
     }  
+	
+	@RequestMapping(value = "/mcbatch")
+	@ResponseBody
+	public Object  mcbatch(RedirectAttributes redirectAttributes,
+			HttpServletRequest request, HttpServletResponse response){
+		agentService.createAgentBatch(getPayTypeName());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", true);
+		return map;
+	}
+	
+	private Map<Integer,String> getPayTypeName(){
+		Map<Integer,String> dataValueMap = new HashMap<Integer,String>();
+		List<BaseCustomValue> customValues = staticService.listValues("payment_type");
+		if(customValues!=null&&customValues.size()>0){
+            for(BaseCustomValue value:customValues){
+        	     dataValueMap.put(value.getId().getDataValue(), value.getPropChName());
+            }
+		}
+        return dataValueMap;
+	}
 }

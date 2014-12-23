@@ -1,5 +1,6 @@
 package com.ey.controller.announce;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +10,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +37,7 @@ import com.ey.service.AreaService;
 import com.ey.service.StaticService;
 import com.ey.util.DateUtil;
 import com.ey.util.RequestUtils;
+import com.ey.util.StringUtil;
 
 @Controller
 @RequestMapping(value="/announce")
@@ -69,7 +74,7 @@ public class AnnounceController extends BaseController {
 	public Object agentgglist(Integer group,Integer page,Integer rows,HttpServletRequest request,HttpServletResponse response){
     	Map<String,Object> paramMap = new HashMap<String,Object>();
     	paramMap.put("group", group);
-    	paramMap.put("createtime",  DateUtil.getAfterDay(new Date(),SystemConst.AFTERDAY));
+    	paramMap.put("retentionTime", new Date());
 		List<SysAnnouncement> announces = getAgentGgList(paramMap, page, rows,request);
 		return announces;
 	}
@@ -78,7 +83,7 @@ public class AnnounceController extends BaseController {
 	public Object gglist(Integer group,Integer page,Integer rows,HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> paramMap = new HashMap<String,Object>();
     	paramMap.put("group", group);
-    	paramMap.put("createtime",  DateUtil.getAfterDay(new Date(),SystemConst.AFTERDAY));
+    	paramMap.put("retentionTime", new Date());
 		List<SysAnnouncement> announces = getGgList(paramMap,page,rows,request);
 		return announces;
 	}
@@ -151,7 +156,7 @@ public class AnnounceController extends BaseController {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		List<SysAnnouncement> annlist = null;
 		paramMap.put("group", group);
-		paramMap.put("createtime",DateUtil.getAfterDay(new Date(), SystemConst.AFTERDAY));
+		paramMap.put("retentionTime", new Date());
 		if (group == 1)
 			annlist = getGgList(paramMap, 0, 0, request);
 		else
@@ -172,13 +177,13 @@ public class AnnounceController extends BaseController {
 		if (group == 1){
 			annAllList = getGgList(paramMap, page,rows, request);
 		    total = announceService.getAnnouncesTotalByQueryParam(paramMap);
-			paramMap.put("createtime",DateUtil.getAfterDay(new Date(), SystemConst.AFTERDAY));
+		    paramMap.put("retentionTime", new Date());
 			newlist = getGgList(paramMap, 0,0, request);
 		}
 		else{
 			annAllList = getAgentGgList(paramMap, page, rows, request);
 			total = announceService.getAnnouncesTotalByQueryParam(paramMap);
-			paramMap.put("createtime",DateUtil.getAfterDay(new Date(), SystemConst.AFTERDAY));
+			paramMap.put("retentionTime", new Date());
 			newlist = getAgentGgList(paramMap, 0,0, request);
 		}
 		modelMap.addAttribute("announces", newlist);
@@ -190,15 +195,48 @@ public class AnnounceController extends BaseController {
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addOrUpdate(SysAnnouncement announce,HttpServletRequest request,HttpServletResponse response){
+		Date date = null;
+		Date retentionTime = null;
+		SysAnnouncement sysAnnounce = null;
 		if(announce.getId() == null){
-			announce.setCreateTime(new Date());
+			date = new Date();
+		}else{
+		    sysAnnounce = announceService.getSysAnnouncement(announce.getId());
+			date = sysAnnounce.getCreateTime();
+			try {
+				ConvertUtils.register(new DateConverter(null), java.util.Date.class);
+				BeanUtils.copyProperties(sysAnnounce, announce);
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String validStr = announce.getRetentionFlag();
+		if(!StringUtil.isEmptyString(validStr)){
+			if(validStr.endsWith(SystemConst.DAY)){
+				retentionTime = DateUtil.getAfterDay(date, Integer.valueOf(validStr.replace(SystemConst.DAY, "").trim()));
+			}else if(validStr.endsWith(SystemConst.WEEK)){
+				retentionTime = DateUtil.getAfterWeek(date, Integer.valueOf(validStr.replace(SystemConst.WEEK, "").trim()));
+			}else if(validStr.endsWith(SystemConst.MONTH)){
+				retentionTime = DateUtil.getAfterMonth(date, Integer.valueOf(validStr.replace(SystemConst.MONTH, "").trim()));
+			}else if(validStr.endsWith(SystemConst.YEAR)){
+				retentionTime = DateUtil.getAfterYear(date, Integer.valueOf(validStr.replace(SystemConst.YEAR, "").trim()));
+			}
+			
+		}
+		if(announce.getId() == null){
+			announce.setCreateTime(date);
+			announce.setRetentionTime(retentionTime);
 			announceService.saveObject(announce);
 		}
 		else{
-			announce.setCreateTime(new Date());
-			announceService.updateObject(announce);
+			sysAnnounce.setCreateTime(date);
+			sysAnnounce.setRetentionTime(retentionTime);
+			announceService.updateObject(sysAnnounce);
 		}
-	    
 	    return REDIRECT;
 	}
 	

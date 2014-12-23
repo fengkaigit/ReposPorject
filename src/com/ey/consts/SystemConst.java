@@ -63,4 +63,8 @@ public class SystemConst {
 	public static final String YDTXF_BILL = "YDTXF_BILL";
 	public static final String JTFKF_BILL = "JTFKF_BILL";
 	public static final String CNF_BILL = "CNF_BILL";
+	public static final String DAY="d";
+	public static final String MONTH="m";
+	public static final String YEAR="y";
+	public static final String WEEK="w";
 }

@@ -63,7 +63,7 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		String hql = "update Feedback set systemTime = ?,systemFeedback = ?,backFlag = ? where id = ?";
-		this.executeHql(hql, new Object[]{new Date(),replyContent,1,id});
+		this.executeHql(hql, new Object[]{new Date(),replyContent,2,id});
 	}
 
 	@Override
@@ -73,7 +73,10 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 		List paramList = new ArrayList();
 		StringBuffer hql = new StringBuffer("from Feedback where 1=1");
 		createQueryParam(hql,Qparam,paramList);
-		hql.append(" order by viewTime desc,areaId");
+		if(Qparam.get("order")!=null)
+			hql.append(" order by backFlag,viewTime desc");
+		else
+		    hql.append(" order by viewTime desc");
 		return this.find(hql.toString(),paramList.toArray(), page, rows);
 	}
 
@@ -89,6 +92,7 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 			Long userId = (Long)Qparam.get("userId");
 			Integer backFlag = (Integer)Qparam.get("backFlag");
 			String areaId = (String)Qparam.get("areaId");
+			String parentAreaId = (String)Qparam.get("parentAreaId");
 			if(userId!=null){
 				query.append(" and userId = ?");
 				paramList.add(userId);
@@ -97,9 +101,13 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 				query.append(" and backFlag = ?");
 				paramList.add(backFlag);
 			}
-			if(areaId!=null){
+			if(!StringUtil.isEmptyString(areaId)){
 				query.append(" and areaId = ?");
 				paramList.add(areaId);
+			}
+			if(!StringUtil.isEmptyString(parentAreaId)){
+				query.append(" and parentAreaId = ?");
+				paramList.add(parentAreaId);
 			}
 		}
 	}
@@ -116,6 +124,16 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 			return Long.valueOf(list.get(0)+"");
 		}
 		return 0l;
+	}
+
+	@Override
+	public void updateStatusByIds(String[] ids, Integer status)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "update Feedback set backFlag = ? where id = ?";
+		for(String id:ids){
+			this.executeHql(hql, new Object[]{status,Long.valueOf(id.trim())});
+		}
 	}
 
 }

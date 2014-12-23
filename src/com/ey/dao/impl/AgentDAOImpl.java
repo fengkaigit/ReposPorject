@@ -13,6 +13,7 @@ import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.SystemManager;
+import com.ey.util.DateUtil;
 import com.ey.util.StringUtil;
 import org.hibernate.type.*;
 
@@ -254,9 +255,24 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	private void createQuerySelfParam(StringBuffer query,Map<String, Object> Qparam,List paramList){
 		if(Qparam!=null&&Qparam.size()>0){
 			Integer status = (Integer)Qparam.get("status");
+			Integer payType = (Integer)Qparam.get("payType");
+			String startDate = (String)Qparam.get("startDate");
+			String endDate = (String)Qparam.get("endDate");
 			if(status!=null){
 				query.append(" and batchStatus = ?");
 				paramList.add(status);
+			}
+			if(payType!=null){
+				query.append(" and payType = ?");
+				paramList.add(payType);
+			}
+			if(!StringUtil.isEmptyString(startDate)){
+				query.append(" and createTime >= ?");
+				paramList.add(DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss",startDate+" 00:00:00"));
+			}
+			if(!StringUtil.isEmptyString(endDate)){
+				query.append(" and createTime <= ?");
+				paramList.add(DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss",endDate+" 23:59:59"));
 			}
 		}
 	}
