@@ -60,6 +60,10 @@ $(document).ready(function() {
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/settlelist.do">结算划款单查询</a></li>
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/incomelist.do">最终盈利划款单查询</a></li>
 			  </ul></li>
+			  <li ><span><a href="<%=request.getContextPath() %>/sysparam/customproplist.do">参数维护</a></span>
+				<ul>
+					<li ><a href="<%=request.getContextPath() %>/sysparam/customproplist.do">自定义属性</a></li>
+			  </ul></li>
 			  <li><span><a href="<%=request.getContextPath() %>/sysman/passwd.do">修改密码</a></span></li>
 	       </ul>
 		</div>

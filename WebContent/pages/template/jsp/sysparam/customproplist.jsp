@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
 <title>e缴365</title>
@@ -9,6 +8,18 @@
 <%@include file="/pages/template/jsp/common/common.jsp"%>
 <script>
 var gloabObj = {page:<c:out value="${page}"/>,rows:<c:out value="${rows}"/>,total:<c:out value="${total}"/>};
+function delCustomProp(id){
+	if(confirm("确实要删除该信息吗?")){
+		if(gloabObj.total%gloabObj.rows==1&&gloabObj.page!=1)
+			gloabObj.page = gloabObj.page-1;
+	   jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/sysparam/delprop.do",{ids:id},"post","json",function(data){
+		    if(data.result){
+		    	alert("信息删除成功");
+		        window.location.href = "<%=request.getContextPath() %>/sysparam/customproplist.do?page="+gloabObj.page+"&rows="+gloabObj.rows;
+		    }
+	    });
+	}
+}
 $(document).ready(function(){
 	if(gloabObj.total!=0){
 	   $("#pageNav").pagination({
@@ -19,39 +30,36 @@ $(document).ready(function(){
 			prevText:'上一页',
 			nextText:'下一页',
 	        onPageClick:function(pageNumber, event){
-			    window.location.href = "<%=request.getContextPath() %>/agent/worklist.do?status=0&page="+pageNumber+"&rows="+gloabObj.rows;
+			    window.location.href = "<%=request.getContextPath() %>/sysparam/customproplist.do?page="+pageNumber+"&rows="+gloabObj.rows;
 			}
 	  });
 	}
 });
-function downloadbill(id){
-	document.getElementById("downloadframe").src = "<%=request.getContextPath() %>/agent/downbatch.do?id="+id;
-}
 </script>
 </head>
 <body>
-<%@include file="/pages/template/jsp/common/agentheader.jsp"%>
+<%@include file="/pages/template/jsp/common/sysheader.jsp"%>
 <div class="ui-container clearfix" id="container">  
   <div class="jfzh-title"><span class="icon1"></span>
-  我的工作 
+  自定义属性维护 
   </div>
 <div class="jfzh-con">
 
 	
     <div class="jfzh-bottom clearfix">    
-	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;待办任务</span>
+	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;自定义属性信息</span>
+	
+	<span class="fr cur" onClick="openWin('<%=request.getContextPath() %>/agent/add.do')"><span class="fcr">新建自定义属性</span></span>	
 	</div>
   
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
   <tr class="add">
     <td>序号</td>
-    <td>标题</td>
-    <td>创建时间</td>
-    <td>金额</td>
-    <td>缴费类型</td>
+    <td>属性英文名</td>
+    <td>属性名称</td>
     <td>操作</td>
   </tr>
-  <c:forEach var="item" items="${works}" varStatus="status">
+  <c:forEach var="item" items="${props}" varStatus="status">
    <tr <c:choose>
        <c:when test="${(status.index+1) % 2 == 0}">
          class="add"
@@ -61,14 +69,12 @@ function downloadbill(id){
        </c:otherwise>
      </c:choose> >
     <td>&nbsp;${status.index+1}</td>
-    <td>&nbsp;<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd"/>&nbsp;${item.payTypeName}费${item.billNum}笔</td>
-    <td>&nbsp;<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-	<td>&nbsp;${item.batchMoney}</td>
-	<td>&nbsp;${item.payTypeName}费</td>
-	 <td>
-	<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/agent/billlist.do?id=${item.id}')" >查看缴费单</a>&nbsp;
-	<a class="cur" style="color:#007abd;" onclick="downloadbill('${item.id}');">导出缴费单</a>&nbsp;
-	<a class="cur" style="color:#007abd;" onclick="openWin('<%=request.getContextPath() %>/agent/statuslist.do?id=${item.id}')">修改办理状态</a></td>
+    <td>&nbsp;${item.propEngName}</td>
+    <td>&nbsp;${item.propChName}</td>
+    <td>
+	<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/sysparam/edit.do')" >修改</a>&nbsp;
+	<a class="cur" style="color:#007abd;" onclick="delAgent(${item.propEngName})">删除</a></td>
+
   </tr>
  </c:forEach>
    
@@ -79,7 +85,6 @@ function downloadbill(id){
   <div class="clear"></div> 
 </div>
 </div>
-<iframe id="downloadframe" src="" style="display:none;"></iframe>
 <%@include file="/pages/template/jsp/common/footer.jsp"%>
 <%@include file="/pages/template/jsp/common/links.jsp"%>
 <script src="js/funs.js" type="text/javascript"></script>

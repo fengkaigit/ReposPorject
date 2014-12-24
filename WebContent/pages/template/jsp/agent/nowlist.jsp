@@ -63,7 +63,7 @@ function downloadbill(id){
        </c:otherwise>
      </c:choose> >
     <td>&nbsp;${status.index+1}</td>
-    <td>&nbsp;<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd"/>${item.payTypeName}费${item.billNum}笔</td>
+    <td>&nbsp;<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd"/>&nbsp;${item.payTypeName}费${item.billNum}笔</td>
     <td>&nbsp;<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
     <td>&nbsp;<fmt:formatDate value="${item.confirmTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 	<td>&nbsp;${item.batchMoney}</td>

@@ -9,9 +9,13 @@ $(document).ready(function() {
 });
 function createBatch(){
 	jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/agent/mcbatch.do",null,"get","json",function(data){
-	    if(confirm("批次单已生成，是否进行办理?")){
-	       window.location.href = "<%=request.getContextPath() %>/agent/worklist.do?status=0";
-	    }
+		if(data.result){
+	       if(confirm("批次单已生成，是否进行办理?")){
+	          window.location.href = "<%=request.getContextPath() %>/agent/worklist.do?status=0";
+	       }
+		}else{
+		   alert(data.message);	
+		}
 	    return false;
     });
 }
@@ -54,8 +58,9 @@ function createBatch(){
 			  <ul>
 					<li class="current"><a href="<%=request.getContextPath() %>/agent/worklist.do?status=0">待办任务</a></li>
 					<li class="current"><a href="<%=request.getContextPath() %>/agent/worklist.do?status=1">已办任务</a></li>
-					<li class="current"><a href="<%=request.getContextPath() %>/agent/statuslist.do">修改办理状态</a></li>
 					<li class="current"><a href="javascript:createBatch()">生成批次单</a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/agent/statuslist.do">修改办理状态</a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/agent/worklist.do?qFlag=1">批次单查询</a></li>
 					
 			  </ul></li>
 			  <li><span><a href="###">个人设置</a></span>
