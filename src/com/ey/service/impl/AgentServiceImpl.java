@@ -316,8 +316,9 @@ public class AgentServiceImpl implements AgentService {
 	}
 
 	@Override
-	public void createAgentBatch(Map<Integer,String> payTypesMap) throws RuntimeException {
+	public boolean createAgentBatch(Map<Integer,String> payTypesMap) throws RuntimeException {
 		// TODO Auto-generated method stub
+		boolean isCreate = false;
 		List<Object[]> billlist = this.findBillByCurrentDay(null);
 		if (billlist != null && billlist.size() > 0) {
 			Date date = new Date();
@@ -339,7 +340,9 @@ public class AgentServiceImpl implements AgentService {
 			}
 			this.batchSaveObject(batchpaylist);
 			this.updateBillStatusByIds(billIdsList,3);
+			isCreate = true;
 		}
+		return isCreate;
 	}
 
 }

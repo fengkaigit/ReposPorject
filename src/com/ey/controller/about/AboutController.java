@@ -76,7 +76,7 @@ public class AboutController extends BaseController {
 		Long total = 0l;
         Map<String,Object> queryMap = new HashMap<String,Object>();
     	//queryMap.put("areaId", user.getAreaId());
-        queryMap.put("backFlag", 2);
+        queryMap.put("in", true);
     	List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, page, rows);
     	total = sysManService.findTotalFeedBack(queryMap);
         mav.addObject("feedbacks", feedlist);

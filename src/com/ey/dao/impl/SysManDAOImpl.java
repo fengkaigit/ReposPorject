@@ -91,6 +91,7 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 		if(Qparam!=null&&Qparam.size()>0){
 			Long userId = (Long)Qparam.get("userId");
 			Integer backFlag = (Integer)Qparam.get("backFlag");
+			Boolean in = (Boolean)Qparam.get("in");
 			String areaId = (String)Qparam.get("areaId");
 			String parentAreaId = (String)Qparam.get("parentAreaId");
 			if(userId!=null){
@@ -100,6 +101,9 @@ public class SysManDAOImpl extends BaseDAOImpl implements SysManDAO {
 			if(backFlag!=null){
 				query.append(" and backFlag = ?");
 				paramList.add(backFlag);
+			}
+			if(in!=null){
+				query.append(" and backFlag in(1,2)");
 			}
 			if(!StringUtil.isEmptyString(areaId)){
 				query.append(" and areaId = ?");

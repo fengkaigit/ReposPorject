@@ -537,6 +537,7 @@ public class AgentController extends BaseController {
 		modelMap.addAttribute("endDate", endDate);
 		modelMap.addAttribute("payType", payType);
 		if(!StringUtil.isEmptyString(qFlag)){
+			modelMap.addAttribute("payTypes",getPayTypeName());
 			return QUERYBATCHBILL_PAGE;
 		}
 		if (status != null && status == 0)
@@ -655,9 +656,17 @@ public class AgentController extends BaseController {
 	@ResponseBody
 	public Object  mcbatch(RedirectAttributes redirectAttributes,
 			HttpServletRequest request, HttpServletResponse response){
-		agentService.createAgentBatch(getPayTypeName());
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("result", true);
+		   Map<String, Object> map = new HashMap<String, Object>();
+		try{
+		   boolean flag = agentService.createAgentBatch(getPayTypeName());
+		   map.put("result", flag);
+		   if(!flag)
+		      map.put("message", RequestUtils.getMessage("nofoundbill", request));
+		 }catch(Exception e){
+			 map.put("result", false);
+			 map.put("message",e.getMessage());
+			 e.printStackTrace();
+		 }
 		return map;
 	}
 	

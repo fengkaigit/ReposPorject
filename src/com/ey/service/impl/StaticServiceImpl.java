@@ -1,7 +1,9 @@
 package com.ey.service.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,5 +75,62 @@ public class StaticServiceImpl implements StaticService {
 			}
 		}
 		return label;
+	}
+
+	@Override
+	public void updateObject(Object obj) throws RuntimeException {
+		// TODO Auto-generated method stub
+		 staticDAO.update(obj);
+	}
+
+	@Override
+	public List findCustomProps(Map<String, Object> Qparam, Integer page,
+			Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.findCustomProps(Qparam, page, rows);
+	}
+
+	@Override
+	public List findCustomValues(Map<String, Object> Qparam, Integer page,
+			Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.findCustomValues(Qparam, page, rows);
+	}
+
+	@Override
+	public Long getTotalCustomProp(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.getTotalCustomProp(Qparam);
+	}
+
+	@Override
+	public Long getTotalCustomValue(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.getTotalCustomValue(Qparam);
+	}
+
+	@Override
+	public Object getObject(Class classz, Serializable id)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.get(classz, id);
+	}
+
+	@Override
+	public void deleteCustomPropByIds(String[] ids) throws RuntimeException {
+		// TODO Auto-generated method stub
+		for(String customPropName:ids){
+		    staticDAO.deleteCustomProp(customPropName);
+		}
+	}
+
+	@Override
+	public void deleteCustomValueByIds(Object[][] ids) throws RuntimeException {
+		// TODO Auto-generated method stub
+		for(Object[] o:ids){
+			staticDAO.deleteCustomValue(o[0]+"", Integer.valueOf(o[1]+""));
+		}
 	}
 }

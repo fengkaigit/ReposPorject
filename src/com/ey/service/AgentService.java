@@ -69,6 +69,6 @@ public interface AgentService {
      
      void updateStatusByBatchId(Long id,Integer status) throws RuntimeException;
      
-     void createAgentBatch(Map<Integer,String> payTypesMap) throws RuntimeException;
+     boolean createAgentBatch(Map<Integer,String> payTypesMap) throws RuntimeException;
      
 }
