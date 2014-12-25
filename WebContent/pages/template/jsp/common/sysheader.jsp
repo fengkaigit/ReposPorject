@@ -63,6 +63,7 @@ $(document).ready(function() {
 			  <li ><span><a href="<%=request.getContextPath() %>/sysparam/customproplist.do">参数维护</a></span>
 				<ul>
 					<li ><a href="<%=request.getContextPath() %>/sysparam/customproplist.do">自定义属性</a></li>
+					<li ><a href="<%=request.getContextPath() %>/sysparam/customvaluelist.do">自定义属性值</a></li>
 			  </ul></li>
 			  <li><span><a href="<%=request.getContextPath() %>/sysman/passwd.do">修改密码</a></span></li>
 	       </ul>
