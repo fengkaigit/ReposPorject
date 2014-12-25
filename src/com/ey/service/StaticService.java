@@ -22,4 +22,8 @@ public interface StaticService {
 	Object getObject(Class classz,Serializable id) throws RuntimeException;
 	void deleteCustomPropByIds(String[] ids) throws RuntimeException;
 	void deleteCustomValueByIds(Object[][] ids) throws RuntimeException;
+	void saveOrUpdateObject(Object obj) throws RuntimeException;
+	List findTransferRate(Map<String,Object> Qparam,Integer page,Integer rows)throws RuntimeException;
+	Long getTotalTransferRate(Map<String,Object> Qparam) throws RuntimeException;
+	void deleteObject(Object obj) throws RuntimeException;
 }

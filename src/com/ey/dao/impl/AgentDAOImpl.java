@@ -170,7 +170,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 		StringBuffer hql = new StringBuffer("from AgentPaymentBatch where agentId = ?");
 		paramList.add(id);
 		createQuerySelfParam(hql,Qparam,paramList);
-		hql.append(" order by createTime desc,payType");
+		hql.append(" order by batchStatus,createTime desc,payType");
 		return this.find(hql.toString(), paramList,page,rows);
 	}
 

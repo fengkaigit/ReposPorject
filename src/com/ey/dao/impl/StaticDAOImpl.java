@@ -61,11 +61,16 @@ public class StaticDAOImpl extends BaseDAOImpl implements StaticDAO {
 		StringBuffer hql = new StringBuffer("from BaseCustomValue where 1=1");
 		List<Object> params = new ArrayList();
 		createCustomValueQueryParams(hql,Qparam,params);
+		hql.append(" order by id.customEngName,id.dataValue");
 		return this.find(hql.toString(), params, page, rows);
 	}
 	private void createCustomPropQueryParams(StringBuffer query,Map<String, Object> Qparam,List paramList){
 		if(Qparam!=null&&Qparam.size()>0){
-			
+			String customPropName = (String)Qparam.get("customPropName");
+			if(!StringUtil.isEmptyString(customPropName)){
+				query.append(" and propEngName = ?");
+				paramList.add(customPropName);
+			}
 		}
 	}
 	private void createCustomValueQueryParams(StringBuffer query,Map<String, Object> Qparam,List paramList){
@@ -117,6 +122,34 @@ public class StaticDAOImpl extends BaseDAOImpl implements StaticDAO {
 		// TODO Auto-generated method stub
 		String hql = "delete from BaseCustomValue where id.customEngName = ? and id.dataValue = ?";
 		this.executeHql(hql, new Object[]{customPropName,customDataValue});
+	}
+
+	@Override
+	public List findTransferRate(Map<String, Object> Qparam,
+			Integer page, Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		StringBuffer hql = new StringBuffer("select new com.ey.bo.TransferRateBo(a.id.bankId,b.bankName,a.id.limitMoney,a.id.rate) from TransferRate a,BankInfo b where a.id.bankId = b.bankCode");
+		List<Object> params = new ArrayList();
+		createTransferRateQueryParams(hql,Qparam,params);
+		return this.find(hql.toString(), params, page, rows);
+	}
+
+	@Override
+	public Long getTotalTransferRate(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		StringBuffer hql = new StringBuffer("select count(id.bankId) from TransferRate where 1=1");
+		List<Object> params = new ArrayList();
+		createTransferRateQueryParams(hql,Qparam,params);
+		List list = this.find(hql.toString(), params);
+		if(list!=null&&list.size()>0)
+			return Long.valueOf(list.get(0)+"");
+		return 0L;
+	}
+	private void createTransferRateQueryParams(StringBuffer query,Map<String, Object> Qparam,List paramList){
+		if(Qparam!=null&&Qparam.size()>0){
+			
+		}
 	}
 
 }

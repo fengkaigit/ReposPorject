@@ -133,4 +133,30 @@ public class StaticServiceImpl implements StaticService {
 			staticDAO.deleteCustomValue(o[0]+"", Integer.valueOf(o[1]+""));
 		}
 	}
+
+	@Override
+	public void saveOrUpdateObject(Object obj) throws RuntimeException {
+		// TODO Auto-generated method stub
+		staticDAO.saveOrUpdate(obj);
+	}
+
+	@Override
+	public List findTransferRate(Map<String, Object> Qparam, Integer page,
+			Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.findTransferRate(Qparam, page, rows);
+	}
+
+	@Override
+	public Long getTotalTransferRate(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.getTotalTransferRate(Qparam);
+	}
+
+	@Override
+	public void deleteObject(Object obj) throws RuntimeException {
+		// TODO Auto-generated method stub
+		staticDAO.delete(obj);
+	}
 }
