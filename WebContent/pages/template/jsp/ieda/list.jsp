@@ -231,7 +231,7 @@ function getArea(id,elementId,initMessage,selectedValue){
             </tr>
             <tr>
                 <td bgcolor="#FFFFFF" align="center" colspan="2">
-				<input  type="button" class="jfxx_btn3" onClick="postHandle()" value="保存" name="searchBill"/>
+				<input  type="button" class="jfxx_btn3" onClick="postHandle();" value="保存" name="searchBill"/>
 				
 				</td>
             </tr>

@@ -833,9 +833,42 @@ public class PhoneController {
 				records = jfService.getTotalRecords(currentUser
 						.getId(), new Integer(year), startMonth, endMonth);
 			}else{
-				
+				obj.put("success", false);
+				obj.put("data","查询用户消息信息失败！");
 			}
 			JSONArray jsonArr=JSONArray.fromObject(records);
+			obj.put("success", true);
+			obj.put("data",jsonArr);
+		}catch (Exception e) {
+			obj.put("success", false);
+			obj.put("data","查询用户消息信息失败！");
+		}
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
+	
+	@RequestMapping(value="/getHisPaymentDetail")
+	public ModelAndView getHisPaymentDetail(String showDate, HttpServletRequest request,
+			HttpServletResponse response) throws JSONException, IOException{
+		JSONObject obj = new JSONObject();
+		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			String year = showDate.substring(0,4);
+			String month = showDate.substring(5,7);
+			List<QueryBillBO> details = jfService.getDetails(currentUser.getId(),
+					new Integer(year), new Integer(month));
+			JSONArray jsonArr=JSONArray.fromObject(details);
 			obj.put("success", true);
 			obj.put("data",jsonArr);
 		}catch (Exception e) {

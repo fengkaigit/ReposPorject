@@ -106,7 +106,7 @@ public class UserDAOImpl extends BaseDAOImpl implements UserDAO {
 	@Override
 	public void modifyUserMessage(Integer status, Long userId, Long id)
 			throws RuntimeException {
-		String hql = "update from NoticeInfo sendStatus  = ? where userId=? and id = ?";
+		String hql = "update from NoticeInfo set sendStatus  = ? where userId=? and id = ?";
         this.executeHql(hql, new Object[]{status, userId,id});
 	}
 
