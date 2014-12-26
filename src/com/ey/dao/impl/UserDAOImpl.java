@@ -1,6 +1,7 @@
 package com.ey.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import com.ey.dao.entity.NoticeInfo;
 import com.ey.dao.entity.SysAnnouncement;
 import com.ey.dao.entity.UserBase;
 import com.ey.entity.User;
+import com.ey.util.DateUtil;
 
 
 @Repository("userDAO")  
@@ -84,21 +86,27 @@ public class UserDAOImpl extends BaseDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public java.util.List<SysAnnouncement> findSystemAnnounce(String areaId, Long id)
+	public java.util.List<SysAnnouncement> findSystemAnnounce(String pareaId,String areaId, Long id, String showDate)
 			throws RuntimeException {
 		String hql = "from SysAnnouncement where status=? and announcementGroup=?";
 		List paramList = new ArrayList();
 		paramList.add(0);
 		paramList.add(1);
 		if (areaId!=null){
-			hql = hql + " and (announcementScope=? or (announcementScope=? and areaId=?))";
+			hql = hql + " and (announcementScope=? or (announcementScope=? and areaId = ?) or (announcementScope=? and areaId = ?) )";
 			paramList.add(0);
 			paramList.add(1);
 			paramList.add(areaId);
+			paramList.add(1);
+			paramList.add(pareaId);
 		}
 		if (id!=null){
 			hql = hql + " and id=?";
 			paramList.add(id);
+		}
+		if (showDate!=null){
+			hql = hql + " and retentionTime>=?";
+			paramList.add(DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss",showDate+" 00:00:00"));
 		}
 		return this.find(hql, paramList.toArray());
 	}

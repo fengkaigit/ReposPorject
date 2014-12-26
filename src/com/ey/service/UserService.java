@@ -23,7 +23,7 @@ public interface UserService {
 	
 	public List<NoticeInfo> findNoticeByUserId(Long userId, Integer showCount, Integer page) throws RuntimeException;
 	
-	public List<SysAnnouncement> findSystemAnnounce(String areaId, Long id) throws RuntimeException;
+	public List<SysAnnouncement> findSystemAnnounce(String pareaId,String areaId, Long id, String showDate) throws RuntimeException;
 	
 	public void modifyUserMessage(Integer status, Long userId,Long id) throws RuntimeException;
 	

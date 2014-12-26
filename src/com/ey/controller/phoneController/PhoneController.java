@@ -686,13 +686,18 @@ public class PhoneController {
 			List<NoticeInfo> noticeLst = userService.findNoticeByUserId(currentUser.getId(), showCount, page);
 			List<NoticeInfoBo> retnLst = new ArrayList();
 			for (NoticeInfo notice:noticeLst){
-				NoticeInfoBo bo = new NoticeInfoBo(notice.getId(),notice.getServerContent().toString(),notice.getCreateTime(),notice.getNoticeType());
+				NoticeInfoBo bo = null;
+				if (notice.getServerContent()!=null)
+					bo = new NoticeInfoBo(notice.getId(),notice.getServerContent().toString(),DateUtil.convertDateToString("yyyy-MM-dd",notice.getCreateTime()),notice.getNoticeType());
+				else
+					bo = new NoticeInfoBo(notice.getId(),"",DateUtil.convertDateToString("yyyy-MM-dd",notice.getCreateTime()),notice.getNoticeType());
 				retnLst.add(bo);
 			}
 			JSONArray jsonArr=JSONArray.fromObject(retnLst);
 			obj.put("success", true);
 			obj.put("data",jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
 			obj.put("data","查询用户消息信息失败");
 		}
@@ -745,10 +750,12 @@ public class PhoneController {
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
-			List<SysAnnouncement> noticeLst = userService.findSystemAnnounce(currentUser.getAreaId(), null);
+			Area area = areaService.getArea(currentUser.getAreaId());
+			String showDate = DateUtil.convertDateToString(new Date());
+			List<SysAnnouncement> noticeLst = userService.findSystemAnnounce(area.getCity(),currentUser.getAreaId(), null, showDate);
 			List<SysAnnounceBo> retnLst = new ArrayList();
 			for (SysAnnouncement notice:noticeLst){
-				SysAnnounceBo bo = new SysAnnounceBo(notice.getId(),notice.getCreateTime(),notice.getTitle(),"");
+				SysAnnounceBo bo = new SysAnnounceBo(notice.getId(),DateUtil.convertDateToString("yyyy-MM-dd",notice.getCreateTime()),notice.getTitle(),"");
 				retnLst.add(bo);
 			}
 			JSONArray jsonArr=JSONArray.fromObject(retnLst);
@@ -779,10 +786,11 @@ public class PhoneController {
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
-			List<SysAnnouncement> noticeLst = userService.findSystemAnnounce(currentUser.getAreaId(),id);
+			Area area = areaService.getArea(currentUser.getAreaId());
+			List<SysAnnouncement> noticeLst = userService.findSystemAnnounce(area.getCity(),currentUser.getAreaId(),id, null);
 			List<SysAnnounceBo> retnLst = new ArrayList();
 			for (SysAnnouncement notice:noticeLst){
-				SysAnnounceBo bo = new SysAnnounceBo(notice.getId(),notice.getCreateTime(),notice.getTitle(),"");
+				SysAnnounceBo bo = new SysAnnounceBo(notice.getId(),DateUtil.convertDateToString("yyyy-MM-dd",notice.getCreateTime()),notice.getTitle(),notice.getContent());
 				retnLst.add(bo);
 			}
 			JSONArray jsonArr=JSONArray.fromObject(retnLst);

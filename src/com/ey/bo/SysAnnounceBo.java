@@ -6,7 +6,7 @@ public class SysAnnounceBo {
 
 	private Long id;
 	
-	private Date createTime;
+	private String createTime;
 	
 	private String title;
 	
@@ -16,7 +16,7 @@ public class SysAnnounceBo {
 		
 	}
 	
-	public SysAnnounceBo(Long id, Date createTime, String title, String content ){
+	public SysAnnounceBo(Long id, String createTime, String title, String content ){
 		this.id=id;
 		this.content=content;
 		this.createTime = createTime;
@@ -31,11 +31,11 @@ public class SysAnnounceBo {
 		this.id = id;
 	}
 
-	public Date getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 

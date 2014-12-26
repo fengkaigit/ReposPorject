@@ -67,10 +67,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<SysAnnouncement> findSystemAnnounce(String areaId, Long id)
+	public List<SysAnnouncement> findSystemAnnounce(String pareaId,String areaId, Long id, String showDate)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		return userDAO.findSystemAnnounce(areaId,id);
+		return userDAO.findSystemAnnounce(pareaId,areaId,id,showDate);
 	}
 
 	@Override

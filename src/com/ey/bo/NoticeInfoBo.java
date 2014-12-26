@@ -6,13 +6,13 @@ public class NoticeInfoBo {
 
 	private Long id;
 	private String serverContent;
-	private Date createTime;
+	private String createTime;
 	private Integer noticeType;
 	
 	public NoticeInfoBo(){
 		
 	}
-	public NoticeInfoBo(Long id, String serverContent, Date createTime, Integer noticeType){
+	public NoticeInfoBo(Long id, String serverContent, String createTime, Integer noticeType){
 		this.id = id;
 		this.serverContent = serverContent;
 		this.createTime = createTime;
@@ -30,10 +30,10 @@ public class NoticeInfoBo {
 	public void setServerContent(String serverContent) {
 		this.serverContent = serverContent;
 	}
-	public Date getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 	public Integer getNoticeType() {
