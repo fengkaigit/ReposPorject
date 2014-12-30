@@ -27,6 +27,39 @@ $(document).ready(function(){
 	  });
     }
 });
+var keywordtitle="请填写邮件地址便于与我们互动";
+function SearchFocus(obj){
+	if(obj.value==keywordtitle){
+		obj.value="";
+		
+	}
+}
+function SearchBlur(obj){
+	if(obj.value==""){
+		obj.value=keywordtitle;
+		
+	}
+}
+function postHandle(){
+	var userId = '${sessionScope.USER.id}';
+	if(userId == ''){
+		alert('您还没有登录，请登录后再评论');
+		return false;
+	}
+	if($("#userIdea").val() ==''){
+		alert("请输入评论内容");
+		return false;
+	}
+	 $('#ideaForm').ajaxSubmit(function(data){
+		    if(data.result){
+		    	alert('评论成功！谢谢您的参与，我们会尽快给您回复。');
+		    	window.location.href = "<%=request.getContextPath() %>/ej/ieda.do";
+		    }
+	 });
+}
+function showIeda(){
+	showDivWin('addIeda',520,420,'');
+}
 </script>
 </head>
 <body class="index">
@@ -107,6 +140,58 @@ $(document).ready(function(){
         <!--右侧主页面-->
 
     </div>
+    <form id="ideaForm" action="<%=request.getContextPath() %>/ej/saveFeed.do" method="post">
+<div id="addIeda" class="divWin" style="display:none;">
+<div class="close cur"  onclick="javascript:hiddenDiv('addIeda')">关闭</div>
+            <h1></h1>
+			 <p >添加通知信息</p> 
+            <table style="width:100%;" border="0" bgcolor="#c3c6c9" cellspacing="0" cellpadding="0">
+            <tbody><tr>
+                <td width="28%" bgcolor="#f1f8ff" align="right" style="vertical-align: middle;">用户地区</td>
+                <td bgcolor="#FFFFFF">
+                        <div class="tabBlBtn" style="margin-top: 10px; clear: both;">
+								<input type="radio" id="propose" value="1" name="backType"
+									checked="checked"><span style="cursor: pointer"
+									class="leftSpace">&nbsp;改进建议&nbsp;&nbsp;</span> <input
+									type="radio" id="recovery" value="2" name="backType"><span
+									style="cursor: pointer" class="leftSpace">&nbsp;内容纠错&nbsp;&nbsp;</span>
+								<input type="radio" id="bug" value="3" name="backType"><span
+									style="cursor: pointer" class="leftSpace">&nbsp;BUG提交&nbsp;&nbsp;</span>
+							</div>
+						</td>
+            </tr>
+            <tr>
+                <td bgcolor="#f1f8ff" align="right">通知状态</td>
+                <td bgcolor="#FFFFFF">
+                            <div class="wantItem" style="margin-top:30px;clear:both;">
+            <div class="titleItem" id="titleItem" >改进建议：</div>
+            <div class="perDataItem" >
+                <textarea style="height: 126px; border-color: rgb(214, 214, 214);" onpropertychange="if(value.length&gt;10000)value=value.substring(0,10000)" name="userIdea" class="inputBox text text-empty" id="userIdea" data-default=""></textarea>
+                  <span class="grey">如果您发现网站有功能或者逻辑性的bug，请在此处向我们报告，我们的工程师会尽快核实并修复bug，不断提升我们的用户体验。
+            </div>
+            <div class="clear"></div>
+        </div>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#f1f8ff" align="right">通知类型</td>
+                <td bgcolor="#FFFFFF">
+                        <div  id="bl_email_div" class="wantItem">
+            <div class="titleItem"><span class="red">*</span>邮箱地址：</div>
+            <div class="perDataItem"><input type="text" name="eMail" id="eMail" class="inputBox text-empty text" style="width:300px;" value="请填写邮件地址便于与我们互动" data-default="请填写邮件地址便于与我们互动" onfocus="SearchFocus(this)" onblur="SearchBlur(this)"></div>
+            <div class="clear"></div>
+        </div>              
+                        </td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF" align="center" colspan="2">
+				<input  type="button" class="jfxx_btn3" onClick="postHandle()" value="提交反馈" name="searchBill"/>
+				</td>
+            </tr>
+            </tbody></table>
+ </div>
+ </form>
+ <div id="bg"></div>
     <%@include file="/pages/template/jsp/common/about.jsp"%> 
 <%@include file="/pages/template/jsp/common/footer.jsp"%>
 <%@include file="/pages/template/jsp/common/links.jsp"%>

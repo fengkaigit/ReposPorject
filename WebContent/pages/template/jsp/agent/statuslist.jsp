@@ -39,26 +39,37 @@ function query(){
 	qForm.action = "<%=request.getContextPath() %>/agent/statuslist.do";
 	qForm.submit();
 }
-function saveReply(){
-	  if($("#replyContent").val()==''){
-		  alert("内容不能为空");
-		  $("#replyContent").focus();
+function postHandle(){
+	  var noticeType = $("#noticeType");
+	  var noticeMode = $("#noticeMode");
+	  var content = $("#serverContent");
+	  if(noticeType==''){
+		  alert("请选择通知类型");
+		  noticeType.focus();
 		  return false;
 	  }
-	  var valueObj = {billId:$("#billId").val(),userId:$("#userId").val(),serverContent:$("#replyContent").val(),noticeType:3,noticeMode:1};
-	  jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/agent/notice.do",valueObj,"post","json",function(data){
+	  if(noticeMode==''){
+		  alert("请选择通知方式");
+		  noticeMode.focus();
+		  return false;
+	  }
+	  if(content.val()==''){
+		  alert("内容不能为空");
+		  content.focus();
+		  return false;
+	  }
+	  $('#replyForm').ajaxSubmit(function(data){
 		  if(data.result){
-		    alert("回复成功");
-		    hiddenDiv('jfhfwin');
-		    window.location.href = "<%=request.getContextPath() %>/agent/statuslist.do?id="+$("#batchId").val();
-		  }
-		   
-	  });
+			    alert("回复成功");
+			    hiddenDiv('jfhfwin');
+			    window.location.href = "<%=request.getContextPath() %>/agent/statuslist.do?id="+$("#batchId").val();
+		   }
+	   });
 }
 function showReplyDiv(userId,id){
 	$("#userId").val(userId);
 	$("#billId").val(id);
-	showDivWin('jfhfwin',380,260,'');
+	showDivWin('jfhfwin',520,380,'');
 }
 </script>
 </head>
@@ -127,41 +138,62 @@ function showReplyDiv(userId,id){
   
 </div>
 </div>
-<form id="replyForm" method="post">
+<form id="replyForm" method="post" action="<%=request.getContextPath() %>/agent/notice.do">
 <input type="hidden" name="userId" id="userId" />
 <input type="hidden" name="billId" id="billId" />
-<input type="hidden" name="noticeType" id="noticeType" value="3"/>
-<input type="hidden" name="noticeMode" id="noticeMode" value="1"/>
-<div id="jfhfwin" class="divWin">
-<div class="close cur" onClick="hiddenDiv('jfhfwin')">关闭</div>
-    <h1 id="title"></h1>
-	<div class="jfzh-con" style="width:460px;height:350px;padding:5px;border:0px;">
-		<div class="jfzh-top clearfix">
-		<table id="login-table" style=" border:0px;width:400px;" cellpadding="0" cellspacing="0">  
-        <tr> 
-<td style="border:1px;text-align:left;width:60px;">内容：</td> 
-<td style=" border:0px;width:340px;" align="left"> <textarea style="height: 145px;border-color: rgb(214, 214, 214);" onpropertychange="if(value.length&gt;10000)value=value.substring(0,10000)" name="replyContent" class="textareajfBox text text-empty" id="replyContent" data-default=""></textarea>
-</td> 
-</tr> 
-<tr> 
-<td style=" border:0px;" colspan="2" class="save">
-<input  type="button" class="jfxx_btn3"  onClick="saveReply()" value="确认">
-</td> 
-</tr> 
-
-
-</table> 
-	
-
-        </div>
-    
-   
-    </div>
-	 
-    
-</div>
-</form>
-<div id="bg"></div>
+<div id="jfhfwin" class="divWin" style="display:none;">
+<div class="close cur"  onclick="javascript:hiddenDiv('jfhfwin')">关闭</div>
+            <h1></h1>
+			 <p >添加通知信息</p> 
+            <table style="width:100%;" border="0" bgcolor="#c3c6c9" cellspacing="0" cellpadding="0">
+            <tbody><tr>
+                <td width="28%" bgcolor="#f1f8ff" align="right" style="vertical-align: middle;">用户地区</td>
+                <td bgcolor="#FFFFFF">
+                          <select class="zc_city"  style="width:190px;height:28px;" id="sendStatus" name="sendStatus">
+                                <option value="0" >有效</option>
+                                <option value="1" >失效</option>
+                        </select>            
+                        </td>
+            </tr>
+            <tr>
+                <td bgcolor="#f1f8ff" align="right">通知类型</td>
+                <td bgcolor="#FFFFFF">
+                        <select class="zc_city"  style="width:190px;height:28px;" id="noticeType" name="noticeType">
+                             <option value="">请选择类型</option>
+                             <c:forEach var="item" items="${noticeTypes}" varStatus="status">
+                                <option value="${item.key}" >${item.value}</option>
+                             </c:forEach>    
+                          
+                        </select>                
+                        </td>
+            </tr>
+            <tr>
+                <td bgcolor="#f1f8ff" align="right">通知方式</td>
+                <td bgcolor="#FFFFFF">
+                        <select class="zc_city"  style="width:190px;height:28px;" id="noticeMode" name="noticeMode">
+                             <option value="">请选择方式</option>
+                             <c:forEach var="item" items="${noticeModes}" varStatus="status">
+                                <option value="${item.key}" >${item.value}</option>
+                             </c:forEach>    
+                          
+                        </select>                
+                        </td>
+            </tr>
+            <tr>
+                <td bgcolor="#f1f8ff" align="right">通知内容</td>
+                 <td bgcolor="#FFFFFF">
+                       <textarea style="height: 105px;border-color: rgb(214, 214, 214);" onpropertychange="if(value.length&gt;10000)value=value.substring(0,10000)" class="textareafeedBox text text-empty" name="serverContent" id="serverContent"></textarea>
+				 </td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF" align="center" colspan="2">
+				<input  type="button" class="jfxx_btn3" onClick="postHandle()" value="保存" name="searchBill"/>
+				</td>
+            </tr>
+            </tbody></table>
+ </div>
+ </form>
+ <div id="bg"></div>
 <%@include file="/pages/template/jsp/common/footer.jsp"%>
 <%@include file="/pages/template/jsp/common/links.jsp"%>
 <script src="js/funs.js" type="text/javascript"></script>

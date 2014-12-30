@@ -65,6 +65,8 @@ $(document).ready(function() {
 				<ul>
 					<li ><a href="<%=request.getContextPath() %>/sysparam/customproplist.do">自定义属性</a></li>
 					<li ><a href="<%=request.getContextPath() %>/sysparam/customvaluelist.do">自定义属性值</a></li>
+					<li ><a href="<%=request.getContextPath() %>/sysparam/ratelist.do">转账费率维护</a></li>
+					<li ><a href="<%=request.getContextPath() %>/sysparam/noticelist.do">通知信息维护</a></li>
 			  </ul></li>
 			  <li><span><a href="<%=request.getContextPath() %>/sysman/passwd.do">修改密码</a></span></li>
 	       </ul>
