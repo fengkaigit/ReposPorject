@@ -24,5 +24,7 @@ public interface StaticDAO extends BaseDAO {
     void deleteCustomValue(String customPropName,Integer customDataValue)  throws RuntimeException;
     List findTransferRate(Map<String,Object> Qparam,Integer page,Integer rows)throws RuntimeException;
 	Long getTotalTransferRate(Map<String,Object> Qparam) throws RuntimeException;
+	List findNoticeInfos(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+	Long getTotalNoticeInfo(Map<String,Object> Qparam) throws RuntimeException; 
     
 }

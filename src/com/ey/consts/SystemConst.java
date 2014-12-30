@@ -22,6 +22,7 @@ public class SystemConst {
 	static public String INITPASSWORD = "8888";
     static public final String[] MONTHS=new String[]{"01","02","03","04","05","06","07","08","09","10","11","12"};
     static public final int AFTERDAY = -3;
+    public static String timePattern = "yyyy-MM-dd HH:mm:ss";
 
 	/**
 	 * HTTP POST«Î«Û

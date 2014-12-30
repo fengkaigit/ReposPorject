@@ -8,6 +8,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * NoticeInfo entity. @author MyEclipse Persistence Tools
  */
@@ -24,6 +26,10 @@ public class NoticeInfo implements java.io.Serializable {
 	private Integer sendStatus;
 	private Integer noticeType;
 	private Integer noticeMode;
+	private Boolean massFlag;
+	private String  parentAreaId;
+	private String areaId;
+	private String areaName;
 
 	// Constructors
 
@@ -55,7 +61,7 @@ public class NoticeInfo implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "user_id", nullable = false)
+	@Column(name = "user_id")
 	public Long getUserId() {
 		return this.userId;
 	}
@@ -75,6 +81,7 @@ public class NoticeInfo implements java.io.Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_time", nullable = false, length = 10)
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	public Date getCreateTime() {
 		return this.createTime;
 	}
@@ -109,5 +116,38 @@ public class NoticeInfo implements java.io.Serializable {
 	public void setNoticeMode(Integer noticeMode) {
 		this.noticeMode = noticeMode;
 	}
+	@Column(name = "mass_flag")
+	public Boolean getMassFlag() {
+		return massFlag;
+	}
+
+	public void setMassFlag(Boolean massFlag) {
+		this.massFlag = massFlag;
+	}
+	@Column(name = "area_pid",length=50)
+	public String getParentAreaId() {
+		return parentAreaId;
+	}
+
+	public void setParentAreaId(String parentAreaId) {
+		this.parentAreaId = parentAreaId;
+	}
+	@Column(name = "area_id",length=50)
+	public String getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(String areaId) {
+		this.areaId = areaId;
+	}
+	@Column(name = "area_name",length=300)
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+	
 
 }

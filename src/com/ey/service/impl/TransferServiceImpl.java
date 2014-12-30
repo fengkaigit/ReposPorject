@@ -29,9 +29,9 @@ public class TransferServiceImpl implements TransferService {
 			TransferRate tr = getTransferRateByBank(form.getBankCode());
 			double poundage = 0;
 			if(tr!=null){
-				poundage = (form.getBillMoney()+form.getPoundage())*tr.getId().getRate();
-				if(poundage>tr.getId().getLimitMoney()){
-					poundage = tr.getId().getLimitMoney();
+				poundage = (form.getBillMoney()+form.getPoundage())*tr.getRate();
+				if(poundage>tr.getLimitMoney()){
+					poundage = tr.getLimitMoney();
 				}
 			}
 			TransferRecords transferRecords = new TransferRecords(null, new Date(), poundage,

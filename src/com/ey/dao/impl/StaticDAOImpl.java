@@ -128,7 +128,7 @@ public class StaticDAOImpl extends BaseDAOImpl implements StaticDAO {
 	public List findTransferRate(Map<String, Object> Qparam,
 			Integer page, Integer rows) throws RuntimeException {
 		// TODO Auto-generated method stub
-		StringBuffer hql = new StringBuffer("select new com.ey.bo.TransferRateBo(a.id.bankId,b.bankName,a.id.limitMoney,a.id.rate) from TransferRate a,BankInfo b where a.id.bankId = b.bankCode");
+		StringBuffer hql = new StringBuffer("select new com.ey.bo.TransferRateBo(a.id,a.bankId,b.bankName,a.limitMoney,a.rate,a.cityFlag,a.peerFlag) from TransferRate a,BankInfo b where a.bankId = b.bankCode");
 		List<Object> params = new ArrayList();
 		createTransferRateQueryParams(hql,Qparam,params);
 		return this.find(hql.toString(), params, page, rows);
@@ -138,7 +138,7 @@ public class StaticDAOImpl extends BaseDAOImpl implements StaticDAO {
 	public Long getTotalTransferRate(Map<String, Object> Qparam)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		StringBuffer hql = new StringBuffer("select count(id.bankId) from TransferRate where 1=1");
+		StringBuffer hql = new StringBuffer("select count(id) from TransferRate where 1=1");
 		List<Object> params = new ArrayList();
 		createTransferRateQueryParams(hql,Qparam,params);
 		List list = this.find(hql.toString(), params);
@@ -147,6 +147,35 @@ public class StaticDAOImpl extends BaseDAOImpl implements StaticDAO {
 		return 0L;
 	}
 	private void createTransferRateQueryParams(StringBuffer query,Map<String, Object> Qparam,List paramList){
+		if(Qparam!=null&&Qparam.size()>0){
+			
+		}
+	}
+
+	@Override
+	public List findNoticeInfos(Map<String, Object> Qparam,
+			Integer page, Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		StringBuffer hql = new StringBuffer("from NoticeInfo where 1=1");
+		List<Object> params = new ArrayList();
+		createNoticeInfoQueryParams(hql,Qparam,params);
+		hql.append(" order by sendStatus,createTime desc");
+		return this.find(hql.toString(), params, page, rows);
+	}
+
+	@Override
+	public Long getTotalNoticeInfo(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		StringBuffer hql = new StringBuffer("select count(id) from NoticeInfo where 1=1");
+		List<Object> params = new ArrayList();
+		createNoticeInfoQueryParams(hql,Qparam,params);
+		List list = this.find(hql.toString(), params);
+		if(list!=null&&list.size()>0)
+			return Long.valueOf(list.get(0)+"");
+		return 0L;
+	}
+	private void createNoticeInfoQueryParams(StringBuffer query,Map<String, Object> Qparam,List paramList){
 		if(Qparam!=null&&Qparam.size()>0){
 			
 		}

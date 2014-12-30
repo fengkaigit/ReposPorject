@@ -537,7 +537,7 @@ public class AgentController extends BaseController {
 		modelMap.addAttribute("endDate", endDate);
 		modelMap.addAttribute("payType", payType);
 		if(!StringUtil.isEmptyString(qFlag)){
-			modelMap.addAttribute("payTypes",getPayTypeName());
+			modelMap.addAttribute("payTypes",getPayTypeName("payment_type"));
 			return QUERYBATCHBILL_PAGE;
 		}
 		if (status != null && status == 0)
@@ -566,6 +566,8 @@ public class AgentController extends BaseController {
 		modelMap.addAttribute("bills", billlist);
 		modelMap.addAttribute("batchId", batchId);
 		modelMap.addAttribute("id", id);
+		modelMap.addAttribute("noticeTypes",getPayTypeName("system_notice_type"));
+		modelMap.addAttribute("noticeModes",getPayTypeName("system_notice_mode"));
 		return STATUSLIST_PAGE;
 	}
 	
@@ -587,7 +589,7 @@ public class AgentController extends BaseController {
 	public Object  doNotice(Long billId, NoticeInfo notice,RedirectAttributes redirectAttributes,
 			HttpServletRequest request, HttpServletResponse response){
 		notice.setCreateTime(new Date());
-		notice.setSendStatus(0);
+		notice.setMassFlag(false);
 		agentService.saveNotice(notice);
 		agentService.updateBillStatusByIds(Arrays.asList(new String[]{billId+""}), 4);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -658,7 +660,7 @@ public class AgentController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response){
 		   Map<String, Object> map = new HashMap<String, Object>();
 		try{
-		   boolean flag = agentService.createAgentBatch(getPayTypeName());
+		   boolean flag = agentService.createAgentBatch(getPayTypeName("payment_type"));
 		   map.put("result", flag);
 		   if(!flag)
 		      map.put("message", RequestUtils.getMessage("nofoundbill", request));
@@ -670,9 +672,9 @@ public class AgentController extends BaseController {
 		return map;
 	}
 	
-	private Map<Integer,String> getPayTypeName(){
+	private Map<Integer,String> getPayTypeName(String typeCode){
 		Map<Integer,String> dataValueMap = new HashMap<Integer,String>();
-		List<BaseCustomValue> customValues = staticService.listValues("payment_type");
+		List<BaseCustomValue> customValues = staticService.listValues(typeCode);
 		if(customValues!=null&&customValues.size()>0){
             for(BaseCustomValue value:customValues){
         	     dataValueMap.put(value.getId().getDataValue(), value.getPropChName());

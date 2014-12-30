@@ -1,6 +1,7 @@
 package com.ey.controller.sysparam;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,14 +21,18 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ey.bo.AgentBo;
 import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
+import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.BaseCustomProp;
 import com.ey.dao.entity.BaseCustomValue;
 import com.ey.dao.entity.BaseCustomValueId;
+import com.ey.dao.entity.NoticeInfo;
 import com.ey.dao.entity.TransferRate;
 import com.ey.dao.entity.TransferRateId;
+import com.ey.service.AreaService;
 import com.ey.service.StaticService;
+import com.ey.util.DateUtil;
 
 @Controller
 @RequestMapping(value = "/sysparam")
@@ -36,9 +41,13 @@ public class SystemParamController extends BaseController {
 	private static final String PROPLIST_PAGE = "sysparam/customproplist";
 	private static final String DATAVALUELIST_PAGE = "sysparam/customvaluelist";
 	private static final String RATELIST_PAGE = "sysparam/ratelist";
+	private static final String NOTICELIST_PAGE = "sysparam/noticelist";
 	
 	@Autowired
 	private StaticService staticService;
+	
+	@Autowired
+	private AreaService areaService;
 	
 	@RequestMapping(value = "/customproplist")
 	public ModelAndView customproplist(@ModelAttribute("page") Integer page,
@@ -84,6 +93,22 @@ public class SystemParamController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/noticelist")
+	public ModelAndView noticelist(@ModelAttribute("page") Integer page,
+			@ModelAttribute("rows") Integer rows, HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		List notices = staticService.findNoticeInfos(null, page, rows);
+		Long total = staticService.getTotalNoticeInfo(null);
+		mav.addObject("notices", notices);
+		mav.addObject("total", total);
+		mav.addObject("areas",initAreas(SystemConst.ROOTAREAID,request));
+		mav.addObject("noticeTypes",getPayTypeName("system_notice_type",request));
+		mav.addObject("noticeModes",getPayTypeName("system_notice_mode",request));
+		mav.setViewName(NOTICELIST_PAGE);
+		return mav;
+	}
+	
 	@RequestMapping(value = "/porpedit")
 	@ResponseBody
 	public Object porpedit(String id,
@@ -102,10 +127,18 @@ public class SystemParamController extends BaseController {
 	
 	@RequestMapping(value = "/rateedit")
 	@ResponseBody
-	public Object rateedit(TransferRateId id,
+	public Object rateedit(Long id,
 			HttpServletRequest request, HttpServletResponse response) {
 		TransferRate rate = (TransferRate)staticService.getObject(TransferRate.class, id);
 		return rate;
+	}
+	
+	@RequestMapping(value = "/noticeedit")
+	@ResponseBody
+	public Object noticeedit(Long id,
+			HttpServletRequest request, HttpServletResponse response) {
+		NoticeInfo notice = (NoticeInfo)staticService.getObject(NoticeInfo.class, id);
+		return notice;
 	}
 	
 	@RequestMapping(value = "/delprop")
@@ -135,8 +168,17 @@ public class SystemParamController extends BaseController {
 	
 	@RequestMapping(value = "/delrate")
 	@ResponseBody
-	public Object delrate(TransferRateId id,HttpServletRequest request, HttpServletResponse response) {
-		staticService.deleteObject(new TransferRate(id));
+	public Object delrate(TransferRate rate ,HttpServletRequest request, HttpServletResponse response) {
+		staticService.deleteObject(rate);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping(value = "/delnotice")
+	@ResponseBody
+	public Object delnotice(NoticeInfo notice ,HttpServletRequest request, HttpServletResponse response) {
+		staticService.deleteObject(notice);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", true);
 		return map;
@@ -163,8 +205,32 @@ public class SystemParamController extends BaseController {
 	
 	@RequestMapping(value = "/saverate")
 	@ResponseBody
-	public Object saverate(TransferRateId id ,HttpServletRequest request, HttpServletResponse response) {
-		staticService.saveOrUpdateObject(new TransferRate(id));
+	public Object saverate(TransferRate rate ,HttpServletRequest request, HttpServletResponse response) {
+		if(rate.getCityFlag()==null)
+			rate.setCityFlag(false);
+		if(rate.getPeerFlag()==null)
+			rate.setPeerFlag(false);
+		if(rate.getId()==null)
+		   staticService.saveObject(rate,true);
+		else
+			staticService.updateObject(rate);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping(value = "/savenotice")
+	@ResponseBody
+	public Object savenotice(String newDate,NoticeInfo notice,HttpServletRequest request, HttpServletResponse response) {
+	    notice.setMassFlag(true);
+		if(notice.getId()==null){
+			notice.setCreateTime(new Date());
+		   staticService.saveObject(notice,true);
+		}
+		else{
+		   notice.setCreateTime(DateUtil.convertStringToDate(SystemConst.timePattern,newDate));
+		   staticService.updateObject(notice);
+		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", true);
 		return map;
@@ -174,5 +240,22 @@ public class SystemParamController extends BaseController {
 	private List initBankInfo(HttpServletRequest request) {
 		List<BankInfo> banks = staticService.listBanks();
 		return banks;
+	}
+	
+	@SuppressWarnings("unused")
+	private Object initAreas(String id,HttpServletRequest request) {
+		List<Area> areas = areaService.getAreasByCity(id);
+		return areas;
+	}
+	@SuppressWarnings("unused")
+	private Map<Integer,String> getPayTypeName(String typeCode,HttpServletRequest request){
+		Map<Integer,String> dataValueMap = new HashMap<Integer,String>();
+		List<BaseCustomValue> customValues = staticService.listValues(typeCode);
+		if(customValues!=null&&customValues.size()>0){
+            for(BaseCustomValue value:customValues){
+        	     dataValueMap.put(value.getId().getDataValue(), value.getPropChName());
+            }
+		}
+        return dataValueMap;
 	}
 }

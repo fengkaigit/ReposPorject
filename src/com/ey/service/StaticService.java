@@ -26,4 +26,7 @@ public interface StaticService {
 	List findTransferRate(Map<String,Object> Qparam,Integer page,Integer rows)throws RuntimeException;
 	Long getTotalTransferRate(Map<String,Object> Qparam) throws RuntimeException;
 	void deleteObject(Object obj) throws RuntimeException;
+	Object saveObject(Object obj,Boolean createDbId) throws RuntimeException;
+	List findNoticeInfos(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+	Long getTotalNoticeInfo(Map<String,Object> Qparam) throws RuntimeException; 
 }

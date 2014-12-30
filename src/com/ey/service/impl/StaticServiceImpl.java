@@ -1,15 +1,18 @@
 package com.ey.service.impl;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ey.bo.StaticDataBO;
 import com.ey.dao.StaticDAO;
+import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.BaseCustomProp;
 import com.ey.dao.entity.BaseCustomValue;
@@ -158,5 +161,30 @@ public class StaticServiceImpl implements StaticService {
 	public void deleteObject(Object obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		staticDAO.delete(obj);
+	}
+
+	@Override
+	public Object saveObject(Object obj, Boolean createDbId)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		if(createDbId){
+			staticDAO.getDbId(obj);
+		}
+		staticDAO.save(obj);
+		return null;
+	}
+
+	@Override
+	public List findNoticeInfos(Map<String, Object> Qparam, Integer page,
+			Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.findNoticeInfos(Qparam, page, rows);
+	}
+
+	@Override
+	public Long getTotalNoticeInfo(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.getTotalNoticeInfo(Qparam);
 	}
 }

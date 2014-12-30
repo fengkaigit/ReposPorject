@@ -8,8 +8,8 @@ public class TransferRateBo extends TransferRate {
     public TransferRateBo(){
     	
     }
-    public TransferRateBo(String bankId,String bankName,Double limitMoney,Double rate){
-    	super(new TransferRateId(bankId,limitMoney,rate));
+    public TransferRateBo(Long id,String bankId,String bankName,Double limitMoney,Double rate,Boolean cityFlag, Boolean peerFlag){
+    	super(id,bankId,limitMoney,rate,cityFlag,peerFlag);
     	this.bankName = bankName;
     }
 	public String getBankName() {
