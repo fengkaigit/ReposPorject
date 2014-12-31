@@ -18,7 +18,6 @@ import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.ChargeEnterprise;
-import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.UserBase;
 import com.ey.forms.JfForm;
 import com.ey.service.AreaService;
@@ -26,7 +25,6 @@ import com.ey.service.ChargeEntService;
 import com.ey.service.FeeService;
 import com.ey.service.JfService;
 import com.ey.service.JtfkfService;
-import com.ey.util.ClassUtil;
 import com.ey.util.DateUtil;
 import com.ey.util.MoneyUtil;
 import com.ey.util.StringUtil;
@@ -51,7 +49,7 @@ public class JtfkController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		UserBase currentUser = (UserBase)request.getSession().getAttribute(SystemConst.USER);
 		String settingId = request.getParameter("settingId");
-		jfService.prePareParams(mav, currentUser, settingId, TYPE, true);
+		jfService.prePareParams(mav, currentUser, settingId, TYPE, true,request.getSession().getServletContext());
 		List<String> monthes = new ArrayList();
 		for(int i=1;i<=12;i++){
 			if(i<10){
@@ -67,7 +65,7 @@ public class JtfkController extends BaseController {
 		List<Integer> years = new ArrayList();
 		years.add(preYear);
 		years.add(curYear);
-		FeeRule feeRule = feeService.getFeeRule(TYPE, date);
+		/*FeeRule feeRule = feeService.getFeeRule(TYPE, date);
 		if(feeRule!=null){
 			try{
 				Object obj = ClassUtil.loadClass(feeRule.getRule());
@@ -77,7 +75,7 @@ public class JtfkController extends BaseController {
 				ex.printStackTrace();
 			}
 			
-		}
+		}*/
 		mav.addObject("years",years );
 		mav.addObject("year",curYear );
 		mav.addObject("month",curMonth );

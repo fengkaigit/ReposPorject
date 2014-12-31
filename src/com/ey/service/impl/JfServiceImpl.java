@@ -1,11 +1,13 @@
 package com.ey.service.impl;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,15 +19,18 @@ import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BaseCustomValue;
 import com.ey.dao.entity.CatvInfo;
 import com.ey.dao.entity.ChargeEnterprise;
+import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.PaymentSetting;
 import com.ey.dao.entity.UserBase;
 import com.ey.service.AreaService;
 import com.ey.service.CatvService;
 import com.ey.service.ChargeEntService;
+import com.ey.service.FeeService;
 import com.ey.service.JfService;
 import com.ey.service.StaticService;
 import com.ey.util.DateUtil;
+import com.ey.util.FeeUtil;
 import com.ey.util.StringUtil;
 
 @Service("jfService")
@@ -40,6 +45,8 @@ public class JfServiceImpl implements JfService {
 	private JfDAO jfDAO;
 	@Autowired
 	private CatvService catvService;
+	@Autowired
+	private FeeService feeService;
 	public Object getObjectById(Class c, Serializable id)
 			throws RuntimeException {
 		return jfDAO.get(c, id);
@@ -47,7 +54,7 @@ public class JfServiceImpl implements JfService {
 
 	@Override
 	public void prePareParams(ModelAndView mav, UserBase currentUser,
-			String settingId, Integer type, boolean loadArea)
+			String settingId, Integer type, boolean loadArea,ServletContext servletContext)
 			throws RuntimeException {
 		PaymentSetting setting = null;
 		if (!StringUtil.isEmptyString(settingId)) {
@@ -58,6 +65,7 @@ public class JfServiceImpl implements JfService {
 				ex.printStackTrace();
 			}
 		}
+		String areaId = null;
 		if (setting != null) {
 			mav.addObject("billNumber", setting.getBillNumber());
 			mav.addObject("payAddress", setting.getPayAddress());
@@ -65,11 +73,24 @@ public class JfServiceImpl implements JfService {
 			mav.addObject("vehicleNumber", setting.getVehicleNumber());
 			mav.addObject("carframeNumber", setting.getCarframeNumber());
 			mav.addObject("engineNumber", setting.getEngineNumber());
-			
-			
-			
+			areaId = setting.getAreaId();
 		}
-		
+		if(areaId==null){
+			areaId = currentUser.getAreaId();
+		}
+		Double poundage = null;
+		if(areaId!=null){
+			try{
+				FeeRule feeRule = feeService.getFeeRule(type, new Date());
+				poundage = FeeUtil.getPoundage(feeRule.getRule(), servletContext, currentUser, type, areaId);
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
+		if(poundage==null){
+			poundage = 0d;
+		}
+		mav.addObject("poundage", poundage);
 		if (!loadArea) {
 			return;
 		}
@@ -149,12 +170,12 @@ public class JfServiceImpl implements JfService {
 		for (Object[] objs : records) {
 			Double money = (Double) objs[0];// 金额
 			Integer payType = (Integer) objs[1];// 缴费类型
-			Integer payStatus = (Integer) objs[2];// 状态
-			Integer _year = (Integer) objs[3];// 年
-			Integer _month = (Integer) objs[4];// 月
-			Long _sum = (Long) objs[5];// 笔数
-			buildStatusMap(statusMap, payStatus, _month,_sum);
-			buildMoneyMap(moneyMap, payStatus, _month, money);
+			//Integer payStatus = (Integer) objs[2];// 状态
+			Integer _year = (Integer) objs[2];// 年
+			Integer _month = (Integer) objs[3];// 月
+			//Long _sum = (Long) objs[4];// 笔数
+			//buildStatusMap(statusMap, payStatus, _month,_sum);
+			buildMoneyMap(moneyMap, null, _month, money);
 			buildItemMap(itemMap, payType, _month, paymentTypes);
 			if (!monthList.contains(_month)) {
 				monthList.add(_month);
@@ -162,12 +183,12 @@ public class JfServiceImpl implements JfService {
 		}
 		Collections.sort(monthList);
 		for (Integer mst : monthList) {
-			Map<Integer, Integer> _statusMap = statusMap.get(mst);
+			//Map<Integer, Integer> _statusMap = statusMap.get(mst);
 			Map<Integer, Double> _moneyMap = moneyMap.get(mst);
 			String _item = itemMap.get(mst);
 			QueryBillBO pb = new QueryBillBO(_moneyMap.get(2), null, null,
 					year, mst, _item, _moneyMap.get(1), _moneyMap.get(0),
-					_statusMap.get(2), _statusMap.get(1), _statusMap.get(0));
+					null, null, null);
 			pbList.add(pb);
 		}
 		return pbList;
@@ -228,12 +249,12 @@ public class JfServiceImpl implements JfService {
 		if (ts == null) {
 			ts = 0d;
 		}
-		if (payStatus.intValue() == 1) {
+		//if (payStatus.intValue() == 1) {
 			ss = ss + money;
-		}
-		if (payStatus.intValue() == 2) {
+		//}
+		/*if (payStatus.intValue() == 2) {
 			ds = ds + money;
-		}
+		}*/
 		ts = ss + ds;
 		_moneyMap.put(0, ds);
 		_moneyMap.put(1, ss);

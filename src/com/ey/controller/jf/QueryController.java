@@ -32,14 +32,17 @@ import com.ey.consts.SystemConst;
 import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.BaseCustomValue;
 import com.ey.dao.entity.ChargeEnterprise;
+import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.PaymentSetting;
 import com.ey.dao.entity.UserBase;
 import com.ey.forms.JfForm;
 import com.ey.service.ChargeEntService;
+import com.ey.service.FeeService;
 import com.ey.service.JfService;
 import com.ey.service.SettingService;
 import com.ey.service.StaticService;
 import com.ey.util.DateUtil;
+import com.ey.util.FeeUtil;
 import com.ey.util.FileUtil;
 import com.ey.util.JacksonJsonUtil;
 import com.ey.util.StringUtil;
@@ -56,6 +59,8 @@ public class QueryController extends BaseController {
 	private StaticService staticService;
 	@Autowired
 	private ChargeEntService chargeEntService;
+	@Autowired
+	private FeeService feeService;
 
 	@RequestMapping(value = "/query")
 	public ModelAndView query(HttpServletRequest request,
@@ -71,11 +76,11 @@ public class QueryController extends BaseController {
 		Integer faultNum = 0;
 		for (QueryBillBO record : records) {
 			money = money + record.getMoney();
-			sucessMoney = sucessMoney + record.getSucessMoney();
-			faultMoney = faultMoney + record.getFaultMoney();
-			totalNum = totalNum + record.getTotalNum();
-			sucessNum = sucessNum + record.getSucessNum();
-			faultNum = faultNum + record.getFaultNum();
+			// sucessMoney = sucessMoney + record.getSucessMoney();
+			// faultMoney = faultMoney + record.getFaultMoney();
+			// totalNum = totalNum + record.getTotalNum();
+			// sucessNum = sucessNum + record.getSucessNum();
+			// faultNum = faultNum + record.getFaultNum();
 		}
 
 		List<Integer> monthes = new ArrayList();
@@ -307,7 +312,7 @@ public class QueryController extends BaseController {
 		// System.out.println(key.getName() + "\t" + "N");
 		// }
 		String json = JacksonJsonUtil.beanToJson(settings);
-		//System.out.println(json);
+		// System.out.println(json);
 		out.println(json);
 		out.flush();
 		out.close();
@@ -400,7 +405,8 @@ public class QueryController extends BaseController {
 
 	@RequestMapping(value = "/viewbillimg")
 	public ModelAndView viewbillimg(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, URISyntaxException {
+			HttpServletResponse response) throws IOException,
+			URISyntaxException {
 		String entId = request.getParameter("entId");
 		String payType = request.getParameter("payType");
 		String path = System.getProperty("java.io.tmpdir");
@@ -415,15 +421,52 @@ public class QueryController extends BaseController {
 				if (bytes != null && bytes.length > 0) {
 					FileUtil.wirteStringToFile(bytes, file);
 				} else {
-					
-					//URI url = new URI("http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/images/no_billImage.jpg");
-					//file = new File(url);
-					response.sendRedirect(request.getContextPath()+"/images/no_billImage.jpg");
+
+					// URI url = new
+					// URI("http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/images/no_billImage.jpg");
+					// file = new File(url);
+					response.sendRedirect(request.getContextPath()
+							+ "/images/no_billImage.jpg");
 					return null;
 				}
 			}
 		}
 		FileUtil.downLoadImg(file, response, fileName);
+		return null;
+	}
+
+	@RequestMapping(value = "/refreshPoundage")
+	public ModelAndView refreshPoundage(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		String areaId = request.getParameter("areaId");
+		String paymentType = request.getParameter("paymentType");
+
+		StringBuffer buffer = new StringBuffer("");
+		Double poundage = null;
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(
+				SystemConst.USER);
+		if (areaId != null) {
+			try {
+				FeeRule feeRule = feeService.getFeeRule(
+						new Integer(paymentType), new Date());
+				poundage = FeeUtil.getPoundage(feeRule.getRule(), request
+						.getSession().getServletContext(), currentUser,
+						new Integer(paymentType), areaId);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		if (poundage == null) {
+			poundage = 0d;
+		}
+		buffer.append(poundage);
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		out.print(buffer.toString());
+		out.close();
 		return null;
 	}
 }

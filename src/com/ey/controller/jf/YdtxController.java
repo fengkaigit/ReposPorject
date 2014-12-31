@@ -17,7 +17,6 @@ import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.Area;
 import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.ChargeEnterprise;
-import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.UserBase;
 import com.ey.forms.JfForm;
 import com.ey.service.AreaService;
@@ -25,7 +24,6 @@ import com.ey.service.ChargeEntService;
 import com.ey.service.FeeService;
 import com.ey.service.JfService;
 import com.ey.service.YdtxfService;
-import com.ey.util.ClassUtil;
 import com.ey.util.DateUtil;
 import com.ey.util.MoneyUtil;
 import com.ey.util.StringUtil;
@@ -50,9 +48,9 @@ public class YdtxController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		String settingId = request.getParameter("settingId");
 		UserBase currentUser = (UserBase)request.getSession().getAttribute(SystemConst.USER);
-		jfService.prePareParams(mav, currentUser, settingId, TYPE, false);
-		Date date = new Date();
-		FeeRule feeRule = feeService.getFeeRule(TYPE, date);
+		jfService.prePareParams(mav, currentUser, settingId, TYPE, false,request.getSession().getServletContext());
+		//Date date = new Date();
+		/*FeeRule feeRule = feeService.getFeeRule(TYPE, date);
 		if(feeRule!=null){
 			try{
 				Object obj = ClassUtil.loadClass(feeRule.getRule());
@@ -62,7 +60,7 @@ public class YdtxController extends BaseController {
 				ex.printStackTrace();
 			}
 			
-		}
+		}*/
 		mav.addObject("paymentType", TYPE);
 		mav.setViewName("jf/ydtx/first");
 		return mav;

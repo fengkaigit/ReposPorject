@@ -30,6 +30,7 @@ import com.ey.forms.UserForm;
 import com.ey.service.AreaService;
 import com.ey.service.LoginService;
 import com.ey.service.StaticService;
+import com.ey.util.CookieManager;
 import com.ey.util.MD5;
 import com.ey.util.RequestUtils;
 import com.ey.util.StringUtil;
@@ -100,7 +101,12 @@ public class LoginController extends BaseController {
 				}
 
 			}
-
+			if (request.getParameter("remember") != null) {
+				CookieManager.addCookie(response, "365LoginName", form.getLoginCode(),
+						60 * 60 * 24 * 31);
+				CookieManager.addCookie(response, "365LoginPwd", form.getPassword(),
+						60 * 60 * 24 * 31);
+			}
 			mav.addObject(SystemConst.USER, currentUser);
 			request.getSession().setAttribute(SystemConst.USER, currentUser);
 		}
@@ -323,7 +329,7 @@ public class LoginController extends BaseController {
 		if (!newepass1.equals(newepass2)) {
 			result = "两次密码不一致,请确认";
 		}
-		if (!oldpass.equals(ub.getPasswd())) {
+		if (!MD5.getMD5Str(oldpass).equals(ub.getPasswd())) {
 			result = "原密码错误";
 		}
 		if (!StringUtil.isEmptyString(result)) {
@@ -334,7 +340,7 @@ public class LoginController extends BaseController {
 
 			UserBase ubd = loginService.findUserByLoginCode(ub
 					.getAccountNumber());
-			ubd.setPasswd(newepass1);
+			ubd.setPasswd(MD5.getMD5Str(newepass1));
 			loginService.saveUser(ubd);
 			request.getSession().setAttribute(SystemConst.USER, ubd);
 			result = "ok";

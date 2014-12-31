@@ -1,7 +1,8 @@
 package com.ey.service;
-
 import java.io.Serializable;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,7 +13,7 @@ public interface JfService {
 	public Object getObjectById(Class c,Serializable id) throws RuntimeException;
 
 	public void prePareParams(ModelAndView mav, UserBase currentUser,
-			String settingId, Integer type,boolean loadArea) throws RuntimeException;
+			String settingId, Integer type,boolean loadArea,ServletContext servletContext) throws RuntimeException;
 
 	public List<QueryBillBO> getTotalRecords(Long userId,Integer year,
 			String startMonth, String endMonth)throws RuntimeException;
