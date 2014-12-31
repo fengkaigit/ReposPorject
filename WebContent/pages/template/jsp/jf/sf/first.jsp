@@ -144,7 +144,7 @@ $(document).ready(function(){
 	</c:forEach>
 </select> <select style="width: 85px; margin-left: 8px;" class="selectCss"
 	id="_areaId" name="_areaId" onmousewheel="return false"
-	onchange="refreshCityId(this);refreshEntByCity(this,'<%=request.getContextPath() %>','paymentType','entId');">
+	onchange="refreshCityId(this);refreshEntByCity(this,'<%=request.getContextPath() %>','paymentType','entId');refreshPoundageByCity(this,'<%=request.getContextPath() %>','paymentType')">
 	<c:forEach var="item" items="${cityList}" varStatus="status">
 		<option value="${item.id}"
 			<c:if test="${item.id==areaId}">selected="selected"</c:if>>${item.province}</option>
@@ -280,7 +280,6 @@ $(document).ready(function(){
 </span>
 
 <div style="clear: both"></div>
-
 
 <!-- ui-prod-newbie --> <!-- .content --></div>
 <!-- .ui-grid --></div>

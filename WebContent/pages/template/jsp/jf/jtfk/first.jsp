@@ -155,7 +155,7 @@ $(document).ready(function(){
                     </c:forEach>
 				 </select>
                   
-				  <select style="width:85px; margin-left:8px; " class="selectCss" id="_areaId" name="_areaId" onmousewheel="return false" onchange="refreshCityId(this);">
+				  <select style="width:85px; margin-left:8px; " class="selectCss" id="_areaId" name="_areaId" onmousewheel="return false" onchange="refreshCityId(this);refreshPoundageByCity(this,'<%=request.getContextPath() %>','paymentType')">
 				  	<c:forEach var="item" items="${cityList}" varStatus="status">
                       <option value="${item.id}" <c:if test="${item.id==areaId}">selected="selected"</c:if>>${item.province}</option>
                     </c:forEach>
@@ -261,8 +261,8 @@ $(document).ready(function(){
 		<input  type="submit" class="jfxx_btn3" value="下一步" name="searchBill">
        </div>
   <span class="icon_futitle">
-  <p>  &nbsp;1、因暂未开通与交管局的系统对接，故暂采取人工跑腿代缴方式完成亲的缴费，故在正常水费基础上增加${poundage}元代缴者的劳务费，请亲谅解！</p>
-  <p>  &nbsp;2、有需要发票的亲，可自行到自来水公司网点柜台打印，或留下地址邮寄给您，但邮寄费需要您来承担。</p></span>
+  <p>  &nbsp;1、因暂未开通与交管局的系统对接，故暂采取人工跑腿代缴方式完成亲的缴费，故在正常交通罚款费基础上增加${poundage}元代缴者的劳务费，请亲谅解！</p>
+  <p>  &nbsp;2、有需要发票的亲，可自行到交管局柜台打印，或留下地址邮寄给您，但邮寄费需要您来承担。</p></span>
 
                 <div style="clear:both"></div>
          

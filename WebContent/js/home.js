@@ -133,6 +133,10 @@ function refreshCity(obj,site,targetObjId){
 		        		}catch(err){
 		        		}
 		        		try{
+		        			refreshPoundageByCity(document.getElementById(targetObjId),site,'paymentType');
+		        		}catch(err){
+		        		}
+		        		try{
 		        			refreshtvs(document.getElementById(targetObjId),site);
 		        		}catch(err){
 		        			
@@ -231,7 +235,7 @@ function refreshEntByCity(obj,site,payTypeId,targetObjId){
 }
 function quickSetting(site,paymentType){
 	var iWidth =480;    
-    var iHeight = 432;  
+    var iHeight = 550;  
     var iTop = (window.screen.height-iHeight)/2;
     var iLeft = (window.screen.width-iWidth)/2;
 	window.showModalDialog(site+"/setting/editframe.do?paymentType="+paymentType,"","dialogLeft="+iLeft+"px;dialogTop="+iTop+"px;dialogHeight="+iHeight+"px;dialogWidth="+iWidth+"px;status=no;scroll=no;resizable=no;help=no");
@@ -482,5 +486,29 @@ function resetMobile(site){
 	       	hiddenDiv('chgmobilewin');
 	        }
 	    });
+	}
+}
+function refreshPoundageByCity(obj,site,payTypeId){
+	var poundageObj =document.getElementById("poundage");
+	if(obj&&obj.value&&poundageObj){
+		if(obj.value!=""){
+			$.ajax({
+		         type: "post",
+		         url: chgUrl(site+"/jf/refreshPoundage.do"),
+		         dataType: "html",
+		         data: {
+					paymentType: document.getElementById(payTypeId).value,
+					areaId:obj.value
+		         },
+		         success: function(data, textStatus) {
+		        	 //alert(data);
+		        	if(data){
+		        		poundageObj.value=data;
+		        	}
+		         }
+		     });
+		}else{
+			poundageObj.value="";
+		}
 	}
 }

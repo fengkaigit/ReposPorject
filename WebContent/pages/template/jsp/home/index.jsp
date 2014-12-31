@@ -19,6 +19,15 @@ jQuery(document).ready(
 			UserBase _user = (UserBase)session.getAttribute(SystemConst.USER);
 			if(_user!=null){ %>
 				document.getElementById("loginmain").style.display="none";
+			<%}else{%>
+				var cookieLoginName = getCookie("365LoginName");
+				var cookieLoginPwd = getCookie("365LoginPwd");
+				if(cookieLoginName!=""){
+	   				document.getElementById("loginCode").value=cookieLoginName;
+				}
+				if(cookieLoginPwd!=""){
+	   				document.getElementById("password").value=cookieLoginPwd;
+				}
 			<%}%>
 			
 			
@@ -81,23 +90,8 @@ function more(){
 						<i class="ico-password"></i>
 						<input type="password" autocomplete="off" value="" accesskey="p" tabindex="2" title="密码" class="input in295  "  maxlength="32" name="password" id="password">
 					</p>
-					<!-- 安全控件登陆 -->
-                    <div style="display:none" id="sercuDiv">
-                         	<span style="line-heigh:20px;margin-right:5px;float:left;">登录密码：</span>	
-                    </div>
-					<div style="display:none" id="sercuBoxDiv">
-                         	<div style="float:left; width:20px;height:15px;margin-top:0px;">
-                         		
-                         		
-                         		<input type="checkbox" class="inputys" value="00" name="isSecurity" id="sercuBox">
-                         	</div>
-                         	<span style="line-height:15px;height:15px; width:75px;color:#333333;">安全控件登录</span>
-                         	<span style="line-height:15px;height:15px;width:72px;"><a style="line-height:15px;height:15px;width:72px;" target="_blank" href="https://www.shfft.com/help/help_700285.htm">安装有问题？</a></span>                    </div>
-                    <!-- 单点登录验证码-->  
-                    <div style="display:none" id="SSOVerify">
-                         <label>验证码：</label>
-                            <input type="text" data-placeholder="输入验证码" autocomplete="off" value="" tabindex="3" class="code js-code fft-fl " maxlength="4" name="ssoverify" id="ssoverify">
-                         	<img alt="点击改变验证码" src="#" onClick="changeVerifyFP('<%=request.getContextPath() %>/getVerify.do')" style="width:100px;height:40px;" id="imgVerifyFP">                    </div>
+					
+					
                     <!-- 非单点登录验证码 -->                     
                     <div id="NoSSOVerify" style="display:block">
 					<p class="js-tips">
@@ -119,8 +113,7 @@ function more(){
 					    	<div id="NoSercuInput">
 								<span onClick="login()" class="fft-loginbtn">登&nbsp;录</span>							</div>
 							<!-- 密码控件登录 -->
-                            <div id="sercuInput" style="display:none;width:80px;margin-top:0px;">
-                            	<span onClick="doLogin1();" class="fft-loginbtn">登&nbsp;录</span>                            </div>
+                           
 					</div>
 				</form>
 			</div>
@@ -242,8 +235,7 @@ var w=$("body").width();
 if(w>1000){
 	$("#loginmain .fft-login").css("right",(w-1000+20)/2);
 }
-
 </script>
-		<script type="text/javascript" src="<%=request.getContextPath() %>/js/zzsc.js"></script> 
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/zzsc.js"></script> 
 <script src="<%=request.getContextPath() %>/js/funs.js" type="text/javascript"></script>
 </body></html>

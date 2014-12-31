@@ -13,6 +13,16 @@ function SearchFocus(obj){
 		
 	}
 }
+$(document).ready(function(){
+	var cookieLoginName = getCookie("365LoginName");
+	var cookieLoginPwd = getCookie("365LoginPwd");
+	if(cookieLoginName!=""){
+	   document.getElementById("loginCode").value=cookieLoginName;
+	}
+	if(cookieLoginPwd!=""){
+	   document.getElementById("password").value=cookieLoginPwd;
+	}
+});
 </script> 
 </head>
 <body>

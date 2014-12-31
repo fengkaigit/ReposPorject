@@ -10,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/aboutUs.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/allQuery.css">
-
 <link href="<%=request.getContextPath() %>/css/chart/chart.css" type="text/css" rel="stylesheet">
 <style>
 .queryhead{
@@ -111,15 +110,11 @@
 		<table width="733" height="35" border="0" align="left" cellspacing="0" cellpadding="0">
 		<tbody>
 		 <tr class="add">
-        <td width="10%" class="queryhead">账期</td>        
-        <td width="15%" class="queryhead">交易内容</td>
-        <td width="10%" class="queryhead">金额</td>
-        <td width="12%" class="queryhead">成功（元）</td>
-        <td width="12%" class="queryhead">未成功（元）</td>
-        <td width="10%" class="queryhead">缴费笔数</td>
-        <td width="10%" class="queryhead">成功笔数</td>
-         <td width="11%" class="queryhead">未成功笔数</td>
-        <td width="10%" class="queryhead">操作</td>
+        <td width="15%" class="queryhead">账期</td>        
+        <td width="50%" class="queryhead">缴费项目</td>
+        <td width="20%" class="queryhead">月小计（元）</td>
+        
+        <td width="15%" class="queryhead">操作</td>
         </tr>
         <c:forEach var="item" items="${totalList}" varStatus="status">
    <tr <c:choose>
@@ -133,25 +128,14 @@
          <td >${item.year}年${item.month}月</td>        
         <td >${item.item}</td>
         <td >${item.money}</td>
-        <td>${item.sucessMoney}</td>
-        <td>${item.faultMoney}</td>
-        <td>${item.totalNum}</td>
-        <td>${item.sucessNum}</td>
-         <td>${item.faultNum}</td>
         <td><a href="javascript:viewDetail(${item.year},${item.month});">详细</a></td>
        
         </tr>
  		</c:forEach>
  		 <tr class="even">
-        <td >&nbsp;</td>        
-        <td >&nbsp;</td>
-        <td >&nbsp;</td>
-         <td  style="font-weight:bold ">合计金额：</td>
-        <td >&nbsp;</td>
-        <td style="font-weight:bold ">${money}</td>
-        <td >&nbsp;</td>
-        <td >&nbsp;</td>
-        <td>&nbsp; </td>
+       
+         <td  style="font-weight:bold;text-align: center;" colspan="4">合计金额：${money}</td>
+        
         </tr>
  		
 		</tbody>

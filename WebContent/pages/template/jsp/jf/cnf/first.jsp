@@ -157,7 +157,7 @@ $(document).ready(function(){
                     </c:forEach>
 				 </select>
                   
-				  <select style="width:85px; margin-left:8px; " class="selectCss" id="_areaId" name="_areaId" onmousewheel="return false" onchange="refreshCityId(this);refreshEntByCity(this,'<%=request.getContextPath() %>','paymentType','entId');">
+				  <select style="width:85px; margin-left:8px; " class="selectCss" id="_areaId" name="_areaId" onmousewheel="return false" onchange="refreshCityId(this);refreshEntByCity(this,'<%=request.getContextPath() %>','paymentType','entId');refreshPoundageByCity(this,'<%=request.getContextPath() %>','paymentType')">
 				  	<c:forEach var="item" items="${cityList}" varStatus="status">
                       <option value="${item.id}" <c:if test="${item.id==areaId}">selected="selected"</c:if>>${item.province}</option>
                     </c:forEach>
@@ -289,8 +289,7 @@ $(document).ready(function(){
 
 			</div><!-- .ui-grid -->
 			
-		</div><!-- .ui-content -->
-		
+		</div><!-- .ui-content -->	
 	</div>
 <%@include file="/pages/template/jsp/common/about.jsp"%> 
  <%@include file="/pages/template/jsp/common/footer.jsp"%>

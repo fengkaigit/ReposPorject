@@ -8,7 +8,6 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/dh.css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.6.min.js"></script> 
-<script src="<%=request.getContextPath() %>/js/common/formValidator.js" language="Javascript"></script>
 <script src="<%=request.getContextPath() %>/js/common/regularExpression.js" language="Javascript"></script>
 <script src="<%=request.getContextPath() %>/js/common/shfftAjax.js" language="Javascript"></script>
 <link href="<%=request.getContextPath() %>/css/jquery/transfer_new.css" type="text/css" rel="stylesheet">
