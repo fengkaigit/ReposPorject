@@ -2,6 +2,8 @@ package com.ey.forms;
 
 import java.io.Serializable;
 
+import com.ey.util.DoubleUtil;
+
 public class JfForm implements Serializable {
 	/**
 	 * 
@@ -53,7 +55,7 @@ public class JfForm implements Serializable {
 	private String othertvs;
 	private Integer jfmonth;
 	private String tvgroup;
-
+	private double totalMoney;
 	public Long getId() {
 		return id;
 	}
@@ -103,12 +105,14 @@ public class JfForm implements Serializable {
 		this.month = month;
 	}
 	public double getBillMoney() {
+		billMoney = DoubleUtil.fixedDoubleAsHalf(billMoney);
 		return billMoney;
 	}
 	public void setBillMoney(double billMoney) {
 		this.billMoney = billMoney;
 	}
 	public double getPoundage() {
+		poundage = DoubleUtil.fixedDoubleAsHalf(poundage);
 		return poundage;
 	}
 	public void setPoundage(double poundage) {
@@ -290,6 +294,11 @@ public class JfForm implements Serializable {
 		this.engineNumber = engineNumber;
 	}
 	public double[] getBillMoneys() {
+		if(billMoneys!=null){
+			for(double bm:billMoneys){
+				bm = DoubleUtil.fixedDoubleAsHalf(bm);
+			}
+		}
 		return billMoneys;
 	}
 	public void setBillMoneys(double[] billMoneys) {
@@ -330,6 +339,15 @@ public class JfForm implements Serializable {
 	}
 	public void setTvgroup(String tvgroup) {
 		this.tvgroup = tvgroup;
+	}
+	public double getTotalMoney() {
+		double bm = getBillMoney();
+		double pd = getPoundage();
+		totalMoney = DoubleUtil.fixedDoubleAsHalf(bm+pd);
+		return totalMoney;
+	}
+	public void setTotalMoney(double totalMoney) {
+		this.totalMoney = totalMoney;
 	}
 	
 }

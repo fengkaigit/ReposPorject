@@ -30,6 +30,7 @@ import com.ey.service.FeeService;
 import com.ey.service.JfService;
 import com.ey.service.StaticService;
 import com.ey.util.DateUtil;
+import com.ey.util.DoubleUtil;
 import com.ey.util.FeeUtil;
 import com.ey.util.StringUtil;
 
@@ -90,7 +91,7 @@ public class JfServiceImpl implements JfService {
 		if(poundage==null){
 			poundage = 0d;
 		}
-		mav.addObject("poundage", poundage);
+		mav.addObject("poundage", DoubleUtil.fixedDoubleAsHalf(poundage));
 		if (!loadArea) {
 			return;
 		}

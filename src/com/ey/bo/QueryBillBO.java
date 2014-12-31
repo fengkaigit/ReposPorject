@@ -1,12 +1,8 @@
 package com.ey.bo;
 
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import com.ey.util.DoubleUtil;
 
 /**
  * PaymentBill entity. @author MyEclipse Persistence Tools
@@ -34,7 +30,7 @@ public class QueryBillBO implements java.io.Serializable {
 	private String business;
 	private Integer payModeId;
 	private String payMode;
-
+	private Double pageMoney;
 	public QueryBillBO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -74,6 +70,7 @@ public class QueryBillBO implements java.io.Serializable {
 	}
 
 	public Double getMoney() {
+		money = DoubleUtil.fixedDoubleAsHalf(money);
 		return money;
 	}
 
@@ -122,6 +119,7 @@ public class QueryBillBO implements java.io.Serializable {
 	}
 
 	public Double getSucessMoney() {
+		sucessMoney = DoubleUtil.fixedDoubleAsHalf(sucessMoney);
 		return sucessMoney;
 	}
 
@@ -130,6 +128,7 @@ public class QueryBillBO implements java.io.Serializable {
 	}
 
 	public Double getFaultMoney() {
+		faultMoney = DoubleUtil.fixedDoubleAsHalf(faultMoney);
 		return faultMoney;
 	}
 
@@ -226,5 +225,24 @@ public class QueryBillBO implements java.io.Serializable {
 	public void setPayMode(String payMode) {
 		this.payMode = payMode;
 	}
+
+	public Double getPageMoney() {
+		Double billMoney = getMoney();
+		if(billMoney==null){
+			billMoney = 0d;
+		}
+		Double poundage = getSucessMoney();
+		if(poundage==null){
+			poundage = 0d;
+		}
+		pageMoney = DoubleUtil.fixedDoubleAsHalf(billMoney+poundage);
+		return pageMoney;
+	}
+
+	public void setPageMoney(Double pageMoney) {
+		this.pageMoney = pageMoney;
+	}
+
+	
 
 }

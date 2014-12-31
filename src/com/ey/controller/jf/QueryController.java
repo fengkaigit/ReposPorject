@@ -42,6 +42,7 @@ import com.ey.service.JfService;
 import com.ey.service.SettingService;
 import com.ey.service.StaticService;
 import com.ey.util.DateUtil;
+import com.ey.util.DoubleUtil;
 import com.ey.util.FeeUtil;
 import com.ey.util.FileUtil;
 import com.ey.util.JacksonJsonUtil;
@@ -89,9 +90,9 @@ public class QueryController extends BaseController {
 		}
 		mav.addObject("monthes", monthes);
 
-		mav.addObject("money", money);
-		mav.addObject("sucessMoney", sucessMoney);
-		mav.addObject("faultMoney", faultMoney);
+		mav.addObject("money", DoubleUtil.fixedDoubleAsHalf(money));
+		mav.addObject("sucessMoney", DoubleUtil.fixedDoubleAsHalf(sucessMoney));
+		mav.addObject("faultMoney", DoubleUtil.fixedDoubleAsHalf(faultMoney));
 		mav.addObject("totalNum", totalNum);
 		mav.addObject("sucessNum", sucessNum);
 		mav.addObject("faultNum", faultNum);
@@ -198,7 +199,7 @@ public class QueryController extends BaseController {
 				.getAttribute("queryareachartdata");
 		PieChart chart = new PieChart();
 		for (QueryBillBO record : records) {
-			Slice s = new Slice(record.getMoney() + record.getSucessMoney(),
+			Slice s = new Slice(DoubleUtil.fixedDoubleAsHalf(record.getMoney() + record.getSucessMoney()),
 					record.getPayTypeStr() + "");
 			// s.setTip(record.getPayType()+":#val#/#total#（ #percent#）");
 			chart.addSlices(s);
@@ -355,7 +356,7 @@ public class QueryController extends BaseController {
 		Map<String, Object> mainMap = new HashMap();
 		mainMap.put("billNo", form.getBillNo());
 		mainMap.put("flowNO", form.getBillId());
-		mainMap.put("money", (form.getBillMoney() + form.getPoundage()) + "");
+		mainMap.put("money", (form.getTotalMoney()) + "");
 		mainMap.put("payType", label + "费");
 		mainMap.put("endName", form.getEndName());
 		mainMap.put("billNumber", form.getBillNumber());
