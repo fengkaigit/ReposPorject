@@ -141,7 +141,7 @@ function checkSubmit(){
   	<li><span>订单编号：</span>${CNF_BILL.billNo}</li>
     <li><span>收费单位：</span>${CNF_BILL.endName}</li>
     <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帐期：</span>${CNF_BILL.year}年${CNF_BILL.month}月</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${CNF_BILL.billMoney+CNF_BILL.poundage}元（包含代缴服务费${CNF_BILL.poundage}元）</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${CNF_BILL.totalMoney}元（包含代缴服务费${CNF_BILL.poundage}元）</li>
     <li><span>缴费户号：</span>${CNF_BILL.billNumber}</li>
 	  <li><span>缴费住址：</span>${CNF_BILL.payAddress}</li>
    </ul>

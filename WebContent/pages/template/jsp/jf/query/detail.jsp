@@ -65,7 +65,7 @@
      	<td >${item.payTypeStr}</td>
         <td >${item.year}年${item.month}月</td>        
         <td>${item.payMode}</td>
-        <td>${item.money+item.sucessMoney}</td>
+        <td>${item.pageMoney}</td>
         <td>${item.payStatuStr}</td>
         </tr>
  		</c:forEach>

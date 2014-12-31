@@ -142,7 +142,7 @@ function checkSubmit(){
   <li><span>订单编号：</span>${YDTXF_BILL.billNo}</li>
     <li><span>收费单位：</span>${YDTXF_BILL.endName}</li>
  
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${YDTXF_BILL.billMoney+YDTXF_BILL.poundage}元（包含代缴服务费${YDTXF_BILL.poundage }元）</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${YDTXF_BILL.totalMoney}元（包含代缴服务费${YDTXF_BILL.poundage }元）</li>
     <li><span>手机号码：</span>${YDTXF_BILL.billNumber}</li>
    </ul>
   </fieldset>

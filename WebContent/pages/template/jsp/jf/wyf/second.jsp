@@ -141,7 +141,7 @@ function checkSubmit(){
   	<li><span>订单编号：</span>${WYF_BILL.billNo}</li>
     <li><span>收费单位：</span>${WYF_BILL.endName}</li>
     <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帐期：</span>${WYF_BILL.year}年${WYF_BILL.month}月</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${WYF_BILL.billMoney+WYF_BILL.poundage}元（包含代缴服务费${WYF_BILL.poundage}元）</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${WYF_BILL.totalMoney}元（包含代缴服务费${WYF_BILL.poundage}元）</li>
     <li><span>缴费户号：</span>${WYF_BILL.billNumber}</li>
 	  <li><span>缴费住址：</span>${WYF_BILL.payAddress}</li>
    </ul>

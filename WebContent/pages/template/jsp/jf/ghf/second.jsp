@@ -145,7 +145,7 @@ function checkSubmit(){
   	<li><span>订单编号：</span>${GHF_BILL.billNo}</li>
     <li><span>收费单位：</span>${GHF_BILL.endName}</li>
     <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帐期：</span>${GHF_BILL.year}年${GHF_BILL.month}月</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${GHF_BILL.billMoney+GHF_BILL.poundage}元（包含代缴服务费${GHF_BILL.poundage}元）</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${GHF_BILL.totalMoney}元（包含代缴服务费${GHF_BILL.poundage}元）</li>
     <li><span>缴费户号：</span>${GHF_BILL.billNumber}</li>
 	  <li><span>缴费住址：</span>${GHF_BILL.payAddress}</li>
    </ul>

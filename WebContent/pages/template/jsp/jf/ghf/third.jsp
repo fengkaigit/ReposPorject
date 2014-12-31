@@ -138,7 +138,7 @@ $(document).ready(function(){
    <ul >
   	<li><span>订单编号：</span>${GHF_BILL.billNo}</li>
     <li><span>收费单位：</span>${GHF_BILL.endName}</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${GHF_BILL.billMoney+GHF_BILL.poundage}元（包含代缴服务费${GHF_BILL.poundage}元）</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${GHF_BILL.totalMoney}元（包含代缴服务费${GHF_BILL.poundage}元）</li>
    </ul>
   </fieldset>
 

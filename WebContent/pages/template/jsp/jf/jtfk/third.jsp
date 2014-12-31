@@ -139,7 +139,7 @@ $(document).ready(function(){
   	<li><span>订单编号：</span>${JTFKF_BILL.billNo}</li>
 		<li><span>车牌号码：</span>${JTFKF_BILL.billNumber}</li>
     <li><span>收费单位：</span>${JTFKF_BILL.endName}</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${JTFKF_BILL.billMoney+JTFKF_BILL.poundage}元（包含代缴服务费${JTFKF_BILL.poundage}元）</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${JTFKF_BILL.totalMoney}元（包含代缴服务费${JTFKF_BILL.poundage}元）</li>
    </ul>
   </fieldset>
 

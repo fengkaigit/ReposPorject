@@ -130,7 +130,7 @@
   	<li><span>订单编号：</span>${RQF_BILL.billNo}</li>
    
     <li><span>订单日期：</span>${RQF_BILL.billDate}</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${RQF_BILL.billMoney+RQF_BILL.poundage}元（包含代缴服务费${RQF_BILL.poundage}元）</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${RQF_BILL.totalMoney}元（包含代缴服务费${RQF_BILL.poundage}元）</li>
 
 	
    </ul>
@@ -157,7 +157,7 @@
   </tr>
   </table>
    <div class="div1">
-   本次：燃气费&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账单总金额：${RQF_BILL.billMoney+RQF_BILL.poundage}元
+   本次：燃气费&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账单总金额：${RQF_BILL.totalMoney}元
    </div>
    <table width="90%" border="0" cellspacing="0" cellpadding="0" class="tab2 tab-style">
   <tr bgcolor="#e6edfb">
@@ -205,7 +205,7 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计：</td>
-    <td>&nbsp;${RQF_BILL.billMoney+RQF_BILL.poundage}元</td>
+    <td>&nbsp;${RQF_BILL.totalMoney}元</td>
   </tr>
   <tr>
     <td>&nbsp;
@@ -223,7 +223,7 @@
 
 <table width="90%" border="0" cellspacing="0" cellpadding="0" class="tab-style tab2">
    <tr bgcolor="#e6edfb">
-    <td colspan="6">&nbsp;支付信息（累计支付1张账单，支付总金额：${RQF_BILL.billMoney+RQF_BILL.poundage}元）</td>
+    <td colspan="6">&nbsp;支付信息（累计支付1张账单，支付总金额：${RQF_BILL.totalMoney}元）</td>
   </tr>
    <tr >
     <td>&nbsp;支付机构</td>
@@ -231,7 +231,7 @@
     <td>&nbsp;卡号/账号</td>
     <td>&nbsp;${RQF_BILL.bankAccount}</td>
     <td>&nbsp;支付金额</td>
-    <td>&nbsp;${RQF_BILL.billMoney+RQF_BILL.poundage}元</td>
+    <td>&nbsp;${RQF_BILL.totalMoney}元</td>
   </tr>
 </table>
 <div class="note"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;感谢您使用E缴365生活缴费支付服务，使用中的任何疑问，可拨打客户专线

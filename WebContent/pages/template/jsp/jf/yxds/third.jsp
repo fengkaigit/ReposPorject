@@ -138,7 +138,7 @@ $(document).ready(function(){
    <ul >
   	<li><span>订单编号：</span>${YXDSF_BILL.billNo}</li>
     <li><span>收费单位：</span>${YXDSF_BILL.endName}</li>
-    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${YXDSF_BILL.billMoney+YXDSF_BILL.poundage}元（包含代缴服务费${YXDSF_BILL.poundage}元）</li>
+    <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金额：</span>${YXDSF_BILL.totalMoney}元（包含代缴服务费${YXDSF_BILL.poundage}元）</li>
    </ul>
   </fieldset>
 
