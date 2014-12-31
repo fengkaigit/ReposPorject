@@ -18,13 +18,16 @@ public class PaymentSettingTrafficBo {
 	
 	private String entName;
 	
+	private String areaName;
+	
 	public PaymentSettingTrafficBo(){
 		
 	}
 	
 	public PaymentSettingTrafficBo(String areaId, Long entId, String entName, 
 			String billNumber,String hoster, 
-			String vehicleNumber, String carframeNumber, String engineNumber){
+			String vehicleNumber, String carframeNumber, 
+			String engineNumber, String areaName){
 		this.areaId = areaId;
 		this.entId = entId;
 		this.entName = entName;
@@ -33,6 +36,7 @@ public class PaymentSettingTrafficBo {
 		this.vehicleNumber = vehicleNumber;
 		this.carframeNumber = carframeNumber;
 		this.engineNumber = engineNumber;
+		this.areaName = areaName;
 	}
 
 	public String getBillNumber() {
@@ -97,6 +101,14 @@ public class PaymentSettingTrafficBo {
 
 	public void setEntName(String entName) {
 		this.entName = entName;
+	}
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
 	}
 	
 }

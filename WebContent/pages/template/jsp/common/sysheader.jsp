@@ -45,6 +45,7 @@ $(document).ready(function() {
 					<li class="current"><a href="<%=request.getContextPath() %>/sysman/list.do">管理员维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/agent/list.do">代理商维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/charge/list.do">收费单位维护</a></li>
+					<li><a href="<%=request.getContextPath() %>/bank/list.do">一级银行维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/feerule/list.do">劳务费信息维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/sysaccount/list.do">系统账户维护</a></li>
 			  </ul></li>

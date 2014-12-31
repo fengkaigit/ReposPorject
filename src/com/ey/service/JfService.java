@@ -6,6 +6,7 @@ import javax.servlet.ServletContext;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ey.bo.PaymentStatisBo;
 import com.ey.bo.QueryBillBO;
 import com.ey.dao.entity.UserBase;
 
@@ -20,4 +21,10 @@ public interface JfService {
 
 	public List<QueryBillBO> getDetails(Long userId, Integer year,
 			Integer month);
+	
+	public List<PaymentStatisBo> getPaymentStatisRecords(Long userId,Integer year,
+			String startMonth, String endMonth)throws RuntimeException;
+	
+	public List<String> getPaymentItems(Long userId,Integer year,
+			Integer month)throws RuntimeException;
 }

@@ -36,6 +36,7 @@ import com.ey.bo.PaymentSettingPhoneBo;
 import com.ey.bo.PaymentSettingPropertyBo;
 import com.ey.bo.PaymentSettingStandardBo;
 import com.ey.bo.PaymentSettingTrafficBo;
+import com.ey.bo.PaymentStatisBo;
 import com.ey.bo.QueryBillBO;
 import com.ey.bo.ResultBo;
 import com.ey.bo.StandardBo;
@@ -254,13 +255,13 @@ public class PhoneController {
 					PaymentSettingPhoneBo bo = new PaymentSettingPhoneBo(setting.getBillNumber(),setting.getHoster());
 					standardLst.add(bo);
 				}else if (payType==5){
-					PaymentSettingTrafficBo bo = new PaymentSettingTrafficBo(setting.getAreaId(), setting.getEntId(), setting.getEntName(), setting.getBillNumber(),setting.getHoster(),setting.getVehicleNumber(),setting.getCarframeNumber(),setting.getEngineNumber());
+					PaymentSettingTrafficBo bo = new PaymentSettingTrafficBo(setting.getAreaId(), setting.getEntId(), setting.getEntName(), setting.getBillNumber(),setting.getHoster(),setting.getVehicleNumber(),setting.getCarframeNumber(),setting.getEngineNumber(), setting.getAreaName());
 					standardLst.add(bo);
 				}else if (payType==6){
-					PaymentSettingPropertyBo bo = new PaymentSettingPropertyBo(setting.getAreaId(), setting.getEntId(), setting.getEntName(),setting.getHoster(),setting.getPayAddress());
+					PaymentSettingPropertyBo bo = new PaymentSettingPropertyBo(setting.getAreaId(), setting.getEntId(), setting.getEntName(),setting.getHoster(),setting.getPayAddress(), setting.getAreaName());
 					standardLst.add(bo);
 				}else{
-					PaymentSettingStandardBo bo = new PaymentSettingStandardBo(setting.getAreaId(), setting.getEntId(), setting.getEntName(),setting.getBillNumber(),setting.getHoster(),setting.getPayAddress());
+					PaymentSettingStandardBo bo = new PaymentSettingStandardBo(setting.getAreaId(), setting.getEntId(), setting.getEntName(),setting.getBillNumber(),setting.getHoster(),setting.getPayAddress(), setting.getAreaName());
 					standardLst.add(bo);
 				}
 			}
@@ -323,7 +324,7 @@ public class PhoneController {
 	public ModelAndView savePaySetting(String areaId,Long entId,
 			int payType,String paymentCode,String payAddress,String vehicle, 
 			String carframe, String engine,HttpServletRequest request,
-			HttpServletResponse response) throws JSONException{
+			HttpServletResponse response) throws JSONException, IOException{
 		//0：水费；1：电费；2：燃气；3：固话；4：移动；5：交通；6：物业；7：有线电视；8采暖
 		JSONObject obj = new JSONObject();
 		PrintWriter out = null;
@@ -378,13 +379,14 @@ public class PhoneController {
 				obj.put("success", true);
 				obj.put("data", "设置用户缴费账号信息成功！");
 			}
-			response.setContentType("application/json;charset=utf-8");
-			out = response.getWriter();
+			
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
 			obj.put("data", "设置用户缴费账号信息失败！");
 		}
-		
+		response.setContentType("application/json;charset=utf-8");
+		out = response.getWriter();
 		String retnStr = obj.toString();
 		/*if (request.getParameter("callback")!=null)
 			retnStr = request.getParameter("callback");
@@ -531,7 +533,7 @@ public class PhoneController {
 	@RequestMapping(value="/confirmPayment")
 	public ModelAndView confirmPayment(String areaId,Long entId,
 			int payType,String paymentCode,String payAddress,String vehicle, 
-			String carframe, String engine, Double payMoney,
+			String carframe, String engine, String payMoney,
 			String beginPeriod, String endPeriod,
 			HttpServletRequest request,HttpServletResponse response) throws JSONException, IOException{
 		//0：水费；1：电费；2：燃气；3：固话；4：移动；5：交通；6：物业；7：有线电视；8采暖
@@ -588,10 +590,40 @@ public class PhoneController {
 				form.setPaymentMode(0);// 0：银行缴费
 				form.setDivideStatus(0);// 0：未生成劳务费划款单据
 				form.setPeriodFrequency("month");// month;
-				form.setMoneycn(MoneyUtil.toUpperCase(payMoney
+				if (payType==4){
+					String[] mobiles=paymentCode.split(",");
+					form.setBillNumber(paymentCode);
+					form.setMobiles(mobiles);
+					String[] moneys = payMoney.split(",");
+					double[] billMoneys = new double[moneys.length];
+					for (int i=0;i<moneys.length;i++){
+						billMoneys[i]=Double.valueOf(moneys[i]);
+					}
+					double money = 0d;
+					for (String m:moneys){
+						money = money + Double.valueOf(m);
+					}
+					form.setBillMoneys(billMoneys);
+					form.setBillMoney(money);
+					List<ChargeEnterprise> charges = chargeEntService.getChargesByArea(areaId, 4);
+					if(charges!=null&&charges.size()>0){
+						form.setEntId(charges.get(0).getId());
+					}
+				}
+				else{
+					form.setMoneycn(MoneyUtil.toUpperCase(Double.valueOf(payMoney)
 						+ form.getPoundage()));
-				form.setYear(Integer.valueOf(beginPeriod.substring(0,3)));
-				form.setMonth(beginPeriod.substring(5,6));
+				}
+				if (beginPeriod!=null){
+					form.setYear(Integer.valueOf(beginPeriod.substring(0,4)));
+					form.setMonth(beginPeriod.substring(5,7));
+				}else{
+					Date date = new Date();
+					int curYear = DateUtil.getYear(date);
+					int curMonth = DateUtil.getMonth(date);
+					form.setYear(curYear);
+					form.setMonth(curMonth+"");
+				}
 	
 				Long dbId = DbidGenerator.getDbidGenerator().getNextId();
 				
@@ -619,15 +651,24 @@ public class PhoneController {
 					cnfService.saveBill(form);
 				}
 				retnBo.setOrderNum(orderNum);
-				retnBo.setPayMoney(payMoney+retnBo.getPoundage());
+				if (payType==4){
+					double money = 0d;
+					String[] moneys = payMoney.split(",");
+					for (String m:moneys){
+						money = money + Double.valueOf(m);
+					}
+					retnBo.setPayMoney(money+retnBo.getPoundage());
+				}else
+					retnBo.setPayMoney(Double.valueOf(payMoney)+retnBo.getPoundage());
 				retnBo.setBillNumber(paymentCode);
 				retnBo.setPayData(StringUtil.encodeString(paymentCode));
 				retnBo.setPayType(payType);
-				
+				JSONArray jsonArr=JSONArray.fromObject(retnBo);
 				jsonObj.put("success", true);
-				jsonObj.put("data",retnBo);
+				jsonObj.put("data",jsonArr);
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
 			jsonObj.put("success", false);
 			jsonObj.put("data","设置缴费确认失败！");
 		}
@@ -815,41 +856,40 @@ public class PhoneController {
 	}
 	
 	@RequestMapping(value="/getHisPayment")
-	public ModelAndView getHisPayment(String beginDate, String endDate, Integer showCount, Integer page, String payType, HttpServletRequest request,
+	public ModelAndView getHisPayment(Integer year,Integer startMonth, Integer endMonth, String payType, HttpServletRequest request,
 			HttpServletResponse response) throws JSONException, IOException{
 		JSONObject obj = new JSONObject();
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
-			Date date = new Date();
-			int curYear = DateUtil.getYear(date);
-			int curMonth = DateUtil.getMonth(date);
-			String year = beginDate.substring(0,4);
-			String startMonth = beginDate.substring(5,7);
-			String endMonth = endDate.substring(5,7);
-			if (StringUtil.isEmptyString(year)) {
-				year = curYear + "";
-			}
-			if (StringUtil.isEmptyString(startMonth)) {
-				startMonth = "1";
-			}
-			if (StringUtil.isEmptyString(endMonth)) {
-				endMonth = curMonth + "";
-			}
-			List<QueryBillBO> records = new ArrayList();
+			List<PaymentStatisBo> records = new ArrayList();
 			if (payType.equals("all")){
-				records = jfService.getTotalRecords(currentUser
-						.getId(), new Integer(year), startMonth, endMonth);
+				records = jfService.getPaymentStatisRecords(currentUser
+						.getId(), year, startMonth.toString(), endMonth.toString());
+				for (PaymentStatisBo bo:records){
+					List<String> itemList=jfService.getPaymentItems(currentUser
+							.getId(), year, bo.getMonth());
+					String items="";
+					for (String item:itemList){
+						if (items.equals("")){
+							items = item;
+						}else{
+							items = items + "," + item;
+						}
+					}
+					bo.setItem(items);
+				}
 			}else{
 				obj.put("success", false);
-				obj.put("data","查询用户消息信息失败！");
+				obj.put("data","查询历史缴费信息失败！");
 			}
 			JSONArray jsonArr=JSONArray.fromObject(records);
 			obj.put("success", true);
 			obj.put("data",jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","查询用户消息信息失败！");
+			obj.put("data","查询历史缴费信息失败！");
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -876,12 +916,17 @@ public class PhoneController {
 			String month = showDate.substring(5,7);
 			List<QueryBillBO> details = jfService.getDetails(currentUser.getId(),
 					new Integer(year), new Integer(month));
-			JSONArray jsonArr=JSONArray.fromObject(details);
+			List<PaymentStatisBo> retn = new ArrayList();
+			for (QueryBillBO detail:details){
+				PaymentStatisBo bo = new PaymentStatisBo(detail.getYear(),detail.getMonth(),detail.getMoney(),detail.getPayTypeStr(),detail.getPayStatuStr(),detail.getPayTime());
+				retn.add(bo);
+			}
+			JSONArray jsonArr=JSONArray.fromObject(retn);
 			obj.put("success", true);
 			obj.put("data",jsonArr);
 		}catch (Exception e) {
 			obj.put("success", false);
-			obj.put("data","查询用户消息信息失败！");
+			obj.put("data","查询历史缴费明细信息失败！");
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -1023,6 +1068,34 @@ public class PhoneController {
 		return null;
 	}
 	
+	@RequestMapping(value="/modifySetting")
+	public ModelAndView modifySetting(String data, HttpServletRequest request,
+			HttpServletResponse response) throws IOException, JSONException{
+		JSONObject obj = new JSONObject();
+		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			
+
+			obj.put("success", true);
+			obj.put("data","缴费设置成功");
+		}catch (Exception e) {
+			obj.put("success", false);
+			obj.put("data","缴费设置失败");
+		}
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
 }
 
 

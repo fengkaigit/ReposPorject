@@ -1,5 +1,8 @@
 package com.ey.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,5 +55,12 @@ public class BankAccountServiceImpl implements BankAccountService {
 	public BankCardInfo findBankCardInfo(String bankId, String cardNo) {
 		// TODO Auto-generated method stub
 		return bankAccountDAO.findBankCardInfo(bankId,cardNo);
+	}
+
+	@Override
+	public List<BankInfo> getBankInfoList(Map<String, Object> params,
+			Integer page, Integer rows) throws RuntimeException {
+		
+		return bankAccountDAO.getBankInfoList(params,page,rows);
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ey.bo.PaymentStatisBo;
 import com.ey.bo.QueryBillBO;
 import com.ey.dao.JfDAO;
 import com.ey.dao.entity.Area;
@@ -325,6 +326,23 @@ public class JfServiceImpl implements JfService {
 			list.add(pb);
 		}
 		return list;
+	}
+
+	@Override
+	public List<PaymentStatisBo> getPaymentStatisRecords(Long userId,
+			Integer year, String startMonth, String endMonth)
+			throws RuntimeException {
+		List<PaymentStatisBo> records = jfDAO.getPaymentStatisRecords(userId, year,
+				startMonth, endMonth);
+		return records;
+	}
+
+	@Override
+	public List<String> getPaymentItems(Long userId, Integer year,
+			Integer month) throws RuntimeException {
+		List<String> records = jfDAO.getPaymentItems(userId, year,
+				month);
+		return records;
 	}
 
 	

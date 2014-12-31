@@ -2,6 +2,7 @@ package com.ey.dao;
 
 import java.util.List;
 
+import com.ey.bo.PaymentStatisBo;
 import com.ey.dao.base.BaseDAO;
 import com.ey.dao.entity.PayAccountBill;
 import com.ey.dao.entity.PaymentBill;
@@ -48,5 +49,10 @@ public interface JfDAO extends BaseDAO {
 			String startMonth, String endMonth);
 
 	List<PaymentBill> getDetails(Long userId, Integer year, Integer month);
+	
+	List<PaymentStatisBo> getPaymentStatisRecords(Long userId,Integer year,
+			String startMonth, String endMonth) throws RuntimeException;
 
+	public List<String> getPaymentItems(Long userId,Integer year,
+			Integer month)throws RuntimeException;
 }

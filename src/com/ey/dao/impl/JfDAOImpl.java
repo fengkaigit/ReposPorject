@@ -1,7 +1,9 @@
 package com.ey.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import java.util.List;
 
+import com.ey.bo.PaymentStatisBo;
 import com.ey.dao.JfDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.PayAccountBill;
@@ -239,7 +241,7 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 	}
 
 	@Override
-	public java.util.List<Object[]> getTotalRecords(Long userId,Integer year,
+	public List<Object[]> getTotalRecords(Long userId,Integer year,
 			String startMonth, String endMonth) {
 		int sm = 1;
 		int em = 12;
@@ -265,5 +267,33 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 			Integer month) {
 		String hql = "from PaymentBill where year=? and month=? and userId=? and paymentStatus>0 order by createTime";
 		return this.find(hql, new Object[]{year,month,userId});
+	}
+
+	@Override
+	public List<PaymentStatisBo> getPaymentStatisRecords(Long userId,
+			Integer year, String startMonth, String endMonth)
+			throws RuntimeException {
+		int sm = 1;
+		int em = 12;
+		if (StringUtil.isEmptyString(startMonth)) {
+			sm = 1;
+		} else {
+			sm = new Integer(startMonth);
+		}
+		if (StringUtil.isEmptyString(endMonth)) {
+			em = 12;
+		} else {
+			em = new Integer(endMonth);
+		}
+		String hql = "select new com.ey.bo.PaymentStatisBo(year,month,sum(payMoney+poundage)) from PaymentBill where userId=? and year=? and month>=? and month<=? and paymentStatus>0  group by year,month order by year,month";
+		return this.find(hql, new Object[]{userId,year,sm,em});
+	}
+
+	@Override
+	public List<String> getPaymentItems(Long userId, Integer year,
+			Integer month) throws RuntimeException {
+		String hql = "select distinct b.propChName from PaymentBill a, BaseCustomValue b where a.userId=? and a.year=? and a.month=? and a.paymentStatus>0 " +
+				" and a.payType = b.id.dataValue and b.id.customEngName='payment_type'";
+		return this.find(hql, new Object[]{userId,year,month});
 	}
 }

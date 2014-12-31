@@ -1,6 +1,7 @@
 package com.ey.dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +9,7 @@ import com.ey.dao.BankAccountDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.BankCardInfo;
+import com.ey.dao.entity.BankInfo;
 @Repository("bankAccountDAO")
 public class BankAccountDAOImpl extends BaseDAOImpl implements BankAccountDAO {
 
@@ -41,6 +43,13 @@ public class BankAccountDAOImpl extends BaseDAOImpl implements BankAccountDAO {
 		} else {
 			return 0l;
 		}
+	}
+
+	@Override
+	public List<BankInfo> getBankInfoList(Map<String, Object> params,
+			Integer page, Integer rows) throws RuntimeException {
+		String hql = "from ";
+		return null;
 	}
 
 }
