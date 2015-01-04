@@ -53,12 +53,13 @@ function postHandle(){
 	 $('#ideaForm').ajaxSubmit(function(data){
 		    if(data.result){
 		    	alert('评论成功！谢谢您的参与，我们会尽快给您回复。');
-		    	window.location.href = "<%=request.getContextPath() %>/ej/ieda.do";
+		    	hiddenDiv('addIeda');
+		    	window.location.href = "<%=request.getContextPath() %>/ej/feedback.do";
 		    }
 	 });
 }
 function showIeda(){
-	showDivWin('addIeda',520,420,'');
+	showDivWin('addIeda',660,410,'');
 }
 </script>
 </head>
@@ -107,9 +108,16 @@ function showIeda(){
         <div class="znx_r">
             
 <div class="tcxx_tt">
-    <span class="tcxx_tt_a"><a href="<%=request.getContextPath() %>/ej/about.do">关于e缴365</a> &gt; <span class="tcxx_tt_b">意见反馈</span> </span>
+    <span class="tcxx_tt_a"><a href="<%=request.getContextPath() %>/ej/about.do">关于e缴365</a> &gt; <span class="tcxx_tt_b">评论区</span> </span>
 </div>
+
 <div class="pinl">
+<div class="tcxx_tt">
+    <input  type="button" class="jfxx_btn3" onClick="showIeda()" value="我要评论" name="showBill"/>   
+</div>
+<div class="tcxx_tt">
+  &nbsp;
+</div>
 <c:forEach var="item" items="${feedbacks}" varStatus="status">
  <div class="outer-personal-info">
                 <div class="fn-clear">
@@ -144,10 +152,10 @@ function showIeda(){
 <div id="addIeda" class="divWin" style="display:none;">
 <div class="close cur"  onclick="javascript:hiddenDiv('addIeda')">关闭</div>
             <h1></h1>
-			 <p >添加通知信息</p> 
+			 <p >我要评论</p> 
             <table style="width:100%;" border="0" bgcolor="#c3c6c9" cellspacing="0" cellpadding="0">
             <tbody><tr>
-                <td width="28%" bgcolor="#f1f8ff" align="right" style="vertical-align: middle;">用户地区</td>
+                <td width="28%" bgcolor="#f1f8ff" align="right" style="vertical-align: middle;">&nbsp;</td>
                 <td bgcolor="#FFFFFF">
                         <div class="tabBlBtn" style="margin-top: 10px; clear: both;">
 								<input type="radio" id="propose" value="1" name="backType"
@@ -161,26 +169,24 @@ function showIeda(){
 						</td>
             </tr>
             <tr>
-                <td bgcolor="#f1f8ff" align="right">通知状态</td>
+                <td bgcolor="#f1f8ff" align="right">改进建议：</td>
                 <td bgcolor="#FFFFFF">
-                            <div class="wantItem" style="margin-top:30px;clear:both;">
-            <div class="titleItem" id="titleItem" >改进建议：</div>
+                   
+          
             <div class="perDataItem" >
                 <textarea style="height: 126px; border-color: rgb(214, 214, 214);" onpropertychange="if(value.length&gt;10000)value=value.substring(0,10000)" name="userIdea" class="inputBox text text-empty" id="userIdea" data-default=""></textarea>
                   <span class="grey">如果您发现网站有功能或者逻辑性的bug，请在此处向我们报告，我们的工程师会尽快核实并修复bug，不断提升我们的用户体验。
             </div>
-            <div class="clear"></div>
-        </div>
+        
                 </td>
             </tr>
             <tr>
-                <td bgcolor="#f1f8ff" align="right">通知类型</td>
+                <td bgcolor="#f1f8ff" align="right"><span class="red">*</span>邮箱地址：</td>
                 <td bgcolor="#FFFFFF">
-                        <div  id="bl_email_div" class="wantItem">
-            <div class="titleItem"><span class="red">*</span>邮箱地址：</div>
+                   
+            
             <div class="perDataItem"><input type="text" name="eMail" id="eMail" class="inputBox text-empty text" style="width:300px;" value="请填写邮件地址便于与我们互动" data-default="请填写邮件地址便于与我们互动" onfocus="SearchFocus(this)" onblur="SearchBlur(this)"></div>
-            <div class="clear"></div>
-        </div>              
+                  
                         </td>
             </tr>
             <tr>

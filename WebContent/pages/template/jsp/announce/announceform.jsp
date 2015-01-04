@@ -11,6 +11,7 @@
 <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath() %>/js/kindeditor-4.1/kindeditor-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath() %>/js/kindeditor-4.1/lang/zh_CN.js"></script>
 <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath() %>/js/kindeditor-4.1/plugins/code/prettify.js"></script>
+<script type="text/javascript" src="<c:url value='/js/My97DatePicker/WdatePicker.js'/>"></script>
 <script>
 $(document).ready(function(){
 	$.formValidator.initConfig({formID:"announceForm",debug:false,submitOnce:true,
@@ -27,6 +28,7 @@ $(document).ready(function(){
 	//$("#provinc").formValidator({onShow:"请选择省份",onFocus:"请选择省份",onCorrect:"选择合法"}).inputValidator({min:1,onError: "省份未选择,请选择!"});
 	//$("#city").formValidator({onShow:"请选择城市",onFocus:"请选择城市",onCorrect:"选择合法"}).inputValidator({min:1,onError: "城市未选择,请选择!"});
 	//$("#status").formValidator({onShow:"请选择状态",onCorrect:"选择合法"}).inputValidator({min:1,onError: "城市未选择,请选择!"});	
+	$("#startDate").formValidator({onShow:"请选择开始时间",onFocus:"请选择开始时间",onCorrect:"选择合法"}).inputValidator({min:1,max:20,onError:"开始时间非法,请确认"});
 	$("#content").formValidator({onShow:"请输入内容",onFocus:"请输入内容",onCorrect:"输入合法"}).inputValidator({min:1,empty:{leftEmpty:false,rightEmpty:false,emptyError:"内容两边不能有空字符"},onError: "内容不能为空!"});
 	//$("#passwd").formValidator({onShow:"请输入密码",onFocus:"至少4个长度,最多20个长度",onCorrect:"密码合法"}).inputValidator({min:4,max:20,empty:{leftEmpty:false,rightEmpty:false,emptyError:"密码两边不能有空符号"},onError:"密码不合法,请确认"});
 	//$("#confirmPassword").formValidator({onShow:"输再次输入密码",onFocus:"至少4个长度,最多20个长度",onCorrect:"密码一致"}).inputValidator({min:4,max:20,empty:{leftEmpty:false,rightEmpty:false,emptyError:"重复密码两边不能有空符号"},onError:"重复密码密码不合法,请确认"}).compareValidator({desID:"passwd",operateor:"=",onError:"两次密码不一致,请确认"});
@@ -199,6 +201,19 @@ function showcity(value,selectValue){
                              <option value="">请选择市</option>
                         </select></td>
                         <td><div id="cityTip" style="width:250px"></div></td>
+                    </tr>
+                    <tr>
+                        <td height="40" width="100" align="right">开始时间：</td>
+                        <td align="left">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><input class="on-show" style="width:290px;" type="text" name="startDate" id="startDate" title="请输入开始日期" placeholder="请输入开始日期" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" value="${startDate}"/><span></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                         <td><div id="startDateTip" style="width:250px"></div></td>
                     </tr>
                     <tr>
                         <td height="40" align="right">保留时间：</td>

@@ -54,6 +54,7 @@ function downloadbill(id){
     <td>缴费用户</td>
     <td>收费单位</td>
     <td>缴费类型</td>
+    <td>状态</td>
   </tr>
   <c:forEach var="item" items="${bills}" varStatus="status">
    <tr <c:choose>
@@ -72,6 +73,20 @@ function downloadbill(id){
 	<td>&nbsp;${item.userName}</td>
 	<td>&nbsp;${item.entName}</td>
 	<td>&nbsp;${item.paymentTypeName}费</td>
+	<td>&nbsp;<c:choose>
+	   <c:when test="${item.paymentStatus == 3}">
+                  核实确认
+       </c:when>
+       <c:when test="${item.paymentStatus == 10}">
+                      办理成功
+       </c:when>
+       <c:when test="${item.paymentStatus == 11}">
+                      补交
+       </c:when>
+       <c:otherwise>
+                      退款
+       </c:otherwise>
+     </c:choose></td>
   </tr>
  </c:forEach>
    

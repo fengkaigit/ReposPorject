@@ -40,12 +40,12 @@ body {
 	PADDING-LEFT: 15px;
 	PADDING-RIGHT: 15px;
 	FONT-FAMILY: simhei;
-	BACKGROUND: url(images/alipay/read/tph1.png) #53ba52 no-repeat 0px 0px;
+	BACKGROUND: url(images/alipay/read/tph1.png) #E8E8E8 no-repeat 0px 0px;
 	FLOAT: left;
 	HEIGHT: 24px;
-	COLOR: #fff;
+	COLOR: #000000;
 	FONT-SIZE: 20px;
-	FONT-WEIGHT: 100;
+	font-weight:bold;
 	PADDING-TOP: 0px
 }
 
@@ -111,8 +111,47 @@ body {
 		<!--左侧菜单导入-->
 		<!--关于我们 左侧菜单-->
 		<div class="jf_lefts">
-		
-			<div class="jfztc_nav">
+		    <div class="jfztc_nav">
+				<div class="left_tt">
+					<a href="#"><span
+						style="line-height: 35px;">最新文章</span></a>
+				</div>
+				<div class="left_lists">
+					<table width="193" border="0" bgcolor="#D1E6ED" align="center"
+						cellspacing="0" cellpadding="0">
+						<tbody>
+							<tr>
+								<td valign="top" height="200" bgcolor="#FFFFFF"><c:if test="${newSize>0}"><table
+										width="200" border="0" align="center" cellspacing="0"
+										cellpadding="0">
+										<tbody>
+											<tr>
+												<td height="33" class="line3" id="aboutUs"><table
+														width="200" border="0" cellspacing="0" cellpadding="0">
+														<tbody>
+														   <c:forEach var="item" items="${announces}" varStatus="status">
+														 
+															<tr>
+																<td width="24" height="22" align="center" class="bg10">&nbsp;</td>
+																<td width="126" height="22" align="left"><a title="${item.title}"
+																	href="<%=request.getContextPath() %>/announce/showgg.do?id=${item.id}"><span class="fcg2">${item.title}</span><span class="fcg fr">[<fmt:formatDate value="${item.createTime}"
+													pattern="yyyy-MM-dd" />]</span></a></td>
+															</tr>
+															</c:forEach>
+														</tbody>
+													</table></td>
+											</tr>
+
+										</tbody>
+									</table></c:if></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+                	
+
+			</div>
+			<div class="jfztc_nav" style="border-top:0px;border-right:1px solid #ddd;border-left:1px solid #ddd;border-bottom:1px solid #ddd">
 				<div class="left_tt">
 					<a href="#"><span
 						style="line-height: 35px;">文章分类</span></a>
@@ -161,45 +200,7 @@ body {
 
 			</div>
 		
-			<div class="jfztc_nav" style="border-top:0px;border-right:1px solid #ddd;border-left:1px solid #ddd;border-bottom:1px solid #ddd">
-				<div class="left_tt">
-					<a href="#"><span
-						style="line-height: 35px;">最新文章</span></a>
-				</div>
-				<div class="left_lists">
-					<table width="193" border="0" bgcolor="#D1E6ED" align="center"
-						cellspacing="0" cellpadding="0">
-						<tbody>
-							<tr>
-								<td valign="top" height="200" bgcolor="#FFFFFF"><c:if test="${newSize>0}"><table
-										width="200" border="0" align="center" cellspacing="0"
-										cellpadding="0">
-										<tbody>
-											<tr>
-												<td height="33" class="line3" id="aboutUs"><table
-														width="200" border="0" cellspacing="0" cellpadding="0">
-														<tbody>
-														   <c:forEach var="item" items="${announces}" varStatus="status">
-														 
-															<tr>
-																<td width="24" height="22" align="center" class="bg10">&nbsp;</td>
-																<td width="126" height="22" align="left"><a title="${item.title}"
-																	href="<%=request.getContextPath() %>/announce/showgg.do?id=${item.id}">${item.title}</a></td>
-															</tr>
-															</c:forEach>
-														</tbody>
-													</table></td>
-											</tr>
-
-										</tbody>
-									</table></c:if></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-                	
-
-			</div>
+			
 		</div>
         
 

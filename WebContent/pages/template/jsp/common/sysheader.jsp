@@ -45,6 +45,9 @@ $(document).ready(function() {
 					<li class="current"><a href="<%=request.getContextPath() %>/sysman/list.do">管理员维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/agent/list.do">代理商维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/charge/list.do">收费单位维护</a></li>
+					<li ><a href="<%=request.getContextPath() %>/sysparam/customproplist.do">自定义属性</a></li>
+					<li ><a href="<%=request.getContextPath() %>/sysparam/customvaluelist.do">自定义属性值</a></li>
+					<li ><a href="<%=request.getContextPath() %>/sysparam/ratelist.do">转账费率维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/bank/list.do">一级银行维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/feerule/list.do">劳务费信息维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/sysaccount/list.do">系统账户维护</a></li>
@@ -55,7 +58,7 @@ $(document).ready(function() {
 					<li><a href="<%=request.getContextPath() %>/announce/list.do">公告管理</a></li>
 					<li><a href="<%=request.getContextPath() %>/ej/list.do">意见回复</a></li>
 			  </ul></li>
-			<li class="current"><span><a href="<%=request.getContextPath() %>/bill/servicelist.do">单据查询</a></span>
+			<li><span><a href="<%=request.getContextPath() %>/bill/servicelist.do">单据查询</a></span>
 				<ul>
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/servicelist.do">劳务费划款单查询</a></li>
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/poundagelist.do">手续费划款单查询</a></li>
@@ -63,13 +66,7 @@ $(document).ready(function() {
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/settlelist.do">结算划款单查询</a></li>
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/incomelist.do">最终盈利划款单查询</a></li>
 			  </ul></li>
-			  <li ><span><a href="<%=request.getContextPath() %>/sysparam/customproplist.do">参数维护</a></span>
-				<ul>
-					<li ><a href="<%=request.getContextPath() %>/sysparam/customproplist.do">自定义属性</a></li>
-					<li ><a href="<%=request.getContextPath() %>/sysparam/customvaluelist.do">自定义属性值</a></li>
-					<li ><a href="<%=request.getContextPath() %>/sysparam/ratelist.do">转账费率维护</a></li>
-					<li ><a href="<%=request.getContextPath() %>/sysparam/noticelist.do">通知信息维护</a></li>
-			  </ul></li>
+
 			  <li><span><a href="<%=request.getContextPath() %>/sysman/passwd.do">修改密码</a></span></li>
 	       </ul>
 		</div>

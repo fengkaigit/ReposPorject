@@ -76,6 +76,7 @@ $(document).ready(function(){
     <td>&nbsp;${item.EMail}</td>
     <td>&nbsp;${item.mobile}</td>
     <td>
+    <a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/agent/signlist.do?id=${item.id}')" >签约信息</a>&nbsp;
 	<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/agent/edit/${item.id}.do')" >修改</a>&nbsp;
 	<a class="cur" style="color:#007abd;" onclick="delAgent(${item.id})">删除</a></td>
 
