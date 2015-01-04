@@ -21,6 +21,7 @@ import com.ey.dao.entity.AgentAccountRelation;
 import com.ey.dao.entity.AgentAccountRelationId;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.AgentPaymentBatch;
+import com.ey.dao.entity.AgentSignRate;
 import com.ey.dao.entity.BankAccount;
 import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.BatchPaymentRelation;
@@ -48,6 +49,26 @@ public class AgentServiceImpl implements AgentService {
         bankAccount.setId(DbidGenerator.getDbidGenerator().getNextId());
         agentDAO.save(bankAccount);
         agentDAO.save(new AgentAccountRelation(new AgentAccountRelationId(agent.getId(),bankAccount.getId()),false));
+        if(agent.getSignDate()!=null&&agent.getSignPeriod()!=null){
+        	createSignPeriod(agent);
+        }
+	}
+	private void createSignPeriod(AgentInfo agent){
+		int singNum = agent.getSignPeriod().intValue();
+		Date signBeginDate = agent.getSignDate();
+		Date signEndDate = null;
+		List<AgentSignRate> volist = new ArrayList<AgentSignRate>();
+		for(int i = 1;i<=singNum;i++){
+			AgentSignRate signRate = new AgentSignRate();
+			signRate.setId(DbidGenerator.getDbidGenerator().getNextId());
+			signRate.setAgentId(agent.getId());
+			signRate.setBeginTime(signBeginDate);
+			signBeginDate = DateUtil.getAfterYear(signBeginDate, 1);
+			signEndDate = DateUtil.getAfterDay(signBeginDate,-1);
+			signRate.setEndTime(signEndDate);
+			volist.add(signRate);
+		}
+		agentDAO.batchSaveVO(volist);
 	}
 
 	@Override
@@ -152,11 +173,12 @@ public class AgentServiceImpl implements AgentService {
 		return agentDAO.findBillSettleByMonth(id, month);
 	}
 	@Override
-	public List<CountReportBo> findReportByAgentId(Long id, String year, String areaId)
+	public List<CountReportBo> findReportByAgentId(Long id, String year, Map<String,Object> monthMap)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		List userlist = agentDAO.findUserByParam(areaId, year);
-		Map<String,Object> monthMap = getUserNum(year,userlist);
+		return getReports(id,year,monthMap);
+	}
+	private List<CountReportBo> getReports(Long id,String year,Map<String,Object> monthMap){
 		List<Object[]> reportlist = agentDAO.findPaymentBillByAgentId(id, year);
 		Map<String,Object> billMap = getBillNum(year,reportlist);
 		List<CountReportBo> repostlist = new ArrayList<CountReportBo>();
@@ -343,6 +365,31 @@ public class AgentServiceImpl implements AgentService {
 			isCreate = true;
 		}
 		return isCreate;
+	}
+
+	@Override
+	public List<CountReportBo> findReportByAgentId(Long id, String year,
+			String areaId) throws RuntimeException {
+		// TODO Auto-generated method stub
+		List userlist = agentDAO.findUserByParam(areaId, year);
+		Map<String,Object> monthMap = getUserNum(year,userlist);
+		return this.getReports(id, year, monthMap);
+	}
+	@Override
+	public List findAgentSignRateByAgentId(Long id) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.findAgentSignRateByAgentId(id);
+	}
+	@Override
+	public void updateObject(Object obj) throws RuntimeException {
+		// TODO Auto-generated method stub
+		agentDAO.update(obj);
+	}
+	@Override
+	public void updateSignRateById(Long id, Double rate)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		agentDAO.updateSignRateById(id, rate);
 	}
 
 }

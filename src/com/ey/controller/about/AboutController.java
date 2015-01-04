@@ -78,6 +78,11 @@ public class AboutController extends BaseController {
     	//queryMap.put("areaId", user.getAreaId());
         queryMap.put("in", true);
     	List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, page, rows);
+    	String userName = null;
+    	for(Feedback fd:feedlist){
+    		userName = fd.getUserName();
+    		fd.setUserName(userName.substring(0,3)+"****"+userName.substring(7));
+    	}
     	total = sysManService.findTotalFeedBack(queryMap);
         mav.addObject("feedbacks", feedlist);
         

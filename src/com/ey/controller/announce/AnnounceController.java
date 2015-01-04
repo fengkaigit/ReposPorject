@@ -122,6 +122,7 @@ public class AnnounceController extends BaseController {
 	  Area area = areaService.getArea(announce.getAreaId());
 	  ModelAndView mav = new ModelAndView(ADD_PAGE);
 	  mav.addObject("announce", announce);
+	  mav.addObject("startDate", DateUtil.getDate(announce.getCreateTime()));
 	  String areaEncodePath = area.getEncodePath();
 	  if(!area.getId().equals(SystemConst.ROOTAREAID))
 		  areaEncodePath = areaEncodePath.substring(8);
@@ -145,6 +146,7 @@ public class AnnounceController extends BaseController {
 	public String add(ModelMap modelMap,SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
 	  initAreas(request,modelMap);
 	  initAnnStatus(request,modelMap);
+	  modelMap.put("startDate", DateUtil.getDate(new Date()));
 	  return ADD_PAGE;
 	}
 	
@@ -194,11 +196,12 @@ public class AnnounceController extends BaseController {
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String addOrUpdate(SysAnnouncement announce,HttpServletRequest request,HttpServletResponse response){
-		Date date = null;
+	public String addOrUpdate(String startDate,SysAnnouncement announce,HttpServletRequest request,HttpServletResponse response){
+		
+		Date date = DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss",startDate+" 00:00:00");
 		Date retentionTime = null;
-		SysAnnouncement sysAnnounce = null;
-		if(announce.getId() == null){
+		//SysAnnouncement sysAnnounce = null;
+		/*if(announce.getId() == null){
 			date = new Date();
 		}else{
 		    sysAnnounce = announceService.getSysAnnouncement(announce.getId());
@@ -213,7 +216,7 @@ public class AnnounceController extends BaseController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
 		String validStr = announce.getRetentionFlag();
 		if(!StringUtil.isEmptyString(validStr)){
 			if(validStr.endsWith(SystemConst.DAY)){
@@ -227,15 +230,17 @@ public class AnnounceController extends BaseController {
 			}
 			
 		}
+		announce.setCreateTime(date);
+		announce.setRetentionTime(retentionTime);
 		if(announce.getId() == null){
-			announce.setCreateTime(date);
-			announce.setRetentionTime(retentionTime);
+			//announce.setCreateTime(date);
+			//announce.setRetentionTime(retentionTime);
 			announceService.saveObject(announce);
 		}
 		else{
-			sysAnnounce.setCreateTime(date);
-			sysAnnounce.setRetentionTime(retentionTime);
-			announceService.updateObject(sysAnnounce);
+			//sysAnnounce.setCreateTime(date);
+			//sysAnnounce.setRetentionTime(retentionTime);
+			announceService.updateObject(announce);
 		}
 	    return REDIRECT;
 	}

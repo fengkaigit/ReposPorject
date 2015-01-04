@@ -1,5 +1,7 @@
 package com.ey.bo;
 
+import java.util.Date;
+
 import com.ey.dao.entity.AgentInfo;
 
 public class AgentBo extends AgentInfo {
@@ -29,9 +31,11 @@ public class AgentBo extends AgentInfo {
 	public AgentBo(Long id, String registAccount, String passwd, String EMail,
 			String mobile, double rebackDot, String registRealName,
 			String areaId, String areaName,String areaPathName,
-			String areaPath,String parentAraeId) {
+			String areaPath,String parentAraeId,Integer signNum,Date signDate) {
 		super(id, registAccount, passwd, EMail, mobile, areaId, rebackDot,
 				registRealName);
+		super.setSignDate(signDate);
+		super.setSignPeriod(signNum);
 		this.areaName = areaName;
 		this.areaPathName = areaPathName.substring(9);
 		this.areaPath = areaPath.substring(8);

@@ -1,9 +1,13 @@
 package com.ey.dao.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -24,6 +28,8 @@ public class AgentInfo implements java.io.Serializable {
 	private double rebackDot;
 	private String registRealName;
 	private Boolean delFlag;
+	private Integer signPeriod;
+	private Date signDate;
 	
 
 	// Constructors
@@ -134,6 +140,24 @@ public class AgentInfo implements java.io.Serializable {
 
 	public void setDelFlag(Boolean delFlag) {
 		this.delFlag = delFlag;
+	}
+	@Column(name = "sign_period")
+	public Integer getSignPeriod() {
+		return signPeriod;
+	}
+
+	public void setSignPeriod(Integer signPeriod) {
+		this.signPeriod = signPeriod;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "sign_date")
+	public Date getSignDate() {
+		return signDate;
+	}
+
+	public void setSignDate(Date signDate) {
+		this.signDate = signDate;
 	}
 	
 	

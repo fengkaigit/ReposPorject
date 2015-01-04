@@ -41,7 +41,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	@Override
 	public AgentBo getAgent(Long id) throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql = "select new com.ey.bo.AgentBo(a.id,a.registAccount,a.passwd,a.EMail,a.mobile,a.rebackDot,a.registRealName,a.areaId,b.province,b.namePath,b.encodePath,b.city) from AgentInfo a,Area b where a.areaId = b.id and a.id = ?";
+		String hql = "select new com.ey.bo.AgentBo(a.id,a.registAccount,a.passwd,a.EMail,a.mobile,a.rebackDot,a.registRealName,a.areaId,b.province,b.namePath,b.encodePath,b.city,a.signPeriod,a.signDate) from AgentInfo a,Area b where a.areaId = b.id and a.id = ?";
 		List<AgentBo> list = this.find(hql, new Object[]{id});
 		if(list!=null&&list.size()>0)
 			return list.get(0);
@@ -52,7 +52,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	public AgentBo findAgentByLoginName(String loginName, String password)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql = "select new com.ey.bo.AgentBo(a.id,a.registAccount,a.passwd,a.EMail,a.mobile,a.rebackDot,a.registRealName,a.areaId,b.province,b.namePath,b.encodePath,b.city) from AgentInfo a,Area b where a.areaId = b.id and a.registAccount = ? and a.passwd = ? and a.delFlag = 0";
+		String hql = "select new com.ey.bo.AgentBo(a.id,a.registAccount,a.passwd,a.EMail,a.mobile,a.rebackDot,a.registRealName,a.areaId,b.province,b.namePath,b.encodePath,b.city,a.signPeriod,a.signDate) from AgentInfo a,Area b where a.areaId = b.id and a.registAccount = ? and a.passwd = ? and a.delFlag = 0";
 		List<AgentBo> agents = this.find(hql.toString(),new Object[]{loginName,password});
 		if(agents!=null&&agents.size()>0)
 			return agents.get(0);
@@ -312,6 +312,22 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 		// TODO Auto-generated method stub
 		String hql = "update AgentPaymentBatch set confirmTime = ?,batchStatus = ? where id = ?";
 		this.executeHql(hql, new Object[]{new Date(),status,id});
+	}
+
+	@Override
+	public List findAgentSignRateByAgentId(Long id)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "from AgentSignRate where agentId = ?";
+		return this.find(hql, new Object[]{id});
+	}
+
+	@Override
+	public void updateSignRateById(Long id, Double rate)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql="update AgentSignRate set signRate = ? where id = ?";
+		this.executeHql(hql, new Object[]{rate,id});
 	}
  
 

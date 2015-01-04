@@ -63,7 +63,8 @@ public class AnnounceDAOImpl extends BaseDAOImpl implements AnnounceDAO {
 				paramList.add(DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss",DateUtil.getDate(createtime)+" 00:00:00"));
 			}
 			if(retentionTime!=null){
-				query.append(" and retentionTime >= ?");
+				query.append(" and createTime <= ? and retentionTime > ?");
+				paramList.add(retentionTime);
 				paramList.add(retentionTime);
 			}
 			if(home!=null&&home){

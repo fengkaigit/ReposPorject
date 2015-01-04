@@ -10,6 +10,7 @@ public class SystemConst {
 	static public String USER = "USER";
 	static public String MANAGER = "MANAGER";
 	static public String INDEXPAGE = "INDEXPAGE";
+	static public String REPORT = "REPORT";
 	static public String AGENT = "AGENT";
 	static public String JSONRESULT = "JSONRESULT";
 	static public String SPLITE_SIGN = "[|]";

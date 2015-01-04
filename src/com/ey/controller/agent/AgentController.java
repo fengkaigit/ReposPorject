@@ -81,6 +81,7 @@ public class AgentController extends BaseController {
 	private static final String REDIRECTSTATIS = "redirect:/agent/statuslist.do";
 	private static final String PASSWORD_PAGE = "agent/modifypass";
 	private static final Integer COMPLATESTATUS = 10;
+	private static final Integer NOCOMPLATESTATUS = 3;
 	@Autowired
 	private AgentService agentService;
 
@@ -151,10 +152,16 @@ public class AgentController extends BaseController {
 			HttpServletResponse response) {
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
 				SystemConst.AGENT);
+		Map<String,Object> monthMapReport = (Map<String,Object>) request.getSession().getAttribute(SystemConst.REPORT);
 		ModelAndView mav = new ModelAndView(IFRAME_PAGE);
+		if(monthMapReport==null){
+			Map<String,Object> monthMap = agentService.findUserByAreaId(String.valueOf(DateUtil.getYear(new Date())),agent.getAreaId());
+            request.getSession().setAttribute(SystemConst.REPORT,monthMap);
+            monthMapReport = monthMap;
+		}
 		List<CountReportBo> reportlist = agentService.findReportByAgentId(
 				agent.getId(), String.valueOf(DateUtil.getYear(new Date())),
-				agent.getAreaId());
+				monthMapReport);
 		mav.addObject("reports", reportlist);
 		return mav;
 	}
@@ -209,6 +216,7 @@ public class AgentController extends BaseController {
 		ModelAndView mav = new ModelAndView(ADD_PAGE);
 		mav.addObject("agent", agent);
 		mav.addObject("bankAcc", bankAccount);
+		mav.addObject("signDate", DateUtil.getDate(agent.getSignDate()));
 		initAreas(request, mav.getModelMap());
 		initBankInfo(request, mav.getModelMap());
 		/*
@@ -241,9 +249,10 @@ public class AgentController extends BaseController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addOrUpdate(AgentInfo agent, BankAccount bankAccount,
+	public String addOrUpdate(String beginDate,AgentInfo agent, BankAccount bankAccount,
 			Long accId, HttpServletRequest request, HttpServletResponse response) {
 		bankAccount.setId(accId);
+		agent.setSignDate(DateUtil.convertStringToDate(beginDate));
 		if (agent.getId() == null) {
 			agent.setPasswd(MD5.getMD5Str(SystemConst.INITPASSWORD));
 			agent.setDelFlag(false);
@@ -267,6 +276,7 @@ public class AgentController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response) {
 		initAreas(request, modelMap);
 		initBankInfo(request, modelMap);
+		modelMap.addAttribute("signDate", DateUtil.getDate(new Date()));
 		return ADD_PAGE;
 	}
 
@@ -357,11 +367,15 @@ public class AgentController extends BaseController {
 			HttpServletResponse response) throws IOException {
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
 				SystemConst.AGENT);
+		Map<String,Object> monthMapReport = (Map<String,Object>) request.getSession().getAttribute(SystemConst.REPORT);
 		Date date = new Date();
 		String currentYearMonth = DateUtil.getYearMonthNowString(date);
 		String year = String.valueOf(DateUtil.getYear(date));
-		Map<String, Object> monthMap = agentService.findUserByAreaId(year,
-				agent.getAreaId());
+		Map<String, Object> monthMap = null;
+		if(monthMapReport!=null)
+			monthMap = monthMapReport;
+		else
+	        monthMap = agentService.findUserByAreaId(year,agent.getAreaId());
 		Long monthNum = (Long) monthMap.get(currentYearMonth);
 		Long totalNum = (Long) monthMap.get("total");
 		PieChart chart = new PieChart();
@@ -409,7 +423,8 @@ public class AgentController extends BaseController {
 				complateNum++;
 				continue;
 			}
-			noComplateNum++;
+			if(status==NOCOMPLATESTATUS)
+			    noComplateNum++;
 		}
 		PieChart chart = new PieChart();
 		Slice s1 = new Slice(noComplateNum, RequestUtils.getMessage(
@@ -558,7 +573,7 @@ public class AgentController extends BaseController {
 			map.put("statusFlag", 1);
 			map.put("batchId", id);
 			map.put("billId", id);
-			map.put("paymentStatus", 3);
+			//map.put("paymentStatus", 3);
 			billlist = agentService.findBillByBatchId(id, map, 0, 0);
 			if(billlist!=null&&billlist.size()>0)
 			    batchId = ((PaymentBillBo)billlist.get(0)).getBatchId();
@@ -681,5 +696,27 @@ public class AgentController extends BaseController {
             }
 		}
         return dataValueMap;
+	}
+	
+	@RequestMapping(value = "/signlist")
+	public String signlist(Long id, ModelMap modelMap,HttpServletRequest request,
+			HttpServletResponse response) {
+		List signlist = agentService.findAgentSignRateByAgentId(id);
+		modelMap.addAttribute("signs", signlist);
+		return "agent/signlist";
+	}
+	@RequestMapping(value = "/urate")
+	@ResponseBody
+	public Object  urate(Long id,Double rate,
+			HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> map = new HashMap<String, Object>();
+		try{
+			  agentService.updateSignRateById(id, rate);
+		      map.put("result", true);
+		 }catch(Exception e){
+			 map.put("result", false);
+			 e.printStackTrace();
+		 }
+		return map;
 	}
 }

@@ -36,8 +36,9 @@ public interface AgentService {
   	  BankAccount getBankAccount(Long id) throws RuntimeException;
   	  
   	  Map<String,Object> findUserByAreaId(String year,String areaId) throws RuntimeException;
-  	  
-  	 List<CountReportBo> findReportByAgentId(Long id,String year,String areaId) throws RuntimeException;
+   	 List<CountReportBo> findReportByAgentId(Long id,String year,String areaId) throws RuntimeException;
+
+  	 List<CountReportBo> findReportByAgentId(Long id,String year,Map<String,Object> monthMap) throws RuntimeException;
   	  
   	 List findBillNumByMonth(Long id,String month) throws RuntimeException;
   	 
@@ -70,5 +71,11 @@ public interface AgentService {
      void updateStatusByBatchId(Long id,Integer status) throws RuntimeException;
      
      boolean createAgentBatch(Map<Integer,String> payTypesMap) throws RuntimeException;
+     
+     List findAgentSignRateByAgentId(Long id) throws RuntimeException;
+     
+     void updateObject(Object obj) throws RuntimeException;
+     
+     void updateSignRateById(Long id,Double rate) throws RuntimeException;
      
 }
