@@ -45,6 +45,8 @@ import com.ey.consts.SystemConst;
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.Area;
+import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.BaseCustomValueId;
 import com.ey.dao.entity.CatvInfo;
 import com.ey.dao.entity.ChargeEnterprise;
 import com.ey.dao.entity.FeeRule;
@@ -329,12 +331,15 @@ public class PhoneController {
 		JSONObject obj = new JSONObject();
 		PrintWriter out = null;
 		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			if (areaId==null||areaId.equals("")){
+				areaId = new String(currentUser.getAreaId());
+			}
 			if (StringUtil.isEmptyString(areaId)) {
 				obj.put("success", false);
 				obj.put("data",RequestUtils.getMessage("noarea",request));
 			}else{
-				UserBase currentUser = (UserBase) request.getSession().getAttribute(
-						SystemConst.USER);
 				JfForm form = new JfForm();
 				Area area=areaService.getArea(areaId);
 				if (entId != null) {
@@ -540,12 +545,15 @@ public class PhoneController {
 		ConfirmPaymentBo retnBo = new ConfirmPaymentBo();
 		JSONObject jsonObj = new JSONObject();
 		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			if (areaId==null||areaId.equals("")){
+				areaId = new String(currentUser.getAreaId());
+			}
 			if (StringUtil.isEmptyString(areaId)) {
 				jsonObj.put("success", false);
 				jsonObj.put("data",RequestUtils.getMessage("noarea",request));
 			}else{
-				UserBase currentUser = (UserBase) request.getSession().getAttribute(
-						SystemConst.USER);
 				JfForm form = new JfForm();
 				Area area=areaService.getArea(areaId);
 				if (entId != null) {
@@ -569,7 +577,7 @@ public class PhoneController {
 				form.setUserName(currentUser.getRealName());
 				form.setPayType(payType);
 				form.setBillNumber(paymentCode);
-				
+				form.setCarType(0);
 				FeeRule feeRule = feeService.getFeeRule(payType, new Date());
 				if (feeRule != null) {
 					try {
@@ -661,7 +669,10 @@ public class PhoneController {
 				}else
 					retnBo.setPayMoney(Double.valueOf(payMoney)+retnBo.getPoundage());
 				retnBo.setBillNumber(paymentCode);
-				retnBo.setPayData(StringUtil.encodeString(paymentCode));
+				if (paymentCode!=null)
+					retnBo.setPayData(StringUtil.encodeString(paymentCode));
+				else
+					retnBo.setPayData(StringUtil.encodeString(""));
 				retnBo.setPayType(payType);
 				JSONArray jsonArr=JSONArray.fromObject(retnBo);
 				jsonObj.put("success", true);
@@ -968,6 +979,7 @@ public class PhoneController {
 				bo.setPaymentType(paymentSet.getPaymentType());
 				bo.setPaymentTypeName(paymentSet.getPaymentTypeName());
 				bo.setVehicleNumber(paymentSet.getVehicleNumber());
+				
 				retnLst.add(bo);
 			}
 			JSONArray jsonArr=JSONArray.fromObject(retnLst);
@@ -1072,14 +1084,68 @@ public class PhoneController {
 	public ModelAndView modifySetting(String data, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, JSONException{
 		JSONObject obj = new JSONObject();
+		Boolean flag = false;
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
-			
-
-			obj.put("success", true);
-			obj.put("data","缴费设置成功");
+			JSONObject  dataJson=new JSONObject(data);
+			List<PaymentSetting> lst = new ArrayList();
+			org.json.JSONArray jsonArray =dataJson.getJSONArray("data");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jo = jsonArray.getJSONObject(i);
+				if (jo.getString("paymentType")!=null){//0：水费；1：电费；2：燃气；3：固话；4：移动；5：交通；6：物业；7：有线电视；8采暖；
+					if (!jo.getString("status").equals("3")){
+						PaymentSetting vo = new PaymentSetting();
+						vo.setAreaId(jo.getString("areaId"));
+						vo.setAreaName(areaService.getArea(vo.getAreaId()).getProvince());
+						vo.setBillNumber(jo.getString("billNumber"));
+						vo.setCreateTime(new Date());
+						vo.setDelFlag(0);
+						vo.setEntId(Long.valueOf(jo.getString("entId")));
+						vo.setEntName(chargeEntService.getChargeEnt(vo.getEntId()).getEnterpriseName());
+						vo.setGroupId(Integer.valueOf(jo.getString("groupId")));
+						BaseCustomValue dataValue = (BaseCustomValue)staticService.getObject(BaseCustomValue.class,new BaseCustomValueId("bill_group_type",vo.getGroupId()));
+						vo.setGroupName(dataValue.getPropChName());
+						vo.setHoster(jo.getString("hoster"));
+						vo.setPayAddress(jo.getString("payAddress"));
+						vo.setPaymentType(Integer.valueOf(jo.getString("paymentType")));
+						dataValue = (BaseCustomValue)staticService.getObject(BaseCustomValue.class,new BaseCustomValueId("payment_type",vo.getPaymentType()));
+						vo.setPaymentTypeName(dataValue.getPropChName());
+						vo.setUserId(currentUser.getId());
+						vo.setVehicleNumber(jo.getString("vehicleNumber"));
+						vo.setEngineNumber(jo.getString("engineNumber"));
+						vo.setCarframeNumber(jo.getString("carframeNumber"));
+						if (jo.getString("status").equals("2"))
+							vo.setId(Long.valueOf(jo.getString("id")));
+						lst.add(vo);
+					}else{
+						PaymentSetting vo = new PaymentSetting();
+						vo.setDelFlag(Integer.valueOf(jo.getString("status")));
+						vo.setId(Long.valueOf(jo.getString("id")));
+						lst.add(vo);
+					}
+					flag=true;
+				}else{
+					flag=false;
+					break;
+				}
+			}
+			if (flag){
+				for (PaymentSetting detail:lst){
+					if (detail.getDelFlag()==3){
+						settingService.delSetting(detail.getId());
+					}else{
+						settingService.saveSetting(detail);
+					}
+				}
+				obj.put("success", true);
+				obj.put("data","缴费设置成功");
+			}else{
+				obj.put("success", false);
+				obj.put("data","请输入缴费类型");
+			}
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
 			obj.put("data","缴费设置失败");
 		}
