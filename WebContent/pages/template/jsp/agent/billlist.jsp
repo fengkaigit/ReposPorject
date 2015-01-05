@@ -73,20 +73,7 @@ function downloadbill(id){
 	<td>&nbsp;${item.userName}</td>
 	<td>&nbsp;${item.entName}</td>
 	<td>&nbsp;${item.paymentTypeName}费</td>
-	<td>&nbsp;<c:choose>
-	   <c:when test="${item.paymentStatus == 3}">
-                  核实确认
-       </c:when>
-       <c:when test="${item.paymentStatus == 10}">
-                      办理成功
-       </c:when>
-       <c:when test="${item.paymentStatus == 11}">
-                      补交
-       </c:when>
-       <c:otherwise>
-                      退款
-       </c:otherwise>
-     </c:choose></td>
+	<td>&nbsp;${payerrs[item.paymentStatus]}</td>
   </tr>
  </c:forEach>
    

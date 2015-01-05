@@ -47,7 +47,7 @@ $(document).ready(function(){
 	 var customEngNameV = '${param.customPropName}';
 	 if(customEngNameV=='')
         $("#customEngName").formValidator().inputValidator({min:1,onError:"属性名不能为空"});
-     $("#propEngName").formValidator().inputValidator({min:1,onError:"属性值英文名不能为空"}).regexValidator({regExp:"^[0-9a-zA-Z,，\.。；;\/、]+$",onError:"属性英文名格式不正确,请重新输入"});
+     $("#propEngName").formValidator().inputValidator({min:1,onError:"属性值英文名不能为空"}).regexValidator({regExp:"^[0-9a-zA-Z,，\.。；;\/、_]+$",onError:"属性英文名格式不正确,请重新输入"});
      $("#propChName").formValidator().inputValidator({min:1,onError:"属性值名称不能为空"});
      $("#dataValue").formValidator().inputValidator({min:1,onError:"属性值不能为空"}).regexValidator({ regExp: "num", dataType: "enum", onError: "属性值只能输入数字" });
 });

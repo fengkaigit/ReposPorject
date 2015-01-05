@@ -44,7 +44,7 @@ $(document).ready(function(){
 			},
 			submitAfterAjaxPrompt : '有数据正在异步验证，请稍等...'
 	   });
-	 $("#propEngName").formValidator().inputValidator({min:1,onError:"属性英文名不能为空"}).regexValidator({regExp:"^[0-9a-zA-Z,，\.。；;\/、]+$",onError:"属性英文名格式不正确,请重新输入"});
+	 $("#propEngName").formValidator().inputValidator({min:1,onError:"属性英文名不能为空"}).regexValidator({regExp:"^[0-9a-zA-Z,，\.。；;\/、_]+$",onError:"属性英文名格式不正确,请重新输入"});
 	 $("#propChName").formValidator().inputValidator({min:1,onError:"属性名称不能为空"});
 });
 function getData(id){

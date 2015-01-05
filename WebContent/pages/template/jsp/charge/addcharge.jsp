@@ -153,7 +153,7 @@ function initArea(){
                                         <td> <select class="zc_city"  style="width:190px;" id="payType" name="payType">
                                         <option value="">请选择收费类型</option>
                                          <c:forEach var="cus" items="${cusvalues}" varStatus="status">
-                                              <option value="${cus.id.dataValue}" <c:if test="${cus.id.dataValue==charge.payType}">selected</c:if>>${cus.propChName}费</option>
+                                              <option value="${cus.key}" <c:if test="${cus.key==charge.payType}">selected</c:if>>${cus.value}费</option>
                                          </c:forEach>
                                          </select></td>
                                     </tr>

@@ -53,34 +53,40 @@ $(document).ready(function(){
 			},
 			submitAfterAjaxPrompt : '有数据正在异步验证，请稍等...'
 	   });
-	 $("#limitMoney").formValidator().inputValidator({min:1,onError:"最高限额不能为空"}).regexValidator({regExp:"^[0-9a-zA-Z,，\.。；;\/、]+$",onError:"属性英文名格式不正确,请重新输入"});
-	 $("#rate").formValidator().inputValidator({min:1,onError:"转账费率不能为空"});
+	 $("#bankCode").formValidator().inputValidator({min:1,onError:"支付机构代码不能为空"});
+	 $("#mobileRate").formValidator().inputValidator({min:1,onError:"手机端转账费率不能为空"});
+	 $("#mobileLimit").formValidator().inputValidator({min:1,onError:"手机端最高限额不能为空"});
+	 $("#computerRate").formValidator().inputValidator({min:1,onError:"PC端转账费率不能为空"});
+	 $("#computerLimit").formValidator().inputValidator({min:1,onError:"PC端最高限额不能为空"});
 });
 function getData(id){
 	jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/sysparam/rateedit.do",{id:id},"get","json",function(data){
-		$("#bankId").val(data.bankId);
-		$("#limitMoney").val(data.limitMoney);
-		$("#rate").val(data.rate);
+		$("#bankCode").val(data.bankCode);
+		$("#bankName").val(data.bankName);
 		$("#id").val(data.id);
-		$("#cityFlag").attr("checked",data.cityFlag);
-		$("#peerFlag").attr("checked",data.peerFlag);
+		$("#mobileRate").val(data.mobileRate);
+		$("#computerRate").val(data.computerRate);
+		$("#mobileLimit").val(data.mobileLimit);
+		$("#computerLimit").val(data.computerLimit);
 		$("#operFlag").val('修改');
-	    showDivWin('addRate',400,280,'');
+	    showDivWin('addRate',400,320,'');
     });
 	
 }
 function add(){
 	$("#id").val('');
-	$("#bankId").val('');
-	$("#limitMoney").val('');
-	$("#rate").val('');
-	$("#cityFlag").attr("checked",false);
-	$("#peerFlag").attr("checked",false);
+	$("#bankCode").val('');
+	$("#bankName").val('');
+	$("#mobileRate").val('');
+	$("#computerRate").val('');
+	$("#mobileLimit").val('');
+	$("#computerLimit").val('');
 	$("#operFlag").val('添加');
-	showDivWin('addRate',400,280,'');
+	showDivWin('addRate',400,320,'');
 }
 function postHandle(){
 	 if($.formValidator.pageIsValid()){
+	   $("#bankName").val($("select option:selected").text());
 	   $('#saveForm').ajaxSubmit(function(data){
 		    if(data.result){
 		    	alert('转账费率'+$("#operFlag").val()+'成功');
@@ -110,11 +116,11 @@ function postHandle(){
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
   <tr class="add">
     <td>序号</td>
-    <td>银行名称</td>
-    <td>最高限额(元)</td>
-     <td>转账费率(%)</td>
-      <td>是否同城</td>
-     <td>是否同行</td>
+    <td>支付机构名称</td>
+    <td>手机端转账费率(%)</td>
+    <td>手机端最高限额(元)</td>
+    <td>PC端转账费率(%)</td>
+    <td>PC端最高限额(元)</td>
     <td>操作</td>
   </tr>
   <c:forEach var="item" items="${rates}" varStatus="status">
@@ -127,11 +133,11 @@ function postHandle(){
        </c:otherwise>
      </c:choose> >
     <td>&nbsp;${status.index+1}</td>
-    <td>&nbsp;${item.bankName}</td>
-    <td>&nbsp;${item.limitMoney}</td>
-    <td>&nbsp;${item.rate}</td>
-    <td>&nbsp;<c:if test="${item.cityFlag==true}">是</c:if><c:if test="${item.cityFlag==false}">否</c:if></td>
-    <td>&nbsp;<c:if test="${item.peerFlag==true}">是</c:if><c:if test="${item.peerFlag==false}">否</c:if></td>
+    <td>&nbsp;${payOrgs[item.bankCode]}</td>
+    <td>&nbsp;${item.mobileRate}</td>
+     <td>&nbsp;${item.mobileLimit}</td>
+     <td>&nbsp;${item.computerRate}</td>
+     <td>&nbsp;${item.computerLimit}</td>
     <td>
 	<a class="cur" style="color:#007abd;"  onClick="getData(${item.id})" >修改</a>&nbsp;
 	<a class="cur" style="color:#007abd;" onclick="delRate(${item.id})">删除</a></td>
@@ -149,39 +155,47 @@ function postHandle(){
 <form id="saveForm" method="post" action="<%=request.getContextPath() %>/sysparam/saverate.do">
 <input type="hidden" id="operFlag" />
 <input type="hidden" id="id" name="id"/>
+<input type="hidden" id="bankName" name="bankName"/>
 <div id="addRate" class="divWin" style="display:none;">
 <div class="close cur"  onclick="javascript:hiddenDiv('addRate')">关闭</div>
             <h1></h1>
 			 <p >添加转账费率</p> 
             <table style="width:100%;" border="0" bgcolor="#c3c6c9" cellspacing="0" cellpadding="0">
             <tbody><tr>
-                <td width="28%" bgcolor="#f1f8ff" align="right" style="vertical-align: middle;">银行名称</td>
+                <td width="28%" bgcolor="#f1f8ff" align="right" style="vertical-align: middle;">支付机构代码</td>
                 <td bgcolor="#FFFFFF">
-                         <select class="zc_city"  style="width:190px;height:28px;" id="bankId" name="bankId">
-                             <option value="">请选择银行</option>
-                             <c:forEach var="item" items="${banks}" varStatus="status">
-                                <option value="${item.bankCode}" >${item.bankName}</option>
+                          <select class="zc_city"  style="width:190px;height:28px;" id="bankCode" name="bankCode">
+                             <option value="">请选择支付机构</option>
+                             <c:forEach var="item" items="${payOrgs}" varStatus="status">
+                                <option value="${item.key}" >${item.value}</option>
                              </c:forEach>    
                           
-                        </select>                
+                        </select>           
                         </td>
             </tr>
             <tr>
-                <td bgcolor="#f1f8ff" align="right">最高限额</td>
+                <td bgcolor="#f1f8ff" align="right">手机端转账费率</td>
                 <td bgcolor="#FFFFFF">
-                        <input type="text" class="on-show" id="limitMoney" name="limitMoney"/>&nbsp;<label>元</label>               
+                <input type="text" class="on-show" id="mobileRate" name="mobileRate"/>&nbsp;<label>%</label>
                 </td>
             </tr>
             <tr>
-                <td bgcolor="#f1f8ff" align="right">转账费率</td>
+                <td bgcolor="#f1f8ff" align="right">手机端最高限额</td>
                 <td bgcolor="#FFFFFF">
-                <input type="text" class="on-show" id="rate" name="rate"/>&nbsp;<label>%</label>
+                <input type="text" class="on-show" id="mobileLimit" name="mobileLimit"/>&nbsp;<label>元</label>
+                </td>
+            </tr>
+             <tr>
+                <td bgcolor="#f1f8ff" align="right">PC端转账费率</td>
+                <td bgcolor="#FFFFFF">
+                <input type="text" class="on-show" id="computerRate" name="computerRate"/>&nbsp;<label>%</label>
                 </td>
             </tr>
             <tr>
-                <td bgcolor="#FFFFFF" align="center" colspan="2">
-                    <div class="input_middle"><input type="checkbox" id="cityFlag" name="cityFlag" style="height:15px;line-height:15px;"/><label>是否同城</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="peerFlag" name="peerFlag" style="height:15px;line-height:15px;"/><label>是否同行</label></div>
-				</td>
+                <td bgcolor="#f1f8ff" align="right">PC端最高限额</td>
+                <td bgcolor="#FFFFFF">
+                <input type="text" class="on-show" id="computerLimit" name="computerLimit"/>&nbsp;<label>元</label>
+                </td>
             </tr>
             <tr>
                 <td bgcolor="#FFFFFF" align="center" colspan="2">

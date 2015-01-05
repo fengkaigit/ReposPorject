@@ -66,10 +66,11 @@ function postHandle(){
 		   }
 	   });
 }
-function showReplyDiv(userId,id){
+function showReplyDiv(userId,id,paidMoney){
 	$("#userId").val(userId);
 	$("#billId").val(id);
-	showDivWin('jfhfwin',520,380,'');
+	$("#paidMoney").val(paidMoney);
+	showDivWin('jfhfwin',520,415,'');
 }
 </script>
 </head>
@@ -129,21 +130,8 @@ function showReplyDiv(userId,id){
 	<td>&nbsp;${item.userName}</td>
 	<td>&nbsp;${item.entName}</td>
 	<td>&nbsp;${item.paymentTypeName}费</td>
-	<td>&nbsp;<c:choose>
-	   <c:when test="${item.paymentStatus == 3}">
-                  核实确认
-       </c:when>
-       <c:when test="${item.paymentStatus == 10}">
-                      办理成功
-       </c:when>
-       <c:when test="${item.paymentStatus == 11}">
-                      补交
-       </c:when>
-       <c:otherwise>
-                      退款
-       </c:otherwise>
-     </c:choose></td>
-	<td><a class="cur" style="color:#007abd;" onclick="showReplyDiv(${item.userId},${item.id});">缴费异常回复</a></td>
+	<td>&nbsp;${payerrs[item.paymentStatus]}</td>
+	<td><a class="cur" style="color:#007abd;" onclick="showReplyDiv(${item.userId},${item.id},${item.paidMoney});">缴费异常回复</a></td>
   </tr>
  </c:forEach>
    
@@ -156,13 +144,15 @@ function showReplyDiv(userId,id){
 <form id="replyForm" method="post" action="<%=request.getContextPath() %>/agent/notice.do">
 <input type="hidden" name="userId" id="userId" />
 <input type="hidden" name="billId" id="billId" />
+ <input type="hidden" id="batchId" name="batchId" value="${batchId}" />
+  <input type="hidden" id="paidMoney" name="paidMoney"/>
 <div id="jfhfwin" class="divWin" style="display:none;">
 <div class="close cur"  onclick="javascript:hiddenDiv('jfhfwin')">关闭</div>
             <h1></h1>
 			 <p >添加通知信息</p> 
             <table style="width:100%;" border="0" bgcolor="#c3c6c9" cellspacing="0" cellpadding="0">
             <tbody><tr>
-                <td width="28%" bgcolor="#f1f8ff" align="right" style="vertical-align: middle;">用户地区</td>
+                <td width="28%" bgcolor="#f1f8ff" align="right" style="vertical-align: middle;">通知状态</td>
                 <td bgcolor="#FFFFFF">
                           <select class="zc_city"  style="width:190px;height:28px;" id="sendStatus" name="sendStatus">
                                 <option value="0" >有效</option>
@@ -188,6 +178,18 @@ function showReplyDiv(userId,id){
                         <select class="zc_city"  style="width:190px;height:28px;" id="noticeMode" name="noticeMode">
                              <option value="">请选择方式</option>
                              <c:forEach var="item" items="${noticeModes}" varStatus="status">
+                                <option value="${item.key}" >${item.value}</option>
+                             </c:forEach>    
+                          
+                        </select>                
+                        </td>
+            </tr>
+           <tr>
+                <td bgcolor="#f1f8ff" align="right">异常状态</td>
+                <td bgcolor="#FFFFFF">
+                        <select class="zc_city"  style="width:190px;height:28px;" id="payerrStatus" name="payerrStatus">
+                             <option value="">请选择状态</option>
+                             <c:forEach var="item" items="${payerrs}" varStatus="status">
                                 <option value="${item.key}" >${item.value}</option>
                              </c:forEach>    
                           
