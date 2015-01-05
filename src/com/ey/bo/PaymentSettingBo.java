@@ -17,6 +17,7 @@ public class PaymentSettingBo {
 	private String vehicleNumber;
 	private String carframeNumber;
 	private String engineNumber;
+	private String flag;
 	
 	public PaymentSettingBo(){	
 	}
@@ -110,6 +111,14 @@ public class PaymentSettingBo {
 	}
 	public void setEngineNumber(String engineNumber) {
 		this.engineNumber = engineNumber;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 	
 	
