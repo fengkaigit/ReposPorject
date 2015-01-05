@@ -7,6 +7,8 @@ import com.ey.dao.base.BaseDAO;
 import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.BaseCustomProp;
 import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.PaymentOrg;
+import com.ey.dao.entity.TransferRate;
 
 public interface StaticDAO extends BaseDAO {
 
@@ -25,6 +27,9 @@ public interface StaticDAO extends BaseDAO {
     List findTransferRate(Map<String,Object> Qparam,Integer page,Integer rows)throws RuntimeException;
 	Long getTotalTransferRate(Map<String,Object> Qparam) throws RuntimeException;
 	List findNoticeInfos(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
-	Long getTotalNoticeInfo(Map<String,Object> Qparam) throws RuntimeException; 
+	Long getTotalNoticeInfo(Map<String,Object> Qparam) throws RuntimeException;
+	List<PaymentOrg> listPaymentOrg() throws RuntimeException;
+	List<TransferRate> findTransferRateByCode(String code)throws RuntimeException;
+
     
 }

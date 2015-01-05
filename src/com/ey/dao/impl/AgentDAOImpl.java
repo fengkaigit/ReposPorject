@@ -227,6 +227,11 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 				query.append(" and e.id.paymentBillId = ?");
 				paramList.add(billId);
 			}
+			Integer paymentStatus = (Integer)Qparam.get("paymentStatus");
+			if(paymentStatus!=null){
+				query.append(" and a.paymentStatus = ?");
+				paramList.add(paymentStatus);
+			}
 		}
 	}
 	
@@ -282,7 +287,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		List paramList = new ArrayList();
-		StringBuffer hql = new StringBuffer("select count(e.id.paymentBillId) from BatchPaymentRelation e where 1=1");
+		StringBuffer hql = new StringBuffer("select count(e.id.paymentBillId) from PaymentBill a,BatchPaymentRelation e where a.id = e.id.paymentBillId");
 		createQueryBillParam(hql,Qparam,paramList);
 		List list = this.find(hql.toString(),paramList.toArray());
 		if(list!=null&&list.size()>0){
@@ -328,6 +333,14 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 		// TODO Auto-generated method stub
 		String hql="update AgentSignRate set signRate = ? where id = ?";
 		this.executeHql(hql, new Object[]{rate,id});
+	}
+
+	@Override
+	public void updateErrorFlagByBatchId(Long batchId,Boolean flag)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "update AgentPaymentBatch set errorFlag = ? where id = ? and errorFlag=?";
+		this.executeHql(hql, new Object[]{flag,batchId,false});
 	}
  
 

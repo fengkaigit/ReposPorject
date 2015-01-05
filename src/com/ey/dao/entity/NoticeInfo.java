@@ -30,6 +30,7 @@ public class NoticeInfo implements java.io.Serializable {
 	private String  parentAreaId;
 	private String areaId;
 	private String areaName;
+	private Long billId;
 
 	// Constructors
 
@@ -148,6 +149,15 @@ public class NoticeInfo implements java.io.Serializable {
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
 	}
-	
+    
+	@Column(name = "bill_id")
+	public Long getBillId() {
+		return billId;
+	}
 
+	public void setBillId(Long billId) {
+		this.billId = billId;
+	}
+	
+    
 }

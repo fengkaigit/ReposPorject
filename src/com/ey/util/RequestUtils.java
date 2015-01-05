@@ -1,12 +1,23 @@
 package com.ey.util;
 
 import com.ey.consts.SystemConst;
+import com.ey.dao.entity.Area;
+import com.ey.dao.entity.BankInfo;
+import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.PaymentOrg;
+import com.ey.service.AreaService;
+import com.ey.service.StaticService;
+import com.ey.service.common.SpringWiredBean;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -18,6 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -27,7 +39,7 @@ import org.springframework.web.util.UrlPathHelper;
 public class RequestUtils {
 	private static final Logger log = LoggerFactory
 			.getLogger(RequestUtils.class);
-
+    private static final SpringWiredBean wiredBean = SpringWiredBean.getInstance();
 	/**
 	 * 获取QueryString的参数，并使用URLDecoder以UTF-8格式转码。如果请求是以post方法提交的，
 	 * 那么将通过HttpServletRequest#getParameter获取。
@@ -287,6 +299,59 @@ public class RequestUtils {
         } 
     	return initPath;
     }
+	public static List<BankInfo> initBankInfo(HttpServletRequest request) {
+		List<BankInfo> banks = (List<BankInfo>)request.getSession().getAttribute(SystemConst.BANK);
+		if(banks==null){
+			 StaticService staticService = (StaticService)wiredBean.getBean("staticService");
+			 banks = staticService.listBanks();
+		     request.getSession().setAttribute(SystemConst.BANK, banks);
+		}
+		return banks;
+	}
+	public static List<Area> initAreas(HttpServletRequest request) {
+		List<Area> areas = (List<Area>)request.getSession().getAttribute(SystemConst.AREAS);
+		if(areas==null){
+			   AreaService areaService = (AreaService)wiredBean.getBean("areaService");
+		       areas = areaService.getAreasByCity(SystemConst.ROOTAREAID);
+			   request.getSession().setAttribute(SystemConst.AREAS, areas);
+		}
+		return areas;
+	}
+	public static Map<Integer,String> getPayTypeName(HttpServletRequest request,String typeCode){
+		Map<Integer,String> dataValueMap = (Map<Integer,String>)request.getSession().getAttribute(typeCode);
+		if(dataValueMap==null){
+			List customlist = (List)request.getSession().getAttribute(SystemConst.CUSTOMPROPTYPE);
+			dataValueMap = new HashMap<Integer,String>();
+			 StaticService staticService = (StaticService)wiredBean.getBean("staticService");
+		    List<BaseCustomValue> customValues = staticService.listValues(typeCode);
+		    if(customValues!=null&&customValues.size()>0){
+              for(BaseCustomValue value:customValues){
+        	        dataValueMap.put(value.getId().getDataValue(), value.getPropChName());
+              }
+		    }
+		    if(customlist==null)
+				customlist = new ArrayList();
+		    customlist.add(typeCode);
+		    request.getSession().setAttribute(typeCode, dataValueMap);
+		    request.getSession().setAttribute(SystemConst.CUSTOMPROPTYPE, customlist);
+		}
+        return dataValueMap;
+	}
+	public static Map<String,String> getPayTypeOrg(HttpServletRequest request){
+		Map<String,String> paymentOrgMap = (Map<String,String>)request.getSession().getAttribute(SystemConst.PAYMENTORGS);
+		if(paymentOrgMap==null){
+			paymentOrgMap = new LinkedHashMap<String,String>();
+			 StaticService staticService = (StaticService)wiredBean.getBean("staticService");
+		    List<PaymentOrg> paymentOrgs = staticService.listPaymentOrg();
+		    if(paymentOrgs!=null&&paymentOrgs.size()>0){
+              for(PaymentOrg value:paymentOrgs){
+            	  paymentOrgMap.put(value.getPayOrgCode(), value.getPayOrgName());
+              }
+		    }
+		    request.getSession().setAttribute(SystemConst.PAYMENTORGS, paymentOrgMap);
+		}
+        return paymentOrgMap;
+	}
 	public static void main(String[] args) {
 	}
 }

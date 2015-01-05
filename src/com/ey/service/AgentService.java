@@ -50,7 +50,7 @@ public interface AgentService {
 
      void saveObject(Object o) throws RuntimeException;
      
-     void saveNotice(NoticeInfo o) throws RuntimeException;
+     void saveNotice(Map<String,Object> paramMap,NoticeInfo o) throws RuntimeException;
      
      void batchSaveObject(List objlist) throws RuntimeException;
      
@@ -77,5 +77,7 @@ public interface AgentService {
      void updateObject(Object obj) throws RuntimeException;
      
      void updateSignRateById(Long id,Double rate) throws RuntimeException;
+     
+     void executeBatchBusiness(Long batchId,List<String> list,Integer status) throws RuntimeException;
      
 }

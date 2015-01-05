@@ -19,8 +19,22 @@ public class PaymentHedge implements Serializable {
 	private Date createTime;
 	private Integer statisStatus;
 	private Integer hedgeType;
-
 	
+	public PaymentHedge(){
+		
+	}
+	
+	public PaymentHedge(Long id, Long billId, Double hedgeMoney,
+			Date createTime, Integer statisStatus, Integer hedgeType) {
+		super();
+		this.id = id;
+		this.billId = billId;
+		this.hedgeMoney = hedgeMoney;
+		this.createTime = createTime;
+		this.statisStatus = statisStatus;
+		this.hedgeType = hedgeType;
+	}
+
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
 	public Long getId() {

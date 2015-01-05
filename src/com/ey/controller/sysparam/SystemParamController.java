@@ -33,6 +33,7 @@ import com.ey.dao.entity.TransferRateId;
 import com.ey.service.AreaService;
 import com.ey.service.StaticService;
 import com.ey.util.DateUtil;
+import com.ey.util.RequestUtils;
 
 @Controller
 @RequestMapping(value = "/sysparam")
@@ -71,7 +72,7 @@ public class SystemParamController extends BaseController {
 		Long total = staticService.getTotalTransferRate(null);
 		mav.addObject("rates", rates);
 		mav.addObject("total", total);
-		mav.addObject("banks",initBankInfo(request));
+		mav.addObject("payOrgs",RequestUtils.getPayTypeOrg(request));
 		mav.setViewName(RATELIST_PAGE);
 		return mav;
 	}
@@ -102,9 +103,9 @@ public class SystemParamController extends BaseController {
 		Long total = staticService.getTotalNoticeInfo(null);
 		mav.addObject("notices", notices);
 		mav.addObject("total", total);
-		mav.addObject("areas",initAreas(SystemConst.ROOTAREAID,request));
-		mav.addObject("noticeTypes",getPayTypeName("system_notice_type",request));
-		mav.addObject("noticeModes",getPayTypeName("system_notice_mode",request));
+		mav.addObject("areas",RequestUtils.initAreas(request));
+		mav.addObject("noticeTypes",RequestUtils.getPayTypeName(request,"system_notice_type"));
+		mav.addObject("noticeModes",RequestUtils.getPayTypeName(request,"system_notice_mode"));
 		mav.setViewName(NOTICELIST_PAGE);
 		return mav;
 	}
@@ -206,10 +207,6 @@ public class SystemParamController extends BaseController {
 	@RequestMapping(value = "/saverate")
 	@ResponseBody
 	public Object saverate(TransferRate rate ,HttpServletRequest request, HttpServletResponse response) {
-		if(rate.getCityFlag()==null)
-			rate.setCityFlag(false);
-		if(rate.getPeerFlag()==null)
-			rate.setPeerFlag(false);
 		if(rate.getId()==null)
 		   staticService.saveObject(rate,true);
 		else
@@ -235,27 +232,9 @@ public class SystemParamController extends BaseController {
 		map.put("result", true);
 		return map;
 	}
-	
-	@SuppressWarnings("unused")
-	private List initBankInfo(HttpServletRequest request) {
-		List<BankInfo> banks = staticService.listBanks();
-		return banks;
-	}
-	
 	@SuppressWarnings("unused")
 	private Object initAreas(String id,HttpServletRequest request) {
 		List<Area> areas = areaService.getAreasByCity(id);
 		return areas;
-	}
-	@SuppressWarnings("unused")
-	private Map<Integer,String> getPayTypeName(String typeCode,HttpServletRequest request){
-		Map<Integer,String> dataValueMap = new HashMap<Integer,String>();
-		List<BaseCustomValue> customValues = staticService.listValues(typeCode);
-		if(customValues!=null&&customValues.size()>0){
-            for(BaseCustomValue value:customValues){
-        	     dataValueMap.put(value.getId().getDataValue(), value.getPropChName());
-            }
-		}
-        return dataValueMap;
 	}
 }

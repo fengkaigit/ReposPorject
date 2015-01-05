@@ -7,11 +7,13 @@ import java.util.Map;
 import com.ey.bo.StaticDataBO;
 import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.PaymentOrg;
 
 public interface StaticService {
 	public List<StaticDataBO> findStatics(String typeCode) throws RuntimeException;
 	public List<BaseCustomValue> listValues(String typeCode) throws RuntimeException;
 	List<BankInfo> listBanks() throws RuntimeException;
+	List<PaymentOrg> listPaymentOrg() throws RuntimeException;
 	Object saveObject(Object obj) throws RuntimeException;
 	void updateObject(Object obj) throws RuntimeException;
 	public String getLabel(List<BaseCustomValue> list, Integer id) throws RuntimeException;

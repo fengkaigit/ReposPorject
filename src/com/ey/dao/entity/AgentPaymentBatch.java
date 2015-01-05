@@ -29,6 +29,7 @@ public class AgentPaymentBatch implements java.io.Serializable {
 	private Integer payType;
 	private Long billNum;
 	private String payTypeName;
+	private Boolean errorFlag;
 
 	// Constructors
 
@@ -59,7 +60,7 @@ public class AgentPaymentBatch implements java.io.Serializable {
 	}
 	
 	public AgentPaymentBatch(double batchMoney, Date createTime,
-			Integer batchStatus, Long agentId,Integer payType,Long billNum,String payTypeName) {
+			Integer batchStatus, Long agentId,Integer payType,Long billNum,String payTypeName,Boolean errorFlag) {
 		this.batchMoney = batchMoney;
 		this.createTime = createTime;
 		this.batchStatus = batchStatus;
@@ -67,6 +68,7 @@ public class AgentPaymentBatch implements java.io.Serializable {
 		this.payType = payType;
 		this.billNum = billNum;
 		this.payTypeName = payTypeName;
+		this.errorFlag = errorFlag;
 	}
 
 	// Property accessors
@@ -160,6 +162,16 @@ public class AgentPaymentBatch implements java.io.Serializable {
 	public void setPayTypeName(String payTypeName) {
 		this.payTypeName = payTypeName;
 	}
+    
+	@Column(name = "error_flag")
+	public Boolean getErrorFlag() {
+		return errorFlag;
+	}
+
+	public void setErrorFlag(Boolean errorFlag) {
+		this.errorFlag = errorFlag;
+	}
+	
 	
 	
 	

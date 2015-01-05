@@ -94,7 +94,16 @@ public class SysManController {
 	
 	@RequestMapping(value="/logout")
     public String syslogout(HttpServletRequest request,HttpServletResponse response){
+		List list = (List)request.getSession().getAttribute(SystemConst.CUSTOMPROPTYPE);
+		if(list!=null&&list.size()>0){
+			for(Object o:list) {
+			     request.getSession().removeAttribute(o+"");
+			}
+		}
 		request.getSession().removeAttribute(SystemConst.MANAGER);
+		request.getSession().removeAttribute(SystemConst.AREAS);
+		request.getSession().removeAttribute(SystemConst.BANK);
+		request.getSession().removeAttribute(SystemConst.CUSTOMPROPTYPE);
 		request.getSession().invalidate();
 		return "login/sysManLogin";
     }

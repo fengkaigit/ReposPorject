@@ -16,6 +16,7 @@ import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.BaseCustomProp;
 import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.PaymentOrg;
 import com.ey.service.StaticService;
 import com.ey.util.StringUtil;
 
@@ -186,5 +187,11 @@ public class StaticServiceImpl implements StaticService {
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return staticDAO.getTotalNoticeInfo(Qparam);
+	}
+
+	@Override
+	public List<PaymentOrg> listPaymentOrg() throws RuntimeException {
+		// TODO Auto-generated method stub
+		return staticDAO.listPaymentOrg();
 	}
 }

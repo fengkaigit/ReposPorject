@@ -52,6 +52,8 @@ public interface AgentDAO extends BaseDAO {
      
      List findAgentSignRateByAgentId(Long id) throws RuntimeException;
      void updateSignRateById(Long id,Double rate) throws RuntimeException;
+     void updateErrorFlagByBatchId(Long batchId,Boolean flag)throws RuntimeException;
+
 
 
 

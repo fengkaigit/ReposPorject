@@ -3,6 +3,7 @@ package com.ey.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.BatchPaymentRelation;
 import com.ey.dao.entity.BatchPaymentRelationId;
 import com.ey.dao.entity.NoticeInfo;
+import com.ey.dao.entity.PaymentHedge;
 import com.ey.service.AgentService;
 import com.ey.util.CurrencyConverter;
 import com.ey.util.DateUtil;
@@ -331,10 +333,36 @@ public class AgentServiceImpl implements AgentService {
 	}
 
 	@Override
-	public void saveNotice(NoticeInfo o) throws RuntimeException {
+	public void saveNotice(Map<String,Object> paramMap,NoticeInfo o) throws RuntimeException {
 		// TODO Auto-generated method stub
 		o.setId(DbidGenerator.getDbidGenerator().getNextId());
 		agentDAO.save(o);
+		Long billId = (Long)paramMap.get("billId");
+		Integer billStatus = (Integer)paramMap.get("payerrStatus");
+		final Long batchId = (Long)paramMap.get("batchId");
+		agentDAO.updateBillStatusByIds(Arrays.asList(new String[]{billId+""}), billStatus);
+		agentDAO.updateErrorFlagByBatchId(batchId,true);
+		agentDAO.update(new BatchPaymentRelation(new BatchPaymentRelationId(billId,batchId),true));
+		if(billStatus==SystemConst.REFUND){
+			Double paidMoney = (Double)paramMap.get("paidMoney");
+			PaymentHedge paymentHedge = new PaymentHedge();
+			paymentHedge.setId(DbidGenerator.getDbidGenerator().getNextId());
+			paymentHedge.setBillId(billId);
+			paymentHedge.setHedgeMoney(paidMoney);
+			paymentHedge.setCreateTime(new Date());
+			paymentHedge.setStatisStatus(0);
+			paymentHedge.setHedgeType(2);
+			agentDAO.save(paymentHedge);
+		}
+		Long num = agentDAO.findBillTotalBatchId(batchId, new HashMap<String,Object>(){
+		     {
+		    	 put("batchId", batchId);
+		    	 put("paymentStatus",3);
+		     }
+		     });
+		if(num!=null&&num==0){
+				agentDAO.updateStatusByBatchId(batchId, 1);
+		}
 	}
 
 	@Override
@@ -349,19 +377,19 @@ public class AgentServiceImpl implements AgentService {
 			for (Object[] o : billlist) {
 				AgentPaymentBatch paymentBatch = new AgentPaymentBatch(
 						(Double) o[3], date, 0, (Long) o[1],
-						(Integer) o[0], (Long) o[4],payTypesMap.get((Integer)o[0]));
+						(Integer) o[0], (Long) o[4],payTypesMap.get((Integer)o[0]),false);
 				this.savePaymentBatch(paymentBatch);
 				String[] billIds = ((String) o[2])
 						.split(SystemConst.SPLITE_SIGN_COMMON);
 				for (String billId : billIds) {
 					batchpaylist.add(new BatchPaymentRelation(
 							new BatchPaymentRelationId(Long.valueOf(billId
-									.trim()), paymentBatch.getId())));
+									.trim()), paymentBatch.getId()),false));
 				}
 				billIdsList.addAll(Arrays.asList(billIds));
 			}
-			this.batchSaveObject(batchpaylist);
-			this.updateBillStatusByIds(billIdsList,3);
+			agentDAO.batchSaveVO(batchpaylist);
+			agentDAO.updateBillStatusByIds(billIdsList,3);
 			isCreate = true;
 		}
 		return isCreate;
@@ -390,6 +418,13 @@ public class AgentServiceImpl implements AgentService {
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		agentDAO.updateSignRateById(id, rate);
+	}
+	@Override
+	public void executeBatchBusiness(Long batchId, List<String> list,
+			Integer status) throws RuntimeException {
+		// TODO Auto-generated method stub
+		agentDAO.updateBillStatusByIds(list,status);
+		agentDAO.updateStatusByBatchId(batchId, 1);
 	}
 
 }

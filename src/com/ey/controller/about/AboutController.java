@@ -127,7 +127,7 @@ public class AboutController extends BaseController {
 		mav.addObject("areaId", areaId);
 		mav.addObject("parentAreaId", pareaId);
 		mav.addObject("status", status);
-		mav.addObject("areas",initAreas(SystemConst.ROOTAREAID,request));
+		mav.addObject("areas",RequestUtils.initAreas(request));
 		if(!StringUtil.isEmptyString(areaId)){
 			mav.addObject("childareas",initAreas(pareaId,request));
 		}

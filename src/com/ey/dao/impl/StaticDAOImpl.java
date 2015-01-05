@@ -10,6 +10,8 @@ import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.BankInfo;
 import com.ey.dao.entity.BaseCustomProp;
 import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.PaymentOrg;
+import com.ey.dao.entity.TransferRate;
 import com.ey.util.StringUtil;
 import com.ey.dao.StaticDAO;
 @Repository("staticDAO")
@@ -128,7 +130,7 @@ public class StaticDAOImpl extends BaseDAOImpl implements StaticDAO {
 	public List findTransferRate(Map<String, Object> Qparam,
 			Integer page, Integer rows) throws RuntimeException {
 		// TODO Auto-generated method stub
-		StringBuffer hql = new StringBuffer("select new com.ey.bo.TransferRateBo(a.id,a.bankId,b.bankName,a.limitMoney,a.rate,a.cityFlag,a.peerFlag) from TransferRate a,BankInfo b where a.bankId = b.bankCode");
+		StringBuffer hql = new StringBuffer("from TransferRate where 1=1");
 		List<Object> params = new ArrayList();
 		createTransferRateQueryParams(hql,Qparam,params);
 		return this.find(hql.toString(), params, page, rows);
@@ -179,6 +181,21 @@ public class StaticDAOImpl extends BaseDAOImpl implements StaticDAO {
 		if(Qparam!=null&&Qparam.size()>0){
 			
 		}
+	}
+
+	@Override
+	public List<PaymentOrg> listPaymentOrg() throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "from PaymentOrg order by sort";
+		return this.find(hql);
+	}
+
+	@Override
+	public List<TransferRate> findTransferRateByCode(String code)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "from TransferRate where bankCode = ?";
+		return this.find(hql, new Object[]{code});
 	}
 
 }

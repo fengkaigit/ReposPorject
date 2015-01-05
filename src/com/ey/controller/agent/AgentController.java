@@ -152,16 +152,14 @@ public class AgentController extends BaseController {
 			HttpServletResponse response) {
 		AgentBo agent = (AgentBo) request.getSession().getAttribute(
 				SystemConst.AGENT);
-		Map<String,Object> monthMapReport = (Map<String,Object>) request.getSession().getAttribute(SystemConst.REPORT);
+		Map<String,Object> monthMap = (Map<String,Object>) request.getSession().getAttribute(SystemConst.REPORT);
 		ModelAndView mav = new ModelAndView(IFRAME_PAGE);
-		if(monthMapReport==null){
-			Map<String,Object> monthMap = agentService.findUserByAreaId(String.valueOf(DateUtil.getYear(new Date())),agent.getAreaId());
+		if(monthMap==null){
+			monthMap = agentService.findUserByAreaId(String.valueOf(DateUtil.getYear(new Date())),agent.getAreaId());
             request.getSession().setAttribute(SystemConst.REPORT,monthMap);
-            monthMapReport = monthMap;
 		}
 		List<CountReportBo> reportlist = agentService.findReportByAgentId(
-				agent.getId(), String.valueOf(DateUtil.getYear(new Date())),
-				monthMapReport);
+				agent.getId(), String.valueOf(DateUtil.getYear(new Date())),monthMap);
 		mav.addObject("reports", reportlist);
 		return mav;
 	}
@@ -178,6 +176,7 @@ public class AgentController extends BaseController {
 		Long total = agentService.findBillTotalBatchId(id, map);
 		modelMap.addAttribute("bills", billlist);
 		modelMap.addAttribute("total", total);
+		modelMap.addAttribute("payerrs",RequestUtils.getPayTypeName(request,"payment_error_status"));
 		return BILLLIST_PAGE;
 	}
 
@@ -190,7 +189,17 @@ public class AgentController extends BaseController {
 	@RequestMapping(value = "/logout")
 	public String syslogout(HttpServletRequest request,
 			HttpServletResponse response) {
+		List list = (List)request.getSession().getAttribute(SystemConst.CUSTOMPROPTYPE);
+		if(list!=null&&list.size()>0){
+			for(Object o:list) {
+			     request.getSession().removeAttribute(o+"");
+			}
+		}
 		request.getSession().removeAttribute(SystemConst.AGENT);
+		request.getSession().removeAttribute(SystemConst.AREAS);
+		request.getSession().removeAttribute(SystemConst.REPORT);
+		request.getSession().removeAttribute(SystemConst.BANK);
+		request.getSession().removeAttribute(SystemConst.CUSTOMPROPTYPE);
 		request.getSession().invalidate();
 		return LOGIN_PAGE;
 	}
@@ -217,22 +226,8 @@ public class AgentController extends BaseController {
 		mav.addObject("agent", agent);
 		mav.addObject("bankAcc", bankAccount);
 		mav.addObject("signDate", DateUtil.getDate(agent.getSignDate()));
-		initAreas(request, mav.getModelMap());
-		initBankInfo(request, mav.getModelMap());
-		/*
-		 * String[] codePaths =
-		 * agent.getAreaPath().split(SystemConst.SPLITE_SIGN_STATIC); List<Area>
-		 * areaList = null; if(codePaths.length==2){ areaList =
-		 * areaService.getAreaByParentId(codePaths[0].trim());
-		 * mav.addObject("secarea", areaList); mav.addObject("secAreaId",
-		 * codePaths[0].trim()); } if(codePaths.length==3){ areaList =
-		 * areaService.getAreaByParentId(codePaths[0].trim());
-		 * mav.addObject("secarea", areaList); areaList =
-		 * areaService.getAreaByParentId(codePaths[1].trim());
-		 * mav.addObject("thirarea", areaList); mav.addObject("secAreaId",
-		 * codePaths[0].trim()); mav.addObject("thirAreaId",
-		 * codePaths[1].trim()); }
-		 */
+		mav.addObject("areas",RequestUtils.initAreas(request));
+		mav.addObject("banks", RequestUtils.initBankInfo(request));
 		return mav;
 	}
 
@@ -274,8 +269,8 @@ public class AgentController extends BaseController {
 	@RequestMapping(value = "/add")
 	public String add(ModelMap modelMap, SystemManager sysMan,
 			HttpServletRequest request, HttpServletResponse response) {
-		initAreas(request, modelMap);
-		initBankInfo(request, modelMap);
+		modelMap.addAttribute("areas",RequestUtils.initAreas(request));
+		modelMap.addAttribute("banks", RequestUtils.initBankInfo(request));
 		modelMap.addAttribute("signDate", DateUtil.getDate(new Date()));
 		return ADD_PAGE;
 	}
@@ -338,18 +333,6 @@ public class AgentController extends BaseController {
 			HttpServletResponse response) throws IOException {
 		List<Area> areas = areaService.getAreasByCity(id);
 		return areas;
-	}
-
-	@SuppressWarnings("unused")
-	private void initAreas(HttpServletRequest request, ModelMap modelMap) {
-		List<Area> areas = areaService.getAreasByCity(SystemConst.ROOTAREAID);
-		modelMap.addAttribute("areas", areas);
-	}
-
-	@SuppressWarnings("unused")
-	private void initBankInfo(HttpServletRequest request, ModelMap modelMap) {
-		List<BankInfo> banks = staticService.listBanks();
-		modelMap.addAttribute("banks", banks);
 	}
 
 	@RequestMapping(value = "/gettest")
@@ -552,7 +535,7 @@ public class AgentController extends BaseController {
 		modelMap.addAttribute("endDate", endDate);
 		modelMap.addAttribute("payType", payType);
 		if(!StringUtil.isEmptyString(qFlag)){
-			modelMap.addAttribute("payTypes",getPayTypeName("payment_type"));
+			modelMap.addAttribute("payTypes",RequestUtils.getPayTypeName(request,"payment_type"));
 			return QUERYBATCHBILL_PAGE;
 		}
 		if (status != null && status == 0)
@@ -573,7 +556,7 @@ public class AgentController extends BaseController {
 			map.put("statusFlag", 1);
 			map.put("batchId", id);
 			map.put("billId", id);
-			//map.put("paymentStatus", 3);
+			map.put("paymentStatus", 3);
 			billlist = agentService.findBillByBatchId(id, map, 0, 0);
 			if(billlist!=null&&billlist.size()>0)
 			    batchId = ((PaymentBillBo)billlist.get(0)).getBatchId();
@@ -581,8 +564,9 @@ public class AgentController extends BaseController {
 		modelMap.addAttribute("bills", billlist);
 		modelMap.addAttribute("batchId", batchId);
 		modelMap.addAttribute("id", id);
-		modelMap.addAttribute("noticeTypes",getPayTypeName("system_notice_type"));
-		modelMap.addAttribute("noticeModes",getPayTypeName("system_notice_mode"));
+		modelMap.addAttribute("noticeTypes",RequestUtils.getPayTypeName(request,"system_notice_type"));
+		modelMap.addAttribute("noticeModes",RequestUtils.getPayTypeName(request,"system_notice_mode"));
+		modelMap.addAttribute("payerrs",RequestUtils.getPayTypeName(request,"payment_error_status"));
 		return STATUSLIST_PAGE;
 	}
 	
@@ -590,10 +574,7 @@ public class AgentController extends BaseController {
 	@ResponseBody
 	public Object  doComplate(String[] chkSel, Long batchId,RedirectAttributes redirectAttributes,
 			HttpServletRequest request, HttpServletResponse response){
-		agentService.updateBillStatusByIds(Arrays.asList(chkSel), 10);
-		agentService.updateStatusByBatchId(batchId, 1);
-		//ModelAndView mav = new ModelAndView(REDIRECTSTATIS);
-		//redirectAttributes.addAttribute("id", batchId);
+		agentService.executeBatchBusiness(batchId,Arrays.asList(chkSel),10);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", true);
 		return map;
@@ -601,16 +582,19 @@ public class AgentController extends BaseController {
 	
 	@RequestMapping(value = "/notice")
 	@ResponseBody
-	public Object  doNotice(Long billId, NoticeInfo notice,RedirectAttributes redirectAttributes,
+	public Object  doNotice(Long batchId,Long billId, Integer payerrStatus,Double paidMoney,NoticeInfo notice,RedirectAttributes redirectAttributes,
 			HttpServletRequest request, HttpServletResponse response){
 		notice.setCreateTime(new Date());
 		notice.setMassFlag(false);
-		agentService.saveNotice(notice);
-		agentService.updateBillStatusByIds(Arrays.asList(new String[]{billId+""}), 4);
+		notice.setBillId(billId);
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		paramMap.put("batchId", batchId);
+		paramMap.put("billId", billId);
+		paramMap.put("payerrStatus", payerrStatus);
+		paramMap.put("paidMoney", paidMoney);
+		agentService.saveNotice(paramMap,notice);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", true);
-		//ModelAndView mav = new ModelAndView(REDIRECTSTATIS);
-		//redirectAttributes.addAttribute("id", billId);
 		return map;
 	}
 	
@@ -675,7 +659,7 @@ public class AgentController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response){
 		   Map<String, Object> map = new HashMap<String, Object>();
 		try{
-		   boolean flag = agentService.createAgentBatch(getPayTypeName("payment_type"));
+		   boolean flag = agentService.createAgentBatch(RequestUtils.getPayTypeName(request,"payment_type"));
 		   map.put("result", flag);
 		   if(!flag)
 		      map.put("message", RequestUtils.getMessage("nofoundbill", request));
@@ -686,18 +670,6 @@ public class AgentController extends BaseController {
 		 }
 		return map;
 	}
-	
-	private Map<Integer,String> getPayTypeName(String typeCode){
-		Map<Integer,String> dataValueMap = new HashMap<Integer,String>();
-		List<BaseCustomValue> customValues = staticService.listValues(typeCode);
-		if(customValues!=null&&customValues.size()>0){
-            for(BaseCustomValue value:customValues){
-        	     dataValueMap.put(value.getId().getDataValue(), value.getPropChName());
-            }
-		}
-        return dataValueMap;
-	}
-	
 	@RequestMapping(value = "/signlist")
 	public String signlist(Long id, ModelMap modelMap,HttpServletRequest request,
 			HttpServletResponse response) {

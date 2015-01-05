@@ -11,6 +11,10 @@ public class SystemConst {
 	static public String MANAGER = "MANAGER";
 	static public String INDEXPAGE = "INDEXPAGE";
 	static public String REPORT = "REPORT";
+	static public String BANK = "BANK";
+	static public String AREAS = "AREAS";
+	static public String CUSTOMPROPTYPE = "CUSTOMPROPTYPE";
+	static public String PAYMENTORGS = "PAYMENTORGS";
 	static public String AGENT = "AGENT";
 	static public String JSONRESULT = "JSONRESULT";
 	static public String SPLITE_SIGN = "[|]";
@@ -24,6 +28,7 @@ public class SystemConst {
     static public final String[] MONTHS=new String[]{"01","02","03","04","05","06","07","08","09","10","11","12"};
     static public final int AFTERDAY = -3;
     public static String timePattern = "yyyy-MM-dd HH:mm:ss";
+    static public Integer REFUND = 11;
 
 	/**
 	 * HTTP POST«Î«Û

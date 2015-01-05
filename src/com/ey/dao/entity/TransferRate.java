@@ -17,11 +17,13 @@ public class TransferRate implements java.io.Serializable {
 
 	// Fields
     private Long id;
-    private String bankId;
-	private double limitMoney;
-	private double rate;
-	private Boolean cityFlag;
-	private Boolean peerFlag;
+    private String bankCode;
+    private String bankName;
+	private double computerLimit;
+	private double mobileLimit;
+	private double computerRate;
+	private double mobileRate;
+
 
 	// Constructors
 
@@ -30,24 +32,17 @@ public class TransferRate implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TransferRate(String bankId, double limitMoney, double rate,
-			Boolean cityFlag, Boolean peerFlag) {
-		super();
-		this.bankId = bankId;
-		this.limitMoney = limitMoney;
-		this.rate = rate;
-		this.cityFlag = cityFlag;
-		this.peerFlag = peerFlag;
-	}
-	public TransferRate(Long id,String bankId, double limitMoney, double rate,
-			Boolean cityFlag, Boolean peerFlag) {
+	public TransferRate(Long id, String bankCode, String bankName,
+			double computerLimit, double mobileLimit, double computerRate,
+			double mobileRate) {
 		super();
 		this.id = id;
-		this.bankId = bankId;
-		this.limitMoney = limitMoney;
-		this.rate = rate;
-		this.cityFlag = cityFlag;
-		this.peerFlag = peerFlag;
+		this.bankCode = bankCode;
+		this.bankName = bankName;
+		this.computerLimit = computerLimit;
+		this.mobileLimit = mobileLimit;
+		this.computerRate = computerRate;
+		this.mobileRate = mobileRate;
 	}
     
 	@Id
@@ -60,48 +55,59 @@ public class TransferRate implements java.io.Serializable {
 		this.id = id;
 	}
 	// Property accessors
-	@Column(name = "bank_id", nullable = false, length = 10)
-	public String getBankId() {
-		return this.bankId;
+    
+	@Column(name = "bank_code")
+	public String getBankCode() {
+		return bankCode;
 	}
 
-	public void setBankId(String bankId) {
-		this.bankId = bankId;
+	public void setBankCode(String bankCode) {
+		this.bankCode = bankCode;
+	}
+	@Column(name = "bank_name")
+	public String getBankName() {
+		return bankName;
 	}
 
-	@Column(name = "limit_money", nullable = false, precision = 22, scale = 0)
-	public double getLimitMoney() {
-		return this.limitMoney;
-	}
-
-	public void setLimitMoney(double limitMoney) {
-		this.limitMoney = limitMoney;
-	}
-
-	@Column(name = "rate", nullable = false, precision = 22, scale = 0)
-	public double getRate() {
-		return this.rate;
-	}
-
-	public void setRate(double rate) {
-		this.rate = rate;
-	}
-	@Column(name = "city_flag")
-	public Boolean getCityFlag() {
-		return cityFlag;
-	}
-
-	public void setCityFlag(Boolean cityFlag) {
-		this.cityFlag = cityFlag;
-	}
-	@Column(name = "peer_flag")
-	public Boolean getPeerFlag() {
-		return peerFlag;
-	}
-
-	public void setPeerFlag(Boolean peerFlag) {
-		this.peerFlag = peerFlag;
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
 	}
 	
+	@Column(name = "computer_limit")
+	public double getComputerLimit() {
+		return computerLimit;
+	}
 
+	public void setComputerLimit(double computerLimit) {
+		this.computerLimit = computerLimit;
+	}
+    
+	@Column(name = "mobile_limit")
+	public double getMobileLimit() {
+		return mobileLimit;
+	}
+
+	public void setMobileLimit(double mobileLimit) {
+		this.mobileLimit = mobileLimit;
+	}
+	
+	@Column(name = "computer_rate")
+	public double getComputerRate() {
+		return computerRate;
+	}
+
+	public void setComputerRate(double computerRate) {
+		this.computerRate = computerRate;
+	}
+     
+	@Column(name = "mobile_rate")
+	public double getMobileRate() {
+		return mobileRate;
+	}
+
+	public void setMobileRate(double mobileRate) {
+		this.mobileRate = mobileRate;
+	}
+    
+	
 }

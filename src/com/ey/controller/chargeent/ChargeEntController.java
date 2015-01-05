@@ -77,9 +77,9 @@ public class ChargeEntController extends BaseController{
 	  ModelAndView mav = new ModelAndView(ADD_PAGE);
 	  mav.addObject("charge", chargeBo);
 	  mav.addObject("bankAcc", bankAccount);
-	  initAreas(request,mav.getModelMap());
-	  initPayTypes(request,mav.getModelMap());
-	  initBankInfo(request,mav.getModelMap());
+	  mav.addObject("cusvalues",RequestUtils.getPayTypeName(request,"payment_type"));
+	  mav.addObject("areas",RequestUtils.initAreas(request));
+	  mav.addObject("banks", RequestUtils.initBankInfo(request));
 	  return mav;
 	}
 	
@@ -107,9 +107,9 @@ public class ChargeEntController extends BaseController{
 	
 	@RequestMapping(value="/add")
 	public String add(ModelMap modelMap,SystemManager sysMan,HttpServletRequest request,HttpServletResponse response){
-	  initAreas(request,modelMap);
-	  initPayTypes(request,modelMap);
-	  initBankInfo(request,modelMap);
+	  modelMap.addAttribute("areas",RequestUtils.initAreas(request));
+	  modelMap.addAttribute("cusvalues",RequestUtils.getPayTypeName(request,"payment_type"));
+	  modelMap.addAttribute("banks", RequestUtils.initBankInfo(request));
 	  return ADD_PAGE;
 	}
 	
@@ -121,23 +121,5 @@ public class ChargeEntController extends BaseController{
 	  map.put("result",true);
 	  map.put("message",RequestUtils.getMessage("delete", request));
 	  return map;
-	}
-	
-	@SuppressWarnings("unused")
-	private void initAreas(HttpServletRequest request,ModelMap modelMap){
-		 List<Area> areas = areaService.getAreasByCity(SystemConst.ROOTAREAID);
-		  modelMap.addAttribute("areas", areas);
-	}
-	
-	@SuppressWarnings("unused")
-	private void initBankInfo(HttpServletRequest request,ModelMap modelMap){
-		 List<BankInfo> banks = staticService.listBanks();
-		  modelMap.addAttribute("banks", banks);
-	}
-	
-	@SuppressWarnings("unused")
-	private void initPayTypes(HttpServletRequest request,ModelMap modelMap){
-		List<BaseCustomValue> customValues = staticService.listValues("payment_type");
-		modelMap.addAttribute("cusvalues", customValues);
 	}
 }
