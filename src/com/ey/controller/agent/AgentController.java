@@ -165,18 +165,25 @@ public class AgentController extends BaseController {
 	}
 
 	@RequestMapping(value = "/billlist")
-	public String billlist(Long id, ModelMap modelMap,
+	public String billlist(Long id, Integer errflag,ModelMap modelMap,
 			@ModelAttribute("page") Integer page,
 			@ModelAttribute("rows") Integer rows, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("batchId", id);
+		if(errflag!=null){
+			map.put("errorFlag", errflag==1?true:false);
+		}
 		List<PaymentBillBo> billlist = agentService.findBillByBatchId(id, map,
 				page, rows);
 		Long total = agentService.findBillTotalBatchId(id, map);
 		modelMap.addAttribute("bills", billlist);
 		modelMap.addAttribute("total", total);
-		modelMap.addAttribute("payerrs",RequestUtils.getPayTypeName(request,"payment_error_status"));
+		Map<Integer,String> payStatusMaps = RequestUtils.getPayTypeName(request, "payment_status");
+		Map<Integer,String> errorPayStatusMaps =  RequestUtils.getPayTypeName(request,"payment_error_status");
+		payStatusMaps.putAll(errorPayStatusMaps);
+		modelMap.addAttribute("payerrs",errorPayStatusMaps);
+		modelMap.addAttribute("paystatus",payStatusMaps);
 		return BILLLIST_PAGE;
 	}
 
@@ -512,7 +519,7 @@ public class AgentController extends BaseController {
 		return selflist;
 
 	}
-
+	
 	@RequestMapping(value = "/worklist")
 	public String worklist(String qFlag,String startDate,String endDate,Integer payType,Integer status,
 			@ModelAttribute("page") Integer page,
@@ -566,7 +573,11 @@ public class AgentController extends BaseController {
 		modelMap.addAttribute("id", id);
 		modelMap.addAttribute("noticeTypes",RequestUtils.getPayTypeName(request,"system_notice_type"));
 		modelMap.addAttribute("noticeModes",RequestUtils.getPayTypeName(request,"system_notice_mode"));
-		modelMap.addAttribute("payerrs",RequestUtils.getPayTypeName(request,"payment_error_status"));
+		Map<Integer,String> payStatusMaps = RequestUtils.getPayTypeName(request, "payment_status");
+		Map<Integer,String> errorPayStatusMaps =  RequestUtils.getPayTypeName(request,"payment_error_status");
+		payStatusMaps.putAll(errorPayStatusMaps);
+		modelMap.addAttribute("payerrs",errorPayStatusMaps);
+		modelMap.addAttribute("paystatus",payStatusMaps);
 		return STATUSLIST_PAGE;
 	}
 	

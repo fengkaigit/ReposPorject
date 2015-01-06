@@ -80,4 +80,6 @@ public interface AgentService {
      
      void executeBatchBusiness(Long batchId,List<String> list,Integer status) throws RuntimeException;
      
+     List findNoticeByBillId(Long billId) throws RuntimeException;
+     
 }

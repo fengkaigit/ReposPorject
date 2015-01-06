@@ -426,5 +426,10 @@ public class AgentServiceImpl implements AgentService {
 		agentDAO.updateBillStatusByIds(list,status);
 		agentDAO.updateStatusByBatchId(batchId, 1);
 	}
+	@Override
+	public List findNoticeByBillId(Long billId) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.findNoticeByBillId(billId);
+	}
 
 }

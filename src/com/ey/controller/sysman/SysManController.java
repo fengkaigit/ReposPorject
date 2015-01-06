@@ -2,6 +2,7 @@ package com.ey.controller.sysman;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,11 +23,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ey.bo.AgentBo;
+import com.ey.bo.CountReportBo;
+import com.ey.bo.PaymentBillBo;
 import com.ey.consts.SystemConst;
+import com.ey.controller.base.BaseController;
 import com.ey.dao.entity.SystemManager;
 import com.ey.dao.entity.UserBase;
 import com.ey.entity.User;
+import com.ey.service.AgentService;
 import com.ey.service.SysManService;
+import com.ey.util.DateUtil;
 import com.ey.util.MD5;
 import com.ey.util.RequestUtils;
 import com.ey.util.StringUtil;
@@ -33,10 +41,15 @@ import com.ey.util.CookieManager;
 
 @Controller
 @RequestMapping(value="/sysman")
-public class SysManController {
+public class SysManController extends BaseController{
 	
+	private static final String IFRAME_PAGE = "sysman/iframe";
+	private static final String INDEX_PAGE = "sysman/index";
 	@Autowired
     private SysManService sysManService;
+	
+	@Autowired
+	private AgentService agentService;
 	
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
@@ -75,7 +88,7 @@ public class SysManController {
   		  mav.addObject("message", RequestUtils.getMessage("login", request));
   		  mav.setViewName("login/sysManLogin");
   	  }else{
-  		  mav.setViewName("redirect:/sysman/list.do");
+  		  mav.setViewName(INDEX_PAGE);
   		  mav.addObject(SystemConst.USER,currentManager);
   		  request.getSession().setAttribute(SystemConst.MANAGER, currentManager);
   		/*       添加cookie信息                  */
@@ -87,11 +100,82 @@ public class SysManController {
   	  }
   	  return mav;
     }
+	
+	@RequestMapping(value = "/index")
+	public String index(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		return INDEX_PAGE;
+	}
+	
+	@RequestMapping(value = "/iframe")
+	public ModelAndView iframe(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView(IFRAME_PAGE);
+		return mav;
+	}
+	
 	@RequestMapping(value="/login")
     public String sysLogin(HttpServletRequest request,HttpServletResponse response){
   	  return "login/sysManLogin";
     }
 	
+	@RequestMapping(value = "/selfMore")
+	public ModelAndView selfMore(@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("status", 1);
+		map.put("errorFlag", true);
+		List selflist = agentService.findAgentSelf(null, map, page,
+				rows);
+		Long total = agentService.findAgentSelfTotal(null, map);
+		ModelAndView mav = new ModelAndView("sysman/errjflist");
+		mav.addObject("works", selflist);
+		mav.addObject("total", total);
+		return mav;
+
+	}
+	
+	@RequestMapping(value = "/showErrNotice")
+	@ResponseBody
+	public Object showErrNotice(Long  billId,HttpServletRequest request, HttpServletResponse response){
+		List noticelist = agentService.findNoticeByBillId(billId);
+		if(noticelist!=null&&noticelist.size()>0)
+			return noticelist.get(0);
+		return null;
+
+	}
+	
+	@RequestMapping(value = "/sysmanSelf")
+	@ResponseBody
+	public Object sysmanSelf(Integer page, Integer rows,HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("status", 1);
+		map.put("errorFlag", true);
+		List selflist = agentService.findAgentSelf(null, map, page,rows);
+		return selflist;
+
+	}
+	
+	@RequestMapping(value = "/errbilllist")
+	public String errbilllist(Long id, Integer errflag,ModelMap modelMap,
+			@ModelAttribute("page") Integer page,
+			@ModelAttribute("rows") Integer rows, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("batchId", id);
+		if(errflag!=null){
+			map.put("errorFlag", errflag==1?true:false);
+		}
+		List<PaymentBillBo> billlist = agentService.findBillByBatchId(id, map,
+				page, rows);
+		Long total = agentService.findBillTotalBatchId(id, map);
+		modelMap.addAttribute("bills", billlist);
+		modelMap.addAttribute("total", total);
+		Map<Integer,String> payStatusMaps = RequestUtils.getPayTypeName(request, "payment_status");
+		Map<Integer,String> errorPayStatusMaps =  RequestUtils.getPayTypeName(request,"payment_error_status");
+		payStatusMaps.putAll(errorPayStatusMaps);
+		modelMap.addAttribute("paystatus",payStatusMaps);
+		return "sysman/errpaylist";
+	}
 	@RequestMapping(value="/logout")
     public String syslogout(HttpServletRequest request,HttpServletResponse response){
 		List list = (List)request.getSession().getAttribute(SystemConst.CUSTOMPROPTYPE);

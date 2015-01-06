@@ -167,8 +167,11 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	public List findAgentSelf(Long id,Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException {
 		// TODO Auto-generated method stub
 		List paramList = new ArrayList();
-		StringBuffer hql = new StringBuffer("from AgentPaymentBatch where agentId = ?");
-		paramList.add(id);
+		StringBuffer hql = new StringBuffer("from AgentPaymentBatch where 1=1");
+		if(id!=null){
+		   hql.append(" and agentId = ?");
+		   paramList.add(id);
+		}
 		createQuerySelfParam(hql,Qparam,paramList);
 		hql.append(" order by batchStatus,createTime desc,payType");
 		return this.find(hql.toString(), paramList,page,rows);
@@ -227,6 +230,11 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 				query.append(" and e.id.paymentBillId = ?");
 				paramList.add(billId);
 			}
+			Boolean errflag = (Boolean)Qparam.get("errorFlag");
+			if(errflag!=null){
+				query.append(" and e.errorFlag = ?");
+				paramList.add(errflag);
+			}
 			Integer paymentStatus = (Integer)Qparam.get("paymentStatus");
 			if(paymentStatus!=null){
 				query.append(" and a.paymentStatus = ?");
@@ -263,6 +271,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 			Integer payType = (Integer)Qparam.get("payType");
 			String startDate = (String)Qparam.get("startDate");
 			String endDate = (String)Qparam.get("endDate");
+			Boolean errflag = (Boolean)Qparam.get("errorFlag");
 			if(status!=null){
 				query.append(" and batchStatus = ?");
 				paramList.add(status);
@@ -278,6 +287,10 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 			if(!StringUtil.isEmptyString(endDate)){
 				query.append(" and createTime <= ?");
 				paramList.add(DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss",endDate+" 23:59:59"));
+			}
+			if(errflag!=null){
+				query.append(" and errorFlag = ?");
+				paramList.add(errflag);
 			}
 		}
 	}
@@ -301,8 +314,11 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		List paramList = new ArrayList();
-		StringBuffer hql = new StringBuffer("select count(id) from AgentPaymentBatch where agentId = ?");
-		paramList.add(id);
+		StringBuffer hql = new StringBuffer("select count(id) from AgentPaymentBatch where 1=1");
+		if(id!=null){
+			   hql.append(" and agentId = ?");
+			   paramList.add(id);
+		}
 		createQuerySelfParam(hql,Qparam,paramList);
 		List list = this.find(hql.toString(), paramList.toArray());
 		if(list!=null&&list.size()>0){
@@ -341,6 +357,14 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 		// TODO Auto-generated method stub
 		String hql = "update AgentPaymentBatch set errorFlag = ? where id = ? and errorFlag=?";
 		this.executeHql(hql, new Object[]{flag,batchId,false});
+	}
+
+	@Override
+	public List findNoticeByBillId(Long billId)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql="from NoticeInfo where billId = ?";
+		return this.find(hql, new Object[]{billId});
 	}
  
 
