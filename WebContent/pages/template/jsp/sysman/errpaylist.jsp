@@ -19,7 +19,7 @@ $(document).ready(function(){
 			prevText:'上一页',
 			nextText:'下一页',
 	        onPageClick:function(pageNumber, event){
-			    window.location.href = "<%=request.getContextPath() %>/agent/billlist.do?id=${param.id}&page="+pageNumber+"&rows="+gloabObj.rows;
+			    window.location.href = windowl.location.pathname+"?id=${param.id}&errflag=${param.errflag}&page="+pageNumber+"&rows="+gloabObj.rows;
 			}
 	  });
 	}
@@ -27,21 +27,27 @@ $(document).ready(function(){
 function downloadbill(id){
 	document.getElementById("downloadframe").src = "<%=request.getContextPath() %>/agent/downbatch.do?id="+id;
 }
-
+function showReplyDiv(id){
+	jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/sysman/showErrNotice.do",{billId:id},"get","json",function(data){
+		   if(data!=null&&data!=''){
+			  $("#serverContent").val(data.serverContent);
+			  showDivWin('jfhfwin',520,250,'');
+		   }
+	 });
+}
 </script>
 </head>
 <body>
-<%@include file="/pages/template/jsp/common/agentheader.jsp"%>
+<%@include file="/pages/template/jsp/common/sysheader.jsp"%>
 	<div class="ui-container clearfix" id="container">  
   <div class="jfzh-title"><span class="icon1"></span>
-  待办任务
+  异常缴费单
   </div>
 <div class="jfzh-con">
 
 	
     <div class="jfzh-bottom clearfix">    
-	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;缴费单信息</span>
-	<span class="fr cur" onClick="downloadbill('${param.id}')"><span class="fcr">导出缴费单</span></span>
+	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;异常缴费单信息</span>
 	</div>
   
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
@@ -55,6 +61,7 @@ function downloadbill(id){
     <td>收费单位</td>
     <td>缴费类型</td>
     <td>状态</td>
+    <td>操作</td>
   </tr>
   <c:forEach var="item" items="${bills}" varStatus="status">
    <tr <c:choose>
@@ -74,6 +81,7 @@ function downloadbill(id){
 	<td>&nbsp;${item.entName}</td>
 	<td>&nbsp;${item.paymentTypeName}费</td>
 	<td>&nbsp;${paystatus[item.paymentStatus]}</td>
+	<td><a class="cur" style="color:#007abd;" onclick="showReplyDiv(${item.id});">查看异常信息</a></td>
   </tr>
  </c:forEach>
    
@@ -84,6 +92,26 @@ function downloadbill(id){
   <div class="clear"></div> 
 </div>
 </div>
+<div id="jfhfwin" class="divWin" style="display:none;">
+<div class="close cur"  onclick="javascript:hiddenDiv('jfhfwin')">关闭</div>
+            <h1></h1>
+			 <p >缴费异常信息</p> 
+            <table style="width:100%;" border="0" bgcolor="#c3c6c9" cellspacing="0" cellpadding="0">
+            <tbody>
+            <tr>
+                <td bgcolor="#f1f8ff" align="right">异常内容</td>
+                 <td bgcolor="#FFFFFF">
+                       <textarea style="height: 105px;border-color: rgb(214, 214, 214);" onpropertychange="if(value.length&gt;10000)value=value.substring(0,10000)" class="textareafeedBox text text-empty" name="serverContent" id="serverContent"></textarea>
+				 </td>
+            </tr>
+             <tr>
+                <td bgcolor="#FFFFFF" align="center" colspan="2">
+				<input  type="button" class="jfxx_btn3" onClick="hiddenDiv('jfhfwin')" value="关闭" name="searchBill"/>
+				</td>
+            </tr>
+            </tbody></table>
+ </div>
+ <div id="bg"></div>
 <iframe id="downloadframe" src="" style="display:none;"></iframe>
 <%@include file="/pages/template/jsp/common/footer.jsp"%>
 <%@include file="/pages/template/jsp/common/links.jsp"%>

@@ -40,6 +40,8 @@ $(document).ready(function() {
         <div class="userbar">
 
 			<ul class="sf-menu" id="nav" >
+			<li class="current"><span><a href="<%=request.getContextPath() %>/sysman/index.do">首页</a></span>
+				</li>
 			<li class="current"><span><a href="<%=request.getContextPath() %>/agent/list.do">信息维护</a></span>
 				<ul>
 					<li class="current"><a href="<%=request.getContextPath() %>/sysman/list.do">管理员维护</a></li>

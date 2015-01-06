@@ -70,7 +70,7 @@ function postHandle(){
     <td>序号</td>
     <td>开始日期</td>
     <td>结束日期</td>
-    <td>比例(%)</td>
+    <td>返点比例(%)</td>
     <td>操作</td>
   </tr>
   <c:forEach var="item" items="${signs}" varStatus="status">
@@ -106,7 +106,7 @@ function postHandle(){
             <table style="width:100%;" border="0" bgcolor="#c3c6c9" cellspacing="0" cellpadding="0">
             <tbody>
             <tr>
-                <td bgcolor="#f1f8ff" align="right">比例</td>
+                <td bgcolor="#f1f8ff" align="right">返点比例</td>
                 <td bgcolor="#FFFFFF">
                         <input type="text" class="on-show" id="signRate" name="signRate"/>&nbsp;<label>%</label>               
                 </td>

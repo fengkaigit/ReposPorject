@@ -130,7 +130,7 @@ function showReplyDiv(userId,id,paidMoney){
 	<td>&nbsp;${item.userName}</td>
 	<td>&nbsp;${item.entName}</td>
 	<td>&nbsp;${item.paymentTypeName}费</td>
-	<td>&nbsp;${payerrs[item.paymentStatus]}</td>
+	<td>&nbsp;${paystatus[item.paymentStatus]}</td>
 	<td><a class="cur" style="color:#007abd;" onclick="showReplyDiv(${item.userId},${item.id},${item.paidMoney});">缴费异常回复</a></td>
   </tr>
  </c:forEach>

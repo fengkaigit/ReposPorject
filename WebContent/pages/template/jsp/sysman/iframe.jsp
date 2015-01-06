@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-<title>代理商首页</title>
+<title>管理员首页</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<%=request.getContextPath() %>/css/agentiframe/base.css" type="text/css" rel="stylesheet" />
 <link href="<%=request.getContextPath() %>/css/agentiframe/base_table[1]_2.css" type="text/css" rel="stylesheet" />
@@ -56,8 +56,8 @@ monthValues[year+"-11"] = "十一月份";
 monthValues[year+"-12"] = "十二月份";
 $(document).ready(function(){
 	//获取公告
-	 jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/announce/agentgglist.do",{group:0,page:1,rows:5},"get","json",function(data){
-		   if(data.length>0){
+	 //jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/announce/agentgglist.do",{group:0,page:1,rows:5},"get","json",function(data){
+		  /*if(data.length>0){
 			   var ggHtml = [];
 			   var gglist = document.getElementById("ggList");
 			   for(var i=0;i<data.length;i++){
@@ -69,11 +69,11 @@ $(document).ready(function(){
 				   ggHtml.push('<div class="desktopTime">'+obj.createTime+'</div>');
 				   ggHtml.push('</div>');
 				 }
-			   gglist.innerHTML = ggHtml.join("");
-		   }
-	 });
+			   gglist.innerHTML = ggHtml.join("");*/
+		   //}
+	 //});
 	//获取待办
-	 jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/agent/self.do",{page:1,rows:10,status:0},"get","json",function(data){
+	 jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/sysman/sysmanSelf.do",{page:1,rows:10,status:0},"get","json",function(data){
 		   if(data.length>0){
 			   var dbHtml = [];
 			   var dblist = document.getElementById("dbList");
@@ -92,17 +92,17 @@ $(document).ready(function(){
 	 });
 	
 	//当月订单完成情况
-	 swfobject.embedSWF("<%=request.getContextPath() %>/js/ofc/open-flash-chart.swf", "bt1", "300", "200", "9.0.0", 
-				"expressInstall.swf",
-				{"data-file":"<%=request.getContextPath() %>/agent/monthBillChart.do?year="+year});
+	 //swfobject.embedSWF("<%=request.getContextPath() %>/js/ofc/open-flash-chart.swf", "bt1", "300", "200", "9.0.0", 
+				//"expressInstall.swf",
+				//{"data-file":"<%=request.getContextPath() %>/agent/monthBillChart.do?year="+year});
 	//当月新增用户数
-      	 swfobject.embedSWF("<%=request.getContextPath() %>/js/ofc/open-flash-chart.swf", "bt2", "300", "200", "9.0.0", 
-				"expressInstall.swf",
-				{"data-file":"<%=request.getContextPath() %>/agent/queryUserChart.do?year="+year});
+      	 //swfobject.embedSWF("<%=request.getContextPath() %>/js/ofc/open-flash-chart.swf", "bt2", "300", "200", "9.0.0", 
+				//"expressInstall.swf",
+				//{"data-file":"<%=request.getContextPath() %>/agent/queryUserChart.do?year="+year});
     //当月决算
-      	 swfobject.embedSWF("<%=request.getContextPath() %>/js/ofc/open-flash-chart.swf", "bt4", "300", "200", "9.0.0", 
-				"expressInstall.swf",
-				{"data-file":"<%=request.getContextPath() %>/agent/monthSettleChart.do?year="+year});
+      	// swfobject.embedSWF("<%=request.getContextPath() %>/js/ofc/open-flash-chart.swf", "bt4", "300", "200", "9.0.0", 
+				//"expressInstall.swf",
+				//{"data-file":"<%=request.getContextPath() %>/agent/monthSettleChart.do?year="+year});
 	//统计报表
 	 //jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/agent/report.do",{year:year},"get","json",function(data){
 		  // if(data.length>0){
@@ -128,23 +128,23 @@ function getgg(id){
 	window.parent.location.href = "<%=request.getContextPath() %>/announce/showgg.do?id="+id;
 }
 function showbatch(id){
-	window.parent.location.href = "<%=request.getContextPath() %>/agent/billlist.do?id="+id;
+	window.parent.location.href = "<%=request.getContextPath() %>/sysman/errbilllist.do?id="+id+"&errflag=1";
 }
 function moregg(){
 	window.parent.location.href = "<%=request.getContextPath() %>/announce/more.do?group=0";
 }
 function moredb(){
-	window.parent.location.href = "<%=request.getContextPath() %>/agent/worklist.do?status=0";
+	window.parent.location.href = "<%=request.getContextPath() %>/sysman/selfMore.do";
 }
 </script>
 </head>
-<body>
+<body >
 	<ul id="desktopBox">
 		<div class="centerDesktopBox">
 			<ul class="workBox">
 				<li class="box" style="width: 300px;">
 					<div class="title">
-						<div class="desktopTitleName">通知公告</div>
+						<div class="desktopTitleName">其它信息</div>
 						<div class="desktopTitleName1"><a class="more" href="javascript:moregg()">更多&gt;</a></div>
 					</div>
 					<div id="ggList">
@@ -153,7 +153,7 @@ function moredb(){
 				</li>
 				<li id="dbwork" class="box" style="width: 645px;">
 					<div class="title">
-						<div class="desktopTitleName">待办工作</div>
+						<div class="desktopTitleName">缴费异常信息</div>
 						<div class="desktopTitleName1" style="width:15%"><a class="more" href="javascript:moredb()">更多&gt;</a></div>
 					</div>
 					<div id="dbList">

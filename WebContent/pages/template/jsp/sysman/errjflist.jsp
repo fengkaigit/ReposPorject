@@ -19,7 +19,7 @@ $(document).ready(function(){
 			prevText:'上一页',
 			nextText:'下一页',
 	        onPageClick:function(pageNumber, event){
-			    window.location.href = "<%=request.getContextPath() %>/agent/billlist.do?id=${param.id}&page="+pageNumber+"&rows="+gloabObj.rows;
+			    window.location.href = windowl.location.pathname +"?page="+pageNumber+"&rows="+gloabObj.rows;
 			}
 	  });
 	}
@@ -31,32 +31,29 @@ function downloadbill(id){
 </script>
 </head>
 <body>
-<%@include file="/pages/template/jsp/common/agentheader.jsp"%>
-	<div class="ui-container clearfix" id="container">  
+<%@include file="/pages/template/jsp/common/sysheader.jsp"%>
+<div class="ui-container clearfix" id="container">  
   <div class="jfzh-title"><span class="icon1"></span>
-  待办任务
+  缴费异常 
   </div>
 <div class="jfzh-con">
 
 	
     <div class="jfzh-bottom clearfix">    
-	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;缴费单信息</span>
-	<span class="fr cur" onClick="downloadbill('${param.id}')"><span class="fcr">导出缴费单</span></span>
+	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;缴费异常信息</span>
 	</div>
   
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
   <tr class="add">
     <td>序号</td>
-    <td>缴费单单号</td>
-    <td>缴费时间</td>
-    <td>应缴金额</td>
-    <td>实缴金额</td>
-    <td>缴费用户</td>
-    <td>收费单位</td>
+    <td>标题</td>
+    <td>创建时间</td>
+    <td>确认时间</td>
+    <td>金额</td>
     <td>缴费类型</td>
-    <td>状态</td>
+    <td>操作</td>
   </tr>
-  <c:forEach var="item" items="${bills}" varStatus="status">
+  <c:forEach var="item" items="${works}" varStatus="status">
    <tr <c:choose>
        <c:when test="${(status.index+1) % 2 == 0}">
          class="add"
@@ -66,14 +63,14 @@ function downloadbill(id){
        </c:otherwise>
      </c:choose> >
     <td>&nbsp;${status.index+1}</td>
-    <td>&nbsp;${item.id}</td>
+    <td>&nbsp;<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd"/>&nbsp;${item.payTypeName}费${item.billNum}笔</td>
     <td>&nbsp;<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-    <td>&nbsp;${item.payMoney}</td>
-    <td>&nbsp;${item.paidMoney}</td>    
-	<td>&nbsp;${item.userName}</td>
-	<td>&nbsp;${item.entName}</td>
-	<td>&nbsp;${item.paymentTypeName}费</td>
-	<td>&nbsp;${paystatus[item.paymentStatus]}</td>
+    <td>&nbsp;<fmt:formatDate value="${item.confirmTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+	<td>&nbsp;${item.batchMoney}</td>
+	<td>&nbsp;${item.payTypeName}费</td>
+	 <td>
+	<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/sysman/errbilllist.do?id=${item.id}&errFlag=1')" >查看缴费单</a>&nbsp;
+    </td>
   </tr>
  </c:forEach>
    
