@@ -22,7 +22,7 @@ public class TransferDAOImpl extends BaseDAOImpl implements TransferDAO {
 	@Override
 	public TransferRate getTransferRateByBank(String bankId) {
 		// TODO Auto-generated method stub
-		String hql = "from TransferRate where id.bankId=?";
+		String hql = "from TransferRate where bankCode=?";
 		List<TransferRate> rateList = find(hql,new Object[]{bankId});
 		if(rateList!=null&&rateList.size()>0){
 			return rateList.get(0);

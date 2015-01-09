@@ -3,11 +3,14 @@ package com.ey.service;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.servlet.ServletContext;
+
+import com.ey.dao.entity.UserBase;
 import com.ey.forms.JfForm;
 
 public interface CnfService {
 
-	void saveBill(JfForm form) throws RuntimeException;
+	void saveBill(JfForm form,UserBase currentUser,ServletContext servletContext) throws RuntimeException;
 
 	Object getObjectById(Class c,Serializable id) throws RuntimeException;
 

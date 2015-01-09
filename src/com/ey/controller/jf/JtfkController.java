@@ -129,7 +129,7 @@ public class JtfkController extends BaseController {
 			}
 		}
 		form.setMoneycn(MoneyUtil.toUpperCase(form.getBillMoney()+form.getPoundage()));
-		jtfkfService.saveBill(form);
+		jtfkfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		request.getSession().setAttribute(SystemConst.JTFKF_BILL, form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.JTFKF_BILL,form);
@@ -149,7 +149,8 @@ public class JtfkController extends BaseController {
 			form.setBankCode(bankCode);
 		}
 		form.setPaymentStatus(0);//3：核实确认；
-		jtfkfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		jtfkfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.JTFKF_BILL,form);
 		mav.setViewName("jf/jtfk/third");
@@ -165,7 +166,8 @@ public class JtfkController extends BaseController {
 		form.setRemark(jform.getRemark());
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
-		jtfkfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		jtfkfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		//request.getSession().removeAttribute(SystemConst.JTFKF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.JTFKF_BILL,form);

@@ -326,8 +326,8 @@ public class DateUtil {
 	}
 
 	public static void main(String[] args) {
-		int last = getLastDayOfMonth(2013,2);
-		System.out.println(last);
+		Date date = getAfterMonth(new Date(),3);
+		System.out.println(getTimeNow(date));
 		//String s = UUID.randomUUID().toString();
 		//System.out.println(s);
 		//System.out.println(s.length());

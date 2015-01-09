@@ -110,7 +110,7 @@ public class RQfController extends BaseController {
 			}
 		}
 		form.setMoneycn(MoneyUtil.toUpperCase(form.getBillMoney()+form.getPoundage()));
-		rqfService.saveBill(form);
+		rqfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		request.getSession().setAttribute(SystemConst.RQF_BILL, form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.RQF_BILL,form);
@@ -130,7 +130,8 @@ public class RQfController extends BaseController {
 			form.setBankCode(bankCode);
 		}
 		form.setPaymentStatus(0);//3：核实确认；
-		rqfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		rqfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.RQF_BILL,form);
 		mav.setViewName("jf/rqf/third");
@@ -146,7 +147,8 @@ public class RQfController extends BaseController {
 		form.setRemark(jform.getRemark());
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
-		rqfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		rqfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		//request.getSession().removeAttribute(SystemConst.RQF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.RQF_BILL,form);

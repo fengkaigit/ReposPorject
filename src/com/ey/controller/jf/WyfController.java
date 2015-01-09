@@ -110,7 +110,7 @@ public class WyfController extends BaseController {
 			}
 		}
 		form.setMoneycn(MoneyUtil.toUpperCase(form.getBillMoney()+form.getPoundage()));
-		wyfService.saveBill(form);
+		wyfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		request.getSession().setAttribute(SystemConst.WYF_BILL, form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.WYF_BILL,form);
@@ -130,7 +130,8 @@ public class WyfController extends BaseController {
 			form.setBankCode(bankCode);
 		}
 		form.setPaymentStatus(0);//3：核实确认；
-		wyfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		wyfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.WYF_BILL,form);
 		mav.setViewName("jf/wyf/third");
@@ -146,7 +147,8 @@ public class WyfController extends BaseController {
 		form.setRemark(jform.getRemark());
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
-		wyfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		wyfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		//request.getSession().removeAttribute(SystemConst.WYF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.WYF_BILL,form);

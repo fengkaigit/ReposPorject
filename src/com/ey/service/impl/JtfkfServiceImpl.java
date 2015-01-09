@@ -6,24 +6,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ey.bo.AgentBo;
 import com.ey.dao.JfDAO;
+import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.PayAccountBill;
 import com.ey.dao.entity.PaymentBill;
+import com.ey.dao.entity.PaymentHedge;
 import com.ey.dao.entity.PaymentSetting;
 import com.ey.dao.entity.PaymentTraffic;
+import com.ey.dao.entity.UserBase;
 import com.ey.forms.JfForm;
 import com.ey.service.AgentService;
 import com.ey.service.BankAccountService;
+import com.ey.service.FeeService;
 import com.ey.service.JtfkfService;
 import com.ey.service.SettingService;
 import com.ey.service.StaticService;
 import com.ey.service.TransferService;
 import com.ey.util.DateUtil;
+import com.ey.util.FeeUtil;
 import com.ey.util.StringUtil;
 import com.ey.util.UUIdUtil;
 
@@ -41,8 +49,10 @@ public class JtfkfServiceImpl implements JtfkfService {
 	private TransferService transferService;
 	@Autowired
 	BankAccountService bankAccountService;
+	@Autowired
+	private FeeService feeService;
 	@Override
-	public void saveBill(JfForm form) throws RuntimeException {
+	public void saveBill(JfForm form,UserBase currentUser,ServletContext servletContext) throws RuntimeException {
 		Long billId = form.getBillId();
 		PayAccountBill payAccountBill = null;
 		PaymentBill paymentBill = null;
@@ -95,6 +105,32 @@ public class JtfkfServiceImpl implements JtfkfService {
 			jfDAO.saveOrUpdate(paymentBill);
 			transferService.saveTransferRecord(form);
 			bankAccountService.saveBankAccount(form);
+			Integer ps = form.getPaymentStatus();
+			if(ps!=null&&ps.intValue()==1){//如果有优惠，存入对冲表
+				FeeRule feeRule = feeService.getFeeRule(form.getPayType(), new Date());
+				String areaId = form.getAreaId();
+				if(StringUtil.isEmptyString(areaId)){
+					areaId = currentUser.getAreaId();
+				}
+				Double poundageSelf = FeeUtil.getPoundageSelf(feeRule.getRule(), servletContext, currentUser, form.getPayType(), areaId);
+				Double poundageOther = FeeUtil.getPoundageOther(feeRule.getRule(), servletContext, currentUser, form.getPayType(), areaId);
+				Double poundage = null;
+				if(poundageOther!=null&&poundageOther.doubleValue()>0){
+					if(poundageSelf.doubleValue()<poundageOther.doubleValue()){
+						poundage = poundageSelf;
+					}else{
+						poundage = poundageOther;
+					}
+					PaymentHedge paymentHedge = new PaymentHedge();
+					paymentHedge.setId(DbidGenerator.getDbidGenerator().getNextId());
+					paymentHedge.setBillId(form.getId());
+					paymentHedge.setHedgeMoney(poundage);
+					paymentHedge.setCreateTime(new Date());
+					paymentHedge.setStatisStatus(0);
+					paymentHedge.setHedgeType(2);
+					jfDAO.save(paymentHedge);
+				}
+			}
 		}
 
 	}

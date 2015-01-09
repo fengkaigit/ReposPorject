@@ -578,6 +578,7 @@ public class PhoneController {
 				form.setPayType(payType);
 				form.setBillNumber(paymentCode);
 				form.setCarType(0);
+				form.setClientType(1);//手机端支付
 				FeeRule feeRule = feeService.getFeeRule(payType, new Date());
 				if (feeRule != null) {
 					try {
@@ -639,24 +640,24 @@ public class PhoneController {
 				form.setOrderNum(orderNum);
 				
 				if (payType==0){
-					sfService.saveBill(form);
+					sfService.saveBill(form,currentUser,request.getSession().getServletContext());
 				}else if (payType==1){
-					dfService.saveBill(form);
+					dfService.saveBill(form,currentUser,request.getSession().getServletContext());
 				}else if (payType==2){
-					rqfService.saveBill(form);
+					rqfService.saveBill(form,currentUser,request.getSession().getServletContext());
 				}else if (payType==3){
-					ghfService.saveBill(form);
+					ghfService.saveBill(form,currentUser,request.getSession().getServletContext());
 				}else if (payType==4){
-					ydtxfService.saveBill(form);
+					ydtxfService.saveBill(form,currentUser,request.getSession().getServletContext());
 				}else if (payType==5){
-					jtfkfService.saveBill(form);
+					jtfkfService.saveBill(form,currentUser,request.getSession().getServletContext());
 				}else if (payType==6){
 					form.setBillNumber(currentUser.getRealName());
-					wyfService.saveBill(form);
+					wyfService.saveBill(form,currentUser,request.getSession().getServletContext());
 				}else if (payType==7){
-					yxfService.saveBill(form);
+					yxfService.saveBill(form,currentUser,request.getSession().getServletContext());
 				}else if (payType==8){
-					cnfService.saveBill(form);
+					cnfService.saveBill(form,currentUser,request.getSession().getServletContext());
 				}
 				retnBo.setOrderNum(orderNum);
 				if (payType==4){

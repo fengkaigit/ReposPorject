@@ -129,7 +129,7 @@ public class YdtxController extends BaseController {
 			}
 		}
 		form.setMoneycn(MoneyUtil.toUpperCase(form.getBillMoney()+form.getPoundage()));
-		ydtxfService.saveBill(form);
+		ydtxfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		request.getSession().setAttribute(SystemConst.YDTXF_BILL, form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.YDTXF_BILL,form);
@@ -149,7 +149,8 @@ public class YdtxController extends BaseController {
 			form.setBankCode(bankCode);
 		}
 		form.setPaymentStatus(0);//3：核实确认；
-		ydtxfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		ydtxfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.YDTXF_BILL,form);
 		mav.setViewName("jf/ydtx/third");
@@ -165,7 +166,8 @@ public class YdtxController extends BaseController {
 		form.setRemark(jform.getRemark());
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
-		ydtxfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		ydtxfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		//request.getSession().removeAttribute(SystemConst.YDTXF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.YDTXF_BILL,form);

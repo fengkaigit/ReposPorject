@@ -110,7 +110,7 @@ public class CnfController extends BaseController {
 			}
 		}
 		form.setMoneycn(MoneyUtil.toUpperCase(form.getBillMoney()+form.getPoundage()));
-		cnfService.saveBill(form);
+		cnfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		request.getSession().setAttribute(SystemConst.CNF_BILL, form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.CNF_BILL,form);
@@ -130,7 +130,8 @@ public class CnfController extends BaseController {
 			form.setBankCode(bankCode);
 		}
 		form.setPaymentStatus(0);//3：核实确认；
-		cnfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		cnfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.CNF_BILL,form);
 		mav.setViewName("jf/cnf/third");
@@ -146,7 +147,8 @@ public class CnfController extends BaseController {
 		form.setRemark(jform.getRemark());
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
-		cnfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		cnfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		//request.getSession().removeAttribute(SystemConst.CNF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.CNF_BILL,form);

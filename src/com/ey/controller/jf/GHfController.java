@@ -110,7 +110,7 @@ public class GHfController extends BaseController {
 			}
 		}
 		form.setMoneycn(MoneyUtil.toUpperCase(form.getBillMoney()+form.getPoundage()));
-		ghfService.saveBill(form);
+		ghfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		request.getSession().setAttribute(SystemConst.GHF_BILL, form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.GHF_BILL,form);
@@ -130,7 +130,8 @@ public class GHfController extends BaseController {
 			form.setBankCode(bankCode);
 		}
 		form.setPaymentStatus(0);//3：核实确认；
-		ghfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		ghfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.GHF_BILL,form);
 		mav.setViewName("jf/ghf/third");
@@ -146,7 +147,8 @@ public class GHfController extends BaseController {
 		form.setRemark(jform.getRemark());
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
-		ghfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		ghfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		//request.getSession().removeAttribute(SystemConst.GHF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.GHF_BILL,form);

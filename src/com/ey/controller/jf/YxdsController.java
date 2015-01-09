@@ -115,7 +115,7 @@ public class YxdsController extends BaseController {
 			}
 		}
 		form.setMoneycn(MoneyUtil.toUpperCase(form.getBillMoney()+form.getPoundage()));
-		yxfService.saveBill(form);
+		yxfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		request.getSession().setAttribute(SystemConst.YXDSF_BILL, form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.YXDSF_BILL,form);
@@ -135,7 +135,8 @@ public class YxdsController extends BaseController {
 			form.setBankCode(bankCode);
 		}
 		form.setPaymentStatus(0);//3：核实确认；
-		yxfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		yxfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.YXDSF_BILL,form);
 		mav.setViewName("jf/yxds/third");
@@ -151,7 +152,8 @@ public class YxdsController extends BaseController {
 		form.setRemark(jform.getRemark());
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
-		yxfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		yxfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		//request.getSession().removeAttribute(SystemConst.YXDSF_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.YXDSF_BILL,form);

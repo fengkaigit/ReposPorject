@@ -115,7 +115,7 @@ public class SfController extends BaseController {
 		}
 		form.setMoneycn(MoneyUtil.toUpperCase(form.getBillMoney()
 				+ form.getPoundage()));
-		sfService.saveBill(form);
+		sfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		request.getSession().setAttribute(SystemConst.WATER_BILL, form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.WATER_BILL, form);
@@ -138,7 +138,8 @@ public class SfController extends BaseController {
 			form.setBankCode(bankCode);
 		}
 		form.setPaymentStatus(0);// 3：核实确认；
-		sfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		sfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.WATER_BILL, form);
 		mav.setViewName("jf/sf/third");
@@ -156,7 +157,8 @@ public class SfController extends BaseController {
 		form.setRemark(jform.getRemark());
 
 		form.setPaymentStatus(1);// 1：系统缴费成功；
-		sfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		sfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		//request.getSession().removeAttribute(SystemConst.WATER_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.WATER_BILL, form);

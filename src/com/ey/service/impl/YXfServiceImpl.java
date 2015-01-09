@@ -6,24 +6,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ey.bo.AgentBo;
 import com.ey.dao.JfDAO;
+import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.PayAccountBill;
 import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.PaymentCatv;
+import com.ey.dao.entity.PaymentHedge;
 import com.ey.dao.entity.PaymentSetting;
+import com.ey.dao.entity.UserBase;
 import com.ey.forms.JfForm;
 import com.ey.service.AgentService;
 import com.ey.service.BankAccountService;
+import com.ey.service.FeeService;
 import com.ey.service.SettingService;
 import com.ey.service.StaticService;
 import com.ey.service.TransferService;
 import com.ey.service.YXfService;
 import com.ey.util.DateUtil;
+import com.ey.util.FeeUtil;
 import com.ey.util.StringUtil;
 import com.ey.util.UUIdUtil;
 
@@ -41,8 +49,10 @@ public class YXfServiceImpl implements YXfService {
 	private TransferService transferService;
 	@Autowired
 	BankAccountService bankAccountService;
+	@Autowired
+	private FeeService feeService;
 	@Override
-	public void saveBill(JfForm form) throws RuntimeException {
+	public void saveBill(JfForm form,UserBase currentUser,ServletContext servletContext) throws RuntimeException {
 		Long billId = form.getBillId();
 		PayAccountBill payAccountBill = null;
 		PaymentBill paymentBill = null;
@@ -55,6 +65,10 @@ public class YXfServiceImpl implements YXfService {
 		}
 		if (payAccountBill == null) {
 			Date date = new Date();
+			int curYear = DateUtil.getYear(date);
+			int curMonth = DateUtil.getMonth(date);
+			form.setYear(curYear);
+			form.setMonth(curMonth+"");
 			Map<String,Object> param = new HashMap();
 			param.put("areaId", form.getAreaId());
 			List<AgentBo> agents = agentService.getAllAgent(param, 0, 0);
@@ -68,17 +82,18 @@ public class YXfServiceImpl implements YXfService {
 					form.getBusinessType());
 			//String areaId, String areaName, Long agentId, String agentName,
 			//String orderNumber, String remarks, String payAddress
+			
 			paymentBill = new PaymentBill(null, null, form.getUserId(), 0,
 					date, form.getBillMoney(), form.getBillMoney(), 0, form
 							.getPoundage(), form.getPayType(), form.getEntId(),
 					form.getBusinessType(), form.getPaymentStatus(), form
 							.getPaymentMode(), null, form.getDivideStatus(),form.getAreaId(),form.getAreaName(),form.getAgentId(),form.getAgentName(),form.getBillNo(),form.getRemark(),form.getPayAddress(),form.getYear(),new Integer(form.getMonth()));
-			String begin = form.getYear() + "-" + form.getMonth()
-					+ "-01 00:00:01";
-			String end = form.getYear() + "-" + form.getMonth() + "-"+DateUtil.getLastDayOfMonth(form.getYear(), new Integer(form.getMonth()))+" 23:59:59";
+			Date begin = DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss",form.getJfdate()+" 00:00:01");/*form.getYear() + "-" + form.getMonth()
+					+ "-01 00:00:01";*/
+			Date end = DateUtil.getAfterMonth(begin,form.getJfmonth());//form.getYear() + "-" + form.getMonth() + "-"+DateUtil.getLastDayOfMonth(form.getYear(), new Integer(form.getMonth()))+" 23:59:59";
 			paymentCatv = new PaymentCatv(null, form.getUserId(), 0l,
-					DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss", begin),
-					DateUtil.convertStringToDate("yyyy-MM-dd HH:mm:ss", end),
+					begin,
+					end,
 					form.getPeriodFrequency(), form.getBillMoney(), form
 							.getPoundage(), date, form.getBillNumber());
 			saveSetting(form, date);
@@ -97,6 +112,33 @@ public class YXfServiceImpl implements YXfService {
 			jfDAO.saveOrUpdate(paymentBill);
 			transferService.saveTransferRecord(form);
 			bankAccountService.saveBankAccount(form);
+			
+			Integer ps = form.getPaymentStatus();
+			if(ps!=null&&ps.intValue()==1){//如果有优惠，存入对冲表
+				FeeRule feeRule = feeService.getFeeRule(form.getPayType(), new Date());
+				String areaId = form.getAreaId();
+				if(StringUtil.isEmptyString(areaId)){
+					areaId = currentUser.getAreaId();
+				}
+				Double poundageSelf = FeeUtil.getPoundageSelf(feeRule.getRule(), servletContext, currentUser, form.getPayType(), areaId);
+				Double poundageOther = FeeUtil.getPoundageOther(feeRule.getRule(), servletContext, currentUser, form.getPayType(), areaId);
+				Double poundage = null;
+				if(poundageOther!=null&&poundageOther.doubleValue()>0){
+					if(poundageSelf.doubleValue()<poundageOther.doubleValue()){
+						poundage = poundageSelf;
+					}else{
+						poundage = poundageOther;
+					}
+					PaymentHedge paymentHedge = new PaymentHedge();
+					paymentHedge.setId(DbidGenerator.getDbidGenerator().getNextId());
+					paymentHedge.setBillId(form.getId());
+					paymentHedge.setHedgeMoney(poundage);
+					paymentHedge.setCreateTime(new Date());
+					paymentHedge.setStatisStatus(0);
+					paymentHedge.setHedgeType(2);
+					jfDAO.save(paymentHedge);
+				}
+			}
 		}
 
 	}

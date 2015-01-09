@@ -14,7 +14,18 @@ public class FeeUtil {
 		PoundageService ps = getPoundageService(serviceName, servletContext);
 		return ps.getPoundage(user, paymentType, areaId);
 	}
-
+	public static Double getPoundageSelf(String serviceName,
+			ServletContext servletContext, UserBase user, Integer paymentType,
+			String areaId) {
+		PoundageService ps = getPoundageService(serviceName, servletContext);
+		return ps.getPoundageSelf(user, paymentType, areaId);
+	}
+	public static Double getPoundageOther(String serviceName,
+			ServletContext servletContext, UserBase user, Integer paymentType,
+			String areaId) {
+		PoundageService ps = getPoundageService(serviceName, servletContext);
+		return ps.getPoundageOther(user, paymentType, areaId);
+	}
 	public static PoundageService getPoundageService(String serviceName,
 			ServletContext servletContext) {
 		WebApplicationContext applicationContext = null;

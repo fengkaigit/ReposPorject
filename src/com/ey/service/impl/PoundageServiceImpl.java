@@ -23,7 +23,7 @@ public class PoundageServiceImpl implements PoundageService{
 				poundage = br.getUnitPoundage();
 			}
 			if(poundage!=null&&sp!=null&&sp.getPreferentialMoney()!=null){
-				poundage = poundage +sp.getPreferentialMoney();
+				poundage = poundage - sp.getPreferentialMoney();
 			}
 			if(poundage==null||poundage.doubleValue()<0){
 				poundage = 0d;
@@ -33,6 +33,30 @@ public class PoundageServiceImpl implements PoundageService{
 			ex.printStackTrace();
 		}
 		return 0;
+	}
+	@Override
+	public double getPoundageOther(UserBase user, Integer paymentType,
+			String areaId) {
+		ServicePreferential sp = feeService.findServicePreferential(user.getId(),paymentType,areaId);
+		if(sp!=null&&sp.getPreferentialMoney()!=null){
+			return sp.getPreferentialMoney();
+		}
+		return 0;
+	}
+	@Override
+	public double getPoundageSelf(UserBase user, Integer paymentType,
+			String areaId) {
+		BaseRuleFee br = feeService.getFeeRule(paymentType, areaId);
+		Double poundage = null;
+		poundage = br.getPersonalPoundage();
+		Integer registType = user.getRegistType();
+		if(registType!=null&&registType.intValue()==2){
+			poundage = br.getUnitPoundage();
+		}
+		if(poundage==null){
+			poundage = 0d;
+		}
+		return poundage;
 	}
 
 }

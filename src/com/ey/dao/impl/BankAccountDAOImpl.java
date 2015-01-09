@@ -23,8 +23,8 @@ public class BankAccountDAOImpl extends BaseDAOImpl implements BankAccountDAO {
 
 	@Override
 	public BankCardInfo findBankCardInfo(String bankId, String cardNo) {
-		if(cardNo!=null&&cardNo.length()>6){
-			cardNo = cardNo.substring(0,6);
+		if(cardNo!=null&&cardNo.replaceAll(" ", "").length()>6){
+			cardNo = cardNo.replaceAll(" ", "").substring(0,6);
 		}
 		String hql = "from BankCardInfo where bankId=? and cardNumber=?";
 		List<BankCardInfo> list = find(hql,new Object[]{bankId,cardNo});

@@ -110,7 +110,7 @@ public class DfController extends BaseController {
 			}
 		}
 		form.setMoneycn(MoneyUtil.toUpperCase(form.getBillMoney()+form.getPoundage()));
-		dfService.saveBill(form);
+		dfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		request.getSession().setAttribute(SystemConst.ELEC_BILL, form);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.ELEC_BILL,form);
@@ -130,7 +130,8 @@ public class DfController extends BaseController {
 			form.setBankCode(bankCode);
 		}
 		form.setPaymentStatus(0);//3：核实确认；
-		dfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		dfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.ELEC_BILL,form);
 		mav.setViewName("jf/df/third");
@@ -146,7 +147,8 @@ public class DfController extends BaseController {
 		form.setRemark(jform.getRemark());
 		
 		form.setPaymentStatus(1);//1：系统缴费成功；
-		dfService.saveBill(form);
+		UserBase currentUser = (UserBase) request.getSession().getAttribute(SystemConst.USER);
+		dfService.saveBill(form,currentUser,request.getSession().getServletContext());
 		//request.getSession().removeAttribute(SystemConst.ELEC_BILL);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(SystemConst.ELEC_BILL,form);
