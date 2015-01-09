@@ -54,8 +54,10 @@ $(document).ready(function() {
 					<li><a href="<%=request.getContextPath() %>/feerule/list.do">劳务费信息维护</a></li>
 					<li><a href="<%=request.getContextPath() %>/sysaccount/list.do">系统账户维护</a></li>
 			  </ul></li>
-			  <li ><span><a href="<%=request.getContextPath() %>/announce/list.do">系统信息</a></span>
+			  <li ><span><a href="<%=request.getContextPath() %>/announce/list.do">我的工作</a></span>
 				<ul>
+				    <li ><a href="<%=request.getContextPath() %>/sysman/selfMore.do?doflag=0">缴费异常查询</a></li>
+					<li><a href="<%=request.getContextPath() %>/sysman/selfMore.do?doflag=1">缴费异常历史查询</a></li>
 					<li ><a href="<%=request.getContextPath() %>/announce/add.do">公告发布</a></li>
 					<li><a href="<%=request.getContextPath() %>/announce/list.do">公告管理</a></li>
 					<li><a href="<%=request.getContextPath() %>/ej/list.do">意见回复</a></li>

@@ -34,13 +34,13 @@ function downloadbill(id){
 <%@include file="/pages/template/jsp/common/sysheader.jsp"%>
 <div class="ui-container clearfix" id="container">  
   <div class="jfzh-title"><span class="icon1"></span>
-  缴费异常 
+  逾期未办 
   </div>
 <div class="jfzh-con">
 
 	
     <div class="jfzh-bottom clearfix">    
-	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;缴费异常信息</span>
+	<div class="name"><span class="fl"><img src="<%=request.getContextPath() %>/images/common/icon2.png" width="16">&nbsp;&nbsp;逾期未办信息</span>
 	</div>
   
     <table  width="100%" border="0" cellspacing="0" cellpadding="0" class="tab" style="width:890px;">
@@ -48,8 +48,6 @@ function downloadbill(id){
     <td>序号</td>
     <td>标题</td>
     <td>创建时间</td>
-    <td>确认时间</td>
-    <td>金额</td>
     <td>缴费类型</td>
     <td>地区</td>
     <td>操作</td>
@@ -64,14 +62,12 @@ function downloadbill(id){
        </c:otherwise>
      </c:choose> >
     <td>&nbsp;${status.index+1}</td>
-    <td>&nbsp;<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd"/>&nbsp;${item.payTypeName}费${item.errorBillNum}笔</td>
+    <td>&nbsp;<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd"/>&nbsp;${item.payTypeName}费${item.outBillNum}笔</td>
     <td>&nbsp;<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-    <td>&nbsp;<fmt:formatDate value="${item.confirmTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-	<td>&nbsp;${item.batchMoney}</td>
 	<td>&nbsp;${item.payTypeName}费</td>
-	<td>&nbsp;${item.areaName}费</td>
+	<td>&nbsp;${item.areaName}</td>
 	 <td>
-	<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/sysman/errbilllist.do?id=${item.id}&errFlag=1&doflag=${param.doflag}')" >查看缴费单</a>&nbsp;
+	<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/sysman/outbilllist.do?id=${item.batchId}')" >查看缴费单</a>&nbsp;
     </td>
   </tr>
  </c:forEach>

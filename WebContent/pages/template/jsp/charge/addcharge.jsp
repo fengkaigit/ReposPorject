@@ -34,6 +34,7 @@ $(document).ready(function(){
 	       var codeStr = '${charge.areaPath}';
 	       var codeStrs = codeStr.split("/");
 	      $("#provinc").val(codeStrs[0]);
+	      $("#outDate").val('${charge.outDate}');
 	      getArea(codeStrs[0],'city','请选择城市',codeStrs.length==2||codeStrs.length==3 ? codeStrs[1]:undefined);
 	      if(codeStrs.length>=2)
 	      getArea(codeStrs[1],'area','请选择市区',codeStrs.length==3 ? codeStrs[2]:undefined);
@@ -155,6 +156,52 @@ function initArea(){
                                          <c:forEach var="cus" items="${cusvalues}" varStatus="status">
                                               <option value="${cus.key}" <c:if test="${cus.key==charge.payType}">selected</c:if>>${cus.value}费</option>
                                          </c:forEach>
+                                         </select></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                         <td><div id="payTypeTip" style="width:250px"></div></td>
+                    </tr>
+                     <tr>
+                        <td height="40" align="right">缴费截至日期(每月)：</td>
+                        <td align="left">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td> <select class="zc_city"  style="width:190px;" id="outDate" name="outDate">
+                                        <option value="">请选择时间</option>
+                                              <option value="01">1 号</option>
+                                              <option value="02">2 号</option>
+                                              <option value="03">3 号</option>
+                                              <option value="04">4 号</option>
+                                              <option value="05">5 号</option>
+                                              <option value="06">6 号</option>
+                                              <option value="07">7 号</option>
+                                              <option value="08">8 号</option>
+                                              <option value="09">9 号</option>
+                                              <option value="10">10 号</option>
+                                              <option value="11">11 号</option>
+                                              <option value="12">12 号</option>
+                                              <option value="13">13 号</option>
+                                              <option value="14">14 号</option>
+                                              <option value="15">15 号</option>
+                                              <option value="16">16 号</option>
+                                              <option value="17">17 号</option>
+                                              <option value="18">18 号</option>
+                                              <option value="19">19 号</option>
+                                              <option value="20">20 号</option>
+                                              <option value="21">21 号</option>
+                                              <option value="22">22 号</option>
+                                              <option value="23">23 号</option>
+                                              <option value="24">24 号</option>
+                                              <option value="25">25 号</option>
+                                              <option value="26">26 号</option>
+                                              <option value="27">27 号</option>
+                                              <option value="28">28 号</option>
+                                              <option value="29">29 号</option>
+                                              <option value="30">30 号</option>
+                                              <option value="31">31 号</option>
                                          </select></td>
                                     </tr>
                                 </tbody>

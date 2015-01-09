@@ -56,22 +56,23 @@ monthValues[year+"-11"] = "十一月份";
 monthValues[year+"-12"] = "十二月份";
 $(document).ready(function(){
 	//获取公告
-	 //jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/announce/agentgglist.do",{group:0,page:1,rows:5},"get","json",function(data){
-		  /*if(data.length>0){
+	 jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/sysman/doOutBatch.do",{group:0,page:1,rows:5},"get","json",function(data){
+		  if(data.length>0){
 			   var ggHtml = [];
 			   var gglist = document.getElementById("ggList");
 			   for(var i=0;i<data.length;i++){
 				   var obj = data[i];
+				   var title = obj.createTime+" "+obj.payTypeName+'费'+obj.outBillNum+'笔'+'('+obj.areaName+')';
 				   ggHtml.push('<div class="list">');
 				   ggHtml.push('<div class="listName">');
-				   ggHtml.push('<a href="javascript:getgg('+obj.id+');" title="'+obj.title+'">'+obj.title+'</a>');
+				   ggHtml.push('<a href="javascript:getgg('+obj.batchId+');" title="'+title+'">'+title+'</a>');
 				   ggHtml.push('</div>');
 				   ggHtml.push('<div class="desktopTime">'+obj.createTime+'</div>');
 				   ggHtml.push('</div>');
 				 }
-			   gglist.innerHTML = ggHtml.join("");*/
-		   //}
-	 //});
+			   gglist.innerHTML = ggHtml.join("");
+		   }
+	 });
 	//获取待办
 	 jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/sysman/sysmanSelf.do",{page:1,rows:10,status:0},"get","json",function(data){
 		   if(data.length>0){
@@ -79,7 +80,7 @@ $(document).ready(function(){
 			   var dblist = document.getElementById("dbList");
 			   for(var i=0;i<data.length;i++){
 				   var obj = data[i];
-				   var title = obj.createTime+" "+obj.payTypeName+'费'+obj.billNum+'笔';
+				   var title = obj.createTime+" "+obj.payTypeName+'费'+obj.errorBillNum+'笔'+'('+obj.areaName+')';
 				   dbHtml.push('<div class="list">');
 				   dbHtml.push('<div class="listName">');
 				   dbHtml.push('<a href="javascript:showbatch('+obj.id+')" title="'+title+'"><span class="error warn">'+title+'</span></a>');
@@ -125,16 +126,16 @@ $(document).ready(function(){
       	
 });
 function getgg(id){
-	window.parent.location.href = "<%=request.getContextPath() %>/announce/showgg.do?id="+id;
+	window.parent.location.href = "<%=request.getContextPath() %>/sysman/outbilllist.do?id="+id;
 }
 function showbatch(id){
 	window.parent.location.href = "<%=request.getContextPath() %>/sysman/errbilllist.do?id="+id+"&errflag=1";
 }
 function moregg(){
-	window.parent.location.href = "<%=request.getContextPath() %>/announce/more.do?group=0";
+	window.parent.location.href = "<%=request.getContextPath() %>/sysman/doOutMore.do";
 }
 function moredb(){
-	window.parent.location.href = "<%=request.getContextPath() %>/sysman/selfMore.do";
+	window.parent.location.href = "<%=request.getContextPath() %>/sysman/selfMore.do?doflag=0";
 }
 </script>
 </head>
@@ -144,7 +145,7 @@ function moredb(){
 			<ul class="workBox">
 				<li class="box" style="width: 300px;">
 					<div class="title">
-						<div class="desktopTitleName">其它信息</div>
+						<div class="desktopTitleName">逾期未办信息</div>
 						<div class="desktopTitleName1"><a class="more" href="javascript:moregg()">更多&gt;</a></div>
 					</div>
 					<div id="ggList">

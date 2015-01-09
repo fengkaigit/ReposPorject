@@ -41,7 +41,7 @@ function showReplyDiv(batchId,id,flag){
 <%@include file="/pages/template/jsp/common/sysheader.jsp"%>
 	<div class="ui-container clearfix" id="container">  
   <div class="jfzh-title"><span class="icon1"></span>
-  异常缴费单
+  逾期未办缴费单
   </div>
 <div class="jfzh-con">
 
@@ -61,7 +61,6 @@ function showReplyDiv(batchId,id,flag){
     <td>收费单位</td>
     <td>缴费类型</td>
     <td>状态</td>
-    <td>操作</td>
   </tr>
   <c:forEach var="item" items="${bills}" varStatus="status">
    <tr <c:choose>
@@ -81,7 +80,6 @@ function showReplyDiv(batchId,id,flag){
 	<td>&nbsp;${item.entName}</td>
 	<td>&nbsp;${item.paymentTypeName}费</td>
 	<td>&nbsp;${paystatus[item.paymentStatus]}</td>
-	<td><a class="cur" style="color:#007abd;" onclick="showReplyDiv(${param.id},${item.id},${param.doflag});">查看异常信息</a></td>
   </tr>
  </c:forEach>
    
