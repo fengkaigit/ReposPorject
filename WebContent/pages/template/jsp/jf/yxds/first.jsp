@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common.css">
  <link href="<%=request.getContextPath()%>/css/jquery.fancybox.css" rel="stylesheet" />
  <script src="<%=request.getContextPath()%>/js/jquery.fancybox.js"></script>
+ <script type="text/javascript" src="<%=request.getContextPath()%>/js/My97DatePicker/WdatePicker.js"></script>
 <script language="javascript">
 $(document).ready(function(){
 	refreshAreaId(document.getElementById("_parentAreaId"));
@@ -23,6 +24,7 @@ $(document).ready(function(){
 	$("#entId").formValidator().inputValidator({min:0,onError:"请选择公用事业单位"});
 	$("#billNumber").formValidator().inputValidator({min:1,max:30,onError:"请输入用户编号"});
 	$("#payAddress").formValidator().inputValidator({min:1,max:100,onError:"请输入不多于100个字的缴费住址"});
+	$("#jfdate").formValidator().inputValidator({min:1,max:10,onError:"请选择缴费日期"});
 	$("#billMoney").formValidator().regexValidator({regExp:"decmal1",dataType:"enum",onError:"请输入合法缴费金额"});
 	$("#poundage").formValidator().regexValidator({regExp:"decmal1",dataType:"enum",onError:"代缴劳务费金额非法"});
 
@@ -313,22 +315,11 @@ function viewMore(){
 	</div>
 
     <div style="border-bottom:1px solid #9D9D9D; width:770px; margin:0px 0px 20px 0px; padding:0px 0px 10px 0px;"> 
-				  <div style="font-size:14px; width:75px; overflow:hidden; padding-left:6px; float:left;">
+				  <label style=" margin-right:8px;line-height:30px;">缴费日期：</label>
 				  
-				  <span style="display:block;padding-top:5px;line-height:30px;" >帐期：</span></div>
-				  
-				  <div style="float:left;">
-				  <select style="margin-left:28px;width:85px;" class="selectCss"  id="year" name="year" onmousewheel="return false">
-				 	 <c:forEach var="item" items="${years}" varStatus="status">
-                      		<option value="${item}" <c:if test="${item==year}">selected="selected"</c:if>>${item}</option>
-                    </c:forEach>
-				  </select>
-                  <select style="width:85px; margin-left:0px; " class="selectCss" id="month" name="month" onmousewheel="return false">
-                   <c:forEach var="item" items="${monthes}" varStatus="status">
-                      		<option value="${item}" <c:if test="${item==month}">selected="selected"</c:if>>${item}</option>
-                    </c:forEach>
-                  </select>
-                  </div>
+				 
+				  	<input type="text" class="on-show" maxlength="10" id="jfdate" name="jfdate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})"/>
+                  
                   <div style="clear:both;height:1px; overflow:hidden;"></div>
 	</div>
   

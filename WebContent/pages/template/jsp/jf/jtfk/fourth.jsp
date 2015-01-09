@@ -173,7 +173,7 @@
     <td width="15%">&nbsp;车牌号码</td>
     <td width="30%">&nbsp;${JTFKF_BILL.billNumber}</td>
     <td width="15%">&nbsp;罚款地点及原因</td>
-    <td width="30%">&nbsp;呼和浩特海西路不按指示标志行车</td>
+    <td width="30%">&nbsp;</td>
   </tr>
   <tr>
     <td>&nbsp;交通罚款</td>
