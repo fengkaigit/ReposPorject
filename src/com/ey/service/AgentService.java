@@ -80,6 +80,14 @@ public interface AgentService {
      
      void executeBatchBusiness(Long batchId,List<String> list,Integer status) throws RuntimeException;
      
-     List findNoticeByBillId(Long billId) throws RuntimeException;
+     List getNoticeByBillId(Long batchId,Long billId,Integer doflag) throws RuntimeException;
+     
+     List getOutBatchBill(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+     Long getCountOutBatchBill(Map<String,Object> Qparam) throws RuntimeException;
+     List statislSummaryErrorBill(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+     List statislSummaryOutNoCompBill(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+     
+     Long statislSummaryErrorBillCount(Map<String, Object> Qparam) throws RuntimeException;
+     Long statislSummaryOutBillCount(Map<String, Object> Qparam) throws RuntimeException;
      
 }

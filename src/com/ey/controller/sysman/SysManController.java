@@ -120,10 +120,11 @@ public class SysManController extends BaseController{
     }
 	
 	@RequestMapping(value = "/selfMore")
-	public ModelAndView selfMore(@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request, HttpServletResponse response){
+	public ModelAndView selfMore(Integer doflag,@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request, HttpServletResponse response){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("status", 1);
 		map.put("errorFlag", true);
+		map.put("errHandleFlag", doflag==0?false:true);
 		List selflist = agentService.findAgentSelf(null, map, page,
 				rows);
 		Long total = agentService.findAgentSelfTotal(null, map);
@@ -136,8 +137,8 @@ public class SysManController extends BaseController{
 	
 	@RequestMapping(value = "/showErrNotice")
 	@ResponseBody
-	public Object showErrNotice(Long  billId,HttpServletRequest request, HttpServletResponse response){
-		List noticelist = agentService.findNoticeByBillId(billId);
+	public Object showErrNotice(Long batchId,Long  billId,Integer doflag,HttpServletRequest request, HttpServletResponse response){
+		List noticelist = agentService.getNoticeByBillId(batchId,billId, doflag);
 		if(noticelist!=null&&noticelist.size()>0)
 			return noticelist.get(0);
 		return null;
@@ -150,8 +151,29 @@ public class SysManController extends BaseController{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("status", 1);
 		map.put("errorFlag", true);
+		map.put("errHandleFlag", false);
 		List selflist = agentService.findAgentSelf(null, map, page,rows);
 		return selflist;
+
+	}
+	@RequestMapping(value = "/doOutBatch")
+	@ResponseBody
+	public Object doOutBatch(Integer page, Integer rows,HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List selflist = agentService.getOutBatchBill( map, page,rows);
+		return selflist;
+
+	}
+	
+	@RequestMapping(value = "/doOutMore")
+	public ModelAndView doOutMore(Integer page, Integer rows,HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List selflist = agentService.getOutBatchBill( map, page,rows);
+		Long total = agentService.getCountOutBatchBill(map);
+		ModelAndView mav = new ModelAndView("sysman/outjflist");
+		mav.addObject("works", selflist);
+		mav.addObject("total", total);
+		return mav;
 
 	}
 	
@@ -165,16 +187,32 @@ public class SysManController extends BaseController{
 		if(errflag!=null){
 			map.put("errorFlag", errflag==1?true:false);
 		}
-		List<PaymentBillBo> billlist = agentService.findBillByBatchId(id, map,
+		getBillList(map,page,rows,request,modelMap);
+		return "sysman/errpaylist";
+	}
+	
+	@RequestMapping(value = "/outbilllist")
+	public String outbilllist(Long id,ModelMap modelMap,
+			@ModelAttribute("page") Integer page,
+			@ModelAttribute("rows") Integer rows, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("batchId", id);
+		map.put("outDate",true);
+		map.put("paymentStatus", 3);
+		getBillList(map,page,rows,request,modelMap);
+		return "sysman/outpaylist";
+	}
+	private void getBillList(Map<String, Object> map,Integer page,Integer rows,HttpServletRequest request,ModelMap modelMap){
+		List<PaymentBillBo> billlist = agentService.findBillByBatchId(null, map,
 				page, rows);
-		Long total = agentService.findBillTotalBatchId(id, map);
+		Long total = agentService.findBillTotalBatchId(null, map);
 		modelMap.addAttribute("bills", billlist);
 		modelMap.addAttribute("total", total);
 		Map<Integer,String> payStatusMaps = RequestUtils.getPayTypeName(request, "payment_status");
 		Map<Integer,String> errorPayStatusMaps =  RequestUtils.getPayTypeName(request,"payment_error_status");
 		payStatusMaps.putAll(errorPayStatusMaps);
 		modelMap.addAttribute("paystatus",payStatusMaps);
-		return "sysman/errpaylist";
 	}
 	@RequestMapping(value="/logout")
     public String syslogout(HttpServletRequest request,HttpServletResponse response){

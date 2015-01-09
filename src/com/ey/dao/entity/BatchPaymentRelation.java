@@ -18,6 +18,7 @@ public class BatchPaymentRelation implements java.io.Serializable {
 
 	private BatchPaymentRelationId id;
 	private Boolean errorFlag;
+	private Boolean errorSeeFlag;
 
 	// Constructors
 
@@ -26,9 +27,10 @@ public class BatchPaymentRelation implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public BatchPaymentRelation(BatchPaymentRelationId id,Boolean errorFlag) {
+	public BatchPaymentRelation(BatchPaymentRelationId id,Boolean errorFlag,Boolean errorSeeFlag) {
 		this.id = id;
 		this.errorFlag = errorFlag;
+		this.errorSeeFlag  = errorSeeFlag;
 	}
 
 	// Property accessors
@@ -51,6 +53,15 @@ public class BatchPaymentRelation implements java.io.Serializable {
 
 	public void setErrorFlag(Boolean errorFlag) {
 		this.errorFlag = errorFlag;
+	}
+    
+	@Column(name = "error_see_flag")
+	public Boolean getErrorSeeFlag() {
+		return errorSeeFlag;
+	}
+
+	public void setErrorSeeFlag(Boolean errorSeeFlag) {
+		this.errorSeeFlag = errorSeeFlag;
 	}
 	
 	

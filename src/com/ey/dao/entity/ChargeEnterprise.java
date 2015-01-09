@@ -21,6 +21,7 @@ public class ChargeEnterprise implements java.io.Serializable {
 	private Integer payType;
 	private byte[] exPic;
 	private Boolean delFlag;
+	private String outDate;
 
 	// Constructors
 
@@ -45,6 +46,16 @@ public class ChargeEnterprise implements java.io.Serializable {
 		this.payType = payType;
 	}
 	/** full constructor */
+	public ChargeEnterprise(Long id, String areaId, String enterpriseName,
+			String careNumber, Integer payType, byte[] exPic,String outDate) {
+		this.id = id;
+		this.areaId = areaId;
+		this.enterpriseName = enterpriseName;
+		this.careNumber = careNumber;
+		this.payType = payType;
+		this.exPic = exPic;
+		this.outDate = outDate;
+	}
 	public ChargeEnterprise(Long id, String areaId, String enterpriseName,
 			String careNumber, Integer payType, byte[] exPic) {
 		this.id = id;
@@ -118,5 +129,13 @@ public class ChargeEnterprise implements java.io.Serializable {
 	public void setDelFlag(Boolean delFlag) {
 		this.delFlag = delFlag;
 	}
+	@Column(name = "out_date")
+	public String getOutDate() {
+		return outDate;
+	}
 
+	public void setOutDate(String outDate) {
+		this.outDate = outDate;
+	}
+    
 }

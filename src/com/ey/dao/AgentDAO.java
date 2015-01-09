@@ -52,7 +52,14 @@ public interface AgentDAO extends BaseDAO {
      
      List findAgentSignRateByAgentId(Long id) throws RuntimeException;
      void updateSignRateById(Long id,Double rate) throws RuntimeException;
-     void updateErrorFlagByBatchId(Long batchId,Boolean flag)throws RuntimeException;
+     void updateErrorFlagByBatchId(Long batchId,Long billId,Boolean flag)throws RuntimeException;
+     void updateComplateFlagByBatchId(Long batchId,List<String> list,Boolean flag)throws RuntimeException;
      List findNoticeByBillId(Long billId) throws RuntimeException;
-
+     void updateErrHandFlagById(Long batchId,Long billId,Boolean handFlag) throws RuntimeException;
+     List getOutBatchBill(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+     Long getCountOutBatchBill(Map<String,Object> Qparam) throws RuntimeException;
+     List statislSummaryErrorBill(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+     List statislSummaryOutNoCompBill(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException;
+     Long statislSummaryErrorBillCount(Map<String, Object> Qparam) throws RuntimeException;
+     Long statislSummaryOutBillCount(Map<String, Object> Qparam) throws RuntimeException;
 }

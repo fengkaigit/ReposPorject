@@ -30,7 +30,11 @@ public class AgentPaymentBatch implements java.io.Serializable {
 	private Long billNum;
 	private String payTypeName;
 	private Boolean errorFlag;
-
+	private Long errorBillNum;
+	private Boolean errHandleFlag;
+    private String areaId;
+    private String areaName;
+    private String agentName;
 	// Constructors
 
 	/** default constructor */
@@ -60,7 +64,8 @@ public class AgentPaymentBatch implements java.io.Serializable {
 	}
 	
 	public AgentPaymentBatch(double batchMoney, Date createTime,
-			Integer batchStatus, Long agentId,Integer payType,Long billNum,String payTypeName,Boolean errorFlag) {
+			Integer batchStatus, Long agentId,Integer payType,Long billNum,String payTypeName,Boolean errorFlag,Long errorBillNum,Boolean errorHandleFlag
+			,String agentName,String areaId,String areaName) {
 		this.batchMoney = batchMoney;
 		this.createTime = createTime;
 		this.batchStatus = batchStatus;
@@ -69,6 +74,11 @@ public class AgentPaymentBatch implements java.io.Serializable {
 		this.billNum = billNum;
 		this.payTypeName = payTypeName;
 		this.errorFlag = errorFlag;
+		this.errorBillNum = errorBillNum;
+		this.errHandleFlag = errHandleFlag;
+		this.agentName = agentName;
+		this.areaId = areaId;
+		this.areaName = areaName;
 	}
 
 	// Property accessors
@@ -170,6 +180,50 @@ public class AgentPaymentBatch implements java.io.Serializable {
 
 	public void setErrorFlag(Boolean errorFlag) {
 		this.errorFlag = errorFlag;
+	}
+   
+	@Column(name = "error_bill_num")
+	public Long getErrorBillNum() {
+		return errorBillNum;
+	}
+
+	public void setErrorBillNum(Long errorBillNum) {
+		this.errorBillNum = errorBillNum;
+	}
+
+	@Column(name = "error_handle_flag")
+	public Boolean getErrHandleFlag() {
+		return errHandleFlag;
+	}
+
+	public void setErrHandleFlag(Boolean errHandleFlag) {
+		this.errHandleFlag = errHandleFlag;
+	}
+    
+	@Column(name = "area_id")
+	public String getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(String areaId) {
+		this.areaId = areaId;
+	}
+    
+	@Column(name = "area_name")
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+	@Column(name = "agent_name")
+	public String getAgentName() {
+		return agentName;
+	}
+
+	public void setAgentName(String agentName) {
+		this.agentName = agentName;
 	}
 	
 	

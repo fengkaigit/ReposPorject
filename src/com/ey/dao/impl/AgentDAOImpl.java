@@ -2,12 +2,14 @@ package com.ey.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.ey.bo.AgentBo;
+import com.ey.bo.TotalBillBo;
 import com.ey.dao.AgentDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.AgentInfo;
@@ -158,8 +160,11 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 				              {"agent_id",StandardBasicTypes.LONG},
 				              {"ids",StandardBasicTypes.STRING},
 				              {"total",StandardBasicTypes.DOUBLE},
-				              {"num",StandardBasicTypes.LONG}};
-		String sql = "select pay_type,agent_id,group_concat(Convert(id ,char)) as ids,sum(paid_money) as total,count(id) as num from payment_bill where payment_status = ? group by pay_type,ent_id,agent_id";
+				              {"num",StandardBasicTypes.LONG},
+				              {"agent_name",StandardBasicTypes.STRING},
+				              {"area_id",StandardBasicTypes.STRING},
+				              {"area_name",StandardBasicTypes.STRING}};
+		String sql = "select pay_type,agent_id,group_concat(Convert(id ,char)) as ids,sum(paid_money) as total,count(id) as num,agent_name,area_id,area_name from payment_bill where payment_status = ? group by pay_type,agent_id,agent_name,area_id,area_name";
 		return this.List(sql,scalaries,new Object[]{1});
 	}
 
@@ -173,7 +178,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 		   paramList.add(id);
 		}
 		createQuerySelfParam(hql,Qparam,paramList);
-		hql.append(" order by batchStatus,createTime desc,payType");
+		hql.append(" order by batchStatus,areaId,createTime desc,payType");
 		return this.find(hql.toString(), paramList,page,rows);
 	}
 
@@ -235,10 +240,22 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 				query.append(" and e.errorFlag = ?");
 				paramList.add(errflag);
 			}
+			Boolean errorSeeFlag = (Boolean)Qparam.get("errorSeeFlag");
+			if(errorSeeFlag!=null){
+				query.append(" and e.errorSeeFlag = ?");
+				paramList.add(errorSeeFlag);
+			}
 			Integer paymentStatus = (Integer)Qparam.get("paymentStatus");
 			if(paymentStatus!=null){
 				query.append(" and a.paymentStatus = ?");
 				paramList.add(paymentStatus);
+			}
+			Boolean outDate = (Boolean)Qparam.get("outDate");
+			if(outDate!=null){
+				Date date = new Date();
+				String currentMonth = DateUtil.getDateTime("yyyy-MM",date);
+				query.append(" and '"+currentMonth+"-'||b.outDate <= ?");
+				paramList.add(DateUtil.getDate(date));
 			}
 		}
 	}
@@ -272,6 +289,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 			String startDate = (String)Qparam.get("startDate");
 			String endDate = (String)Qparam.get("endDate");
 			Boolean errflag = (Boolean)Qparam.get("errorFlag");
+			Boolean errHandleFlag = (Boolean)Qparam.get("errHandleFlag");
 			if(status!=null){
 				query.append(" and batchStatus = ?");
 				paramList.add(status);
@@ -292,6 +310,10 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 				query.append(" and errorFlag = ?");
 				paramList.add(errflag);
 			}
+			if(errHandleFlag!=null){
+				query.append(" and errHandleFlag = ?");
+				paramList.add(errHandleFlag);
+			}
 		}
 	}
 
@@ -300,7 +322,7 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		List paramList = new ArrayList();
-		StringBuffer hql = new StringBuffer("select count(e.id.paymentBillId) from PaymentBill a,BatchPaymentRelation e where a.id = e.id.paymentBillId");
+		StringBuffer hql = new StringBuffer("select count(e.id.paymentBillId) from PaymentBill a,ChargeEnterprise b,BatchPaymentRelation e where a.id = e.id.paymentBillId and a.entId = b.id");
 		createQueryBillParam(hql,Qparam,paramList);
 		List list = this.find(hql.toString(),paramList.toArray());
 		if(list!=null&&list.size()>0){
@@ -352,19 +374,204 @@ public class AgentDAOImpl extends BaseDAOImpl implements AgentDAO {
 	}
 
 	@Override
-	public void updateErrorFlagByBatchId(Long batchId,Boolean flag)
+	public void updateErrorFlagByBatchId(Long batchId,Long billId,Boolean flag)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql = "update AgentPaymentBatch set errorFlag = ? where id = ? and errorFlag=?";
-		this.executeHql(hql, new Object[]{flag,batchId,false});
+		String hql = "update AgentPaymentBatch set errorFlag = ? where id = ?";
+		this.executeHql(hql, new Object[]{flag,batchId});
+		hql = "select count(id.paymentBillId) from BatchPaymentRelation where errorFlag = ? and id.paymentBillId = ? and id.relationId = ?";
+		List list = this.find(hql, new Object[]{true,billId,batchId});
+		if(list!=null&&list.size()>0){
+			Long num = Long.valueOf(list.get(0)+"");
+			if(num!=null&&num==0){
+				hql = "update AgentPaymentBatch set errorBillNum = errorBillNum + 1 where id = ?";
+			   this.executeHql(hql, new Object[]{batchId});
+			}
+		}
+		updateErrorFlagByBilldId(batchId,billId,flag);
 	}
-
+	@Override
+	public void updateComplateFlagByBatchId(Long batchId,List<String> list,Boolean flag)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "select id.paymentBillId from BatchPaymentRelation where id.relationId = ? and errorFlag = ?";
+		List errlist = this.find(hql, new Object[]{batchId,true});
+		if(list!=null&&list.size()>0){
+			for(String billIdStr:list){
+				Long billId = Long.valueOf(billIdStr.trim());
+				if(errlist.contains(billId)){
+					hql = "update AgentPaymentBatch set errorBillNum = errorBillNum - 1 where id = ?";
+					this.executeHql(hql, new Object[]{batchId});
+					errlist.remove(billId);
+				}
+				updateErrorFlagByBilldId(batchId,billId,flag);
+			}
+		}
+		if(errlist!=null&&errlist.size()==0){
+		     hql = "update AgentPaymentBatch set errorFlag = ? where id = ?";
+		     this.executeHql(hql, new Object[]{flag,batchId});
+		}
+	}
+   
+	public void updateErrorFlagByBilldId(Long batchId,Long billId,Boolean flag)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "update BatchPaymentRelation set errorFlag = ? where id.paymentBillId = ? and id.relationId = ?";
+		this.executeHql(hql, new Object[]{flag,billId,batchId});
+		hql = "delete from PaymentHedge where billId = ?";
+		this.executeHql(hql, new Object[]{billId});
+		hql = "delete from NoticeInfo where billId = ?";
+		this.executeHql(hql, new Object[]{billId});
+	}
 	@Override
 	public List findNoticeByBillId(Long billId)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		String hql="from NoticeInfo where billId = ?";
 		return this.find(hql, new Object[]{billId});
+	}
+
+	@Override
+	public void updateErrHandFlagById(final Long batchId, Long billId,Boolean handFlag)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		String hql = "update BatchPaymentRelation set errorSeeFlag = ? where id.paymentBillId = ? and id.relationId = ?";
+		this.executeHql(hql, new Object[]{handFlag,billId,batchId});
+		Long num = this.findBillTotalBatchId(batchId, new HashMap<String,Object>(){
+		     {
+		    	 put("batchId", batchId);
+		    	 put("errorSeeFlag",false);
+		     }
+		     });
+		if(num!=null&&num==0){
+		    hql = "update AgentPaymentBatch set errHandleFlag = ? where id = ?";
+			this.executeHql(hql, new Object[]{handFlag,batchId});
+		}
+	}
+
+	@Override
+	public List getOutBatchBill(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		Date date = new Date();
+		StringBuffer hql = new StringBuffer("select new com.ey.bo.TotalBillBo(a.id,a.payType,a.payTypeName,a.areaId,a.areaName,a.createTime,count(a.id)) from AgentPaymentBatch a,BatchPaymentRelation b,ChargeEnterprise c,PaymentBill d where a.id = b.id.relationId and b.id.paymentBillId = d.id and d.entId = c.id");
+		hql.append(" and d.paymentStatus = ?");
+		paramList.add(3);
+		String currentMonth = DateUtil.getDateTime("yyyy-MM",date);
+		hql.append(" and '"+currentMonth+"-'||c.outDate <= ?");
+		paramList.add(DateUtil.getDate(date));
+		hql.append(" group by a.id,a.payType,a.payTypeName,a.areaId,a.areaName,a.createTime order by a.areaId,a.payType,a.createTime desc");
+		return this.find(hql.toString(), paramList,page,rows);
+	}
+	@Override
+	public Long getCountOutBatchBill(Map<String,Object> Qparam) throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		Date date = new Date();
+		//StringBuffer totalHql = new StringBuffer("select count(*) from (");
+		StringBuffer hql = new StringBuffer("select a.id from AgentPaymentBatch a,BatchPaymentRelation b,ChargeEnterprise c,PaymentBill d where a.id = b.id.relationId and b.id.paymentBillId = d.id and d.entId = c.id");
+		hql.append(" and d.paymentStatus = ?");
+		paramList.add(3);
+		String currentMonth = DateUtil.getDateTime("yyyy-MM",date);
+		hql.append(" and '"+currentMonth+"-'||c.outDate <= ?");
+		paramList.add(DateUtil.getDate(date));
+		hql.append(" group by a.id,a.payType,a.payTypeName,a.areaId,a.areaName,a.createTime");
+		//totalHql.append(hql);
+		//totalHql.append(")");
+		List list = this.find(hql.toString(), paramList);
+		if(list!=null&&list.size()>0){
+        	return Long.valueOf(list.size());
+        }
+        return 0L;
+	}
+
+	@Override
+	public List statislSummaryErrorBill(Map<String, Object> Qparam,
+			Integer page, Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		Object[][] scalaries={{"areaId",StandardBasicTypes.STRING},
+	              {"areaName",StandardBasicTypes.STRING},
+	              {"payType",StandardBasicTypes.INTEGER},
+	              {"payTypeName",StandardBasicTypes.STRING},
+	              {"batchIds",StandardBasicTypes.STRING},
+	              {"errBillNum",StandardBasicTypes.LONG}};
+        StringBuffer query = new StringBuffer("select area_id as areaId,area_name as areaName,pay_type as payType,pay_typename as payTypeName,group_concat(Convert(id ,char)) as batchIds,sum(errorBillNum) as errBillNum from agent_payment_batch where error_flag = ?");
+        paramList.add(true);
+        createErrCountParam(query,Qparam,paramList);
+        query.append(" group by area_id,area_name,pay_type,pay_typename order by area_id,pay_type");
+        return this.List(query.toString(),scalaries,TotalBillBo.class,paramList.toArray(),page,rows);
+	}
+	@Override
+	public Long statislSummaryErrorBillCount(Map<String, Object> Qparam) throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		StringBuffer totalsql = new StringBuffer("select count(*) from (");
+        StringBuffer query = new StringBuffer("select area_id,pay_type from agent_payment_batch where error_flag = ? group by area_id,area_name,pay_type,pay_typename");
+        createErrCountParam(query,Qparam,paramList);
+        query.append(" group by area_id,area_name,pay_type,pay_typename");
+        totalsql.append(query);
+        totalsql.append(")");
+        List  list =  this.List(totalsql.toString(),paramList.toArray());
+        if(list!=null&&list.size()>0){
+        	return Long.valueOf(list.get(0)+"");
+        }
+        return 0L;
+	}
+
+	@Override
+	public List statislSummaryOutNoCompBill(
+			Map<String, Object> Qparam, Integer page, Integer rows)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		Object[][] scalaries={{"areaId",StandardBasicTypes.STRING},
+	              {"areaName",StandardBasicTypes.STRING},
+	              {"payType",StandardBasicTypes.INTEGER},
+	              {"payTypeName",StandardBasicTypes.STRING},
+	              {"batchIds",StandardBasicTypes.STRING},
+	              {"outBillNum",StandardBasicTypes.LONG}};
+      StringBuffer query = new StringBuffer("select a.area_id as areaId,a.area_name as areaName,a.pay_type as payType,a.pay_typename as payTypeName,group_concat(Convert(a.id ,char)) as batchIds,count(a.id) as outBillNum from agent_payment_batch a,batch_payment_relation b,charge_enterprise c,payment_bill d where a.id = b.relation_id and b.payment_bill_id = d.id and d.ent_id = c.id");
+	  createOutCountParam(query,Qparam,paramList);
+	  query.append(" group by a.area_id,a.area_name,a.pay_type,a.pay_typename order by a.area_id,a.pay_type");
+      return this.List(query.toString(),scalaries,TotalBillBo.class,paramList.toArray(),page,rows);
+	}
+	@Override
+	public Long statislSummaryOutBillCount(Map<String, Object> Qparam) throws RuntimeException {
+		// TODO Auto-generated method stub
+		List paramList = new ArrayList();
+		StringBuffer totalsql = new StringBuffer("select count(*) from (");
+		StringBuffer query = new StringBuffer("select a.area_id,a.pay_type from agent_payment_batch a,batch_payment_relation b,charge_enterprise c,payment_bill d where a.id = b.relation_id and b.payment_bill_id = d.id and d.ent_id = c.id");
+		createOutCountParam(query,Qparam,paramList);
+		query.append(" group by a.area_id,a.area_name,a.pay_type,a.pay_typename");
+        totalsql.append(query);
+        totalsql.append(")");
+        List  list =  this.List(totalsql.toString(),paramList.toArray());
+        if(list!=null&&list.size()>0){
+        	return Long.valueOf(list.get(0)+"");
+        }
+        return 0L;
+	}
+	private void createErrCountParam(StringBuffer query,Map<String, Object> Qparam,List paramList){
+		if(Qparam!=null&&Qparam.size()>0){
+			
+		}
+	}
+	private void createOutCountParam(StringBuffer query,Map<String, Object> Qparam,List paramList){
+		if(Qparam!=null&&Qparam.size()>0){
+			Integer payStatus = (Integer)Qparam.get("payStatus");
+			if(payStatus!=null){
+				query.append(" and d.payment_status = ?");
+				paramList.add(payStatus);
+			}
+			Boolean outDate = (Boolean)Qparam.get("outDate");
+			if(outDate!=null){
+				Date date = new Date();
+				String currentMonth = DateUtil.getDateTime("yyyy-MM",date);
+				query.append(" and concat('"+currentMonth+"-',c.out_date) <= ?");
+				paramList.add(DateUtil.getDate(date));
+			}
+		}
 	}
  
 

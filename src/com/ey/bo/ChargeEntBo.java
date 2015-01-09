@@ -30,8 +30,8 @@ public class ChargeEntBo extends ChargeEnterprise {
 		
 	}
 	public ChargeEntBo(Long id, String areaId, String enterpriseName,
-			String careNumber, Integer payType,byte[] exPic,String areaName,String areaPathName,String areaPath ) {
-		super(id, areaId, enterpriseName, careNumber, payType,exPic);
+			String careNumber, Integer payType,byte[] exPic,String areaName,String areaPathName,String areaPath ,String outDate,String payTypeName) {
+		super(id, areaId, enterpriseName, careNumber, payType,exPic,outDate);
 		this.areaName = areaName;
 		this.areaPathName = areaPathName.substring(9);
 		this.areaPath = areaPath.substring(8);

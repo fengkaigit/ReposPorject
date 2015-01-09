@@ -37,7 +37,7 @@ public class ChargeEntDAOImpl extends BaseDAOImpl implements ChargeEntDAO {
 	@Override
 	public ChargeEntBo getChargeEnt(Long id) throws RuntimeException {
 		// TODO Auto-generated method stub
-		String hql = "select new com.ey.bo.ChargeEntBo(a.id,a.areaId,a.enterpriseName,a.careNumber,a.payType,a.exPic,b.province,b.namePath,b.encodePath) from ChargeEnterprise a,Area b where a.areaId = b.id and a.id = ?";
+		String hql = "select new com.ey.bo.ChargeEntBo(a.id,a.areaId,a.enterpriseName,a.careNumber,a.payType,a.exPic,b.province,b.namePath,b.encodePath,a.outDate,a.outDate) from ChargeEnterprise a,Area b where a.areaId = b.id and a.id = ?";
 		List<ChargeEntBo> list = this.find(hql, new Object[]{id});
 		if(list!=null&&list.size()>0)
 			return list.get(0);

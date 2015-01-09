@@ -563,7 +563,7 @@ public class AgentController extends BaseController {
 			map.put("statusFlag", 1);
 			map.put("batchId", id);
 			map.put("billId", id);
-			map.put("paymentStatus", 3);
+			//map.put("paymentStatus", 3);
 			billlist = agentService.findBillByBatchId(id, map, 0, 0);
 			if(billlist!=null&&billlist.size()>0)
 			    batchId = ((PaymentBillBo)billlist.get(0)).getBatchId();

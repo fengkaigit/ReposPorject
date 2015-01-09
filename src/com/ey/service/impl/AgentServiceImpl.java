@@ -335,14 +335,13 @@ public class AgentServiceImpl implements AgentService {
 	@Override
 	public void saveNotice(Map<String,Object> paramMap,NoticeInfo o) throws RuntimeException {
 		// TODO Auto-generated method stub
-		o.setId(DbidGenerator.getDbidGenerator().getNextId());
-		agentDAO.save(o);
 		Long billId = (Long)paramMap.get("billId");
 		Integer billStatus = (Integer)paramMap.get("payerrStatus");
 		final Long batchId = (Long)paramMap.get("batchId");
 		agentDAO.updateBillStatusByIds(Arrays.asList(new String[]{billId+""}), billStatus);
-		agentDAO.updateErrorFlagByBatchId(batchId,true);
-		agentDAO.update(new BatchPaymentRelation(new BatchPaymentRelationId(billId,batchId),true));
+		agentDAO.updateErrorFlagByBatchId(batchId,billId,true);
+		o.setId(DbidGenerator.getDbidGenerator().getNextId());
+		agentDAO.save(o);
 		if(billStatus==SystemConst.REFUND){
 			Double paidMoney = (Double)paramMap.get("paidMoney");
 			PaymentHedge paymentHedge = new PaymentHedge();
@@ -377,14 +376,14 @@ public class AgentServiceImpl implements AgentService {
 			for (Object[] o : billlist) {
 				AgentPaymentBatch paymentBatch = new AgentPaymentBatch(
 						(Double) o[3], date, 0, (Long) o[1],
-						(Integer) o[0], (Long) o[4],payTypesMap.get((Integer)o[0]),false);
+						(Integer) o[0], (Long) o[4],payTypesMap.get((Integer)o[0]),false,0l,false,(String)o[5],(String)o[6],(String)o[7]);
 				this.savePaymentBatch(paymentBatch);
 				String[] billIds = ((String) o[2])
 						.split(SystemConst.SPLITE_SIGN_COMMON);
 				for (String billId : billIds) {
 					batchpaylist.add(new BatchPaymentRelation(
 							new BatchPaymentRelationId(Long.valueOf(billId
-									.trim()), paymentBatch.getId()),false));
+									.trim()), paymentBatch.getId()),false,false));
 				}
 				billIdsList.addAll(Arrays.asList(billIds));
 			}
@@ -420,16 +419,63 @@ public class AgentServiceImpl implements AgentService {
 		agentDAO.updateSignRateById(id, rate);
 	}
 	@Override
-	public void executeBatchBusiness(Long batchId, List<String> list,
+	public void executeBatchBusiness(final Long batchId, List<String> list,
 			Integer status) throws RuntimeException {
 		// TODO Auto-generated method stub
 		agentDAO.updateBillStatusByIds(list,status);
-		agentDAO.updateStatusByBatchId(batchId, 1);
+		agentDAO.updateComplateFlagByBatchId(batchId, list,false);
+		Long num = agentDAO.findBillTotalBatchId(batchId, new HashMap<String,Object>(){
+		     {
+		    	 put("batchId", batchId);
+		    	 put("paymentStatus",3);
+		     }
+		     });
+		if(num!=null&&num==0){
+		   agentDAO.updateStatusByBatchId(batchId, 1);
+		}
 	}
 	@Override
-	public List findNoticeByBillId(Long billId) throws RuntimeException {
+	public List getNoticeByBillId(Long batchId,Long billId,Integer doflag) throws RuntimeException {
 		// TODO Auto-generated method stub
+		if(doflag==0)
+		   agentDAO.updateErrHandFlagById(batchId,billId,true);
 		return agentDAO.findNoticeByBillId(billId);
+		
+	}
+	@Override
+	public List getOutBatchBill(Map<String,Object> Qparam,Integer page,Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.getOutBatchBill(Qparam,page,rows);
+	}
+	@Override
+	public List statislSummaryErrorBill(Map<String, Object> Qparam,
+			Integer page, Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.statislSummaryErrorBill(Qparam,page,rows);
+	}
+	@Override
+	public List statislSummaryOutNoCompBill(Map<String, Object> Qparam,
+			Integer page, Integer rows) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.statislSummaryOutNoCompBill(Qparam, page, rows);
+	}
+	@Override
+	public Long statislSummaryErrorBillCount(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.statislSummaryErrorBillCount(Qparam);
+	}
+	@Override
+	public Long statislSummaryOutBillCount(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.statislSummaryOutBillCount(Qparam);
+	}
+	@Override
+	public Long getCountOutBatchBill(Map<String, Object> Qparam)
+			throws RuntimeException {
+		// TODO Auto-generated method stub
+		return agentDAO.getCountOutBatchBill(Qparam);
 	}
 
 }
