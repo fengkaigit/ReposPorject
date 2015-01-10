@@ -353,7 +353,7 @@ function viewMore(){
 	</div>
  	<div>
 		<label style=" margin-right:8px;line-height:30px;"> 缴费金额：</label>
-		   <input type="text" value="" class="on-show" id="billMoney" name="billMoney" maxlength="10">&nbsp;&nbsp;元
+		   <input type="text" value="" class="on-show" id="billMoney" name="billMoney" maxlength="10" readonly="readonly">&nbsp;&nbsp;元
 	</div>
      
 	<div style="margin-bottom: 0px; margin-top:5px;clear:both;">
@@ -443,7 +443,6 @@ function viewMore(){
    
     </div>
 	 
-    
 </div>
 </div>
 <script src="<%=request.getContextPath() %>/js/funs.js" type="text/javascript"></script>
