@@ -1,11 +1,21 @@
 package com.ey.dao.impl;
 
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.ey.bo.PaymentStatisBo;
 import com.ey.dao.JfDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
+import com.ey.dao.entity.BillModel;
+import com.ey.dao.entity.BillSubject;
+import com.ey.dao.entity.BillSubjectData;
+import com.ey.dao.entity.BillSubjectDataId;
 import com.ey.dao.entity.PayAccountBill;
 import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.PaymentCatv;
@@ -17,6 +27,9 @@ import com.ey.dao.entity.PaymentMobile;
 import com.ey.dao.entity.PaymentProperty;
 import com.ey.dao.entity.PaymentTraffic;
 import com.ey.dao.entity.PaymentWater;
+import com.ey.forms.JfForm;
+import com.ey.util.ConvertUtil;
+import com.ey.util.DateUtil;
 import com.ey.util.StringUtil;
 
 @Repository("jfDAO")
@@ -24,9 +37,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 
 	@Override
 	public void saveBill(PayAccountBill payAccountBill,
-			PaymentBill paymentBill, PaymentWater paymentWater) {
+			PaymentBill paymentBill, PaymentWater paymentWater,BillModel bm) {
+		if (bm.getId() == null) {
+			super.getDbId(bm);
+		}
 		if (payAccountBill.getId() == null) {
 			super.getDbId(payAccountBill);
+			payAccountBill.setModelId(bm.getId());
 		}
 		if (paymentBill.getAccountBillId() == null) {
 			paymentBill.setAccountBillId(payAccountBill.getId());
@@ -36,11 +53,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		}
 		if (paymentWater.getId() == null) {
 			paymentWater.setId(paymentBill.getId());
+			paymentWater.setModelId(bm.getId());
 		}
 		if (paymentBill.getOrderNumber() == null) {
 			paymentBill.setOrderNumber(StringUtil.getBillNo(paymentBill
 					.getCreateTime(), paymentBill.getId()));
 		}
+		save(bm);
 		save(payAccountBill);
 		save(paymentBill);
 		save(paymentWater);
@@ -48,9 +67,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 
 	@Override
 	public void saveBill(PayAccountBill payAccountBill,
-			PaymentBill paymentBill, PaymentElectic paymentElectic) {
+			PaymentBill paymentBill, PaymentElectic paymentElectic, BillModel bm) {
+		if (bm.getId() == null) {
+			super.getDbId(bm);
+		}
 		if (payAccountBill.getId() == null) {
 			super.getDbId(payAccountBill);
+			payAccountBill.setModelId(bm.getId());
 		}
 		if (paymentBill.getAccountBillId() == null) {
 			paymentBill.setAccountBillId(payAccountBill.getId());
@@ -60,11 +83,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		}
 		if (paymentElectic.getId() == null) {
 			paymentElectic.setId(paymentBill.getId());
+			paymentElectic.setModelId(bm.getId());
 		}
 		if (paymentBill.getOrderNumber() == null) {
 			paymentBill.setOrderNumber(StringUtil.getBillNo(paymentBill
 					.getCreateTime(), paymentBill.getId()));
 		}
+		save(bm);
 		save(payAccountBill);
 		save(paymentBill);
 		save(paymentElectic);
@@ -72,9 +97,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 
 	@Override
 	public void saveBill(PayAccountBill payAccountBill,
-			PaymentBill paymentBill, PaymentFixedline paymentFixedline) {
+			PaymentBill paymentBill, PaymentFixedline paymentFixedline, BillModel bm) {
+		if (bm.getId() == null) {
+			super.getDbId(bm);
+		}
 		if (payAccountBill.getId() == null) {
 			super.getDbId(payAccountBill);
+			payAccountBill.setModelId(bm.getId());
 		}
 		if (paymentBill.getAccountBillId() == null) {
 			paymentBill.setAccountBillId(payAccountBill.getId());
@@ -84,11 +113,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		}
 		if (paymentFixedline.getId() == null) {
 			paymentFixedline.setId(paymentBill.getId());
+			paymentFixedline.setModelId(bm.getId());
 		}
 		if (paymentBill.getOrderNumber() == null) {
 			paymentBill.setOrderNumber(StringUtil.getBillNo(paymentBill
 					.getCreateTime(), paymentBill.getId()));
 		}
+		save(bm);
 		save(payAccountBill);
 		save(paymentBill);
 		save(paymentFixedline);
@@ -96,9 +127,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 
 	@Override
 	public void saveBill(PayAccountBill payAccountBill,
-			PaymentBill paymentBill, PaymentGas paymentGas) {
+			PaymentBill paymentBill, PaymentGas paymentGas, BillModel bm) {
+		if (bm.getId() == null) {
+			super.getDbId(bm);
+		}
 		if (payAccountBill.getId() == null) {
 			super.getDbId(payAccountBill);
+			payAccountBill.setModelId(bm.getId());
 		}
 		if (paymentBill.getAccountBillId() == null) {
 			paymentBill.setAccountBillId(payAccountBill.getId());
@@ -108,11 +143,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		}
 		if (paymentGas.getId() == null) {
 			paymentGas.setId(paymentBill.getId());
+			paymentGas.setModelId(bm.getId());
 		}
 		if (paymentBill.getOrderNumber() == null) {
 			paymentBill.setOrderNumber(StringUtil.getBillNo(paymentBill
 					.getCreateTime(), paymentBill.getId()));
 		}
+		save(bm);
 		save(payAccountBill);
 		save(paymentBill);
 		save(paymentGas);
@@ -120,9 +157,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 
 	@Override
 	public void saveBill(PayAccountBill payAccountBill,
-			PaymentBill paymentBill, PaymentProperty paymentProperty) {
+			PaymentBill paymentBill, PaymentProperty paymentProperty, BillModel bm) {
+		if (bm.getId() == null) {
+			super.getDbId(bm);
+		}
 		if (payAccountBill.getId() == null) {
 			super.getDbId(payAccountBill);
+			payAccountBill.setModelId(bm.getId());
 		}
 		if (paymentBill.getAccountBillId() == null) {
 			paymentBill.setAccountBillId(payAccountBill.getId());
@@ -132,11 +173,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		}
 		if (paymentProperty.getId() == null) {
 			paymentProperty.setId(paymentBill.getId());
+			paymentProperty.setModelId(bm.getId());
 		}
 		if (paymentBill.getOrderNumber() == null) {
 			paymentBill.setOrderNumber(StringUtil.getBillNo(paymentBill
 					.getCreateTime(), paymentBill.getId()));
 		}
+		save(bm);
 		save(payAccountBill);
 		save(paymentBill);
 		save(paymentProperty);
@@ -144,9 +187,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 
 	@Override
 	public void saveBill(PayAccountBill payAccountBill,
-			PaymentBill paymentBill, PaymentCatv paymentCatv) {
+			PaymentBill paymentBill, PaymentCatv paymentCatv, BillModel bm) {
+		if (bm.getId() == null) {
+			super.getDbId(bm);
+		}
 		if (payAccountBill.getId() == null) {
 			super.getDbId(payAccountBill);
+			payAccountBill.setModelId(bm.getId());
 		}
 		if (paymentBill.getAccountBillId() == null) {
 			paymentBill.setAccountBillId(payAccountBill.getId());
@@ -156,11 +203,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		}
 		if (paymentCatv.getId() == null) {
 			paymentCatv.setId(paymentBill.getId());
+			paymentCatv.setModelId(bm.getId());
 		}
 		if (paymentBill.getOrderNumber() == null) {
 			paymentBill.setOrderNumber(StringUtil.getBillNo(paymentBill
 					.getCreateTime(), paymentBill.getId()));
 		}
+		save(bm);
 		save(payAccountBill);
 		save(paymentBill);
 		save(paymentCatv);
@@ -168,9 +217,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 
 	@Override
 	public void saveBill(PayAccountBill payAccountBill,
-			PaymentBill paymentBill, PaymentMobile paymentMobile) {
+			PaymentBill paymentBill, PaymentMobile paymentMobile, BillModel bm) {
+		if (bm.getId() == null) {
+			super.getDbId(bm);
+		}
 		if (payAccountBill.getId() == null) {
 			super.getDbId(payAccountBill);
+			payAccountBill.setModelId(bm.getId());
 		}
 		if (paymentBill.getAccountBillId() == null) {
 			paymentBill.setAccountBillId(payAccountBill.getId());
@@ -180,11 +233,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		}
 		if (paymentMobile.getId() == null) {
 			paymentMobile.setId(paymentBill.getId());
+			paymentMobile.setModelId(bm.getId());
 		}
 		if (paymentBill.getOrderNumber() == null) {
 			paymentBill.setOrderNumber(StringUtil.getBillNo(paymentBill
 					.getCreateTime(), paymentBill.getId()));
 		}
+		save(bm);
 		save(payAccountBill);
 		save(paymentBill);
 		save(paymentMobile);
@@ -193,9 +248,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 
 	@Override
 	public void saveBill(PayAccountBill payAccountBill,
-			PaymentBill paymentBill, PaymentTraffic paymentTraffic) {
+			PaymentBill paymentBill, PaymentTraffic paymentTraffic, BillModel bm) {
+		if (bm.getId() == null) {
+			super.getDbId(bm);
+		}
 		if (payAccountBill.getId() == null) {
 			super.getDbId(payAccountBill);
+			payAccountBill.setModelId(bm.getId());
 		}
 		if (paymentBill.getAccountBillId() == null) {
 			paymentBill.setAccountBillId(payAccountBill.getId());
@@ -205,11 +264,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		}
 		if (paymentTraffic.getId() == null) {
 			paymentTraffic.setId(paymentBill.getId());
+			paymentTraffic.setModelId(bm.getId());
 		}
 		if (paymentBill.getOrderNumber() == null) {
 			paymentBill.setOrderNumber(StringUtil.getBillNo(paymentBill
 					.getCreateTime(), paymentBill.getId()));
 		}
+		save(bm);
 		save(payAccountBill);
 		save(paymentBill);
 		save(paymentTraffic);
@@ -218,9 +279,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 
 	@Override
 	public void saveBill(PayAccountBill payAccountBill,
-			PaymentBill paymentBill, PaymentHeating paymentHeating) {
+			PaymentBill paymentBill, PaymentHeating paymentHeating, BillModel bm) {
+		if (bm.getId() == null) {
+			super.getDbId(bm);
+		}
 		if (payAccountBill.getId() == null) {
 			super.getDbId(payAccountBill);
+			payAccountBill.setModelId(bm.getId());
 		}
 		if (paymentBill.getAccountBillId() == null) {
 			paymentBill.setAccountBillId(payAccountBill.getId());
@@ -230,11 +295,13 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		}
 		if (paymentHeating.getId() == null) {
 			paymentHeating.setId(paymentBill.getId());
+			paymentHeating.setModelId(bm.getId());
 		}
 		if (paymentBill.getOrderNumber() == null) {
 			paymentBill.setOrderNumber(StringUtil.getBillNo(paymentBill
 					.getCreateTime(), paymentBill.getId()));
 		}
+		save(bm);
 		save(payAccountBill);
 		save(paymentBill);
 		save(paymentHeating);
@@ -295,5 +362,107 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		String hql = "select distinct b.propChName from PaymentBill a, BaseCustomValue b where a.userId=? and a.year=? and a.month=? and a.paymentStatus>0 " +
 				" and a.payType = b.id.dataValue and b.id.customEngName='payment_type'";
 		return this.find(hql, new Object[]{userId,year,month});
+	}
+
+	@Override
+	public List<BillSubject> getBillSubjects(String sourceId) {
+		// TODO Auto-generated method stub
+		String hql = "from BillSubject where sourceId=? order by id";
+		return find(hql,new Object[]{sourceId});
+	}
+
+	@Override
+	public void saveBillSubjectData(JfForm form, PaymentBill paymentBill,
+			PayAccountBill payAccountBill, Object formObject) {
+		Integer ps = form.getPaymentStatus();
+		if(ps==null||ps.intValue()==0){
+			return;
+		}
+		List<BillSubject> subjects = getBillSubjects(form.getPayType().toString());
+		Map<String,Object> map = new HashMap();
+		ConvertUtil.copyProperties(map, formObject);
+		List<BillSubjectData> bsds = new ArrayList();
+		for(BillSubject subject:subjects){
+			Object obj = map.get(subject.getFieldName());
+			String data = null;
+			if(obj!=null){
+				if(obj instanceof Date){
+					data = DateUtil.convertDateToString("yyyy-MM-dd HH:mm:ss", (Date)obj);
+				}else{
+					data = obj.toString();
+				}
+			}
+			BillSubjectData bsd = new BillSubjectData(new BillSubjectDataId(form.getModelId(),subject.getId()),subject.getFieldName(),data);
+			bsds.add(bsd);
+		}
+		
+		Map<String,Object> otherMap = new HashMap();
+		otherMap.put("clientType", form.getClientType());
+		otherMap.put("orderNum", form.getOrderNum());
+		otherMap.put("moneycn", form.getMoneycn());
+		otherMap.put("billNo", form.getBillNo());
+		otherMap.put("billDate", form.getBillDate());
+		otherMap.put("billId", form.getBillId());
+		otherMap.put("bankName", form.getBankName());
+		otherMap.put("bankAccount", form.getBankAccount());
+		otherMap.put("totalMoney", form.getTotalMoney());
+		otherMap.put("bankCode", form.getBankCode());
+		otherMap.put("paymentbillid", paymentBill.getId());
+		otherMap.put("paymentaccountid", payAccountBill.getId());
+		otherMap.put("payuserid", form.getUserId());
+		otherMap.put("payusername", form.getUserName());
+		
+		if(!StringUtil.isEmptyString(form.getJfdate())&&form.getJfmonth()!=null){
+			otherMap.put("jfmonth", form.getJfmonth());
+			otherMap.put("jfdate", form.getJfdate());
+			if(!StringUtil.isEmptyString(form.getTvgroup())){
+				String[] strs = form.getTvgroup().split(",");
+				if(strs.length==3){
+					otherMap.put("tvmid", strs[0]);
+					otherMap.put("tvmname", strs[1]);
+					otherMap.put("tvmmoney", strs[2]);
+				}
+			}
+			if(!StringUtil.isEmptyString(form.getOthertvs())){
+				String[] strs = form.getOthertvs().split(";");
+				int i=0;
+				for(String str:strs){
+					String[] ses = str.split(",");
+					if(ses.length==3){
+						otherMap.put("tvoid"+i, ses[0]);
+						otherMap.put("tvoname"+i, ses[1]);
+						otherMap.put("tvomoney"+i, ses[2]);
+					}
+					i++;
+				}
+			}
+		}
+		if(form.getMobiles()!=null&&form.getBillMoneys()!=null){
+			for(int i=0;i<form.getMobiles().length;i++){
+				String mobile = form.getMobiles()[i];
+				double money = form.getBillMoneys()[i];
+				otherMap.put("mobile"+i, mobile);
+				otherMap.put("mobilemoney"+i, money);
+			}
+		}
+		Set<String> sets = otherMap.keySet();
+		int i=1;
+		for(String set:sets){
+			Object obj = otherMap.get(set);
+			String data = null;
+			if(obj!=null){
+				if(obj instanceof Date){
+					data = DateUtil.convertDateToString("yyyy-MM-dd HH:mm:ss", (Date)obj);
+				}else{
+					data = obj.toString();
+				}
+			}
+			BillSubjectData bsd = new BillSubjectData(new BillSubjectDataId(form.getModelId(),new Long(0-i)),set,data);
+			bsds.add(bsd);
+			i++;
+		}
+		if(bsds.size()>0){
+			this.batchSaveVO(bsds);
+		}
 	}
 }

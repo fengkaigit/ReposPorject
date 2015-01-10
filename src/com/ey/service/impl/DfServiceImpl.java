@@ -15,6 +15,7 @@ import com.ey.bo.AgentBo;
 import com.ey.dao.JfDAO;
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.BillModel;
 import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.PayAccountBill;
 import com.ey.dao.entity.PaymentBill;
@@ -33,7 +34,6 @@ import com.ey.service.TransferService;
 import com.ey.util.DateUtil;
 import com.ey.util.FeeUtil;
 import com.ey.util.StringUtil;
-import com.ey.util.UUIdUtil;
 
 @Service("dfService")
 public class DfServiceImpl implements DfService {
@@ -95,7 +95,10 @@ public class DfServiceImpl implements DfService {
 			saveSetting(form, date);
 			if (form.getOrderNum()!=null)
 				paymentBill.setOrderNumber(form.getOrderNum());
-			jfDAO.saveBill(payAccountBill,paymentBill,paymentElectic);
+			
+			BillModel bm = new BillModel(null,currentUser.getId(),"电",form.getPayType().toString(),form.getEntId());
+			jfDAO.saveBill(payAccountBill,paymentBill,paymentElectic,bm);
+			form.setModelId(bm.getId());
 			form.setBillId(payAccountBill.getId());
 			form.setBillNo(paymentBill.getOrderNumber());
 			form.setId(paymentBill.getId());
@@ -106,6 +109,10 @@ public class DfServiceImpl implements DfService {
 			paymentBill.setRemarks(form.getRemark());
 			paymentBill.setPayAddress(form.getPayAddress());
 			jfDAO.saveOrUpdate(paymentBill);
+			
+			//存账单源数据值
+			paymentElectic = (PaymentElectic) jfDAO.get(PaymentElectic.class,paymentBill.getId());
+			jfDAO.saveBillSubjectData(form,paymentBill,payAccountBill,paymentElectic);
 			transferService.saveTransferRecord(form);
 			bankAccountService.saveBankAccount(form);
 			Integer ps = form.getPaymentStatus();

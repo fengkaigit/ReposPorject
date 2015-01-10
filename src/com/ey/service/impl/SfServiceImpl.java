@@ -15,6 +15,7 @@ import com.ey.bo.AgentBo;
 import com.ey.dao.JfDAO;
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.BillModel;
 import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.PayAccountBill;
 import com.ey.dao.entity.PaymentBill;
@@ -91,9 +92,12 @@ public class SfServiceImpl implements SfService {
 					form.getPeriodFrequency(), form.getBillMoney(), form
 							.getPoundage(), date, form.getBillNumber());
 			saveSetting(form, date);
-			if (form.getOrderNum()!=null)
+			if (form.getOrderNum()!=null){
 				paymentBill.setOrderNumber(form.getOrderNum());
-			jfDAO.saveBill(payAccountBill,paymentBill,paymentWater);
+			}
+			BillModel bm = new BillModel(null,currentUser.getId(),"水",form.getPayType().toString(),form.getEntId());
+			jfDAO.saveBill(payAccountBill,paymentBill,paymentWater,bm);
+			form.setModelId(bm.getId());
 			form.setBillId(payAccountBill.getId());
 			form.setBillNo(paymentBill.getOrderNumber());
 			form.setId(paymentBill.getId());
@@ -104,6 +108,10 @@ public class SfServiceImpl implements SfService {
 			paymentBill.setRemarks(form.getRemark());
 			paymentBill.setPayAddress(form.getPayAddress());
 			jfDAO.saveOrUpdate(paymentBill);
+			//存账单源数据值
+			paymentWater = (PaymentWater) jfDAO.get(PaymentWater.class,paymentBill.getId());
+			jfDAO.saveBillSubjectData(form,paymentBill,payAccountBill,paymentWater);
+			
 			transferService.saveTransferRecord(form);
 			bankAccountService.saveBankAccount(form);
 			

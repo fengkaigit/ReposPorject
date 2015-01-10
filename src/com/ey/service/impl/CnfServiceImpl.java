@@ -15,6 +15,7 @@ import com.ey.bo.AgentBo;
 import com.ey.dao.JfDAO;
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.BillModel;
 import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.PayAccountBill;
 import com.ey.dao.entity.PaymentBill;
@@ -33,7 +34,6 @@ import com.ey.service.TransferService;
 import com.ey.util.DateUtil;
 import com.ey.util.FeeUtil;
 import com.ey.util.StringUtil;
-import com.ey.util.UUIdUtil;
 
 @Service("cnfService")
 public class CnfServiceImpl implements CnfService {
@@ -102,7 +102,10 @@ public class CnfServiceImpl implements CnfService {
 			saveSetting(form, date);
 			if (form.getOrderNum()!=null)
 				paymentBill.setOrderNumber(form.getOrderNum());
-			jfDAO.saveBill(payAccountBill, paymentBill, paymentHeating);
+			
+			BillModel bm = new BillModel(null,currentUser.getId(),"采暖",form.getPayType().toString(),form.getEntId());
+			jfDAO.saveBill(payAccountBill, paymentBill, paymentHeating,bm);
+			form.setModelId(bm.getId());
 			form.setBillId(payAccountBill.getId());
 			form.setBillNo(paymentBill.getOrderNumber());
 			form.setId(paymentBill.getId());
@@ -113,6 +116,10 @@ public class CnfServiceImpl implements CnfService {
 			paymentBill.setRemarks(form.getRemark());
 			paymentBill.setPayAddress(form.getPayAddress());
 			jfDAO.saveOrUpdate(paymentBill);
+			
+			//存账单源数据值
+			paymentHeating = (PaymentHeating) jfDAO.get(PaymentHeating.class,paymentBill.getId());
+			jfDAO.saveBillSubjectData(form,paymentBill,payAccountBill,paymentHeating);
 			transferService.saveTransferRecord(form);
 			bankAccountService.saveBankAccount(form);
 			

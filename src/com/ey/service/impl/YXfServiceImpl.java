@@ -15,6 +15,7 @@ import com.ey.bo.AgentBo;
 import com.ey.dao.JfDAO;
 import com.ey.dao.common.dbid.DbidGenerator;
 import com.ey.dao.entity.BaseCustomValue;
+import com.ey.dao.entity.BillModel;
 import com.ey.dao.entity.FeeRule;
 import com.ey.dao.entity.PayAccountBill;
 import com.ey.dao.entity.PaymentBill;
@@ -33,7 +34,6 @@ import com.ey.service.YXfService;
 import com.ey.util.DateUtil;
 import com.ey.util.FeeUtil;
 import com.ey.util.StringUtil;
-import com.ey.util.UUIdUtil;
 
 @Service("yxfService")
 public class YXfServiceImpl implements YXfService {
@@ -99,7 +99,10 @@ public class YXfServiceImpl implements YXfService {
 			saveSetting(form, date);
 			if (form.getOrderNum()!=null)
 				paymentBill.setOrderNumber(form.getOrderNum());
-			jfDAO.saveBill(payAccountBill,paymentBill,paymentCatv);
+			
+			BillModel bm = new BillModel(null,currentUser.getId(),"有线电视",form.getPayType().toString(),form.getEntId());
+			jfDAO.saveBill(payAccountBill,paymentBill,paymentCatv,bm);
+			form.setModelId(bm.getId());
 			form.setBillId(payAccountBill.getId());
 			form.setBillNo(paymentBill.getOrderNumber());
 			form.setId(paymentBill.getId());
@@ -110,6 +113,10 @@ public class YXfServiceImpl implements YXfService {
 			paymentBill.setRemarks(form.getRemark());
 			paymentBill.setPayAddress(form.getPayAddress());
 			jfDAO.saveOrUpdate(paymentBill);
+			
+			//存账单源数据值
+			paymentCatv = (PaymentCatv) jfDAO.get(PaymentCatv.class,paymentBill.getId());
+			jfDAO.saveBillSubjectData(form,paymentBill,payAccountBill,paymentCatv);
 			transferService.saveTransferRecord(form);
 			bankAccountService.saveBankAccount(form);
 			

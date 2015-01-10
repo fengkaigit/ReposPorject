@@ -58,6 +58,7 @@ public class JfForm implements Serializable {
 	private String tvgroup;
 	private double totalMoney;
 	private Integer clientType;//0或null为web端支付，1为手机端
+	private Long modelId;
 	public Long getId() {
 		return id;
 	}
@@ -364,5 +365,10 @@ public class JfForm implements Serializable {
 	public void setJfdate(String jfdate) {
 		this.jfdate = jfdate;
 	}
-	
+	public Long getModelId() {
+		return modelId;
+	}
+	public void setModelId(Long modelId) {
+		this.modelId = modelId;
+	}
 }
