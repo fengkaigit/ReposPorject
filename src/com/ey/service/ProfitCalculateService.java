@@ -71,6 +71,16 @@ public interface ProfitCalculateService {
 	
 	public void saveIncomeTransferRecords(Long incomeBillId, Long transferAccountId) throws RuntimeException;
 	
-	Long getNextId() throws RuntimeException;
+	public Long getNextId() throws RuntimeException;
+	
+	public Integer setHedgeDetail(int status1,int status2) throws RuntimeException;
+	
+	public Double saveSteriliseBill(Long steriliseId) throws RuntimeException;
+	
+	public void saveBillHedgeRelation(Long steriliseId, int status) throws RuntimeException;
+	
+	public void createAgentClearBill(int year, int month) throws RuntimeException;
+
+	public void createSystemClearBill(int year, int month) throws RuntimeException;
 
 }

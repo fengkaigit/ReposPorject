@@ -8,9 +8,11 @@ import com.ey.bo.AgentBo;
 import com.ey.bo.PaymentAgentBo;
 import com.ey.dao.ProfitCalculateDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
+import com.ey.dao.entity.AgentClearStatis;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.ServiceChargeBill;
+import com.ey.dao.entity.SystemClearStatis;
 import com.ey.dao.entity.TempPaymentBill;
 import com.ey.dao.entity.TransferRecords;
 
@@ -144,6 +146,102 @@ public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalcula
 			return lst.get(0);
 		else
 			return null;
+	}
+
+	@Override
+	public Integer saveHedgeDetail(int status1, int status2) throws RuntimeException {
+		String hql = " update PaymentHedge set statisStatus=? where statisStatus=?";
+		int flag = this.executeHql(hql, new Object[]{status2,status1});
+		return flag;
+	}
+
+	@Override
+	public Double getSteriliseBillMoney(int status) throws RuntimeException {
+		String hql = "select sum(hedgeMoney) from PaymentHedge where statisStatus=? and hedgeType<>?";
+		List<Double> lst = this.find(hql,new Object[]{status,0});
+		if (lst!=null && lst.size()>0)
+			return lst.get(0);
+		else
+			return null;
+	}
+
+	@Override
+	public java.util.List<Long> getHedgeList(int status)
+			throws RuntimeException {
+		String hql = "from PaymentHedge where statisStatus=?";
+		return this.find(hql,new Object[]{status});
+	}
+	
+	@Override
+	public List<AgentClearStatis> getAgentClearBill(Integer year,
+			Integer month) throws RuntimeException {
+		String hql = "select new AgentClearStatis(a.agentId,b.registRealName,sum(a.profitMoney),sum(c.poundage)) from SettleBill a,AgentInfo b, PaymentBill c " +
+				"where a.status=? and a.agentId=b.id and a.agentId=c.agentId and date_format(a.createDate,'%Y%m')=? and date_format(a.createDate,'%Y%m')=?" +
+				" group by a.agentId,b.registRealName";
+		String date = year.toString();
+		if (month<10)
+			date = date.concat("0").concat(month.toString());
+		else
+			date = date.concat(month.toString());
+		return this.find(hql,new Object[]{2,date,date});
+	}
+
+	@Override
+	public SystemClearStatis getSystemClearBill(Integer year,
+			Integer month) throws RuntimeException {
+		Double serviceMoney=0d,settleMoney=0d,replaceMoney=0d,profitMoney=0d;
+		SystemClearStatis sysClear = new SystemClearStatis();
+		String hql = "select sum(a.profitMoney) from ServiceChargeBill a" +
+				"where a.status=? and date_format(a.createDate,'%Y%m')=? ";
+		String date = year.toString();
+		if (month<10)
+			date = date.concat("0").concat(month.toString());
+		else
+			date = date.concat(month.toString());
+		List<Double> lst = this.find(hql,new Object[]{2,date});
+		if (lst!=null && lst.size()>0)
+			serviceMoney = lst.get(0);//系统劳务费金额
+		
+		hql = "select sum(a.profitMoney) from SettleBill a" +
+				"where a.status=? and date_format(a.createDate,'%Y%m')=? ";
+		lst = this.find(hql,new Object[]{2,date});
+		if (lst!=null && lst.size()>0)
+			settleMoney = lst.get(0);//代理商结算金额
+		
+		hql = "select sum(a.profitMoney) from IncomeBill a" +
+				"where a.status=? and date_format(a.createDate,'%Y%m')=? ";
+		lst = this.find(hql,new Object[]{2,date});
+		if (lst!=null && lst.size()>0)
+			profitMoney = lst.get(0);//系统最终盈利金额
+		
+		hql = "select sum(a.profitMoney) from PoundageBill a" +
+				"where a.status=? and date_format(a.createDate,'%Y%m')=? ";
+		lst = this.find(hql,new Object[]{2,date});
+		if (lst!=null && lst.size()>0)
+			replaceMoney = lst.get(0);//系统垫付手续费
+		hql = "select sum(a.steriliseMoney) from SteriliseBill a" +
+				"where a.status=? and date_format(a.createDate,'%Y%m')=? ";
+		lst = this.find(hql,new Object[]{2,date});
+		if (lst!=null && lst.size()>0)
+			replaceMoney = replaceMoney+lst.get(0);//系统垫付其它费用
+		
+		sysClear.setYear(year);
+		sysClear.setMonth(month);
+		sysClear.setServiceMoney(serviceMoney);
+		sysClear.setProfitMoney(profitMoney);
+		sysClear.setReplaceMoney(replaceMoney);
+		sysClear.setAgentMoney(settleMoney);
+		return sysClear;
+	}
+
+	@Override
+	public Long getBillId(String billName) throws RuntimeException {
+		String hql = "select max(id)+1 from "+billName;
+		Long id=1l;
+		List<Long> lst = this.find(hql);
+		if (lst!=null && lst.size()>0)
+			id = lst.get(0);
+		return id;
 	}
 	
 	

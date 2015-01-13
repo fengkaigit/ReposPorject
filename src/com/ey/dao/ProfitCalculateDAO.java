@@ -8,8 +8,10 @@ import com.ey.bo.PaymentAgentBo;
 import com.ey.dao.base.BaseDAO;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.PaymentBill;
+import com.ey.dao.entity.SystemClearStatis;
 import com.ey.dao.entity.TempPaymentBill;
 import com.ey.dao.entity.TransferRecords;
+import com.ey.dao.entity.AgentClearStatis;
 
 public interface ProfitCalculateDAO extends BaseDAO {
 
@@ -42,5 +44,17 @@ public interface ProfitCalculateDAO extends BaseDAO {
 	public Double getSystemProfitMoney(Long serviceBillId) throws RuntimeException;
 	
 	public Double getSystemSettleMoney(Long serviceBillId) throws RuntimeException;
+	
+	public Integer saveHedgeDetail(int status1,int status2) throws RuntimeException;
+	
+	public Double getSteriliseBillMoney(int status) throws RuntimeException;
+	
+	public List<Long> getHedgeList(int status) throws RuntimeException;
+
+	public List<AgentClearStatis> getAgentClearBill(Integer year, Integer month) throws RuntimeException;
+
+	public SystemClearStatis getSystemClearBill(Integer year, Integer month) throws RuntimeException;
+	
+	public Long getBillId(String billName) throws RuntimeException;
 	
 }

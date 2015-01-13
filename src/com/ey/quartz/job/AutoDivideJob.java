@@ -35,15 +35,18 @@ public class AutoDivideJob implements Job{
 		//处理劳务费划款单
 		Long serviceBillId = calculateServiceBill(calculateService);
 		if (serviceBillId!=null){
-			//处理系统手续费划款单(包括：用户缴费时手续费手续费)
+			//处理系统手续费划款单(用户缴费时手续费)
 			Long poundageBillId = calculatePoundagetBill(calculateService,serviceBillId);
 			//处理系统收益账户划款单(返回收益划款单号List)
 			Long profitBillId = calculateProfitBill(calculateService,serviceBillId);
-			//按代理商处理系统结算账户划款单(返回结算划款单号List)
+			//按代理商处理系统结算账户划款单(返回结算划款单号List,劳务费*代理商返点数)
 			List<PaymentAgentBo> settleIdList = calculateSettleBill(calculateService,serviceBillId);
-			//处理系统最终盈利划款单(收益－代理商结算－手续费)
-			Long incomeBillId = calculateIncomeBill(calculateService,serviceBillId);
+			//处理系统对冲数据划款单
+			Double steriliseMoney = calculateSterilise(calculateService);
+			//处理系统最终盈利划款单(收益－代理商结算－手续费－对冲数据)
+			Long incomeBillId = calculateIncomeBill(calculateService,serviceBillId,steriliseMoney);
 		}
+		
 		
 	}
 	
@@ -202,9 +205,31 @@ public class AutoDivideJob implements Job{
 		return agentList;
 	}
 	
+	//处理系统冲销金额
+	private Double calculateSterilise(ProfitCalculateService calculateService){
+		//获取系统最终盈利账户ID　获取转入账户Id
+		Long profitAccountId = calculateService.getSystemAccountId(6);
+		if (profitAccountId==null)
+			throw new RuntimeException("未设置系统冲销账户");
+		//生成系统冲销划款单单号
+		Long steriliseBillId =calculateService.getNextId();
+		Double steriliseMoney = 0d;
+		//修改冲销数据状态
+		Integer status = calculateService.setHedgeDetail(0,2);
+		if (status>0){
+			//生成系统冲销划款单，返回冲销金额
+			steriliseMoney = calculateService.saveSteriliseBill(steriliseBillId);
+			//生成系统冲销划款单与冲销数据对应关系
+			calculateService.saveBillHedgeRelation(steriliseBillId,2);
+			//修改系统冲销明细状态
+			calculateService.setHedgeDetail(2,1);
+		}
+		return steriliseMoney;
+	}
+	
 	//处理系统最终盈利
 	private Long calculateIncomeBill(ProfitCalculateService calculateService,
-			Long serviceBillId) throws RuntimeException{
+			Long serviceBillId, Double steriliseMoney) throws RuntimeException{
 		//获取系统大账户ID 获取转出账户Id
 		Long systemAccountId = calculateService.getSystemAccountId(0);
 		if (systemAccountId==null)
@@ -219,8 +244,8 @@ public class AutoDivideJob implements Job{
 		Double profitMoney = calculateService.getSystemProfitMoney(serviceBillId);
 		//获取系统结算金额
 		Double poundageMoney = calculateService.getSystemSettleMoney(serviceBillId);
-		//获取系统最终盈利金额(=系统收益金额－系统结算金额)
-		Double incomeMoney = profitMoney - poundageMoney;
+		//获取系统最终盈利金额(=系统收益金额－系统结算金额-系统冲销金额)
+		Double incomeMoney = profitMoney - poundageMoney - steriliseMoney;
 		//生成系统最终盈利账户划款单
 		calculateService.saveIncomeBill(incomeBillId, incomeMoney);
 		//保存最终盈利账户划款单与劳务费划款单关系

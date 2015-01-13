@@ -14,6 +14,7 @@ import com.ey.bo.AgentBo;
 import com.ey.bo.PaymentAgentBo;
 import com.ey.dao.ProfitCalculateDAO;
 import com.ey.dao.common.dbid.DbidGenerator;
+import com.ey.dao.entity.AgentClearStatis;
 import com.ey.dao.entity.AgentInfo;
 import com.ey.dao.entity.IncomeBill;
 import com.ey.dao.entity.IncomeServiceRelation;
@@ -41,6 +42,9 @@ import com.ey.dao.entity.SettleServiceRelation;
 import com.ey.dao.entity.SettleServiceRelationId;
 import com.ey.dao.entity.SettleTransferRelation;
 import com.ey.dao.entity.SettleTransferRelationId;
+import com.ey.dao.entity.SteriliseBill;
+import com.ey.dao.entity.SteriliseHedgeRelationId;
+import com.ey.dao.entity.SystemClearStatis;
 import com.ey.dao.entity.TempPaymentBill;
 import com.ey.dao.entity.TransferRecords;
 import com.ey.service.ProfitCalculateService;
@@ -373,6 +377,70 @@ public class ProfitCalculateServiceImpl implements ProfitCalculateService {
 	public Long getNextId() throws RuntimeException {
 		// TODO Auto-generated method stub
 		return  DbidGenerator.getDbidGenerator().getNextId();
+	}
+
+
+	@Override
+	public Integer setHedgeDetail(int status1, int status2) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return profitDao.saveHedgeDetail(status1,status2);
+	}
+
+
+	@Override
+	public Double saveSteriliseBill(Long steriliseId) throws RuntimeException {
+		Double money = profitDao.getSteriliseBillMoney(2);
+		SteriliseBill bill = new SteriliseBill();
+		bill.setId(steriliseId);
+		bill.setCreateDate(new Date());
+		bill.setConfirmDate(new Date());
+		bill.setStatus(2);
+		profitDao.save(bill);
+		return money;
+	}
+
+
+	@Override
+	public void saveBillHedgeRelation(Long steriliseId, int status)
+			throws RuntimeException {
+		List<Long> lst = profitDao.getHedgeList(status);
+		for (Long id:lst){
+			SteriliseHedgeRelationId billId = new SteriliseHedgeRelationId();
+			billId.setHedgeId(id);
+			billId.setSteriliseId(steriliseId);
+			profitDao.save(billId);
+		}
+	}
+
+
+	@Override
+	public void createAgentClearBill(int year, int month)
+			throws RuntimeException {
+		List<AgentClearStatis> lst = profitDao.getAgentClearBill(year,month);
+		Long id = profitDao.getBillId("AgentClearStatis");
+		if (id==null || id.longValue()==0l){
+			id=1l;
+		}
+		for (AgentClearStatis agentClear:lst){
+			agentClear.setYear(year);
+			agentClear.setMonth(month);
+			agentClear.setId(id);
+			id ++;
+			profitDao.save(agentClear);
+		}
+	}
+
+
+	@Override
+	public void createSystemClearBill(int year, int month)
+			throws RuntimeException {
+		SystemClearStatis sysClear = profitDao.getSystemClearBill(year,month);
+		Long id = profitDao.getBillId("SystemClearStatis");
+		if (id==null || id.longValue()==0l){
+			id=1l;
+		}
+		sysClear.setId(id);
+		profitDao.save(sysClear);
 	}
 
 }

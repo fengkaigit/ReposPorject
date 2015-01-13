@@ -86,6 +86,24 @@ public class BillController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/steriliselist")
+	public ModelAndView steriliselist(HttpServletRequest request,HttpServletResponse response){
+		ModelAndView mav = new ModelAndView();
+		List<SettleBillBo> sysManList = billService.getSettleBillList();
+		mav.addObject("settlelist", sysManList);
+		mav.setViewName("bill/sterilise");
+		return mav;
+	}
+	
+	@RequestMapping(value="/transferlist")
+	public ModelAndView transferlist(HttpServletRequest request,HttpServletResponse response){
+		ModelAndView mav = new ModelAndView();
+		List<SettleBillBo> sysManList = billService.getSettleBillList();
+		mav.addObject("settlelist", sysManList);
+		mav.setViewName("bill/transfer");
+		return mav;
+	}
+	
 	@RequestMapping(value="/incomelist")
 	public ModelAndView incomelist(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();

@@ -78,6 +78,7 @@ import com.ey.service.YXfService;
 import com.ey.service.YdtxfService;
 import com.ey.util.ClassUtil;
 import com.ey.util.DateUtil;
+import com.ey.util.FeeUtil;
 import com.ey.util.MD5;
 import com.ey.util.MoneyUtil;
 import com.ey.util.RequestUtils;
@@ -579,7 +580,8 @@ public class PhoneController {
 				form.setBillNumber(paymentCode);
 				form.setCarType(0);
 				form.setClientType(1);//手机端支付
-				FeeRule feeRule = feeService.getFeeRule(payType, new Date());
+
+				/*FeeRule feeRule = feeService.getFeeRule(payType, new Date());
 				if (feeRule != null) {
 					try {
 						Object obj = ClassUtil.loadClass(feeRule.getRule());
@@ -589,7 +591,12 @@ public class PhoneController {
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
-				}
+				}*/
+				
+				FeeRule feeRule = feeService.getFeeRule(payType, new Date());
+				Double poundage = FeeUtil.getPoundage(feeRule.getRule(), request.getSession().getServletContext(), currentUser, payType, areaId);
+				retnBo.setPoundage(poundage);
+				
 				form.setPoundage(retnBo.getPoundage());
 				form.setPaymentStatus(0);// 0：创建；
 				form.setBusinessType(0);//0：代缴；
@@ -618,8 +625,16 @@ public class PhoneController {
 					if(charges!=null&&charges.size()>0){
 						form.setEntId(charges.get(0).getId());
 					}
-				}
-				else{
+				}else if(payType==7){
+					String byear = beginPeriod.substring(0,4);
+					String eyear = endPeriod.substring(0,4);
+					int cMonth = 0;
+					if (byear.equals(eyear))
+						cMonth = Integer.valueOf(endPeriod.substring(5,7))-Integer.valueOf(beginPeriod.substring(5,7)+1);
+					else
+						cMonth = Integer.valueOf(12-Integer.valueOf(beginPeriod.substring(5,7))+1+Integer.valueOf(endPeriod.substring(5,7)));
+					form.setJfmonth(cMonth);
+				}else{
 					form.setMoneycn(MoneyUtil.toUpperCase(Double.valueOf(payMoney)
 						+ form.getPoundage()));
 				}
@@ -633,7 +648,8 @@ public class PhoneController {
 					form.setYear(curYear);
 					form.setMonth(curMonth+"");
 				}
-	
+				form.setJfdate(DateUtil.convertDateToString("yyyy-mm-dd", new Date()));
+				
 				Long dbId = DbidGenerator.getDbidGenerator().getNextId();
 				
 				String orderNum = StringUtil.getBillNo(new Date(), dbId);
