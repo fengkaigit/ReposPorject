@@ -6,16 +6,6 @@
 <title>e缴365</title>
 <meta content="" name="description">
 <%@include file="/pages/template/jsp/common/common.jsp"%>
-<script>
-function delManager(id){
-	if(confirm("确实要删除该信息吗?")){
-	   jQuery.shfftAjaxHandler.ajaxSynRequest("<%=request.getContextPath() %>/sysman/del.do",{ids:id},"get","json",function(data){
-		    alert(data.message);
-		    window.location.href = "<%=request.getContextPath() %>/sysman/list.do";
-	    });
-	}
-}
-</script>
 </head>
 <body>
 <%@include file="/pages/template/jsp/common/sysheader.jsp"%>
@@ -33,7 +23,7 @@ function delManager(id){
 	    <td>账户账号</td>
 	    <td>账户名称</td>
 	    <td>账户余额</td>
-	    <td>操作</td>
+	    <td>账户说明</td>
 	  </tr>
 	  <c:forEach var="item" items="${syslist}" varStatus="status">
 	   <tr <c:choose>
@@ -48,8 +38,7 @@ function delManager(id){
 	    <td>&nbsp;${item.acctNo}</td>
 	    <td>&nbsp;${item.acctName}</td>
 	    <td>&nbsp;${item.acctBalance}</td>
-	    <td>
-		<a class="cur" style="color:#007abd;"  onClick="openWin('<%=request.getContextPath() %>/sysaccount/edit/${item.bankAccountId}.do')" >修改</a>&nbsp;
+		<td>&nbsp;${item.memo}</td>
 		</td>
 	  </tr>
 	 </c:forEach>

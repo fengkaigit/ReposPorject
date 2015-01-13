@@ -68,7 +68,9 @@ $(document).ready(function() {
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/poundagelist.do">手续费划款单查询</a></li>
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/profitlist.do">收益划款单查询</a></li>
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/settlelist.do">结算划款单查询</a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/bill/steriliselist.do">对冲金额划款单查询</a></li>
 					<li class="current"><a href="<%=request.getContextPath() %>/bill/incomelist.do">最终盈利划款单查询</a></li>
+					<li class="current"><a href="<%=request.getContextPath() %>/bill/transferlist.do">转账记录查询</a></li>
 			  </ul></li>
 
 			  <li><span><a href="<%=request.getContextPath() %>/sysman/passwd.do">修改密码</a></span></li>
