@@ -30,9 +30,9 @@
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/payment?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="jdbcUrl" value="jdbc:mysql://115.28.218.241:3306/payment?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<property name="username" value="root" />
-		<property name="password" value="root" />
+		<property name="password" value="vifnn.com" />
 
 		<!-- 配置 -->
 		<!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->
