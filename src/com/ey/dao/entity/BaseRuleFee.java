@@ -40,14 +40,14 @@ public class BaseRuleFee implements java.io.Serializable {
 	public void setPaymentType(Integer paymentType) {
 		this.paymentType = paymentType;
 	}
-	@Column(name = "personalpoundage")
+	@Column(name = "personal_poundage")
 	public Double getPersonalPoundage() {
 		return personalPoundage;
 	}
 	public void setPersonalPoundage(Double personalPoundage) {
 		this.personalPoundage = personalPoundage;
 	}
-	@Column(name = "unitpoundage")
+	@Column(name = "unit_poundage")
 	public Double getUnitPoundage() {
 		return unitPoundage;
 	}
