@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * AgentTransferRelation entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "agent_transfer_relation")
+@Table(name = "hoster_setting")
 public class HosterSetting implements java.io.Serializable {
 
 	// Fields

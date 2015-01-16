@@ -1,4 +1,5 @@
 package com.ey.dao.impl;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,11 +11,13 @@ import com.ey.dao.ProfitCalculateDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.AgentClearStatis;
 import com.ey.dao.entity.AgentInfo;
+import com.ey.dao.entity.AgentSignRate;
 import com.ey.dao.entity.PaymentBill;
 import com.ey.dao.entity.ServiceChargeBill;
 import com.ey.dao.entity.SystemClearStatis;
 import com.ey.dao.entity.TempPaymentBill;
 import com.ey.dao.entity.TransferRecords;
+import com.ey.util.DateUtil;
 
 @Repository("profitDao") 
 public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalculateDAO{
@@ -120,10 +123,16 @@ public class ProfitCalculateDAOImpl extends BaseDAOImpl implements ProfitCalcula
 		String hql = "select new com.ey.bo.AgentBo(a.id,a.registAccount,a.passwd,a.EMail,a.mobile,a.rebackDot,a.registRealName,a.areaId,b.province,b.namePath,b.encodePath,c.rule,d.id.bankAccountId) from AgentInfo a,Area b,AgentRule c, AgentAccountRelation d" +
 				" where a.areaId = b.id and a.id=c.agentId and a.id=d.id.id and a.id = ? and a.delFlag = 0 and d.flag=0";
 		List<AgentBo> lst = this.find(hql,new Object[]{agentId});
-		if (lst!=null && lst.size()>0)
-			return lst.get(0);
-		else
-			return null;
+		AgentBo bo = null;
+		String date = DateUtil.convertDateToString("yyyymmdd",new Date()); 
+		if (lst!=null && lst.size()>0){
+			bo = lst.get(0);
+			hql = " select signRate from AgentSignRate where agentId=? and date_format(beginTime,'%Y%m%d')<=? and date_format(endTime,'%Y%m%d')=>? ";
+			List<AgentSignRate> lst1 = this.find(hql, new Object[]{agentId,date,date});
+			if (lst1!=null && lst1.size()>0)
+				bo.setRebackDot(lst1.get(0).getSignRate());
+		}
+		return bo;
 	}
 
 	@Override

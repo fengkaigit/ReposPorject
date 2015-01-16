@@ -1189,32 +1189,38 @@ public class PhoneController {
 	public ModelAndView modifyHoster(String hoster, String payAddress, String areaId, Integer groupId, Integer status, Long id, 
 			HttpServletRequest request,HttpServletResponse response) throws IOException, JSONException{
 		JSONObject obj = new JSONObject();
-		Boolean flag = false;
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
+			Long hosterId = 0l;
 			PaymentSetting setting = new PaymentSetting();
-			setting.setAreaId(areaId);
-			setting.setAreaName(areaService.getArea(areaId).getProvince());
-			setting.setGroupId(groupId);
-			BaseCustomValue dataValue = (BaseCustomValue)staticService.getObject(BaseCustomValue.class,new BaseCustomValueId("bill_group_type",groupId));
-			setting.setGroupName(dataValue.getPropChName());
-			setting.setHoster(hoster);
-			setting.setPayAddress(payAddress);
-			setting.setPaymentType(-1);
-			setting.setUserId(currentUser.getId());
+			if (status!=3){
+				setting.setAreaId(areaId);
+				setting.setAreaName(areaService.getArea(areaId).getProvince());
+				setting.setGroupId(groupId);
+				BaseCustomValue dataValue = (BaseCustomValue)staticService.getObject(BaseCustomValue.class,new BaseCustomValueId("bill_group_type",groupId));
+				setting.setGroupName(dataValue.getPropChName());
+				setting.setHoster(hoster);
+				setting.setPayAddress(payAddress);
+				setting.setPaymentType(-1);
+				setting.setPaymentTypeName("户主信息");
+				setting.setUserId(currentUser.getId());
+				setting.setCreateTime(new Date());
+			}
 			if (status==1){
 				setting.setDelFlag(0);
-				settingService.saveHoster(setting);
+				hosterId = settingService.saveHoster(setting);
 			}else if (status==2){
-				setting.setDelFlag(1);
 				setting.setId(id);
 				settingService.saveHoster(setting);
 			}else{
 				settingService.delHoster(id);
 			}
 			obj.put("success", true);
-			obj.put("data","缴费户主设置成功");
+			if (status==1)
+				obj.put("data",hosterId);
+			else	
+				obj.put("data","缴费户主设置成功");
 		}catch (Exception e) {
 			e.printStackTrace();
 			obj.put("success", false);

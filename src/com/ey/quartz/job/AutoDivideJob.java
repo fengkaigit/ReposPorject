@@ -179,7 +179,6 @@ public class AutoDivideJob implements Job{
 			//查询代理商返点规则
 			AgentBo agent = calculateService.findAgentRule(agentInfo.getId());
 			String className="";
-			String funName="";
 			//计算代理商返点金额
 			String[] ruleArray = agent.getRule().split(";");
 			for (String rule:ruleArray){
