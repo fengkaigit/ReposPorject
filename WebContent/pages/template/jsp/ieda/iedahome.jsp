@@ -59,7 +59,7 @@ function postHandle(){
 	 });
 }
 function showIeda(){
-	showDivWin('addIeda',660,410,'');
+	showDivWin('addIeda',660,300,'');
 }
 </script>
 </head>
@@ -92,7 +92,7 @@ function showIeda(){
                                 <td height="33" class="line3" id="aboutUs"><table width="200" border="0" cellspacing="0" cellpadding="0">
                                         <tbody><tr>
                                             <td width="24" height="22" align="center" class="bg10">&nbsp;</td>
-                                            <td width="126" height="22" align="left"><a href="<%=request.getContextPath() %>/ej/feedback.do">意见反馈</a></td>
+                                            <td width="126" height="22" align="left"><a href="<%=request.getContextPath() %>/ej/feedback.do">评论区</a></td>
                                         </tr>
                                     </tbody></table></td>
                             </tr>
@@ -154,7 +154,7 @@ function showIeda(){
             <h1></h1>
 			 <p >我要评论</p> 
             <table style="width:100%;" border="0" bgcolor="#c3c6c9" cellspacing="0" cellpadding="0">
-            <tbody><tr>
+            <tbody><tr style="display:none;">
                 <td width="28%" bgcolor="#f1f8ff" align="right" style="vertical-align: middle;">&nbsp;</td>
                 <td bgcolor="#FFFFFF">
                         <div class="tabBlBtn" style="margin-top: 10px; clear: both;">
@@ -174,13 +174,13 @@ function showIeda(){
                    
           
             <div class="perDataItem" >
-                <textarea style="height: 126px; border-color: rgb(214, 214, 214);" onpropertychange="if(value.length&gt;10000)value=value.substring(0,10000)" name="userIdea" class="inputBox text text-empty" id="userIdea" data-default=""></textarea>
-                  <span class="grey">如果您发现网站有功能或者逻辑性的bug，请在此处向我们报告，我们的工程师会尽快核实并修复bug，不断提升我们的用户体验。
+                <textarea style="height: 150px; border-color: rgb(214, 214, 214);" onpropertychange="if(value.length&gt;10000)value=value.substring(0,10000)" name="userIdea" class="inputBox text text-empty" id="userIdea" data-default=""></textarea>
+                 
             </div>
         
                 </td>
             </tr>
-            <tr>
+            <tr style="display:none;">
                 <td bgcolor="#f1f8ff" align="right"><span class="red">*</span>邮箱地址：</td>
                 <td bgcolor="#FFFFFF">
                    

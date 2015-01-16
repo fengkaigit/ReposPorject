@@ -91,7 +91,25 @@ $(document).ready(function(){
 			   dblist.innerHTML = dbHtml.join("");
 		   }
 	 });
-	
+	//获取评论信息
+	 jQuery.shfftAjaxHandler.ajaxRequest("<%=request.getContextPath() %>/ej/audisynclist.do",{page:1,rows:10,status:0},"get","json",function(data){
+		   if(data.length>0){
+			   var opinHtml = [];
+			   var opindiv = document.getElementById("bt1");
+			   for(var i=0;i<data.length;i++){
+				   var obj = data[i];
+				   var title = obj.userName+'('+obj.areaName+')';
+				   opinHtml.push('<div class="list">');
+				   opinHtml.push('<div class="listName">');
+				   //opinHtml.push('<a href="javascript:showbatch('+obj.id+')" title="'+title+'"><span class="error warn">'+title+'</span></a>');
+				   opinHtml.push('<span class="error warn" title="'+obj.userIdea+'">'+title+'</span></a>');
+				   opinHtml.push('</div>');
+				   opinHtml.push('<div class="desktopTime">'+obj.viewTime+'</div>');
+				   opinHtml.push('</div>');
+				 }
+			   opindiv.innerHTML = opinHtml.join("");
+		   }
+	 });
 	//当月订单完成情况
 	 //swfobject.embedSWF("<%=request.getContextPath() %>/js/ofc/open-flash-chart.swf", "bt1", "300", "200", "9.0.0", 
 				//"expressInstall.swf",
@@ -137,6 +155,9 @@ function moregg(){
 function moredb(){
 	window.parent.location.href = "<%=request.getContextPath() %>/sysman/selfMore.do?doflag=0";
 }
+function moreopin(){
+	window.parent.location.href = "<%=request.getContextPath() %>/ej/list.do?status=0";
+}
 </script>
 </head>
 <body >
@@ -169,7 +190,8 @@ function moredb(){
 							<td>
 								<li class="box" style="width: 300px;">
 									<div class="title">
-										<div class="desktopTitleName">当月订单完成情况</div>
+										<div class="desktopTitleName">用户评论信息</div>
+										<div class="desktopTitleName1"><a class="more" href="javascript:moreopin()">更多&gt;</a></div>
 									</div>
 									<div class="" id="bt1">
 									</div>

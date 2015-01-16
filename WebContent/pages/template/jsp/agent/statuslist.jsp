@@ -166,7 +166,7 @@ function showReplyDiv(userId,id,paidMoney){
                         <select class="zc_city"  style="width:190px;height:28px;" id="noticeType" name="noticeType">
                              <option value="">请选择类型</option>
                              <c:forEach var="item" items="${noticeTypes}" varStatus="status">
-                                <option value="${item.key}" >${item.value}</option>
+                                <option value="${item.key}" <c:if test="${item.key==3}">selected</c:if>>${item.value}</option>
                              </c:forEach>    
                           
                         </select>                
@@ -178,7 +178,7 @@ function showReplyDiv(userId,id,paidMoney){
                         <select class="zc_city"  style="width:190px;height:28px;" id="noticeMode" name="noticeMode">
                              <option value="">请选择方式</option>
                              <c:forEach var="item" items="${noticeModes}" varStatus="status">
-                                <option value="${item.key}" >${item.value}</option>
+                                <option value="${item.key}" <c:if test="${item.key==2}">selected</c:if>>${item.value}</option>
                              </c:forEach>    
                           
                         </select>                
@@ -190,7 +190,7 @@ function showReplyDiv(userId,id,paidMoney){
                         <select class="zc_city"  style="width:190px;height:28px;" id="payerrStatus" name="payerrStatus">
                              <option value="">请选择状态</option>
                              <c:forEach var="item" items="${payerrs}" varStatus="status">
-                                <option value="${item.key}" >${item.value}</option>
+                                <option value="${item.key}">${item.value}</option>
                              </c:forEach>    
                           
                         </select>                

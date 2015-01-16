@@ -23,7 +23,7 @@ $(document).ready(function(){
 	$("#careNumber").formValidator({onShow:"请输入有效银行账户",onFocus:"名称至少16个字符,最多20个字符",onCorrect:"输入合法"}).inputValidator({min:16,max:20,onError:"有效银行账户非法,请确认"});
 	$("#bankId").formValidator({onShow:"请选择所属银行",onCorrect:"选择合法"}).inputValidator({min:1,onError: "银行未选择,请选择!"});
 	$("#bankDeposit").formValidator({onShow:"请输入开户行",onFocus:"开户行至少5个字符,最多200个字符",onCorrect:"输入合法"}).inputValidator({min:5,max:200,onError:"开户行非法,请确认"});
-	$("#cardNumber").formValidator({onShow:"请输入银行账号",onFocus:"银行账号至少16个字符,最多32个字符",onCorrect:"输入合法"}).inputValidator({min:16,max:32,empty:{leftEmpty:false,rightEmpty:false,emptyError:"账号两边不能有空符号"},onError:"银行账号非法,请确认"});
+	$("#cardNumber").formValidator({onShow:"请输入银行账号",onFocus:"银行账号至少16个字符",onCorrect:"输入合法"}).inputValidator({min:16,empty:{leftEmpty:false,rightEmpty:false,emptyError:"账号两边不能有空符号"},onError:"银行账号非法,请确认"});
 	document.getElementById("cardNumber").onkeyup =function() {
 		cardNumFormat(this);
 	};
