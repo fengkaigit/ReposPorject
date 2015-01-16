@@ -1108,23 +1108,27 @@ public class PhoneController {
 			JSONObject  dataJson=new JSONObject(data);
 			List<PaymentSetting> lst = new ArrayList();
 			org.json.JSONArray jsonArray =dataJson.getJSONArray("data");
+			PaymentSetting hoster = new PaymentSetting();
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jo = jsonArray.getJSONObject(i);
 				if (jo.getString("paymentType")!=null){//0：水费；1：电费；2：燃气；3：固话；4：移动；5：交通；6：物业；7：有线电视；8采暖；
 					if (!jo.getString("status").equals("3")){
 						PaymentSetting vo = new PaymentSetting();
-						vo.setAreaId(jo.getString("areaId"));
-						vo.setAreaName(areaService.getArea(vo.getAreaId()).getProvince());
+						
+						hoster = (PaymentSetting)settingService.getObjectById(PaymentSetting.class, Long.valueOf(jo.getString("hoster")));
+						
+						vo.setAreaId(hoster.getAreaId());
+						vo.setAreaName(hoster.getAreaName());
 						vo.setBillNumber(jo.getString("billNumber"));
 						vo.setCreateTime(new Date());
 						vo.setDelFlag(0);
 						vo.setEntId(Long.valueOf(jo.getString("entId")));
 						vo.setEntName(chargeEntService.getChargeEnt(vo.getEntId()).getEnterpriseName());
-						vo.setGroupId(Integer.valueOf(jo.getString("groupId")));
+						vo.setGroupId(hoster.getGroupId());
 						BaseCustomValue dataValue = (BaseCustomValue)staticService.getObject(BaseCustomValue.class,new BaseCustomValueId("bill_group_type",vo.getGroupId()));
 						vo.setGroupName(dataValue.getPropChName());
-						vo.setHoster(jo.getString("hoster"));
-						vo.setPayAddress(jo.getString("payAddress"));
+						vo.setHoster(hoster.getHoster());
+						vo.setPayAddress(hoster.getPayAddress());
 						vo.setPaymentType(Integer.valueOf(jo.getString("paymentType")));
 						dataValue = (BaseCustomValue)staticService.getObject(BaseCustomValue.class,new BaseCustomValueId("payment_type",vo.getPaymentType()));
 						vo.setPaymentTypeName(dataValue.getPropChName());
@@ -1152,7 +1156,8 @@ public class PhoneController {
 					if (detail.getDelFlag()==3){
 						settingService.delSetting(detail.getId());
 					}else{
-						settingService.saveSetting(detail);
+						Long id = settingService.saveSetting(detail);
+						settingService.saveHosterDetailRelation(hoster.getId(),id);
 					}
 				}
 				obj.put("success", true);
@@ -1165,6 +1170,55 @@ public class PhoneController {
 			e.printStackTrace();
 			obj.put("success", false);
 			obj.put("data","缴费设置失败");
+		}
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
+	
+	@RequestMapping(value="/modifyHoster")
+	public ModelAndView modifyHoster(String hoster, String payAddress, String areaId, Integer groupId, Integer status, Long id, 
+			HttpServletRequest request,HttpServletResponse response) throws IOException, JSONException{
+		JSONObject obj = new JSONObject();
+		Boolean flag = false;
+		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			PaymentSetting setting = new PaymentSetting();
+			setting.setAreaId(areaId);
+			setting.setAreaName(areaService.getArea(areaId).getProvince());
+			setting.setGroupId(groupId);
+			BaseCustomValue dataValue = (BaseCustomValue)staticService.getObject(BaseCustomValue.class,new BaseCustomValueId("bill_group_type",groupId));
+			setting.setGroupName(dataValue.getPropChName());
+			setting.setHoster(hoster);
+			setting.setPayAddress(payAddress);
+			setting.setPaymentType(-1);
+			setting.setUserId(currentUser.getId());
+			if (status==1){
+				setting.setDelFlag(0);
+				settingService.saveHoster(setting);
+			}else if (status==2){
+				setting.setDelFlag(1);
+				setting.setId(id);
+				settingService.saveHoster(setting);
+			}else{
+				settingService.delHoster(id);
+			}
+			obj.put("success", true);
+			obj.put("data","缴费户主设置成功");
+		}catch (Exception e) {
+			e.printStackTrace();
+			obj.put("success", false);
+			obj.put("data","缴费户主设置失败");
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();

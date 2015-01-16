@@ -29,11 +29,14 @@ public class SettingDAOImpl extends BaseDAOImpl implements SettingDAO {
 	}
 
 	@Override
-	public void saveSetting(PaymentSetting setting) throws RuntimeException {
+	public Long saveSetting(PaymentSetting setting) throws RuntimeException {
+		Long id = 0l;
 		if (setting.getId() == null) {
 			super.getDbId(setting);
+			id = setting.getId();
 		}
 		saveOrUpdate(setting);
+		return id;
 	}
 
 	@Override
@@ -61,6 +64,14 @@ public class SettingDAOImpl extends BaseDAOImpl implements SettingDAO {
 		String hql = "from PaymentSetting where (billNumber like ? or hoster like ?) and paymentType=? and userId=?";
 
 		return find(hql, new Object[] { "%" + name + "%","%" + name + "%", paymentType, userId });
+	}
+
+	@Override
+	public void delHoster(Long id) throws RuntimeException {
+		String hql = "update PaymentSetting set delFlag=1 where id in (select id.detailId from HosterSetting where id.hosterId=?)";
+		this.executeHql(hql, new Object[] { id });
+		hql = "update PaymentSetting set delFlag=1 where id=?";
+		this.executeHql(hql, new Object[] { id });
 	}
 
 }

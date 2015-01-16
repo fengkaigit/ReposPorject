@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ey.dao.SettingDAO;
+import com.ey.dao.entity.HosterSetting;
+import com.ey.dao.entity.HosterSettingId;
 import com.ey.dao.entity.PaymentSetting;
 import com.ey.service.SettingService;
 @Service("settingService")
@@ -28,8 +30,9 @@ public class SettingServiceImpl implements SettingService {
 	}
 
 	@Override
-	public void saveSetting(PaymentSetting setting)  throws RuntimeException {
-		settingDAO.saveSetting(setting);
+	public Long saveSetting(PaymentSetting setting)  throws RuntimeException {
+		Long id = settingDAO.saveSetting(setting);
+		return id;
 	}
 
 	@Override
@@ -49,5 +52,24 @@ public class SettingServiceImpl implements SettingService {
 			Integer paymentType, Long userId) {
 		// TODO Auto-generated method stub
 		return settingDAO.getSettingByBillNumber(name,paymentType,userId);
+	}
+
+	@Override
+	public Long saveHoster(PaymentSetting setting) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return settingDAO.saveSetting(setting);
+	}
+
+	@Override
+	public void delHoster(Long id) throws RuntimeException {
+		settingDAO.delHoster(id);
+	}
+
+	@Override
+	public void saveHosterDetailRelation(Long hosterId, Long id)
+			throws RuntimeException {
+		HosterSettingId hosterDetail = new HosterSettingId(hosterId,id);
+		HosterSetting hoster = new HosterSetting(hosterDetail);
+		settingDAO.save(hoster);
 	}
 }

@@ -9,7 +9,7 @@ public interface SettingDAO extends BaseDAO {
 
 	List<PaymentSetting> list(Long userId, Integer paymentType) throws RuntimeException;
 
-	void saveSetting(PaymentSetting setting) throws RuntimeException;
+	Long saveSetting(PaymentSetting setting) throws RuntimeException;
 
 	void delSetting(Long id)throws RuntimeException;
 
@@ -17,5 +17,7 @@ public interface SettingDAO extends BaseDAO {
 
 	List<PaymentSetting> getSettingByBillNumber(String name,
 			Integer paymentType, Long userId);
+	
+	public void delHoster(Long id) throws RuntimeException;
 
 }

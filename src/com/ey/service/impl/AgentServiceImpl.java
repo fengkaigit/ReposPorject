@@ -67,6 +67,7 @@ public class AgentServiceImpl implements AgentService {
 			signRate.setBeginTime(signBeginDate);
 			signBeginDate = DateUtil.getAfterYear(signBeginDate, 1);
 			signEndDate = DateUtil.getAfterDay(signBeginDate,-1);
+			signRate.setSignRate(0d);
 			signRate.setEndTime(signEndDate);
 			volist.add(signRate);
 		}
