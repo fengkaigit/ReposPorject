@@ -135,6 +135,16 @@ public class AboutController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/audisynclist")
+	@ResponseBody
+	public Object audisynclist(String pareaId,String areaId,Integer status,@ModelAttribute("page") Integer page,@ModelAttribute("rows") Integer rows,HttpServletRequest request,HttpServletResponse response){
+		ModelAndView mav = new ModelAndView();
+		Map<String,Object> queryMap = new HashMap<String,Object>();
+        queryMap.put("backFlag", status);
+		List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, page, rows);
+	    return feedlist;
+	}
+	
 	@RequestMapping(value="/areafeed")
 	public ModelAndView areafeed(HttpServletRequest request,HttpServletResponse response){
 		UserBase user = (UserBase)request.getSession().getAttribute(SystemConst.USER);

@@ -8,6 +8,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * Feedback entity. @author MyEclipse Persistence Tools
  */
@@ -90,6 +92,7 @@ public class Feedback implements java.io.Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "view_time", nullable = false, length = 10)
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	public Date getViewTime() {
 		return this.viewTime;
 	}

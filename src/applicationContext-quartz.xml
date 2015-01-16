@@ -27,9 +27,9 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 	<!--  代理商批次单调度触发器 -->
 	<bean id="batchCornTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
        <property name="jobDetail" ref="batchJobDetail"/>
-       <!-- 测试用 -->
-       <property name="cronExpression" value="0 0 12 * * ?"/>
-       <!-- <property name="cronExpression" value="59 59 23 * * ?"/> -->
+       <!-- 测试用 
+       <property name="cronExpression" value="0 0 12 * * ?"/>-->
+       <property name="cronExpression" value="0 59 23 * * ?"/>
     </bean>
     
     <!--  定时生成各类结算单据任务 -->
@@ -75,7 +75,6 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
        <!-- 每年的11月11号 11点11分触发(光棍节)  -->
        <!-- <property name="cronExpression" value="0 11 11 11 11 ? "/> -->
     </bean>
-    	
 	<!--  定时生成代理商月终清算统计单任务 -->
 	<bean id="systemJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
 	    <!--false表示等上一个任务执行完后再开启新的任务-->
@@ -102,7 +101,8 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
       <property name="triggers">
           <list>
-          	<ref bean="batchCornTrigger"/>
+              <!--<ref bean="cornTrigger"/>-->
+            <ref bean="batchCornTrigger"/>
           	<ref bean="cornTrigger"/>
           	<ref bean="agentTrigger"/>
           	<ref bean="systemTrigger"/>
