@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ey.bo.HosterBo;
 import com.ey.dao.SettingDAO;
 import com.ey.dao.entity.HosterSetting;
 import com.ey.dao.entity.HosterSettingId;
@@ -71,5 +72,11 @@ public class SettingServiceImpl implements SettingService {
 		HosterSettingId hosterDetail = new HosterSettingId(hosterId,id);
 		HosterSetting hoster = new HosterSetting(hosterDetail);
 		settingDAO.save(hoster);
+	}
+
+	@Override
+	public List<HosterBo> getHosterList(Long id) {
+		// TODO Auto-generated method stub
+		return settingDAO.getHosterList(id);
 	}
 }

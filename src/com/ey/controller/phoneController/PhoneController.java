@@ -30,6 +30,7 @@ import com.ey.bo.CatvInfoBo;
 import com.ey.bo.ChargeEntBo;
 import com.ey.bo.ConfirmPaymentBo;
 import com.ey.bo.FeedBackBo;
+import com.ey.bo.HosterBo;
 import com.ey.bo.NoticeInfoBo;
 import com.ey.bo.PaymentSettingBo;
 import com.ey.bo.PaymentSettingPhoneBo;
@@ -1117,8 +1118,8 @@ public class PhoneController {
 						
 						hoster = (PaymentSetting)settingService.getObjectById(PaymentSetting.class, Long.valueOf(jo.getString("hoster")));
 						
-						vo.setAreaId(hoster.getAreaId());
-						vo.setAreaName(hoster.getAreaName());
+						vo.setAreaId(jo.getString("areaId"));
+						vo.setAreaName(areaService.getArea(jo.getString("areaId")).getProvince());
 						vo.setBillNumber(jo.getString("billNumber"));
 						vo.setCreateTime(new Date());
 						vo.setDelFlag(0);
@@ -1186,7 +1187,7 @@ public class PhoneController {
 	}
 	
 	@RequestMapping(value="/modifyHoster")
-	public ModelAndView modifyHoster(String hoster, String payAddress, String areaId, Integer groupId, Integer status, Long id, 
+	public ModelAndView modifyHoster(String hoster, String payAddress, Integer groupId, Integer status, Long id, 
 			HttpServletRequest request,HttpServletResponse response) throws IOException, JSONException{
 		JSONObject obj = new JSONObject();
 		try{
@@ -1195,8 +1196,8 @@ public class PhoneController {
 			Long hosterId = 0l;
 			PaymentSetting setting = new PaymentSetting();
 			if (status!=3){
-				setting.setAreaId(areaId);
-				setting.setAreaName(areaService.getArea(areaId).getProvince());
+				setting.setAreaId(currentUser.getAreaId());
+				setting.setAreaName(areaService.getArea(currentUser.getAreaId()).getProvince());
 				setting.setGroupId(groupId);
 				BaseCustomValue dataValue = (BaseCustomValue)staticService.getObject(BaseCustomValue.class,new BaseCustomValueId("bill_group_type",groupId));
 				setting.setGroupName(dataValue.getPropChName());
@@ -1225,6 +1226,35 @@ public class PhoneController {
 			e.printStackTrace();
 			obj.put("success", false);
 			obj.put("data","缴费户主设置失败");
+		}
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = obj.toString();
+		/*if (request.getParameter("callback")!=null)
+			retnStr = request.getParameter("callback");
+		else
+			retnStr = "callback";
+		retnStr = retnStr + "(" + obj.toString() + ")";*/
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
+	
+	@RequestMapping(value="/getHosterList")
+	public ModelAndView getHosterList(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, JSONException{
+		JSONObject obj = new JSONObject();
+		try{
+			UserBase currentUser = (UserBase) request.getSession().getAttribute(
+					SystemConst.USER);
+			List<HosterBo> retnLst = settingService.getHosterList(currentUser.getId());
+	    	JSONArray jsonArr=JSONArray.fromObject(retnLst);
+			obj.put("success", true);
+			obj.put("data",jsonArr);
+		}catch (Exception e) {
+			obj.put("success", false);
+			obj.put("data","查询意见反馈信息失败");
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();

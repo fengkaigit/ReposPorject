@@ -3,6 +3,7 @@ package com.ey.service;
 import java.io.Serializable;
 import java.util.List;
 
+import com.ey.bo.HosterBo;
 import com.ey.dao.entity.PaymentSetting;
 
 public interface SettingService {
@@ -16,5 +17,6 @@ public interface SettingService {
 	public Long saveHoster(PaymentSetting setting) throws RuntimeException;
 	public void delHoster(Long id) throws RuntimeException;
 	public void saveHosterDetailRelation(Long hosterId, Long id) throws RuntimeException;
+	public List<HosterBo> getHosterList(Long id);
 
 }

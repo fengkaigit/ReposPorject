@@ -2,6 +2,7 @@ package com.ey.dao;
 
 import java.util.List;
 
+import com.ey.bo.HosterBo;
 import com.ey.dao.base.BaseDAO;
 import com.ey.dao.entity.PaymentSetting;
 
@@ -19,5 +20,7 @@ public interface SettingDAO extends BaseDAO {
 			Integer paymentType, Long userId);
 	
 	public void delHoster(Long id) throws RuntimeException;
+
+	public List<HosterBo> getHosterList(Long id);
 
 }

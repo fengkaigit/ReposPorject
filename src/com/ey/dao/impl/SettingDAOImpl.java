@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.ey.bo.HosterBo;
 import com.ey.dao.SettingDAO;
 import com.ey.dao.base.impl.BaseDAOImpl;
 import com.ey.dao.entity.PaymentSetting;
@@ -72,6 +73,13 @@ public class SettingDAOImpl extends BaseDAOImpl implements SettingDAO {
 		this.executeHql(hql, new Object[] { id });
 		hql = "update PaymentSetting set delFlag=1 where id=?";
 		this.executeHql(hql, new Object[] { id });
+	}
+
+	@Override
+	public List<HosterBo> getHosterList(Long id) {
+		String hql = "select new com.ey.bo.HosterBo(a.hoster,a.payAddress,a.groupId,a.groupName,a.id) " +
+				"from PaymentSetting a where userId=? and paymentType=? and delFlag=?";
+		return this.find(hql,new Object[]{id,-1,0});
 	}
 
 }
