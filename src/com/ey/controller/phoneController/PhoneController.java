@@ -1068,10 +1068,13 @@ public class PhoneController {
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
 			Feedback feedBack = new Feedback();
+			Area area = areaService.getArea(currentUser.getAreaId());
 			if(currentUser!=null){
 			  feedBack.setUserId(currentUser.getId());
 			  feedBack.setUserName(currentUser.getRealName());
 			  feedBack.setAreaId(currentUser.getAreaId());
+			  feedBack.setAreaName(areaService.getArea(currentUser.getAreaId()).getProvince());
+			  feedBack.setParentAreaId(area.getCity());
 			}
 			feedBack.setBackFlag(0);
 			feedBack.setBackType(backType);
