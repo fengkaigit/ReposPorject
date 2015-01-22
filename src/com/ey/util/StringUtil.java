@@ -275,7 +275,7 @@ public class StringUtil {
 	}
 	//生成规则：年（4位）+月（2位）+日（2位）+时（2位）+分（2位）+秒（2位）+8位流水号
 	public static String getBillNo(Date date,Long dbId){
-		String timeStr = DateUtil.getDateTime("yyyyMMddHHmmss", date);
+		String timeStr = DateUtil.getDateTime("yyyyMMdd", date);
 		String flowNo = dbId.toString();
 		int leng = flowNo.length();
 		int size = 8;
@@ -284,7 +284,6 @@ public class StringUtil {
 		}
 		return timeStr+flowNo;
 	}
-	
 	public static String getSessionKey(int type){
 		String sessionKey = null;
 		if(type==0){

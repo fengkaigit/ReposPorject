@@ -25,6 +25,7 @@ import com.ey.dao.entity.PaymentGas;
 import com.ey.dao.entity.PaymentHeating;
 import com.ey.dao.entity.PaymentMobile;
 import com.ey.dao.entity.PaymentProperty;
+import com.ey.dao.entity.PaymentRemark;
 import com.ey.dao.entity.PaymentTraffic;
 import com.ey.dao.entity.PaymentWater;
 import com.ey.forms.JfForm;
@@ -34,7 +35,6 @@ import com.ey.util.StringUtil;
 
 @Repository("jfDAO")
 public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
-
 	@Override
 	public void saveBill(PayAccountBill payAccountBill,
 			PaymentBill paymentBill, PaymentWater paymentWater,BillModel bm) {
@@ -378,6 +378,10 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		if(ps==null||ps.intValue()==0){
 			return;
 		}
+		StringBuffer remark = new StringBuffer("");
+		buildRemark(remark,form,paymentBill);
+		PaymentRemark pr = new PaymentRemark(paymentBill.getId(),remark.toString());
+		saveOrUpdate(pr);
 		List<BillSubject> subjects = getBillSubjects(form.getPayType().toString());
 		Map<String,Object> map = new HashMap();
 		ConvertUtil.copyProperties(map, formObject);
@@ -463,6 +467,171 @@ public class JfDAOImpl extends BaseDAOImpl implements JfDAO {
 		}
 		if(bsds.size()>0){
 			this.batchSaveVO(bsds);
+		}
+	}
+
+	private void buildRemark(StringBuffer remark, JfForm form,
+			PaymentBill paymentBill) {
+		Integer payType = form.getPayType();
+		if(payType==null){
+			payType = -1;
+		}
+		if(payType.intValue()==4){//移动
+			remark.append(DateUtil.convertDateToString("yyyy-MM-dd HH:mm:ss", paymentBill.getCreateTime()));
+			remark.append("登录用户：");
+			remark.append(form.getUserName());
+			remark.append("，");
+			remark.append("通过");
+			if(form.getClientType()==null||form.getClientType().intValue()==0){
+				remark.append("系统");
+			}else{
+				remark.append("手机");
+			}
+			remark.append("缴费");
+			remark.append(form.getTotalMoney());
+			
+			/////////////////
+			String[] mobiles = form.getMobiles();
+			double[] billMoneys = form.getBillMoneys();
+			if(mobiles!=null&&billMoneys!=null){
+				remark.append("（");
+				for(int i=0;i<mobiles.length;i++){
+					if(i>0){
+						remark.append("，");
+					}
+					remark.append(mobiles[i]);
+					remark.append("（");
+					remark.append(billMoneys[i]);
+					remark.append("元）");
+				}
+				remark.append("）");
+			}
+			/////////////////
+			
+			remark.append("（包含代缴服务费");
+			remark.append(form.getPoundage());
+			remark.append("元）");
+			
+			remark.append("，大写金额：");
+			remark.append(form.getMoneycn());
+		}else if(payType.intValue()==5){//交通
+			remark.append(DateUtil.convertDateToString("yyyy-MM-dd HH:mm:ss", paymentBill.getCreateTime()));
+			remark.append("登录用户：");
+			remark.append(form.getUserName());
+			remark.append("，");
+			remark.append("车牌号码：");
+			remark.append(form.getBillNumber());
+			remark.append("，");
+			remark.append("通过");
+			if(form.getClientType()==null||form.getClientType().intValue()==0){
+				remark.append("系统");
+			}else{
+				remark.append("手机");
+			}
+			remark.append("缴费");
+			remark.append(form.getTotalMoney());
+			remark.append("（包含代缴服务费");
+			remark.append(form.getPoundage());
+			remark.append("元），");
+			remark.append("大写金额：");
+			remark.append(form.getMoneycn());
+		}else if(payType.intValue()==6){//物业
+			remark.append(DateUtil.convertDateToString("yyyy-MM-dd HH:mm:ss", paymentBill.getCreateTime()));
+			remark.append("登录用户：");
+			remark.append(form.getUserName());
+			remark.append("，");
+			remark.append("户主：");
+			remark.append(form.getBillNumber());
+			remark.append("，");
+			remark.append("通过");
+			if(form.getClientType()==null||form.getClientType().intValue()==0){
+				remark.append("系统");
+			}else{
+				remark.append("手机");
+			}
+			remark.append("缴费");
+			remark.append(form.getTotalMoney());
+			remark.append("（包含代缴服务费");
+			remark.append(form.getPoundage());
+			remark.append("元），");
+			remark.append("大写金额：");
+			remark.append(form.getMoneycn());
+		}else if(payType.intValue()==7){
+			remark.append(DateUtil.convertDateToString("yyyy-MM-dd HH:mm:ss", paymentBill.getCreateTime()));
+			remark.append("登录用户：");
+			remark.append(form.getUserName());
+			remark.append("，");
+			remark.append("用户编号：");
+			remark.append(form.getBillNumber());
+			remark.append("，");
+			remark.append("通过");
+			if(form.getClientType()==null||form.getClientType().intValue()==0){
+				remark.append("系统");
+			}else{
+				remark.append("手机");
+			}
+			remark.append("缴费");
+			remark.append(form.getTotalMoney());
+			remark.append("（缴费日期：");
+			remark.append(form.getJfdate());
+			remark.append("，");
+			remark.append("缴费月数：");
+			remark.append(form.getJfmonth());
+			
+			if(!StringUtil.isEmptyString(form.getTvgroup())){
+				String[] strs = form.getTvgroup().split(",");
+				if(strs.length==3){
+					remark.append("，");
+					remark.append("频道：");
+					remark.append(strs[1]);
+					remark.append("（");
+					remark.append(strs[2]);
+					remark.append("元/月）");
+				}
+			}
+			
+			if(!StringUtil.isEmptyString(form.getOthertvs())){
+				String[] strs = form.getOthertvs().split(";");
+				int i=0;
+				for(String str:strs){
+					String[] ses = str.split(",");
+					if(ses.length==3){
+						remark.append("，");
+						remark.append(ses[1]);
+						remark.append("（");
+						remark.append(ses[2]);
+						remark.append("元/月）");
+					}
+					i++;
+				}
+			}
+			remark.append("）");
+			remark.append("（包含代缴服务费");
+			remark.append(form.getPoundage());
+			remark.append("元），");
+			remark.append("大写金额：");
+			remark.append(form.getMoneycn());
+		}else{
+			remark.append(DateUtil.convertDateToString("yyyy-MM-dd HH:mm:ss", paymentBill.getCreateTime()));
+			remark.append("登录用户：");
+			remark.append(form.getUserName());
+			remark.append("，");
+			remark.append("用户编号：");
+			remark.append(form.getBillNumber());
+			remark.append("，");
+			remark.append("通过");
+			if(form.getClientType()==null||form.getClientType().intValue()==0){
+				remark.append("系统");
+			}else{
+				remark.append("手机");
+			}
+			remark.append("缴费");
+			remark.append(form.getTotalMoney());
+			remark.append("（包含代缴服务费");
+			remark.append(form.getPoundage());
+			remark.append("元），");
+			remark.append("大写金额：");
+			remark.append(form.getMoneycn());
 		}
 	}
 }

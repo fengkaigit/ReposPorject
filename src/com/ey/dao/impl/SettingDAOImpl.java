@@ -17,7 +17,7 @@ public class SettingDAOImpl extends BaseDAOImpl implements SettingDAO {
 	public java.util.List<PaymentSetting> list(Long userId, Integer paymentType)
 			throws RuntimeException {
 		StringBuffer hql = new StringBuffer(
-				"from PaymentSetting where userId=? and delFlag=?");
+				"from PaymentSetting where userId=? and delFlag=? and paymentType!=-1");
 		List<Object> param = new ArrayList();
 		param.add(userId);
 		param.add(0);
