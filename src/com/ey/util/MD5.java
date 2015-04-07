@@ -1,7 +1,12 @@
 package com.ey.util;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MD5 {
@@ -293,25 +298,8 @@ public class MD5 {
 	}
 
 	public static void main(String args[]) {
-		MD5 md5 = new MD5();
-		System.out.println(md5.getMD5ofStr("stupid"));
-		Map<Integer,String> map = new LinkedHashMap<Integer,String>();
-
-		   map.put(6, "apple");
-
-		   map.put(3, "banana");
-
-		   map.put(2,"pear");
-		   map.put(6, "fffff");
-		   for (Iterator it =  map.keySet().iterator();it.hasNext();) 
-
-		   {
-
-		    Object key = it.next(); 
-
-		    System.out.println(key+"="+ map.get(key));
-
-		   }
+		//MD5 md5 = new MD5();
+		//System.out.println(md5.getMD5ofStr("1234"));
 	}
 
 
