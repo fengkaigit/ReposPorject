@@ -10,18 +10,41 @@ public class HosterBo {
 	
 	public String groupName;
 	
+	public String areaId;
+	
+	public String areaName;
+	
 	public Long id;
 	
 	public HosterBo(){
 		
 	}
 	
-	public HosterBo(String hoster, String payAddress, Integer groupId, String groupName, Long id){
+	public HosterBo(String areaId, String areaName, String hoster, String payAddress, Integer groupId, String groupName, Long id){
+		this.areaId = areaId;
+		this.areaName = areaName;
 		this.hoster = hoster;
 		this.payAddress = payAddress;
 		this.groupId = groupId;
 		this.groupName = groupName;
 		this.id = id;
+	}
+
+	
+	public String getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(String areaId) {
+		this.areaId = areaId;
+	}
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
 	}
 
 	public String getHoster() {

@@ -79,4 +79,11 @@ public class SettingServiceImpl implements SettingService {
 		// TODO Auto-generated method stub
 		return settingDAO.getHosterList(id);
 	}
+
+	@Override
+	public List<PaymentSetting> getDetailByHoster(Long userId, Long hosterId,
+			Integer paymentType) throws RuntimeException {
+		// TODO Auto-generated method stub
+		return settingDAO.getDetailByHoster(userId,hosterId,paymentType);
+	}
 }

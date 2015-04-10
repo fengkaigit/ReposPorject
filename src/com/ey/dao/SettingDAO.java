@@ -23,4 +23,7 @@ public interface SettingDAO extends BaseDAO {
 
 	public List<HosterBo> getHosterList(Long id);
 
+	public List<PaymentSetting> getDetailByHoster(Long userId, Long hosterId,
+			Integer paymentType);
+
 }

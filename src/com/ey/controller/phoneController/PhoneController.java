@@ -195,8 +195,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data", jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data", "获取缴费区域信息失败！");
+			/*obj.put("data", "获取缴费区域信息失败！");*/
+			obj.put("data",e.getMessage());
 		}
 		
 		response.setContentType("application/json;charset=utf-8");
@@ -228,8 +230,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data", jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data", "获取缴费单位信息失败！");
+			/*obj.put("data", "获取缴费单位信息失败！");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -273,8 +277,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data", jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data", "获取缴费账户设置信息失败！");
+			/*obj.put("data", "获取缴费账户设置信息失败！");*/
+			obj.put("data",e.getMessage());
 		}
 
 		response.setContentType("application/json;charset=utf-8");
@@ -307,8 +313,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data", jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data", "获取有线电视设置信息失败！");
+			/*obj.put("data", "获取有线电视设置信息失败！");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		
@@ -390,7 +398,8 @@ public class PhoneController {
 		}catch (Exception e) {
 			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data", "设置用户缴费账号信息失败！");
+			/*obj.put("data", "设置用户缴费账号信息失败！");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		out = response.getWriter();
@@ -427,8 +436,10 @@ public class PhoneController {
 				obj.put("data",request.getSession().getId());
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","用户登录失败！");
+			obj.put("data",e.getMessage());
+			/*obj.put("data","用户登录失败！");*/
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -467,8 +478,10 @@ public class PhoneController {
 				obj.put("data",request.getSession().getId());
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","用户登录失败！");
+			/*obj.put("data","用户登录失败！");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -502,9 +515,9 @@ public class PhoneController {
 				user.setRealName(user.getAccountNumber());
 				user.setMobilePhone(user.getAccountNumber());
 
-				/*user.setPasswd(MD5
-						.getMD5Str(passwd));*/
-				user.setPasswd(passwd);
+				user.setPasswd(MD5
+						.getMD5Str(passwd));
+				/*user.setPasswd(passwd);*/
 				UserBase currentUser = loginService.findUserByLoginCode(user.getAccountNumber());
 				if(currentUser!=null){
 					obj.put("success", false);
@@ -520,8 +533,10 @@ public class PhoneController {
 				}
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","用户注册失败！");
+			/*obj.put("data","用户注册失败！");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -699,7 +714,8 @@ public class PhoneController {
 		}catch (Exception e) {
 			e.printStackTrace();
 			jsonObj.put("success", false);
-			jsonObj.put("data","设置缴费确认失败！");
+			/*jsonObj.put("data","缴费确认失败！");*/
+			jsonObj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -725,8 +741,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data","用户注销成功");
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","用户注销失败");
+			/*obj.put("data","用户注销失败");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -769,7 +787,8 @@ public class PhoneController {
 		}catch (Exception e) {
 			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","查询用户消息信息失败");
+			/*obj.put("data","查询用户消息信息失败");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -796,8 +815,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data","修改消息状态成功");
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","修改消息状态失败");
+			/*obj.put("data","修改消息状态失败");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -832,8 +853,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data",jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","查询系统公告失败！");
+			/*obj.put("data","查询系统公告失败！");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -867,8 +890,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data",jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","查询系统公告内容失败！");
+			/*obj.put("data","查询系统公告内容失败！");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -918,7 +943,8 @@ public class PhoneController {
 		}catch (Exception e) {
 			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","查询历史缴费信息失败！");
+			/*obj.put("data","查询历史缴费信息失败！");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -954,8 +980,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data",jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","查询历史缴费明细信息失败！");
+			/*obj.put("data","查询历史缴费明细信息失败！");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -972,13 +1000,13 @@ public class PhoneController {
 	}
 	
 	@RequestMapping(value="/getPaymentSetting")
-	public ModelAndView getPaymentSetting(HttpServletRequest request,
+	public ModelAndView getPaymentSetting(Long hoster, HttpServletRequest request,
 			HttpServletResponse response) throws JSONException, IOException{
 		JSONObject obj = new JSONObject();
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
-			List<PaymentSetting> list = settingService.list(currentUser.getId(),null);
+			List<PaymentSetting> list = settingService.getDetailByHoster(currentUser.getId(),hoster,null);
 			List<PaymentSettingBo> retnLst = new ArrayList();
 			for (PaymentSetting paymentSet:list){
 				PaymentSettingBo bo = new PaymentSettingBo();
@@ -1004,8 +1032,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data",jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","查询当前登录用户设置账户信息失败！");
+			/*obj.put("data","查询当前登录用户设置账户信息失败！");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -1033,7 +1063,10 @@ public class PhoneController {
 	    	List<Feedback> feedlist = sysManService.findFeedBacks(queryMap, page, showCount);
 	    	List<FeedBackBo> retnLst = new ArrayList();
 	    	for (Feedback feed:feedlist){
-				FeedBackBo bo = new FeedBackBo(feed.getId(),feed.getUserId(),feed.getUserIdea(),feed.getSystemFeedback(),
+	    		String systemFeedback = "";
+	    		if (feed.getSystemFeedback()!=null && !feed.getSystemFeedback().equals(""))
+	    			systemFeedback = "系统回复:" + feed.getSystemFeedback();
+				FeedBackBo bo = new FeedBackBo(feed.getId(),feed.getUserId(),feed.getUserIdea(),systemFeedback,
 						feed.getBackFlag(),feed.getBackType(),feed.geteMail(),feed.getAreaId(),feed.getAreaName(),feed.getUserName());
 				bo.setSystemTime(DateUtil.convertDateToString("yyyy-MM-dd HH:mm:ss",feed.getSystemTime()));
 				bo.setViewTime(DateUtil.convertDateToString("yyyy-MM-dd HH:mm:ss",feed.getViewTime()));
@@ -1043,8 +1076,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data",jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","查询意见反馈信息失败");
+			/*obj.put("data","查询意见反馈信息失败");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -1084,8 +1119,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data","意见反馈成功");
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","意见反馈失败");
+			/*obj.put("data","意见反馈失败");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -1104,12 +1141,13 @@ public class PhoneController {
 	@RequestMapping(value="/modifySetting")
 	public ModelAndView modifySetting(String data, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, JSONException{
+		System.out.println("JSONObject Data======="+data);
 		JSONObject obj = new JSONObject();
 		Boolean flag = false;
 		try{
 			UserBase currentUser = (UserBase) request.getSession().getAttribute(
 					SystemConst.USER);
-			JSONObject  dataJson=new JSONObject(data);
+			JSONObject  dataJson=new JSONObject(data);			
 			List<PaymentSetting> lst = new ArrayList();
 			org.json.JSONArray jsonArray =dataJson.getJSONArray("data");
 			PaymentSetting hoster = new PaymentSetting();
@@ -1121,8 +1159,8 @@ public class PhoneController {
 						
 						hoster = (PaymentSetting)settingService.getObjectById(PaymentSetting.class, Long.valueOf(jo.getString("hoster")));
 						
-						vo.setAreaId(jo.getString("areaId"));
-						vo.setAreaName(areaService.getArea(jo.getString("areaId")).getProvince());
+						vo.setAreaId(hoster.getAreaId());
+						vo.setAreaName(areaService.getArea(hoster.getAreaId()).getProvince());
 						vo.setBillNumber(jo.getString("billNumber"));
 						vo.setCreateTime(new Date());
 						vo.setDelFlag(0);
@@ -1140,6 +1178,7 @@ public class PhoneController {
 						vo.setVehicleNumber(jo.getString("vehicleNumber"));
 						vo.setEngineNumber(jo.getString("engineNumber"));
 						vo.setCarframeNumber(jo.getString("carframeNumber"));
+						vo.setDelFlag(Integer.valueOf(jo.getString("status")));
 						if (jo.getString("status").equals("2"))
 							vo.setId(Long.valueOf(jo.getString("id")));
 						lst.add(vo);
@@ -1160,8 +1199,14 @@ public class PhoneController {
 					if (detail.getDelFlag()==3){
 						settingService.delSetting(detail.getId());
 					}else{
-						Long id = settingService.saveSetting(detail);
-						settingService.saveHosterDetailRelation(hoster.getId(),id);
+						if (detail.getDelFlag()==1){
+							detail.setDelFlag(0);
+							Long id = settingService.saveSetting(detail);
+							settingService.saveHosterDetailRelation(hoster.getId(),id);
+						}else{
+							detail.setDelFlag(0);
+							Long id = settingService.saveSetting(detail);
+						}
 					}
 				}
 				obj.put("success", true);
@@ -1173,7 +1218,8 @@ public class PhoneController {
 		}catch (Exception e) {
 			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","缴费设置失败");
+			/*obj.put("data","缴费设置失败");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -1190,7 +1236,7 @@ public class PhoneController {
 	}
 	
 	@RequestMapping(value="/modifyHoster")
-	public ModelAndView modifyHoster(String hoster, String payAddress, Integer groupId, Integer status, Long id, 
+	public ModelAndView modifyHoster(String areaId, String hoster, String payAddress, Integer groupId, Integer status, Long id, 
 			HttpServletRequest request,HttpServletResponse response) throws IOException, JSONException{
 		JSONObject obj = new JSONObject();
 		try{
@@ -1199,8 +1245,8 @@ public class PhoneController {
 			Long hosterId = 0l;
 			PaymentSetting setting = new PaymentSetting();
 			if (status!=3){
-				setting.setAreaId(currentUser.getAreaId());
-				setting.setAreaName(areaService.getArea(currentUser.getAreaId()).getProvince());
+				setting.setAreaId(areaId);
+				setting.setAreaName(areaService.getArea(areaId).getProvince());
 				setting.setGroupId(groupId);
 				BaseCustomValue dataValue = (BaseCustomValue)staticService.getObject(BaseCustomValue.class,new BaseCustomValueId("bill_group_type",groupId));
 				setting.setGroupName(dataValue.getPropChName());
@@ -1216,6 +1262,7 @@ public class PhoneController {
 				hosterId = settingService.saveHoster(setting);
 			}else if (status==2){
 				setting.setId(id);
+				setting.setDelFlag(0);
 				settingService.saveHoster(setting);
 			}else{
 				settingService.delHoster(id);
@@ -1228,7 +1275,8 @@ public class PhoneController {
 		}catch (Exception e) {
 			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","缴费户主设置失败");
+			/*obj.put("data","缴费户主设置失败");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -1256,8 +1304,10 @@ public class PhoneController {
 			obj.put("success", true);
 			obj.put("data",jsonArr);
 		}catch (Exception e) {
+			e.printStackTrace();
 			obj.put("success", false);
-			obj.put("data","查询意见反馈信息失败");
+			/*obj.put("data","查询户主信息失败");*/
+			obj.put("data",e.getMessage());
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();

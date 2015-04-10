@@ -77,9 +77,27 @@ public class SettingDAOImpl extends BaseDAOImpl implements SettingDAO {
 
 	@Override
 	public List<HosterBo> getHosterList(Long id) {
-		String hql = "select new com.ey.bo.HosterBo(a.hoster,a.payAddress,a.groupId,a.groupName,a.id) " +
+		String hql = "select new com.ey.bo.HosterBo(a.areaId, a.areaName, a.hoster,a.payAddress,a.groupId,a.groupName,a.id) " +
 				"from PaymentSetting a where userId=? and paymentType=? and delFlag=?";
 		return this.find(hql,new Object[]{id,-1,0});
+	}
+
+	@Override
+	public java.util.List<PaymentSetting> getDetailByHoster(Long userId,
+			Long hosterId, Integer paymentType) {
+		StringBuffer hql = new StringBuffer(
+				"from PaymentSetting where userId=? and delFlag=? and id in (select id.detailId from HosterSetting where id.hosterId=?) and paymentType<>?");
+		List<Object> param = new ArrayList();
+		param.add(userId);
+		param.add(0);
+		param.add(hosterId);
+		param.add(-1);
+		if (paymentType != null) {
+			hql.append(" and paymentType=?");
+			param.add(paymentType);
+		}
+		hql.append(" order by paymentType,createTime");
+		return this.find(hql.toString(), param);
 	}
 
 }

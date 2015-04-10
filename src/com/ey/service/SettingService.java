@@ -8,6 +8,7 @@ import com.ey.dao.entity.PaymentSetting;
 
 public interface SettingService {
 	public List<PaymentSetting> list(Long userId,Integer paymentType) throws RuntimeException;
+	public List<PaymentSetting> getDetailByHoster(Long userId,Long hosterId, Integer paymentType) throws RuntimeException;
 	Object getObjectById(Class c,Serializable id) throws RuntimeException;
 	public Long saveSetting(PaymentSetting setting)  throws RuntimeException;
 	public void delSetting(Long id) throws RuntimeException;
