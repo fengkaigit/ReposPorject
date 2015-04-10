@@ -71,6 +71,7 @@ import com.ey.service.LoginService;
 import com.ey.service.RQfService;
 import com.ey.service.SettingService;
 import com.ey.service.SfService;
+import com.ey.service.SmsService;
 import com.ey.service.StaticService;
 import com.ey.service.SysManService;
 import com.ey.service.UserService;
@@ -81,6 +82,7 @@ import com.ey.util.ClassUtil;
 import com.ey.util.DateUtil;
 import com.ey.util.FeeUtil;
 import com.ey.util.MD5;
+import com.ey.util.MessageUtil;
 import com.ey.util.MoneyUtil;
 import com.ey.util.RequestUtils;
 import com.ey.util.StringUtil;
@@ -148,6 +150,8 @@ public class PhoneController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private SmsService smsService;
 	
 	@RequestMapping(value="/areaJson")
 	public ModelAndView getAreaInJSON(String areaType,HttpServletRequest request,
@@ -1317,6 +1321,37 @@ public class PhoneController {
 		else
 			retnStr = "callback";
 		retnStr = retnStr + "(" + obj.toString() + ")";*/
+		out.println(retnStr);
+		out.flush();
+		out.close();
+		return null;
+	}
+	@RequestMapping(value="/getSmsMessage")
+	public ModelAndView getSmsMessage(String mobile,Integer mesType,HttpServletRequest request,
+			HttpServletResponse response) throws IOException, JSONException{
+		JSONObject obj = new JSONObject();
+		if(StringUtil.isEmptyString(mobile)){
+			obj.put("success", false);
+			obj.put("data","手机号码为空");
+		}else{
+			try{
+				if(mesType==null){
+					mesType = 0;
+				}
+				String result = null;
+				String message = MessageUtil.getMessageFormatByType(mesType);
+				result = smsService.sendSms(message, mobile);
+				obj.put("success", true);
+				obj.put("data",result);
+			}catch (Exception e) {
+				obj.put("success", false);
+				obj.put("data","发送失败");
+			}
+		}
+		
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String retnStr = obj.toString();
 		out.println(retnStr);
 		out.flush();
 		out.close();
