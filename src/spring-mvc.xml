@@ -133,6 +133,7 @@
                         <value>/phone/phoneReg.do</value>
                          <value>/announce/more.do</value>
                          <value>/ej/feedback.do</value>
+                         <value>/phone/getSmsMessage.do</value>
                    </list> 
          </property>
           
